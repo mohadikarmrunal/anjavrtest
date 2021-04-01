@@ -27,7 +27,7 @@ class App{
         //Replace Box with Circle, Cone, Cylinder, Dodecahedron, Icosahedron, Octahedron, Plane, Sphere, Tetrahedron, Torus or TorusKnot
         //const geometry = new THREE.CircleBufferGeometry(1,32, 0, Math.PI); 
         
-        /*const geometry = new THREE.Shape();
+        const geometry = new THREE.Shape();
         const outerRadius = 0.8;
         const innerRadius = 0.4;
         const PI2 = Math.PI*2;
@@ -40,7 +40,7 @@ class App{
             const radius = (inner) ? innerRadius : outerRadius;
             THREE.Shape.lineTo( Math.cos(theta)*radius, Math.sin (theta)*radius);
             inner = !inner;
-        }*/
+        }
 
 
 
