@@ -34,12 +34,20 @@ class App{
         this.loadingBar = new LoadingBar();
         
         
-        initScene();
+        
 
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
         this.controls.target.set(0, 3.5, 0);
         this.controls.update();
-        
+
+        this.stats = new Stats();
+        document.body.appendChild( this.stats.dom );
+
+        this.origin = new THREE.Vector3();
+        this.euler = new THREE.Euler();
+        this.quaternion = new THREE.Quaternion();
+
+        this.initScene();
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
@@ -102,7 +110,25 @@ class App{
 		);
         
     }
+ setupXR(){
+        this.renderer.xr.enabled = true; 
+        
+        const self = this;
+        let controller, controller1;
+        
+        function onSessionStart(){
+            self.apples.mesh.position.set( 0, -0.15, -0.3 );
+        }
+        
+        
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd });//, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
+        
+        this.gestures = new ControllerGestures( this.renderer );
 
+
+        this.renderer.setAnimationLoop( this.render.bind(this) );
+    }
+    
     
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
