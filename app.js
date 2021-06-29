@@ -13,6 +13,8 @@ class App{
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
 		this.camera.position.set( 0, 4, 14 );
         
+        this.scene.add(this.camera);
+
 		this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color( 0xaaaaaa );
         
@@ -29,13 +31,7 @@ class App{
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.renderer.physicallyCorrectLights = true;
         container.appendChild( this.renderer.domElement );
-		this.setEnvironment();
-		
-        this.loadingBar = new LoadingBar();
-        
-        
-        
-
+	
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
         this.controls.target.set(0, 3.5, 0);
         this.controls.update();
@@ -48,6 +44,7 @@ class App{
         this.quaternion = new THREE.Quaternion();
 
         this.initScene();
+        this.setupXR();
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
@@ -119,7 +116,9 @@ class App{
         function onSessionStart(){
             self.apples.mesh.position.set( 0, -0.15, -0.3 );
         }
-        
+        function onSessionEnd(){
+            self.camera.remove( self.apples );
+        }
         
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd });//, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
         
