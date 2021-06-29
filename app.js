@@ -79,11 +79,11 @@ class App{
 				};
 				
 				//self.knight = new Player(options);
-                self.knight.object.visible = true;
+                self.apples.object.visible = true;
 				
 				
 				const scale = 0.003;
-				self.knight.object.scale.set(scale, scale, scale); 
+				self.apples.object.scale.set(scale, scale, scale); 
 				
                 self.loadingBar.visible = false;
 			},
