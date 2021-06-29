@@ -45,7 +45,7 @@ class App{
 
         this.initScene();
         this.setupXR();
-        console.log('radi li ovo alooou?')
+        console.log('radi li ovo alooou?');
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
