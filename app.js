@@ -45,8 +45,47 @@ class App{
 	}	
     
     initScene(){
-        this.geometry = new THREE.BoxBufferGeometry( 0.06, 0.06, 0.06 ); 
-        this.meshes = [];
+        this.loadingBar = new LoadingBar();
+        
+        this.assetsPath = '../../assets/';
+        const loader = new GLTFLoader().setPath(this.assetsPath);
+		const self = this;
+
+        loader.load(
+			// resource URL
+			`apple.glb`,
+			// called when the resource is loaded
+			function ( gltf ) {
+				const object = gltf.scene.children[5];
+                //console.log(gltf);
+                //console.log(gltf.scene.children[5]);
+				
+				const options = {
+					object: object,
+					speed: 0.5,
+					app: self,
+					name: 'apple',
+					npc: false
+				};
+				
+				self.apple = new Player(options);
+                self.apple.object.visible = true;
+				const scale = 0.003;
+				self.apple.object.scale.set(scale, scale, scale); 
+				
+                self.loadingBar.visible = false;
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened' );
+			}
+        );
+
     }
     
     setupVR(){
