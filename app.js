@@ -4,6 +4,7 @@ import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
+//import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 import { Player } from '../../libs/Player.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
@@ -56,12 +57,13 @@ class App{
 			`apple.glb`,
 			// called when the resource is loaded
 			function ( gltf ) {
-                
+
                 self.apple= gltf.scene;
                 self.scene.add(gltf.scene);
                 self.loadingBar.visible = false;
+
 				//const scale = 0.003;
-				//self.apple.object.scale.set(scale, scale, scale); 
+				//self.apple.object.scale.(scale, scale, scale); 
 				
 			},
 			// called while loading is progressing
