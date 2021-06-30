@@ -56,24 +56,13 @@ class App{
 			`apple.glb`,
 			// called when the resource is loaded
 			function ( gltf ) {
-				const object = gltf.scene.children[5];
-                //console.log(gltf);
-                //console.log(gltf.scene.children[5]);
-				
-				const options = {
-					object: object,
-					speed: 0.5,
-					app: self,
-					name: 'apple',
-					npc: false
-				};
-				
-				self.apple = new Player(options);
-                self.apple.object.visible = true;
-				const scale = 0.003;
-				self.apple.object.scale.set(scale, scale, scale); 
-				
+                
+                self.apple= gltf.scene;
+                self.scene.add(gltf.scene);
                 self.loadingBar.visible = false;
+				//const scale = 0.003;
+				//self.apple.object.scale.set(scale, scale, scale); 
+				
 			},
 			// called while loading is progressing
 			function ( xhr ) {
