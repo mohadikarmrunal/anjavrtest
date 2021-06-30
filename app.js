@@ -55,7 +55,7 @@ class App{
         const self = this;
         let controller;
         
-        function onSelect() {
+        /*function onSelect() {
             const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
             const mesh = new THREE.Mesh( self.geometry, material );
             mesh.position.set( 0, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
@@ -63,12 +63,12 @@ class App{
             self.scene.add( mesh );
             self.meshes.push( mesh );
 
-        }
+        }*/
 
         const btn = new ARButton( this.renderer );
         
         controller = this.renderer.xr.getController( 0 );
-        controller.addEventListener( 'select', onSelect );
+        //controller.addEventListener( 'select', onSelect );
         this.scene.add( controller );
         
         this.renderer.setAnimationLoop( this.render.bind(this) );
@@ -82,7 +82,7 @@ class App{
     
 	render( ) {   
         this.stats.update();
-        this.meshes.forEach( (mesh) => { mesh.rotateY( 0.01 ); });
+        //this.meshes.forEach( (mesh) => { mesh.rotateY( 0.01 ); });
         this.renderer.render( this.scene, this.camera );
     }
 }
