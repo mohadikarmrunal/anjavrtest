@@ -54,7 +54,7 @@ class App{
 
         loader.load(
 			// resource URL
-			`apple.glb`,
+			'chair.glb',
 			// called when the resource is loaded
 			function ( gltf ) {
 
