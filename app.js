@@ -54,7 +54,7 @@ class App{
 
         loader.load(
 			// resource URL
-			`knight2.glb`,
+			`apple.glb`,
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -73,7 +73,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened' );
+				console.log( 'An error happened lol' );
 			}
         );
 
