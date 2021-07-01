@@ -61,12 +61,11 @@ class App{
                 self.apple= gltf.scene;
                 
                 self.loadingBar.visible = false;
-                //self.apple.object.rotateX(pi/2);
 				const scale = 0.7;
 				self.apple.scale.set(scale, scale, scale); 
-				self.apple.position.set(0,5,-2);
+				//self.apple.position.set(0,5,-2);
                 self.apple.rotateX(Math.PI / 2);
-                self.scene.add(self.apple);
+                //self.scene.add(self.apple);
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -79,6 +78,25 @@ class App{
 			}
         );
 
+        this.createUI();
+
+    }
+
+     
+    createUI() {
+        
+        const config = {
+            panelSize: { width: 0.15, height: 0.038 },
+            height: 128,
+            info:{ type: "text" }
+        }
+        const content = {
+            info: "Price: 1.5 euro"
+        }
+        
+        const ui = new CanvasUI( content, config );
+        
+        this.ui = ui;
     }
     
     setupVR(){
@@ -96,13 +114,22 @@ class App{
             self.meshes.push( mesh );
 
         }*/
+        function onSessionStart(){
+            self.ui.mesh.position.set( 0, -0.15, -0.3 );
+            self.camera.add( self.ui.mesh );
+            self.apple.visible = true;
+            self.apple.position.set( 0, -0.3, -0.5 );
+            self.scene.add( self.apple ); 
+        }
+        
+        function onSessionEnd(){
+            self.camera.remove( self.ui.mesh );
+        }
 
-        const btn = new ARButton( this.renderer );
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd });
         
-        controller = this.renderer.xr.getController( 0 );
-        //controller.addEventListener( 'select', onSelect );
-        this.scene.add( controller );
-        
+        this.gestures = new ControllerGestures( this.renderer );
+
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
