@@ -59,12 +59,14 @@ class App{
 			function ( gltf ) {
 
                 self.apple= gltf.scene;
-                self.scene.add(gltf.scene);
+                
                 self.loadingBar.visible = false;
-
-				//const scale = 0.003;
-				//self.apple.object.scale.(scale, scale, scale); 
-				
+                //self.apple.object.rotateX(pi/2);
+				const scale = 0.7;
+				self.apple.scale.set(scale, scale, scale); 
+				self.apple.position.set(0,5,-2);
+                self.apple.rotateX(Math.PI / 2);
+                self.scene.add(self.apple);
 			},
 			// called while loading is progressing
 			function ( xhr ) {
