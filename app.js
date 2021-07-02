@@ -58,13 +58,13 @@ class App{
 			// called when the resource is loaded
 			function ( gltf ) {
 
-                self.apple= gltf.scene;
-                
+                self.apple = gltf.scene;
+                //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
-				const scale = 0.7;
-				self.apple.scale.set(scale, scale, scale); 
+				//const scale = 0.7;
+				//self.apple.scale.set(scale, scale, scale); 
 				//self.apple.position.set(0,5,-2);
-                self.apple.rotateX(Math.PI / 2);
+                //self.apple.rotateX(Math.PI / 2);
                 //self.scene.add(self.apple);
 			},
 			// called while loading is progressing
