@@ -118,7 +118,8 @@ class App{
             self.ui.mesh.position.set( 0, -0.15, -0.3 );
             self.camera.add( self.ui.mesh );
             self.apple.visible = true;
-            self.apple.position.set( 0, -20, -20 );
+            self.apple.position.set( 0, 0, -0.3 ).applyMatrix4(controller.matrixWorld);
+            self.apple.quaternion.setFromRotationMatrix(controller.matrixWorld);
             self.scene.add( self.apple ); 
         }
         
