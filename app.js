@@ -61,8 +61,8 @@ class App{
                 self.apple = gltf.scene;
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
-				//const scale = 0.7;
-				//self.apple.scale.set(scale, scale, scale); 
+				const scale = 0.7;
+				self.apple.scale.set(scale, scale, scale); 
 				//self.apple.position.set(0,5,-2);
                 //self.apple.rotateX(Math.PI / 2);
                 //self.scene.add(self.apple);
@@ -118,7 +118,7 @@ class App{
             self.ui.mesh.position.set( 0, -0.15, -0.3 );
             self.camera.add( self.ui.mesh );
             self.apple.visible = true;
-            self.apple.position.set( 0, -3, -5 );
+            self.apple.position.set( 0, -20, -20 );
             self.scene.add( self.apple ); 
         }
         
