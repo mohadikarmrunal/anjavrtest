@@ -129,8 +129,8 @@ class App{
             console.log( 'tap' ); 
             if (!self.apple.visible){
                 self.apple.visible = true;
-                self.apple.position.set( 0, -0.3, -0.8 ).add( ev.position );
-                self.ui.mesh.position.set(0,0.3,-0.5).add(ev.position);
+                self.apple.position.set( 0, -0.3, -0.7 ).add( ev.position );
+                self.ui.mesh.position.set(0, 0.2, -0.2).add(ev.position);
                 self.scene.add( self.apple); 
                 self.scene.add(self.ui.mesh);
             }
