@@ -117,7 +117,7 @@ class App{
         }*/
         
 
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd });
+        const btn = new ARButton( this.renderer);
         
         //controller = this.renderer.xr.getController( 0 );
         //controller.addEventListener( 'select', onSelect );
@@ -129,7 +129,7 @@ class App{
             console.log( 'tap' ); 
             if (!self.apple.visible){
                 self.apple.visible = true;
-                self.apple.position.set( 0, -0.3, -0.5 ).add( ev.position );
+                self.apple.position.set( 0, -0.3, -0.8 ).add( ev.position );
                 self.ui.mesh.position.set(0,0.3,-0.5).add(ev.position);
                 self.scene.add( self.apple); 
                 self.scene.add(self.ui.mesh);
