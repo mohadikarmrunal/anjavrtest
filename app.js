@@ -63,7 +63,7 @@ class App{
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
                 self.apple.visible=false;
-				const scale = 0.003;
+				const scale = 0.008;
 				self.apple.scale.set(scale, scale, scale); 
                 
 				//self.apple.position.set(0,5,-2);
