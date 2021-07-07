@@ -63,7 +63,7 @@ class App{
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
                 self.apple.visible=false;
-				const scale = 0.4;
+				const scale = 0.04;
 				self.apple.scale.set(scale, scale, scale); 
                 
 				//self.apple.position.set(0,5,-2);
@@ -107,14 +107,14 @@ class App{
         const self = this;
         //let controller;
 
-        function onSessionStart(){
+        /*function onSessionStart(){
             self.ui.mesh.position.set( 0, -0.15, -0.3 );
             self.camera.add( self.ui.mesh );
-        }
+        }*/
         
-        function onSessionEnd(){
+       /* function onSessionEnd(){
             self.camera.remove( self.ui.mesh );
-        }
+        }*/
         
 
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd });
@@ -130,7 +130,9 @@ class App{
             if (!self.apple.visible){
                 self.apple.visible = true;
                 self.apple.position.set( 0, -0.3, -0.5 ).add( ev.position );
+                self.ui.mesh.position.set(0,0.3,-0.5).app(ev.position);
                 self.scene.add( self.apple); 
+                self.scene.add(self.ui.mesh);
             }
         });
 
