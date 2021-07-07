@@ -105,29 +105,28 @@ class App{
         const self = this;
         let controller;
         
-        /*function onSelect() {
-            const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
-            const mesh = new THREE.Mesh( self.geometry, material );
-            mesh.position.set( 0, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
-            mesh.quaternion.setFromRotationMatrix( controller.matrixWorld );
-            self.scene.add( mesh );
-            self.meshes.push( mesh );
-
-        }*/
-        function onSessionStart(){
+        function onSelect() {
+            self.apple.position.set( 0, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
+            self.apple.quaternion.setFromRotationMatrix( controller.matrixWorld );
+            self.ui.position.set( 0.1, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
+            self.ui.quaternion.setFromRotationMatrix( controller.matrixWorld );
+            self.scene.add( self.apple);
+            self.scene.add( self.ui);
+        }
+        /*function onSessionStart(){
             self.ui.mesh.position.set( 0, -0.15, -0.3 );
             self.camera.add( self.ui.mesh );
             self.apple.visible = true;
             self.apple.position.set( 0, 0, -0.3 ).applyMatrix4(controller.matrixWorld);
             self.apple.quaternion.setFromRotationMatrix(controller.matrixWorld);
             self.scene.add( self.apple ); 
-        }
+        }*/
         
-        function onSessionEnd(){
+        /*function onSessionEnd(){
             self.camera.remove( self.ui.mesh );
-        }
+        }*/
 
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd });
+        const btn = new ARButton( this.renderer);
         
         controller = this.renderer.xr.getController( 0 );
         controller.addEventListener( 'select', onSelect );
@@ -144,6 +143,7 @@ class App{
     
 	render( ) {   
         this.stats.update();
+        this.apple.rotateY(0.01);
         //this.meshes.forEach( (mesh) => { mesh.rotateY( 0.01 ); });
         this.renderer.render( this.scene, this.camera );
     }
