@@ -61,8 +61,9 @@ class App{
                 self.apple = gltf.scene;
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
-				const scale = 0.7;
+				const scale = 0.4;
 				self.apple.scale.set(scale, scale, scale); 
+                self.apple.visible=false;
 				//self.apple.position.set(0,5,-2);
                 //self.apple.rotateX(Math.PI / 2);
                 //self.scene.add(self.apple);
@@ -104,14 +105,21 @@ class App{
         
         const self = this;
         let controller;
+
+        function onSessionStart(){
+            self.ui.mesh.position.set( 0, -0.15, -0.3 );
+            self.camera.add( self.ui.mesh );
+        }
         
+        function onSessionEnd(){
+            self.camera.remove( self.ui.mesh );
+        }
+
         function onSelect() {
             self.apple.position.set( 0, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
             self.apple.quaternion.setFromRotationMatrix( controller.matrixWorld );
-            self.ui.position.set( 0.1, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
-            self.ui.quaternion.setFromRotationMatrix( controller.matrixWorld );
             self.scene.add( self.apple);
-            self.scene.add( self.ui);
+          
         }
         /*function onSessionStart(){
             self.ui.mesh.position.set( 0, -0.15, -0.3 );
@@ -126,11 +134,22 @@ class App{
             self.camera.remove( self.ui.mesh );
         }*/
 
-        const btn = new ARButton( this.renderer);
+        const btn = new ARButton( this.renderer,{ onSessionStart, onSessionEnd });
         
-        controller = this.renderer.xr.getController( 0 );
-        controller.addEventListener( 'select', onSelect );
-        this.scene.add( controller );
+        //controller = this.renderer.xr.getController( 0 );
+        //controller.addEventListener( 'select', onSelect );
+        //this.scene.add( controller );
+
+        this.gestures = new ControllerGestures( this.renderer );
+
+        this.gestures.addEventListener( 'tap', (ev)=>{
+            console.log( 'tap' ); 
+            if (!self.apple.object.visible){
+                self.knight.object.visible = true;
+                self.knight.object.position.set( 0, -0.3, -0.5 ).add( ev.position );
+                self.scene.add( self.apple); 
+            }
+        });
 
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
@@ -143,7 +162,7 @@ class App{
     
 	render( ) {   
         this.stats.update();
-        this.apple.children[0].rotateY(0.01);
+        //this.apple.children[0].rotateY(0.01);
         //this.meshes.forEach( (mesh) => { mesh.rotateY( 0.01 ); });
         this.renderer.render( this.scene, this.camera );
     }
