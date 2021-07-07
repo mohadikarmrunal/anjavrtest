@@ -143,7 +143,7 @@ class App{
     
 	render( ) {   
         this.stats.update();
-        this.apple.rotateY(0.01);
+        this.apple.children[0].rotateY(0.01);
         //this.meshes.forEach( (mesh) => { mesh.rotateY( 0.01 ); });
         this.renderer.render( this.scene, this.camera );
     }
