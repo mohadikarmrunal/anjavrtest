@@ -6,7 +6,7 @@ import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 //import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
-import { Player } from '../../libs/Player.js';
+//import { Player } from '../../libs/Player.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
 
 class App{
@@ -19,6 +19,7 @@ class App{
 		this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
 		
 		this.scene = new THREE.Scene();
+        this.scene.add(this.camera);
        
 		this.scene.add( new THREE.HemisphereLight( 0x606060, 0x404040 ) );
 
@@ -61,9 +62,10 @@ class App{
                 self.apple = gltf.scene;
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
+                self.apple.visible=false;
 				const scale = 0.4;
 				self.apple.scale.set(scale, scale, scale); 
-                self.apple.visible=false;
+                
 				//self.apple.position.set(0,5,-2);
                 //self.apple.rotateX(Math.PI / 2);
                 //self.scene.add(self.apple);
@@ -83,7 +85,6 @@ class App{
 
     }
 
-     
     createUI() {
         
         const config = {
@@ -104,7 +105,7 @@ class App{
         this.renderer.xr.enabled = true; 
         
         const self = this;
-        let controller;
+        //let controller;
 
         function onSessionStart(){
             self.ui.mesh.position.set( 0, -0.15, -0.3 );
@@ -114,27 +115,9 @@ class App{
         function onSessionEnd(){
             self.camera.remove( self.ui.mesh );
         }
-
-        function onSelect() {
-            self.apple.position.set( 0, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
-            self.apple.quaternion.setFromRotationMatrix( controller.matrixWorld );
-            self.scene.add( self.apple);
-          
-        }
-        /*function onSessionStart(){
-            self.ui.mesh.position.set( 0, -0.15, -0.3 );
-            self.camera.add( self.ui.mesh );
-            self.apple.visible = true;
-            self.apple.position.set( 0, 0, -0.3 ).applyMatrix4(controller.matrixWorld);
-            self.apple.quaternion.setFromRotationMatrix(controller.matrixWorld);
-            self.scene.add( self.apple ); 
-        }*/
         
-        /*function onSessionEnd(){
-            self.camera.remove( self.ui.mesh );
-        }*/
 
-        const btn = new ARButton( this.renderer,{ onSessionStart, onSessionEnd });
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd });
         
         //controller = this.renderer.xr.getController( 0 );
         //controller.addEventListener( 'select', onSelect );
@@ -144,9 +127,9 @@ class App{
 
         this.gestures.addEventListener( 'tap', (ev)=>{
             console.log( 'tap' ); 
-            if (!self.apple.object.visible){
-                self.knight.object.visible = true;
-                self.knight.object.position.set( 0, -0.3, -0.5 ).add( ev.position );
+            if (!self.apple.visible){
+                self.apple.visible = true;
+                self.apple.position.set( 0, -0.3, -0.5 ).add( ev.position );
                 self.scene.add( self.apple); 
             }
         });
@@ -160,10 +143,14 @@ class App{
         this.renderer.setSize( window.innerWidth, window.innerHeight );  
     }
     
-	render( ) {   
+
+    render( ) {   
+        const dt = this.clock.getDelta();
         this.stats.update();
-        //this.apple.children[0].rotateY(0.01);
-        //this.meshes.forEach( (mesh) => { mesh.rotateY( 0.01 ); });
+        if ( this.renderer.xr.isPresenting ){
+            this.gestures.update();
+            //this.ui.update();
+        }
         this.renderer.render( this.scene, this.camera );
     }
 }
