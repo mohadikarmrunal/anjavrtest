@@ -144,9 +144,9 @@ class App{
         }*/
         
 
-        const btn = new ARButton( this.renderer);
+        const btn = new ARButton( this.renderer, {onSessionStart});
         
-    
+        //const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
 
         //this.gestures = new ControllerGestures( this.renderer );
 
