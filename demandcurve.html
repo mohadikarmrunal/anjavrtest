@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Welcome to our supermarket!s</title>
+		<title>Welcome to the supermarket</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <!--favicon -->
@@ -19,24 +19,17 @@
                 margin: 0;
                 padding: 0;
             }
-            
-            ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            }
-
         </style>
 	</head>
 	<body>
-        <h1>SUPERMARKET</h1>
-        <ul>
-            <p>Interested in how we determine prices in our supermarket? Click bellow</p>
-            <li><a href="demandcurve.html"> Area Under the Curve 1.1</a></li>
-            <li><a href=#example2>Example 2</a></li>
-          </ul>
-       
-        <p></p>
+        <script src="../../libs/fas.js"></script>
+        <script type="module">
+            import { App } from './app1.js';
 
+            document.addEventListener("DOMContentLoaded", function(){
+                const app = new App();
+                window.app = app;
+            });
+        </script>
 	</body>
 </html>
