@@ -94,7 +94,8 @@ class App{
         const config = {
             panelSize: { width: 0.15, height: 0.038 },
             height: 128,
-            backgroundColour: '#FFF5EE',
+            backgroundColor: '#ffe',
+            fontColor:'#bbb',
             info:{ type: "text" }
         }
         const content = {
@@ -110,7 +111,8 @@ class App{
         const config = {
             panelSize: { width: 0.15, height: 0.038 },
             height: 128,
-            backgroundColour: '#FFF5EE',
+            backgroundColour: '#ffe',
+            fontColor:'#bbb',
             info:{ type: "text" }
         }
         const content = {
