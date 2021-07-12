@@ -92,7 +92,7 @@ class App{
     createUI() {
         
         const config = {
-            panelSize: { width: 0.15, height: 0.038 },
+            panelSize: { width: 0.1, height: 0.038 },
             height: 128,
             backgroundColor: '#ffe',
             fontColor:'#bbb',
@@ -109,7 +109,7 @@ class App{
     createUI2() {
         
         const config = {
-            panelSize: { width: 0.15, height: 0.038 },
+            panelSize: { width: 0.1, height: 0.038 },
             height: 128,
             backgroundColour: '#ffe',
             fontColor:'#bbb',
