@@ -43,9 +43,9 @@ class App{
         this.initScene();
         this.setupVR();
         console.log(this.ui.content.info);
-        setTimeout( this.plotting(),30000);
+        console.log('before settimeou');
         console.log(this.ui.content.info);
-
+        console.log('after settimeou');
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
@@ -98,8 +98,7 @@ class App{
         }
         const content = {
             info: "Price: 1.53e/kg"
-        }
-        
+        }        
         const ui = new CanvasUI( content, config );
         
         this.ui = ui;
@@ -155,15 +154,19 @@ class App{
                 self.scene.add( self.apple); 
                 self.scene.add(self.ui.mesh);
                 self.scene.add(self.ui2.mesh);
+                setTimeout( this.plotting(),30000);
             }
         });
 
         this.renderer.setAnimationLoop( this.render.bind(this) );
+        console.log('setupa vr');
     }
     
     plotting(){
         this.ui.updateElement('info', 'Price: 2.3e/kg');
         this.ui2.updateElement('info', 'Sold per kilogram: 40');
+        this.ui.update();
+        this.ui2.update();
     }
    
     resize(){
