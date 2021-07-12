@@ -131,23 +131,15 @@ class App{
             self.ui2.mesh.position.set(-0.1, 0.01, -0.2);
             self.scene.add(self.ui.mesh);
             self.scene.add(self.ui2.mesh);
-            self.camera.add( self.ui.mesh);
-            self.camera.add( self.ui2.mesh);
             if(!self.apple.visible){
                 self.apple.visible=true;
                 self.apple.position.set( 0, -0.3, -0.7 ); 
                 self.scene.add( self.apple); 
-                self.camera.add(self.apple);
             }
 
             setTimeout( this.plotting(),30000);
         }
         
-       function onSessionEnd(){
-            self.camera.remove( self.ui.mesh );
-            self.camera.remove( self.ui2.mesh ); 
-            self.camera.remove( self.apple );
-        }
         
 
         const btn = new ARButton( this.renderer, {onSessionStart});
