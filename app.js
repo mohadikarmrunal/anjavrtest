@@ -85,6 +85,7 @@ class App{
         );
 
         this.createUI();
+        this.createUI2();
 
     }
 
@@ -96,12 +97,28 @@ class App{
             info:{ type: "text" }
         }
         const content = {
-            info: "Price: 1.5 euro"
+            info: "Price: 1.53e/kg"
         }
         
         const ui = new CanvasUI( content, config );
         
         this.ui = ui;
+    }
+
+    createUI2() {
+        
+        const config = {
+            panelSize: { width: 0.15, height: 0.038 },
+            height: 128,
+            info:{ type: "text" }
+        }
+        const content = {
+            info: "Sold per kilogram: 60"
+        }
+        
+        const ui = new CanvasUI( content, config );
+        
+        this.ui2 = ui;
     }
     
     setupVR(){
@@ -133,9 +150,11 @@ class App{
             if (!self.apple.visible){
                 self.apple.visible = true;
                 self.apple.position.set( 0, -0.3, -0.7 ).add( ev.position );
-                self.ui.mesh.position.set(0, 0.01, -0.2).add(ev.position);
+                self.ui.mesh.position.set(0.1, 0.01, -0.2).add(ev.position);
+                self.ui2.mesh.position.set(-0.1, 0.01, -0.2).add(ev.position);
                 self.scene.add( self.apple); 
                 self.scene.add(self.ui.mesh);
+                self.scene.add(self.ui2.mesh);
             }
         });
 
@@ -143,7 +162,8 @@ class App{
     }
     
     plotting(){
-        this.ui.updateElement('info', 'Price 30e');
+        this.ui.updateElement('info', 'Price: 2.3e/kg');
+        this.ui2.updateElement('info', 'Sold per kilogram: 40');
     }
    
     resize(){
@@ -156,6 +176,8 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
+        this.ui.update();
+        this.ui2.update();
         if ( this.renderer.xr.isPresenting ){
             this.gestures.update();
             //this.ui.update();
