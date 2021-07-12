@@ -42,8 +42,6 @@ class App{
         
         this.initScene();
         this.setupVR();
-        console.log(this.ui.content.info);
-        console.log(this.ui.content.info);
       
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
@@ -69,7 +67,6 @@ class App{
 				self.apple.scale.set(scale, scale, scale); 
                 
 				//self.apple.position.set(0,5,-2);
-                //self.apple.rotateX(Math.PI / 2);
                 //self.scene.add(self.apple);
 			},
 			// called while loading is progressing
@@ -129,25 +126,31 @@ class App{
         const self = this;
         //let controller;
 
-        /*function onSessionStart(){
-            self.ui.mesh.position.set( 0, -0.15, -0.3 );
-            self.camera.add( self.ui.mesh );
-        }*/
+        function onSessionStart(){
+            self.ui.mesh.position.set(0.1, 0.01, -0.2);
+            self.ui2.mesh.position.set(-0.1, 0.01, -0.2);
+            self.scene.add(self.ui.mesh);
+            self.scene.add(self.ui2.mesh);
+            //self.camera.add( self.ui.mesh);
+            //self.camera.add( self.ui2.mesh);
+            if(!self.apple.visible){
+                self.apple.position.set( 0, -0.3, -0.7 ); 
+                self.scene.add( self.apple); 
+            }
+        }
         
-       /* function onSessionEnd(){
-            self.camera.remove( self.ui.mesh );
+       /*function onSessionEnd(){
+            self.camera.remove( self.ui.mesh ); 
         }*/
         
 
         const btn = new ARButton( this.renderer);
         
-        //controller = this.renderer.xr.getController( 0 );
-        //controller.addEventListener( 'select', onSelect );
-        //this.scene.add( controller );
+    
 
-        this.gestures = new ControllerGestures( this.renderer );
+        //this.gestures = new ControllerGestures( this.renderer );
 
-        this.gestures.addEventListener( 'tap', (ev)=>{
+        /*this.gestures.addEventListener( 'tap', (ev)=>{
             console.log( 'tap' ); 
             if (!self.apple.visible){
                 self.apple.visible = true;
@@ -160,9 +163,8 @@ class App{
                 setTimeout( this.plotting(),300000);
             }
         });
-
+*/
         this.renderer.setAnimationLoop( this.render.bind(this) );
-        console.log('setupa vr');
     }
     
     plotting(){
@@ -181,7 +183,6 @@ class App{
         const dt = this.clock.getDelta();
         this.stats.update();
         if ( this.renderer.xr.isPresenting ){
-            this.gestures.update();
             this.ui.update();
             this.ui2.update();
         }
