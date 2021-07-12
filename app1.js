@@ -94,6 +94,7 @@ class App{
         const config = {
             panelSize: { width: 0.15, height: 0.038 },
             height: 128,
+            backgroundColour: '#FFF5EE',
             info:{ type: "text" }
         }
         const content = {
@@ -109,6 +110,7 @@ class App{
         const config = {
             panelSize: { width: 0.15, height: 0.038 },
             height: 128,
+            backgroundColour: '#FFF5EE',
             info:{ type: "text" }
         }
         const content = {
@@ -154,7 +156,7 @@ class App{
                 self.scene.add( self.apple); 
                 self.scene.add(self.ui.mesh);
                 self.scene.add(self.ui2.mesh);
-                setTimeout( this.plotting(),30000);
+                setTimeout( this.plotting(),300000);
             }
         });
 
@@ -165,8 +167,6 @@ class App{
     plotting(){
         this.ui.updateElement('info', 'Price: 2.3e/kg');
         this.ui2.updateElement('info', 'Sold per kilogram: 40');
-        this.ui.update();
-        this.ui2.update();
     }
    
     resize(){
@@ -181,7 +181,8 @@ class App{
         this.stats.update();
         if ( this.renderer.xr.isPresenting ){
             this.gestures.update();
-            //this.ui.update();
+            this.ui.update();
+            this.ui2.update();
         }
         this.renderer.render( this.scene, this.camera );
     }
