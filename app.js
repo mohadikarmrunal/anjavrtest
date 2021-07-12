@@ -42,7 +42,10 @@ class App{
         
         this.initScene();
         this.setupVR();
-        
+        console.log(this.ui.content.info);
+        setTimeout( this.plotting(),30000);
+        console.log(this.ui.content.info);
+
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
@@ -139,6 +142,10 @@ class App{
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
+    plotting(){
+        this.ui.updateElement('info', 'Price 30e');
+    }
+   
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
