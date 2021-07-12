@@ -176,8 +176,6 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        this.ui.update();
-        this.ui2.update();
         if ( this.renderer.xr.isPresenting ){
             this.gestures.update();
             //this.ui.update();
