@@ -63,7 +63,7 @@ class App{
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
                 self.apple.visible=false;
-				const scale = 0.008;
+				const scale = 0.03;
 				self.apple.scale.set(scale, scale, scale); 
                 
 				//self.apple.position.set(0,5,-2);
@@ -130,7 +130,7 @@ class App{
             if (!self.apple.visible){
                 self.apple.visible = true;
                 self.apple.position.set( 0, -0.3, -0.7 ).add( ev.position );
-                self.ui.mesh.position.set(0, 0.2, -0.2).add(ev.position);
+                self.ui.mesh.position.set(0, 0.01, -0.2).add(ev.position);
                 self.scene.add( self.apple); 
                 self.scene.add(self.ui.mesh);
             }
