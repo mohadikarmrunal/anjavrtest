@@ -107,7 +107,7 @@ class App{
         const config = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 83,
-            backgroundColour: '#ffe',
+            backgroundColor: '#ffe',
             fontColor:'#bbb',
             info:{ type: "text" }
         }
@@ -139,6 +139,8 @@ class App{
                 self.scene.add( self.apple); 
                 self.camera.add(self.apple);
             }
+
+            setTimeout( this.plotting(),30000);
         }
         
        function onSessionEnd(){
