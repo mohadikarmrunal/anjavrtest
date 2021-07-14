@@ -40,6 +40,8 @@ class App{
         
         this.stats = new Stats();
         
+        
+
         this.initScene();
         this.setupVR();
       
@@ -65,6 +67,7 @@ class App{
                 self.apple.visible=false;
 				const scale = 0.03;
 				self.apple.scale.set(scale, scale, scale); 
+
                 
 				//self.apple.position.set(0,5,-2);
                 //self.scene.add(self.apple);
@@ -90,8 +93,8 @@ class App{
         const config = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 83,
-            backgroundColor: '#fff',
-            fontColor:'#bbb',
+            backgroundColor: "#666",
+            fontColor:"#bbb",
             info:{ type: "text" }
         }
         const content = {
@@ -107,8 +110,8 @@ class App{
         const config = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 83,
-            backgroundColor: '#fff',
-            fontColor:'#bbb',
+            backgroundColor: "#666",
+            fontColor:"#bbb",
             info:{ type: "text" }
         }
         const content2 = {
@@ -136,7 +139,6 @@ class App{
                 self.apple.position.set( 0, -0.3, -0.7 ); 
                 self.scene.add( self.apple); 
             }
-            setTimeout( this.plotting(),30000);
             
         }
 
@@ -183,7 +185,7 @@ class App{
             this.ui.update();
             this.ui2.update();
        }
-        //setTimeout( this.plotting(),30000);
+
         this.renderer.render( this.scene, this.camera );
     }
 }
