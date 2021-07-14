@@ -95,7 +95,7 @@ class App{
             info:{ type: "text" }
         }
         const content = {
-            info: "Price: 1.53e/kg"
+            info: "First Price: 1.53e/kg"
         }        
         const ui = new CanvasUI( content, config );
         
@@ -136,11 +136,9 @@ class App{
                 self.apple.position.set( 0, -0.3, -0.7 ); 
                 self.scene.add( self.apple); 
             }
-
             setTimeout( this.plotting(),30000);
+            
         }
-        
-        
 
         const btn = new ARButton( this.renderer, {onSessionStart});
         
@@ -168,6 +166,8 @@ class App{
     plotting(){
         this.ui.updateElement('info', 'Price: 2.3e/kg');
         this.ui2.updateElement('info', 'Sold per kilogram: 40');
+        this.ui.update();
+        this.ui2.update();
     }
    
     resize(){
@@ -180,10 +180,11 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        if ( this.renderer.xr.isPresenting ){
-            this.ui.update();
-            this.ui2.update();
-        }
+        //if ( this.renderer.xr.isPresenting ){
+       //     this.ui.update();
+        //    this.ui2.update();
+       // }
+        //setTimeout( this.plotting(),30000);
         this.renderer.render( this.scene, this.camera );
     }
 }
