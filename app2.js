@@ -90,7 +90,7 @@ class App{
         const config = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 83,
-            backgroundColor: '#ffe',
+            backgroundColor: '#fff',
             fontColor:'#bbb',
             info:{ type: "text" }
         }
@@ -107,17 +107,17 @@ class App{
         const config = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 83,
-            backgroundColor: '#ffe',
+            backgroundColor: '#fff',
             fontColor:'#bbb',
             info:{ type: "text" }
         }
-        const content = {
-            info: "Sold per kilogram: 60"
+        const content2 = {
+            info: "Sold: 60 kg"
         }
         
-        const ui = new CanvasUI( content, config );
+        const ui2 = new CanvasUI( content2, config );
         
-        this.ui2 = ui;
+        this.ui2 = ui2;
     }
     
     setupVR(){
@@ -166,8 +166,7 @@ class App{
     plotting(){
         this.ui.updateElement('info', 'Price: 2.3e/kg');
         this.ui2.updateElement('info', 'Sold per kilogram: 40');
-        this.ui.update();
-        this.ui2.update();
+        
     }
    
     resize(){
@@ -180,10 +179,10 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        //if ( this.renderer.xr.isPresenting ){
-       //     this.ui.update();
-        //    this.ui2.update();
-       // }
+        if ( this.renderer.xr.isPresenting ){
+            this.ui.update();
+            this.ui2.update();
+       }
         //setTimeout( this.plotting(),30000);
         this.renderer.render( this.scene, this.camera );
     }
