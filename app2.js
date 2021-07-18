@@ -49,6 +49,7 @@ class App{
 	}	
     
     initScene(){
+        console.log(this);
         this.loadingBar = new LoadingBar();
         
         this.assetsPath = '../../assets/';
@@ -139,6 +140,7 @@ class App{
                 self.apple.position.set( 0, -0.3, -0.7 ); 
                 self.scene.add( self.apple); 
             }
+            setTimeout(plotting,6000);
             
         }
 
@@ -166,9 +168,12 @@ class App{
     }
     
     plotting(){
+        console.log(this+'this in plotting');
         this.ui.updateElement('info', 'Price: 2.3e/kg');
-        this.ui2.updateElement('info', 'Sold per kilogram: 40');
-        
+        this.ui2.updateElement('info', 'Sold per kilogram: 40'); 
+        this.ui.update();
+        this.ui2.update();
+       
     }
    
     resize(){
@@ -181,11 +186,6 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        if ( this.renderer.xr.isPresenting ){
-            this.ui.update();
-            this.ui2.update();
-       }
-
         this.renderer.render( this.scene, this.camera );
     }
 }
