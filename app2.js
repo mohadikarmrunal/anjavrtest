@@ -67,10 +67,6 @@ class App{
                 self.apple.visible=false;
 				const scale = 0.03;
 				self.apple.scale.set(scale, scale, scale); 
-
-                
-				//self.apple.position.set(0,5,-2);
-                //self.scene.add(self.apple);
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -91,7 +87,7 @@ class App{
         
         const config = {
             panelSize: { width: 0.1, height: 0.038 },
-            height: 83,
+            height: 194,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
