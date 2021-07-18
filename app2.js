@@ -123,12 +123,23 @@ class App{
         
         this.ui2 = ui2;
     }
+
+   
     
     setupVR(){
         this.renderer.xr.enabled = true; 
         
         const self = this;
         //let controller;
+       
+        function plotting(){
+            console.log(this);
+            this.app.ui.updateElement('info', 'Price: 2.3e/kg');
+            this.app.ui2.updateElement('info', 'Sold per kilogram: 40'); 
+            this.app.ui.update();
+            this.app.ui2.update();
+           
+        }
 
         function onSessionStart(){
             self.ui.mesh.position.set(0.1, 0.01, -0.2);
@@ -167,14 +178,7 @@ class App{
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
-    plotting(){
-        console.log(this+'this in plotting');
-        this.ui.updateElement('info', 'Price: 2.3e/kg');
-        this.ui2.updateElement('info', 'Sold per kilogram: 40'); 
-        this.ui.update();
-        this.ui2.update();
-       
-    }
+   
    
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
