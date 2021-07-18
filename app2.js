@@ -129,13 +129,13 @@ class App{
         }
 
         function onSessionStart(){
-            self.ui.mesh.position.set(0.1, 0.01, -0.2);
-            self.ui2.mesh.position.set(-0.1, 0.01, -0.2);
+            self.ui.mesh.position.set(0.08, 0.01, -0.2);
+            self.ui2.mesh.position.set(-0.08, 0.01, -0.2);
             self.scene.add(self.ui.mesh);
             self.scene.add(self.ui2.mesh);
             if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0, -0.3, -0.7 ); 
+                self.apple.position.set( 0.08, -0.2, -0.7 ); 
                 self.scene.add( self.apple); 
             }
             setTimeout(plotting,6000);
