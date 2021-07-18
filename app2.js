@@ -85,7 +85,6 @@ class App{
         );
 
         this.createUI();
-        this.createUI2();
 
     }
 
@@ -94,38 +93,31 @@ class App{
         const config = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 83,
-            backgroundColor: "#666",
-            fontColor:"#bbb",
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:20,
+                fontSize:50,
+            },
             info:{ type: "text" }
         }
+
+
         const content = {
             info: "First Price: 1.53e/kg"
-        }        
-        const ui = new CanvasUI( content, config );
-        
-        this.ui = ui;
-    }
+        }   
 
-    createUI2() {
-        
-        const config = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 83,
-            backgroundColor: "#666",
-            fontColor:"#bbb",
-            info:{ type: "text" }
-        }
         const content2 = {
             info: "Sold: 60 kg"
         }
-        
+
+        const ui = new CanvasUI( content, config );
         const ui2 = new CanvasUI( content2, config );
-        
+        this.ui = ui;
         this.ui2 = ui2;
     }
-
-   
-    
+       
     setupVR(){
         this.renderer.xr.enabled = true; 
         
