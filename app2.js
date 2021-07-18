@@ -8,7 +8,7 @@ import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 //import { Player } from '../../libs/Player.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
-
+//demand curve 
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
