@@ -58,12 +58,11 @@ class App{
 
         loader.load(
 			// resource URL
-			'chair.glb',
+			'chair1.glb',
 			// called when the resource is loaded
 			function ( gltf ) {
 
                 self.apple = gltf.scene;
-                //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
                 self.apple.visible=false;
 				const scale = 0.03;
@@ -105,7 +104,7 @@ class App{
 
 
         const content = {
-            info: "First Price: 1.53e/kg"
+            info: "Price: 1.53e/kg"
         }   
 
         const content2 = {
@@ -127,7 +126,7 @@ class App{
         function plotting(){
             console.log(this);
             this.app.ui.updateElement('info', 'Price: 2.3e/kg');
-            this.app.ui2.updateElement('info', 'Sold per kilogram: 40'); 
+            this.app.ui2.updateElement('info', 'Sold: 40'); 
             this.app.ui.update();
             this.app.ui2.update();
            
