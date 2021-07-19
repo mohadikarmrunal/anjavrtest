@@ -92,7 +92,7 @@ class App{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
-                padding:20,
+                padding:40,
                 fontSize:50,
             },
             info:{ type: "text" }
@@ -135,7 +135,7 @@ class App{
             self.scene.add(self.ui2.mesh);
             if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0.08, -0.2, -0.7 ); 
+                self.apple.position.set( 0.1, -0.2, -0.7 ); 
                 self.scene.add( self.apple); 
             }
             setTimeout(plotting,6000);
