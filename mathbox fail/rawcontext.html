@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Welcome to our supermarket!s</title>
+		<title>Welcome to the supermarket</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <!--favicon -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="../../build/mathbox.css">
         <link rel="apple-touch-icon" sizes="180x180" href="../../css/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="../../css/favicon/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="../../css/favicon/favicon-16x16.png">
@@ -19,24 +20,17 @@
                 margin: 0;
                 padding: 0;
             }
-            
-            ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            }
-
         </style>
 	</head>
-	<body>
-        <h1>SUPERMARKET</h1>
-        <ul>
-            <p>Interested in how we determine prices in our supermarket? Click bellow</p>
-            <li><a href="demandcurve.html"> Area Under the Curve 1.1</a></li>
-            <li><a href="graphparam.html">Example 2</a></li>
-          </ul>
-       
-        <p></p>
-
+        <body>
+            <script src="../../build/mathbox-bundle.js"></script>
+            <script type="module">
+                import { App } from './appcontext.js';
+    
+                document.addEventListener("DOMContentLoaded", function(){
+                    const app = new App();
+                    window.app = app;
+                });
+            </script>
 	</body>
 </html>
