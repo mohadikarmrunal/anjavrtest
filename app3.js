@@ -49,8 +49,8 @@ class App{
         const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         material.wireframe=true;
         this.boca = new THREE.Mesh( geometry, material );
-        this.boca.visible=false;
-        this.scene.add( this.boca );
+        this.boca.position.set(0,0,-4);
+        this.boca.scale.set(0.08,0.08,0.08);
     }
 
        
@@ -59,7 +59,7 @@ class App{
         
         const self = this;
         function onSessionStart(){
-          console.log('start the session');  
+          self.scene.add(self.boca);  
         }
 
         const btn = new ARButton( this.renderer, {onSessionStart});
@@ -75,6 +75,7 @@ class App{
     
 	render( ) {   
         const dt = this.clock.getDelta();
+        this.boca.rotateY( 0.01 );
         this.stats.update();
         this.renderer.render( this.scene, this.camera );
     }
