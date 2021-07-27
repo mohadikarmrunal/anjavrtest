@@ -16,8 +16,8 @@ class App{
         this.clock = new THREE.Clock();
 
 		this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color( 0xaaaaaa );
-
+        this.scene.add(this.camera);
+        
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 0.3);
 		this.scene.add(ambient);
         
