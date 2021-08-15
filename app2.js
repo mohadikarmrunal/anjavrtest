@@ -96,11 +96,11 @@ class App{
             info:{ type: "text" }
         }
         const content1 = {
-            info: "Price: 1.90e/kg"
+            info: "Price per kg"
         }   
 
         const content2 = {
-            info: "Sold: 90 kg"
+            info: "Sold in kg"
         }
 
         const config = {
@@ -181,7 +181,15 @@ class App{
         }
 
         function next1(){
-    
+            //update cijene i potraznje
+            console.log(this);
+            this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
+            this.app.ui2.updateElement('info', 'Sold: 60'); 
+            this.app.ui1.updateConfig ("body", "fontColor", "#0f0" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#0f0" );
+            this.app.ui1.update();
+            this.app.ui2.update();  
+
             //update grafa
             this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(a-c,b-c);
@@ -212,9 +220,10 @@ class App{
 
         function next2(){
             //update cijene i potraznje
-            console.log(this);
             this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
             this.app.ui2.updateElement('info', 'Sold: 60'); 
+            this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
             this.app.ui1.update();
             this.app.ui2.update();  
 
@@ -252,6 +261,8 @@ class App{
             console.log(this);
             this.app.ui1.updateElement('info', 'Price: 3.7e/kg');
             this.app.ui2.updateElement('info', 'Sold: 30'); 
+            this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
             this.app.ui1.update();
             this.app.ui2.update();  
 
