@@ -155,22 +155,23 @@ class App{
             
             //console.log("values of width and height"+ a + b);
             //x i y osa sa oznakama
-            this.ui.context.beginPath();
-            this.ui.context.moveTo(c,c);
-            this.ui.context.lineTo(c,b-c);
-            this.ui.context.lineTo(a-c,b-c);
-            this.ui.context.stroke();
-            this.ui.context.fillText("quantity", a/2,b-c/4);
-            this.ui.context.save();
-            this.ui.context.rotate(-Math.PI/2);
-            this.ui.context.fillText("price", -2*b/3 , 2*c/3);
-            this.ui.context.restore();
+            self.ui.context.beginPath();
+            self.ui.context.moveTo(c,c);
+            self.ui.context.lineTo(c,b-c);
+            self.ui.context.lineTo(a-c,b-c);
+            self.ui.context.stroke();
+            self.ui.context.fillText("quantity", a/2,b-c/4);
+            self.ui.context.save();
+            self.ui.context.rotate(-Math.PI/2);
+            self.ui.context.fillText("price", -2*b/3 , 2*c/3);
+            self.ui.context.restore();
 
             if(!self.apple.visible){
                 self.apple.visible=true;
                 self.apple.position.set( 0.1, -0.2, -0.7 ); 
                 self.scene.add( self.apple); 
             }
+
             setTimeout(next1,3000);
             
         }
@@ -178,8 +179,8 @@ class App{
         function next1(){
             //update cijene i potraznje
             console.log(this);
-            this.app.ui1.updateElement('info', 'Price: 2.3e/kg');
-            this.app.ui2.updateElement('info', 'Sold: 40'); 
+            this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
+            this.app.ui2.updateElement('info', 'Sold: 60'); 
             this.app.ui1.update();
             this.app.ui2.update();  
 
