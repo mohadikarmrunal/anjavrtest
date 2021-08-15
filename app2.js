@@ -176,6 +176,7 @@ class App{
             setTimeout(next1,3000);
             setTimeout(next2,6000);
             setTimeout(next3,9000);
+            setTimeout(next4,12000);
             
         }
 
@@ -286,6 +287,9 @@ class App{
         }
 
         function next4(){
+            this.app.ui1.mesh.visible = false;
+            this.app.ui2.mesh.visible = false;
+            
             //filling the area
 			this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(a-c,b-c);
