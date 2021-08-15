@@ -119,7 +119,7 @@ class App{
         }
         const ui = new CanvasUI( content, config );
         const ui1 = new CanvasUI( content1, config1 );
-        const ui2 = new CanvasUI( content2, config );
+        const ui2 = new CanvasUI( content2, config1 );
         this.ui = ui;
         this.ui1 = ui1;
         this.ui2 = ui2;
@@ -144,7 +144,7 @@ class App{
             self.ui.context.lineJoin = "round";  
 		    self.ui.context.strokeStyle = "black"; 
 		    self.ui.context.font = "20px Arial";
-		    self.ui.mesh.position.set(0,0,0);
+		    self.ui.mesh.position.set(0,0,-10);
 		    self.ui.needsUpdate = true;
             //pozicioniranje mesha starog
             self.ui1.mesh.position.set(0.08, 0.01, -0.2);
@@ -171,7 +171,7 @@ class App{
                 self.apple.position.set( 0.1, -0.2, -0.7 ); 
                 self.scene.add( self.apple); 
             }
-            setTimeout(next1,6000);
+            setTimeout(next1,3000);
             
         }
 
