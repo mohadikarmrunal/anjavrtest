@@ -123,13 +123,7 @@ class App{
         this.ui = ui;
         this.ui1 = ui1;
         this.ui2 = ui2;
-        //draw and label x and y axis
-        const a = config.width;
-        const b = config.height;
-        const c = 60;
-        //increments on x and y axis
-        const incx = (a-2*c)/ 15.3;
-        const incy = (b-2*c)/ 4.6;
+       
     }
        
     setupVR(){
@@ -137,7 +131,14 @@ class App{
         
         const self = this;
         //let controller;
-       
+    
+        //draw and label x and y axis
+        const a = this.ui.config.width;
+        const b = this.ui.config.height;
+        const c = 60;
+        //increments on x and y axis
+        const incx = (a-2*c)/ 15.3;
+        const incy = (b-2*c)/ 4.6;
 
         function onSessionStart(){
             //podesavanje mesa novog
