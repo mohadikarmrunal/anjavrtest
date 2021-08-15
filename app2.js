@@ -187,7 +187,8 @@ class App{
 			this.app.ui.context.moveTo(a-c,b-c);
 			this.app.ui.context.lineTo(9*incx,2.7*incy);
 			this.app.ui.context.stroke();
-			this.app.ui.context.fillRect(9*incx,2.7*incy,7,7);
+            this.app.ui.context.fillStyle = 'green';
+            this.app.ui.context.fillRect(9*incx,2.7*incy,7,7);
 			//dashed vertical line with the label of quantity
 			this.app.ui.context.beginPath();
 			this.app.ui.context.setLineDash([5, 15]);
@@ -222,6 +223,7 @@ class App{
 			this.app.ui.context.moveTo(9*incx,2.7*incy);
 			this.app.ui.context.lineTo(6*incx,1.8*incy);
 			this.app.ui.context.stroke();
+            this.app.ui.context.fillStyle = 'blue';
 			this.app.ui.context.fillRect(6*incx,1.8*incy,7,7);
 			this.app.ui.context.save();
 			//dashed vertical line with the label of quantity
@@ -258,6 +260,7 @@ class App{
             this.app.ui.context.moveTo(6*incx,1.8*incy);
             this.app.ui.context.lineTo(3*incx,0.9*incy);
             this.app.ui.context.stroke();
+            this.app.ui.context.fillStyle = 'red';
             this.app.ui.context.fillRect(3*incx,0.9*incy,7,7);
             this.app.ui.context.save();
             //dashed vertical line with the label of quantity
@@ -297,6 +300,9 @@ class App{
 			this.app.ui.context.lineTo(c,b-c);
 			this.app.ui.context.lineTo(a-c,b-c);
 			this.app.ui.context.fill();
+            this.app.ui.context.fillStyle = 'black';
+			this.app.ui.context.font = "25px Arial";
+			this.app.ui.context.fillText("AREA = 352,59 e", a/4  , 3*b/4 );
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
 			console.log('cetvrti timeout gotov');
