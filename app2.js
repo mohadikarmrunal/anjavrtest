@@ -145,9 +145,9 @@ class App{
             self.ui.context.lineJoin = "round";  
 		    self.ui.context.strokeStyle = "black"; 
 		    self.ui.context.font = "20px Arial";
-		    self.ui.mesh.position.set(0,0,-10);
+		    self.ui.mesh.position.set(0,0,-5);
 		    self.ui.needsUpdate = true;
-            //pozicioniranje mesha starog
+            //pozicioniranje mesheva starog
             self.ui1.mesh.position.set(0.08, 0.01, -0.2);
             self.ui2.mesh.position.set(-0.08, 0.01, -0.2);
             self.scene.add(self.ui1.mesh);
