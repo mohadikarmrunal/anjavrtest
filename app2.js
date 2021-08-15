@@ -56,7 +56,7 @@ class App{
 
         loader.load(
 			// resource URL
-			'chair1.glb',
+			'scene.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -323,23 +323,6 @@ class App{
         const btn = new ARButton( this.renderer, {onSessionStart});
         
         //const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
-
-        //this.gestures = new ControllerGestures( this.renderer );
-
-        /*this.gestures.addEventListener( 'tap', (ev)=>{
-            console.log( 'tap' ); 
-            if (!self.apple.visible){
-                self.apple.visible = true;
-                self.apple.position.set( 0, -0.3, -0.7 ).add( ev.position );
-                self.ui.mesh.position.set(0.1, 0.01, -0.2).add(ev.position);
-                self.ui2.mesh.position.set(-0.1, 0.01, -0.2).add(ev.position);
-                self.scene.add( self.apple); 
-                self.scene.add(self.ui.mesh);
-                self.scene.add(self.ui2.mesh);
-                setTimeout( this.plotting(),300000);
-            }
-        });
-*/
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     

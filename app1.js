@@ -8,7 +8,7 @@ import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 //import { Player } from '../../libs/Player.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
-//JUST SOME BASIC TEMPLATE
+//JUST SOME BASIC TEMPLATE FOR TESTING OBJECTS AND LOADERS
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
@@ -42,9 +42,6 @@ class App{
         
         this.initScene();
         this.setupVR();
-        console.log(this.ui.content.info);
-        console.log(this.ui.content.info);
-      
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
@@ -57,7 +54,7 @@ class App{
 
         loader.load(
 			// resource URL
-			'chair.glb',
+			'scene.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -82,69 +79,28 @@ class App{
 				console.log( 'An error happened lol' );
 			}
         );
-
-        this.createUI();
-        this.createUI2();
-
     }
 
-    createUI() {
-        
-        const config = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 128,
-            backgroundColor: '#ffe',
-            fontColor:'#bbb',
-            info:{ type: "text" }
-        }
-        const content = {
-            info: "Price: 1.53e/kg"
-        }        
-        const ui = new CanvasUI( content, config );
-        
-        this.ui = ui;
-    }
-
-    createUI2() {
-        
-        const config = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 128,
-            backgroundColour: '#ffe',
-            fontColor:'#bbb',
-            info:{ type: "text" }
-        }
-        const content = {
-            info: "Sold per kilogram: 60"
-        }
-        
-        const ui = new CanvasUI( content, config );
-        
-        this.ui2 = ui;
-    }
-    
     setupVR(){
         this.renderer.xr.enabled = true; 
         
         const self = this;
         //let controller;
-
-        /*function onSessionStart(){
-            self.ui.mesh.position.set( 0, -0.15, -0.3 );
-            self.camera.add( self.ui.mesh );
-        }*/
-        
        /* function onSessionEnd(){
             self.camera.remove( self.ui.mesh );
         }*/
-        
 
-        const btn = new ARButton( this.renderer);
-        
-        //controller = this.renderer.xr.getController( 0 );
+        function onSessionStart(){
+             if(!self.apple.visible){
+                self.apple.visible=true;
+                self.apple.position.set( 0.1, -0.2, -0.7 ); 
+                self.scene.add( self.apple); 
+            }
+        }
+        const btn = new ARButton( this.renderer, {onSessionStart});
+        /*controller = this.renderer.xr.getController( 0 );
         //controller.addEventListener( 'select', onSelect );
         //this.scene.add( controller );
-
         this.gestures = new ControllerGestures( this.renderer );
 
         this.gestures.addEventListener( 'tap', (ev)=>{
@@ -160,16 +116,11 @@ class App{
                 setTimeout( this.plotting(),300000);
             }
         });
+        */
 
         this.renderer.setAnimationLoop( this.render.bind(this) );
-        console.log('setupa vr');
     }
-    
-    plotting(){
-        this.ui.updateElement('info', 'Price: 2.3e/kg');
-        this.ui2.updateElement('info', 'Sold per kilogram: 40');
-    }
-   
+     
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
@@ -180,11 +131,6 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        if ( this.renderer.xr.isPresenting ){
-            this.gestures.update();
-            this.ui.update();
-            this.ui2.update();
-        }
         this.renderer.render( this.scene, this.camera );
     }
 }
