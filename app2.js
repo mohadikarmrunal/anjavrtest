@@ -148,8 +148,8 @@ class App{
 		    self.ui.mesh.position.set(0,0,-2);
 		    self.ui.needsUpdate = true;
             //pozicioniranje mesheva starog
-            self.ui1.mesh.position.set(0.1, 0.03, -0.3);
-            self.ui2.mesh.position.set(-0.1, 0.03, -0.3);
+            self.ui1.mesh.position.set(0.6, 0.03, -0.3);
+            self.ui2.mesh.position.set(-0.6, 0.03, -0.3);
             self.scene.add(self.ui1.mesh);
             self.scene.add(self.ui2.mesh);
             self.scene.add(self.ui.mesh);
