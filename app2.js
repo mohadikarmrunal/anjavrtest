@@ -285,6 +285,19 @@ class App{
             
         }
 
+        function next4(){
+            //filling the area
+			this.app.ui.context.beginPath();
+			this.app.ui.context.moveTo(a-c,b-c);
+			this.app.ui.context.lineTo(c,c);
+			this.app.ui.context.lineTo(c,b-c);
+			this.app.ui.context.lineTo(a-c,b-c);
+			this.app.ui.context.fill();
+			this.app.ui.needsUpdate = true;
+			this.app.ui.texture.needsUpdate = true;
+			console.log('cetvrti timeout gotov');
+        }
+
         const btn = new ARButton( this.renderer, {onSessionStart});
         
         //const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
