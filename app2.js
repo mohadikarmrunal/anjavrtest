@@ -145,11 +145,11 @@ class App{
             self.ui.context.lineJoin = "round";  
 		    self.ui.context.strokeStyle = "black"; 
 		    self.ui.context.font = "20px Arial";
-		    self.ui.mesh.position.set(0,0,-5);
+		    self.ui.mesh.position.set(0,0,-2);
 		    self.ui.needsUpdate = true;
             //pozicioniranje mesheva starog
-            self.ui1.mesh.position.set(0.08, 0.01, -0.2);
-            self.ui2.mesh.position.set(-0.08, 0.01, -0.2);
+            self.ui1.mesh.position.set(0.1, 0.03, -0.3);
+            self.ui2.mesh.position.set(-0.1, 0.03, -0.3);
             self.scene.add(self.ui1.mesh);
             self.scene.add(self.ui2.mesh);
             self.scene.add(self.ui.mesh);
@@ -174,17 +174,13 @@ class App{
             }
 
             setTimeout(next1,3000);
+            setTimeout(next2,6000);
+            setTimeout(next3,9000);
             
         }
 
         function next1(){
-            //update cijene i potraznje
-            console.log(this);
-            this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
-            this.app.ui2.updateElement('info', 'Sold: 60'); 
-            this.app.ui1.update();
-            this.app.ui2.update();  
-
+    
             //update grafa
             this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(a-c,b-c);
@@ -210,6 +206,83 @@ class App{
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
 			console.log('prvi timeout gotov');
+        }
+
+        function next2(){
+            //update cijene i potraznje
+            console.log(this);
+            this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
+            this.app.ui2.updateElement('info', 'Sold: 60'); 
+            this.app.ui1.update();
+            this.app.ui2.update();  
+
+            //second line
+			this.app.ui.context.beginPath();
+			this.app.ui.context.moveTo(9*incx,2.7*incy);
+			this.app.ui.context.lineTo(6*incx,1.8*incy);
+			this.app.ui.context.stroke();
+			this.app.ui.context.fillRect(6*incx,1.8*incy,7,7);
+			this.app.ui.context.save();
+			//dashed vertical line with the label of quantity
+			this.app.ui.context.beginPath();
+			this.app.ui.context.setLineDash([5, 15]);
+			this.app.ui.context.moveTo(6*incx,1.8*incy);
+			this.app.ui.context.lineTo(6*incx,b-c);
+			this.app.ui.context.stroke();
+			this.app.ui.context.font = "15px Arial";
+			this.app.ui.context.fillText("60", 6*incx, b-2*c/3);
+			//dashed horizontal line with the label of price
+			this.app.ui.context.beginPath();
+			this.app.ui.context.setLineDash([5, 15]);
+			this.app.ui.context.moveTo(6*incx,1.8*incy);
+			this.app.ui.context.lineTo(c,1.8*incy);
+			this.app.ui.context.stroke();
+			this.app.ui.context.fillText("2.8", c/3 , 1.8*incy );
+			this.app.ui.context.restore();
+			this.app.ui.needsUpdate = true;
+			this.app.ui.texture.needsUpdate = true;
+			console.log('drugi timeout gotov');
+        }
+
+        function next3(){
+            //update cijene i potraznje
+            console.log(this);
+            this.app.ui1.updateElement('info', 'Price: 3.7e/kg');
+            this.app.ui2.updateElement('info', 'Sold: 30'); 
+            this.app.ui1.update();
+            this.app.ui2.update();  
+
+            //third line
+            this.app.ui.context.beginPath();
+            this.app.ui.context.moveTo(6*incx,1.8*incy);
+            this.app.ui.context.lineTo(3*incx,0.9*incy);
+            this.app.ui.context.stroke();
+            this.app.ui.context.fillRect(3*incx,0.9*incy,7,7);
+            this.app.ui.context.save();
+            //dashed vertical line with the label of quantity
+            this.app.ui.context.beginPath();
+            this.app.ui.context.setLineDash([5, 15]);
+            this.app.ui.context.moveTo(3*incx,0.9*incy);
+            this.app.ui.context.lineTo(3*incx,b-c);
+            this.app.ui.context.stroke();
+            this.app.ui.context.font = "15px Arial";
+            this.app.ui.context.fillText("30", 3*incx, b-2*c/3);
+            //dashed horizontal line with the label of price
+            this.app.ui.context.beginPath();
+            this.app.ui.context.setLineDash([5, 15]);
+            this.app.ui.context.moveTo(3*incx,0.9*incy);
+            this.app.ui.context.lineTo(c,0.9*incy);
+            this.app.ui.context.stroke();
+            this.app.ui.context.fillText("3.7", c/3 , 0.9*incy );
+            this.app.ui.context.restore();
+            this.app.ui.context.beginPath();
+            this.app.ui.context.moveTo(3*incx,0.9*incy);
+            this.app.ui.context.lineTo(c,c);
+            this.app.ui.context.stroke();
+            this.app.ui.needsUpdate = true;
+            this.app.ui.texture.needsUpdate = true;
+            console.log('treci timeout gotov');
+            
         }
 
         const btn = new ARButton( this.renderer, {onSessionStart});
