@@ -39,9 +39,7 @@ class App{
         this.controls.update();
         
         this.stats = new Stats();
-        
-        
-
+    
         this.initScene();
         this.setupVR();
       
@@ -85,7 +83,7 @@ class App{
 
     createUI() {
         
-        const config = {
+        const config1 = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 194,
             body:{
@@ -97,9 +95,7 @@ class App{
             },
             info:{ type: "text" }
         }
-
-
-        const content = {
+        const content1 = {
             info: "Price: 1.53e/kg"
         }   
 
@@ -107,10 +103,33 @@ class App{
             info: "Sold: 60 kg"
         }
 
+        const config = {
+            body:{ 
+                textAlign: 'center',
+                backgroundColor: '#fff', 
+                fontColor:'#000', 
+                borderRadius: 6,
+                padding:50,
+                fontSize:50,
+            },
+            info:{ type: "text" }
+            }
+        const content = {
+                info: ""
+        }
         const ui = new CanvasUI( content, config );
+        const ui1 = new CanvasUI( content1, config1 );
         const ui2 = new CanvasUI( content2, config );
         this.ui = ui;
+        this.ui1 = ui1;
         this.ui2 = ui2;
+        //draw and label x and y axis
+        const a = config.width;
+        const b = config.height;
+        const c = 60;
+        //increments on x and y axis
+        const incx = (a-2*c)/ 15.3;
+        const incy = (b-2*c)/ 4.6;
     }
        
     setupVR(){
@@ -119,27 +138,76 @@ class App{
         const self = this;
         //let controller;
        
-        function plotting(){
-            console.log(this);
-            this.app.ui.updateElement('info', 'Price: 2.3e/kg');
-            this.app.ui2.updateElement('info', 'Sold: 40'); 
-            this.app.ui.update();
-            this.app.ui2.update();
-           
-        }
 
         function onSessionStart(){
-            self.ui.mesh.position.set(0.08, 0.01, -0.2);
+            //podesavanje mesa novog
+            self.ui.context.lineJoin = "round";  
+		    self.ui.context.strokeStyle = "black"; 
+		    self.ui.context.font = "20px Arial";
+		    self.ui.mesh.position.set(0,0,0);
+		    self.ui.needsUpdate = true;
+            //pozicioniranje mesha starog
+            self.ui1.mesh.position.set(0.08, 0.01, -0.2);
             self.ui2.mesh.position.set(-0.08, 0.01, -0.2);
-            self.scene.add(self.ui.mesh);
+            self.scene.add(self.ui1.mesh);
             self.scene.add(self.ui2.mesh);
+            self.scene.add(self.ui.mesh);
+            
+            //console.log("values of width and height"+ a + b);
+            //x i y osa sa oznakama
+            this.ui.context.beginPath();
+            this.ui.context.moveTo(c,c);
+            this.ui.context.lineTo(c,b-c);
+            this.ui.context.lineTo(a-c,b-c);
+            this.ui.context.stroke();
+            this.ui.context.fillText("quantity", a/2,b-c/4);
+            this.ui.context.save();
+            this.ui.context.rotate(-Math.PI/2);
+            this.ui.context.fillText("price", -2*b/3 , 2*c/3);
+            this.ui.context.restore();
+
             if(!self.apple.visible){
                 self.apple.visible=true;
                 self.apple.position.set( 0.1, -0.2, -0.7 ); 
                 self.scene.add( self.apple); 
             }
-            setTimeout(plotting,6000);
+            setTimeout(next1,6000);
             
+        }
+
+        function next1(){
+            //update cijene i potraznje
+            console.log(this);
+            this.app.ui1.updateElement('info', 'Price: 2.3e/kg');
+            this.app.ui2.updateElement('info', 'Sold: 40'); 
+            this.app.ui1.update();
+            this.app.ui2.update();  
+
+            //update grafa
+            this.app.ui.context.beginPath();
+			this.app.ui.context.moveTo(a-c,b-c);
+			this.app.ui.context.lineTo(9*incx,2.7*incy);
+			this.app.ui.context.stroke();
+			this.app.ui.context.fillRect(9*incx,2.7*incy,7,7);
+			//dashed vertical line with the label of quantity
+			this.app.ui.context.beginPath();
+			this.app.ui.context.setLineDash([5, 15]);
+			this.app.ui.context.moveTo(9*incx,2.7*incy);
+			this.app.ui.context.lineTo(9*incx,b-c);
+			this.app.ui.context.stroke();
+			this.app.ui.context.font = "15px Arial";
+			this.app.ui.context.fillText("90", 9*incx, b-2*c/3);
+			//dashed horizontal line with the label of price
+			this.app.ui.context.beginPath();
+			this.app.ui.context.setLineDash([5, 12]);
+			this.app.ui.context.moveTo(9*incx,2.7*incy);
+			this.app.ui.context.lineTo(c,2.7*incy);
+			this.app.ui.context.stroke();
+			this.app.ui.context.fillText("1.9", c/3, 2.7*incy);
+			this.app.ui.context.restore();
+			this.app.ui.needsUpdate = true;
+			this.app.ui.texture.needsUpdate = true;
+			console.log('prvi timeout gotov');
         }
 
         const btn = new ARButton( this.renderer, {onSessionStart});
