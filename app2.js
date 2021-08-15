@@ -96,11 +96,11 @@ class App{
             info:{ type: "text" }
         }
         const content1 = {
-            info: "Price: 1.53e/kg"
+            info: "Price: 1.90e/kg"
         }   
 
         const content2 = {
-            info: "Sold: 60 kg"
+            info: "Sold: 90 kg"
         }
 
         const config = {
