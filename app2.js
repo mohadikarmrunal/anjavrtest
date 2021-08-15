@@ -305,6 +305,7 @@ class App{
             this.app.ui2.mesh.visible = false;
             
             //filling the area
+            this.app.ui.context.fillStyle = 'gray';
 			this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(a-c,b-c);
 			this.app.ui.context.lineTo(c,c);
