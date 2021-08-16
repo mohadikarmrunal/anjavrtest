@@ -169,7 +169,7 @@ class App{
 
             if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0.3, -0.2, -0.7 ); 
+                self.apple.position.set( 0.3, 0.15, -0.9 ); 
                 self.scene.add( self.apple); 
             }
 
