@@ -86,8 +86,7 @@ class App{
                 self.cart = gltf.scene;
                 self.loadingBar.visible = false;
                 self.cart.visible=false;
-				const scale = 0.06;
-				self.cart.scale.set(scale, scale, scale); 
+				//self.cart.scale.set(scale, scale, scale); 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -198,7 +197,7 @@ class App{
 
             if(!self.cart.visible){
                 self.cart.visible=true;
-                self.cart.position.set( 0.3, -0.15, -0.9 ); 
+                self.cart.position.set( -0.3, -0.15, -0.9 ); 
                 self.scene.add( self.cart); 
             }
 

@@ -62,7 +62,7 @@ class App{
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
                 self.apple.visible=false;
-				const scale = 0.09;
+				const scale = 1;
 				self.apple.scale.set(scale, scale, scale); 
                 
 			},
@@ -90,7 +90,7 @@ class App{
         function onSessionStart(){
              if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0, 0, -3 ); 
+                self.apple.position.set( 0, 0, -1 ); 
                 self.scene.add( self.apple); 
             }
         }
