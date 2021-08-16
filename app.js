@@ -54,7 +54,7 @@ class App{
 
         loader.load(
 			// resource URL
-			'scene.gltf',
+			'apple.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -62,12 +62,9 @@ class App{
                 //self.scene.add( self.apple ); 
                 self.loadingBar.visible = false;
                 self.apple.visible=false;
-				const scale = 0.03;
+				const scale = 0.09;
 				self.apple.scale.set(scale, scale, scale); 
                 
-				//self.apple.position.set(0,5,-2);
-                //self.apple.rotateX(Math.PI / 2);
-                //self.scene.add(self.apple);
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -93,7 +90,7 @@ class App{
         function onSessionStart(){
              if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0.1, -0.2, -0.7 ); 
+                self.apple.position.set( 0, 0, 0 ); 
                 self.scene.add( self.apple); 
             }
         }
