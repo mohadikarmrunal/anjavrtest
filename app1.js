@@ -90,8 +90,8 @@ class App{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
-                padding:40,
-                fontSize:50,
+                padding:55,
+                fontSize:65,
             },
             info:{ type: "text" }
         }
@@ -169,7 +169,7 @@ class App{
 
             if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0.2, -0.2, -0.7 ); 
+                self.apple.position.set( 0.3, -0.2, -0.7 ); 
                 self.scene.add( self.apple); 
             }
 
@@ -185,8 +185,8 @@ class App{
             console.log(this);
             this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
             this.app.ui2.updateElement('info', 'Sold: 60'); 
-            this.app.ui1.updateConfig ("body", "fontColor", "#0f4" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#0f4" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#0f7" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#0f7" );
             this.app.ui1.update();
             this.app.ui2.update();  
 
