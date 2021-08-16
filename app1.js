@@ -183,8 +183,8 @@ class App{
         function next1(){
             //update cijene i potraznje
             console.log(this);
-            this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
-            this.app.ui2.updateElement('info', 'Sold: 60'); 
+            this.app.ui1.updateElement('info', 'Price: 1.9e/kg');
+            this.app.ui2.updateElement('info', 'Sold: 90 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#0f7" );
             this.app.ui1.updateConfig ("body", "fontColor", "#0f7" );
             this.app.ui1.update();
@@ -221,7 +221,7 @@ class App{
         function next2(){
             //update cijene i potraznje
             this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
-            this.app.ui2.updateElement('info', 'Sold: 60'); 
+            this.app.ui2.updateElement('info', 'Sold: 60 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
             this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
             this.app.ui1.update();
@@ -260,7 +260,7 @@ class App{
             //update cijene i potraznje
             console.log(this);
             this.app.ui1.updateElement('info', 'Price: 3.7e/kg');
-            this.app.ui2.updateElement('info', 'Sold: 30'); 
+            this.app.ui2.updateElement('info', 'Sold:  30kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
             this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
             this.app.ui1.update();

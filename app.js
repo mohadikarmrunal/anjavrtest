@@ -54,7 +54,7 @@ class App{
 
         loader.load(
 			// resource URL
-			'apple.gltf',
+			'cart.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -90,7 +90,7 @@ class App{
         function onSessionStart(){
              if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0, 0, 0 ); 
+                self.apple.position.set( 0, 0, -3 ); 
                 self.scene.add( self.apple); 
             }
         }
