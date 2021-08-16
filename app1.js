@@ -56,14 +56,14 @@ class App{
 
         loader.load(
 			// resource URL
-			'scene.gltf',
+			'apple.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
                 self.apple = gltf.scene;
                 self.loadingBar.visible = false;
                 self.apple.visible=false;
-				const scale = 0.03;
+				const scale = 0.06;
 				self.apple.scale.set(scale, scale, scale); 
 			},
 			// called while loading is progressing
@@ -146,10 +146,10 @@ class App{
 		    self.ui.context.strokeStyle = "black"; 
 		    self.ui.context.font = "20px Arial";
 		    self.ui.mesh.position.set(0,0,-2);
-		    self.ui.needsUpdate = true;
+		   // self.ui.needsUpdate = true;
             //pozicioniranje mesheva starog
-            self.ui1.mesh.position.set(0.15, 0.05, -0.3);
-            self.ui2.mesh.position.set(-0.15, 0.05, -0.3);
+            self.ui1.mesh.position.set(0.2, 0.05, -0.3);
+            self.ui2.mesh.position.set(-0.2, 0.05, -0.3);
             self.scene.add(self.ui1.mesh);
             self.scene.add(self.ui2.mesh);
             self.scene.add(self.ui.mesh);
@@ -169,7 +169,7 @@ class App{
 
             if(!self.apple.visible){
                 self.apple.visible=true;
-                self.apple.position.set( 0.1, -0.2, -0.7 ); 
+                self.apple.position.set( 0.2, -0.2, -0.7 ); 
                 self.scene.add( self.apple); 
             }
 
@@ -185,8 +185,8 @@ class App{
             console.log(this);
             this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
             this.app.ui2.updateElement('info', 'Sold: 60'); 
-            this.app.ui1.updateConfig ("body", "fontColor", "#0f0" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#0f0" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#0f4" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#0f4" );
             this.app.ui1.update();
             this.app.ui2.update();  
 
