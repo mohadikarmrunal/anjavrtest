@@ -161,10 +161,10 @@ class App{
             self.ui.context.lineTo(c,b-c);
             self.ui.context.lineTo(a-c,b-c);
             self.ui.context.stroke();
-            self.ui.context.fillText("quantity", a/2,b-c/4);
+            self.ui.context.fillText("Quantity Demanded", a/2,b-c/4);
             self.ui.context.save();
             self.ui.context.rotate(-Math.PI/2);
-            self.ui.context.fillText("price", -2*b/3 , 2*c/3);
+            self.ui.context.fillText("Price per kilogram", -2*b/3 , 2*c/3);
             self.ui.context.restore();
 
             if(!self.apple.visible){
@@ -213,7 +213,7 @@ class App{
 			this.app.ui.context.stroke();
 			this.app.ui.context.fillText("1.9", c/3, 2.7*incy);
 			this.app.ui.context.restore();
-			this.app.ui.needsUpdate = true;
+            this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
 			console.log('prvi timeout gotov');
         }
@@ -294,6 +294,12 @@ class App{
             this.app.ui.context.moveTo(3*incx,0.9*incy);
             this.app.ui.context.lineTo(c,c);
             this.app.ui.context.stroke();
+            this.app.ui.context.save();
+            this.app.ui.context.rotate(Math.PI/4);
+            this.app.ui.context.fillStyle = 'black';
+            this.app.ui.context.font = "20px Arial";
+            this.app.ui.context.fillText("Demand Curve f(x)", a/2 , -b/80);
+            this.app.ui.context.restore();
             this.app.ui.needsUpdate = true;
             this.app.ui.texture.needsUpdate = true;
             console.log('treci timeout gotov');
@@ -314,7 +320,12 @@ class App{
 			this.app.ui.context.fill();
             this.app.ui.context.fillStyle = 'black';
 			this.app.ui.context.font = "25px Arial";
-			this.app.ui.context.fillText("AREA = 352,59 e", a/4  , 3*b/4 );
+			this.app.ui.context.fillText("AREA = 352,59", a/4  , 3*b/4 );
+            this.app.ui.context.lineWidth = '4';
+            this.app.ui.context.beginPath();
+			this.app.ui.context.moveTo(c,c);
+			this.app.ui.context.lineTo(a-c,b-c);
+            this.app.ui.context.stroke();
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
 			console.log('cetvrti timeout gotov');
