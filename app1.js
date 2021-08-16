@@ -77,6 +77,29 @@ class App{
 			}
         );
 
+        loader.load(
+			// resource URL
+			'cart.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.cart = gltf.scene;
+                self.loadingBar.visible = false;
+                self.cart.visible=false;
+				const scale = 0.06;
+				self.cart.scale.set(scale, scale, scale); 
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened lol' );
+			}
+        );
+
         this.createUI();
 
     }
@@ -171,6 +194,12 @@ class App{
                 self.apple.visible=true;
                 self.apple.position.set( 0.3, 0.15, -0.9 ); 
                 self.scene.add( self.apple); 
+            }
+
+            if(!self.cart.visible){
+                self.cart.visible=true;
+                self.cart.position.set( 0.3, -0.15, -0.9 ); 
+                self.scene.add( self.cart); 
             }
 
             setTimeout(next1,3000);
