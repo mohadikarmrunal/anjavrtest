@@ -47,6 +47,7 @@ class App{
 
     createUI(){
 
+        const self = this;
         const config = {
             body:{ 
                 textAlign: 'center',
@@ -91,7 +92,9 @@ class App{
 
         //functions of the button
         function button1(){
-            console.log("button 1 pressed");
+            const msg = "first button pressed";
+            console.log(msg);
+            self.ui2.updateElement( "info", msg );
         }
         
         function button2(){
