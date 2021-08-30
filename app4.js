@@ -80,7 +80,7 @@ class App{
             renderer: this.renderer
         }
         const content2 = {
-            info: "Select the lenght of the rectangles",
+            info: "Select the lenght of the rectangles by pressing buttons",
             prev: "<path>M 50 15 L 15 15 L 15 50 L 50 50 Z<path>",
             stop: "<path>M 50 15 L 15 15 L 15 50 L 50 50 Z<path>",
             next: "<path>M 50 15 L 15 15 L 15 50 L 50 50 Z<path>",
