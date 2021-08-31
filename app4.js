@@ -128,6 +128,7 @@ class App{
             self.scene.add(self.ui.mesh);
             self.ui2.mesh.position.set(0,-1.7,-5);
             self.scene.add(self.ui2.mesh);
+            //self.camera.attach( self.ui2.mesh );
 
             //setting up canvas for graph
             self.ui.context.lineJoin = "round";  
@@ -151,7 +152,10 @@ class App{
             setTimeout(rectangles,5000,30);
         }
        
-       
+        function onSessionEnd(){
+            self.camera.remove( self.ui2.mesh );
+        }
+
         //step for function drawing
         var XSTEP= 5;
         // RenderFunction() renders the input funtion f on the canvas.
@@ -241,9 +245,16 @@ class App{
             console.log('drugi timeout gotov');
         }
 
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
+        const controller = this.renderer.xr.getController( 0 );
+        //controller.addEventListener( 'connected', onConnected );
+        
+        this.scene.add( controller );
+        this.controller = controller;
 
-        const btn = new ARButton( this.renderer, {onSessionStart});
+        
         this.renderer.setAnimationLoop( this.render.bind(this) );
+
     }
 
    
@@ -257,6 +268,7 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
+        if ( this.renderer.xr.isPresenting ) this.ui2.update();
         this.renderer.render( this.scene, this.camera );
     }
 }
