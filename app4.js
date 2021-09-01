@@ -106,7 +106,7 @@ class App{
         //functions of the button
         function button1(){
             const msg = "You have selected length 40";
-            self.clearCanvas();
+            //self.clearCanvas();
             self.rectangles(40);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
@@ -278,6 +278,8 @@ class App{
             self.scene.add(self.ui2.mesh);
             //self.camera.attach( self.ui2.mesh );
             self.RenderFunction();
+            setTimeout(self.clearCanvas,5000);
+            
         }
        
         function onSessionEnd(){
