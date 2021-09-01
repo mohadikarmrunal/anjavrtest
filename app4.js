@@ -83,20 +83,23 @@ class App{
        
         //setting up button canvasUI
         const config2 = {
-            panelSize: { width: 2, height: 0.5 },
+            panelSize: { width: 2.4, height: 0.5 },
             height: 128,
-            info: { type: "text", position:{ left: 6, top: 6 }, width: 500, height: 58, backgroundColor: "#aaa", fontColor: "#000", fontSize: 20, },
-            prev: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#ff0", onSelect: button1 },
-            stop: { type: "button", position:{ top: 64, left: 64 }, width: 64, fontColor: "#bb0", hover: "#ff0", onSelect: button2 },
-            next: { type: "button", position:{ top: 64, left: 128 }, width: 64, fontColor: "#bb0", hover: "#ff0", onSelect: button3 },
-            continue: { type: "button", position:{ top: 70, right: 10 }, width: 200, height: 52, fontColor: "#fff", backgroundColor: "#1bf", hover: "#3df", onSelect: button4 },
+            info: { type: "text", position:{ left: 6, top: 6 }, width: 500, height: 58, backgroundColor: "#aaa", fontColor: "#000", fontSize: 17, },
+            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
+            button1: { type: "button", position:{ top: 70, left: 6.4 }, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
+            button2: { type: "button", position:{ top: 70, left: 132.8 }, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
+            button3: { type: "button", position:{ top: 70, left: 259.2}, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button3 },
+            button4: { type: "button", position:{ top: 70, left: 385.6}, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button4 },
+            //continue: { type: "button", position:{ top: 70, right: 10 }, width: 200, height: 52, fontColor: "#fff", backgroundColor: "#1bf", hover: "#3df", onSelect: button4 },
             renderer: this.renderer
         }
         const content2 = {
             info: "Select the lenght of the rectangles by pressing buttons",
-            prev: "<path>M 50 15 L 15 15 L 15 50 L 50 50 Z<path>",
-            stop: "<path>M 50 15 L 15 15 L 15 50 L 50 50 Z<path>",
-            next: "<path>M 50 15 L 15 15 L 15 50 L 50 50 Z<path>",
+            button1: "40",
+            button2: "60",
+            button3: "80",
+            button4: "100",
         }
 
         const ui2 = new CanvasUI( content2, config2 );
@@ -140,7 +143,6 @@ class App{
     }
     
     rectangles(n){
-        console.log('kad kliknem dugme dobijemo');
         console.log(this);
         this.clearCanvas();
         this.RenderFunction();
@@ -283,6 +285,7 @@ class App{
             self.scene.add(self.ui2.mesh);
             //self.camera.attach( self.ui2.mesh );
             self.RenderFunction();
+            console.log(self.ui2.config.width);
             //setTimeout(self.rectangles,5000,50);
             //setTimeout(self.rectangles,8000,100);
             
