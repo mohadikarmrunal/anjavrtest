@@ -114,7 +114,7 @@ class App{
         
         function button2(){
             const msg = "You have selected length 60";
-            self.clearCanvas();
+            //self.clearCanvas();
             self.rectangles(60);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
@@ -122,7 +122,7 @@ class App{
         
         function button3(){
             const msg = "You have selected length 80";
-            self.clearCanvas();
+            //self.clearCanvas();
             self.rectangles(80);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
@@ -131,7 +131,7 @@ class App{
 
         function button4(){
             const msg = "You have selected length 100";
-            self.clearCanvas();
+            //self.clearCanvas();
             self.rectangles(100);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
@@ -140,67 +140,72 @@ class App{
     }
     
     rectangles(n){
+        console.log('kad kliknem dugme dobijemo');
+        console.log(this);
+        this.clearCanvas();
         this.RenderFunction();
-        this.app.ui.context.fillStyle = 'gray';
-        const a = this.app.a;
-        const b = this.app.b;
-        const c = this.app.c;
+        this.ui.context.save();
+        this.ui.context.fillStyle = 'gray';
+        const a = this.a;
+        const b = this.b;
+        const c = this.c;
 
         for (let i=1;i*n<a-2*c;i++) {
             var area=0;
             var p;
             var x = c+ i*n;
-            var y= this.app.YC((x-452)*(x-452)/452);
+            var y= this.YC((x-452)*(x-452)/452);
             
             if (i==1){
                 area=n*(((n)-452)*((n)-452)/452);
                 p=area;
-                this.app.ui.context.beginPath();
-                this.app.ui.context.setLineDash([5, 15]);
-                this.app.ui.context.moveTo(c,y);
-                this.app.ui.context.lineTo(x,y);
-                this.app.ui.context.lineTo(x,b-c);
-                this.app.ui.context.lineTo(c,b-c);
-                this.app.ui.context.lineTo(c,y);
-                this.app.ui.context.stroke();
-                this.app.ui.context.save();
-                this.app.ui.context.fillStyle = 'black';
-                this.app.ui.context.fillText(x-60, x, b-2*c/3);
+                this.ui.context.beginPath();
+                this.ui.context.setLineDash([5, 15]);
+                this.ui.context.moveTo(c,y);
+                this.ui.context.lineTo(x,y);
+                this.ui.context.lineTo(x,b-c);
+                this.ui.context.lineTo(c,b-c);
+                this.ui.context.lineTo(c,y);
+                this.ui.context.stroke();
+                this.ui.context.save();
+                this.ui.context.fillStyle = 'black';
+                this.ui.context.fillText(x-60, x, b-2*c/3);
                 //this.app.ui.context.fillText(y, c/3, y);
                 //this.app.ui.context.fillRect(x,y,7,7);
-                this.app.ui.context.restore();
-                this.app.ui.context.fill();
+                this.ui.context.restore();
+                this.ui.context.fill();
             }
 
             else{
-                this.app.ui.context.beginPath();
-                this.app.ui.context.setLineDash([5, 15]);
-                this.app.ui.context.moveTo(x-n,y);
-                this.app.ui.context.lineTo(x,y);
-                this.app.ui.context.lineTo(x,b-c);
-                this.app.ui.context.lineTo(x-n,b-c);
-                this.app.ui.context.lineTo(x-n,y);
-                this.app.ui.context.stroke();
-                this.app.ui.context.save();
-                this.app.ui.context.fillStyle = 'black';
-                this.app.ui.context.fillText(x-60, x, b-2*c/3);
+                this.ui.context.beginPath();
+                this.ui.context.setLineDash([5, 15]);
+                this.ui.context.moveTo(x-n,y);
+                this.ui.context.lineTo(x,y);
+                this.ui.context.lineTo(x,b-c);
+                this.ui.context.lineTo(x-n,b-c);
+                this.ui.context.lineTo(x-n,y);
+                this.ui.context.stroke();
+                this.ui.context.save();
+                this.ui.context.fillStyle = 'black';
+                this.ui.context.fillText(x-60, x, b-2*c/3);
                 //this.app.ui.context.fillText(y, c/3, y);
                 //this.app.ui.context.fillRect(x,y,7,7);
-                this.app.ui.context.restore();
-                this.app.ui.context.fill();
+                this.ui.context.restore();
+                this.ui.context.fill();
                 area=p+n*(((i*n)-452)*((i*n)-452)/452);
                 p=area;
                 
             }
         }
 
-        this.app.ui.context.fillStyle = 'black';
-        this.app.ui.context.fillText("Area of the rectangles with lenght "+n, 3*a/5 , c);
-        this.app.ui.context.fillText(area.toFixed(2), 3*a/5 , c+30);
-        this.app.ui.needsUpdate = true;
-        this.app.ui.texture.needsUpdate = true;
+        this.ui.context.fillStyle = 'black';
+        this.ui.context.fillText("Area of the rectangles with lenght "+n, 3*a/5 , c);
+        this.ui.context.fillText(area.toFixed(2), 3*a/5 , c+30);
+        this.ui.needsUpdate = true;
+        this.ui.texture.needsUpdate = true;
         console.log(area);
         console.log('drugi timeout gotov');
+        this.ui.context.restore();
     }
     
     YC(y) {
@@ -208,13 +213,13 @@ class App{
     }
 
     clearCanvas(){
-        this.app.ui.context.save();
-        this.app.ui.context.fillStyle = 'white';
-        this.app.ui.context.fillRect(0,0,this.app.a,this.app.b);
-        this.app.ui.needsUpdate = true;
-        this.app.ui.texture.needsUpdate = true;
+        this.ui.context.save();
+        this.ui.context.fillStyle = 'white';
+        this.ui.context.fillRect(0,0,this.a,this.b);
+        this.ui.needsUpdate = true;
+        this.ui.texture.needsUpdate = true;
         console.log("drugi timeout gotov");
-        this.app.ui.context.restore();
+        this.ui.context.restore();
     }
 
     // RenderFunction() renders the input funtion f on the canvas.
@@ -278,7 +283,8 @@ class App{
             self.scene.add(self.ui2.mesh);
             //self.camera.attach( self.ui2.mesh );
             self.RenderFunction();
-            setTimeout(self.clearCanvas,5000);
+            //setTimeout(self.rectangles,5000,50);
+            //setTimeout(self.rectangles,8000,100);
             
         }
        
