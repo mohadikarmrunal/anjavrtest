@@ -1,12 +1,14 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
-//import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
+import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 //import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
-//import { LoadingBar } from '../../libs/LoadingBar.js';
-
+import { LoadingBar } from '../../libs/LoadingBar.js';
+//import { Player } from '../../libs/Player.js';
+import { ControllerGestures } from '../../libs/ControllerGestures.js';
+//demand curve 
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
@@ -37,17 +39,20 @@ class App{
         this.controls.update();
         
         this.stats = new Stats();
-        
-        this.createUI();
+    
+        this.initScene();
         this.setupVR();
-
+      
         window.addEventListener('resize', this.resize.bind(this) );
-	
+	}	
+    
+    initScene(){
+
+        this.createUI();
     }
 
-    createUI(){
+    createUI() {
 
-        const self = this;
         const config = {
             body:{ 
                 textAlign: 'center',
@@ -60,254 +65,126 @@ class App{
             info:{ type: "text" }
             }
 
-
         const content = {
                 info: ""
         }
 
         const ui = new CanvasUI( content, config );
         this.ui = ui;
-
-        //setting up canvas for graph
-        this.ui.context.lineJoin = "round";  
-        this.ui.context.strokeStyle = "black"; 
-        this.ui.context.font = "20px Arial";
-
-         //draw and label x and y axis
-         const a = this.ui.config.width;
-         const b = this.ui.config.height;
-         const c = 60;
-         this.a = a;
-         this.b = b;
-         this.c = c;
        
-        //setting up button canvasUI
-        const config2 = {
-            panelSize: { width: 2.4, height: 0.5 },
-            height: 128,
-            info: { type: "text", position:{ left: 6, top: 6 }, width: 500, height: 58, backgroundColor: "#aaa", fontColor: "#000", fontSize: 17, },
-            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            button1: { type: "button", position:{ top: 70, left: 6.4 }, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
-            button2: { type: "button", position:{ top: 70, left: 132.8 }, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
-            button3: { type: "button", position:{ top: 70, left: 259.2}, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button3 },
-            button4: { type: "button", position:{ top: 70, left: 385.6}, width: 120, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button4 },
-            //continue: { type: "button", position:{ top: 70, right: 10 }, width: 200, height: 52, fontColor: "#fff", backgroundColor: "#1bf", hover: "#3df", onSelect: button4 },
-            renderer: this.renderer
-        }
-        const content2 = {
-            info: "Select the lenght of the rectangles by pressing buttons",
-            button1: "40",
-            button2: "60",
-            button3: "80",
-            button4: "100",
-        }
-
-        const ui2 = new CanvasUI( content2, config2 );
-        this.ui2= ui2;
-
-
-        //functions of the button
-        function button1(){
-            const msg = "You have selected length 40";
-            //self.clearCanvas();
-            self.rectangles(40);
-            console.log(msg);
-            self.ui2.updateElement( "info", msg );
-        }
-        
-        function button2(){
-            const msg = "You have selected length 60";
-            //self.clearCanvas();
-            self.rectangles(60);
-            console.log(msg);
-            self.ui2.updateElement( "info", msg );
-        }
-        
-        function button3(){
-            const msg = "You have selected length 80";
-            //self.clearCanvas();
-            self.rectangles(80);
-            console.log(msg);
-            self.ui2.updateElement( "info", msg );
-
-        }
-
-        function button4(){
-            const msg = "You have selected length 100";
-            //self.clearCanvas();
-            self.rectangles(100);
-            console.log(msg);
-            self.ui2.updateElement( "info", msg );
-        }
-
+       
     }
-    
-    rectangles(n){
-        console.log(this);
-        this.clearCanvas();
-        this.RenderFunction();
-        this.ui.context.save();
-        this.ui.context.fillStyle = 'gray';
-        const a = this.a;
-        const b = this.b;
-        const c = this.c;
-
-        for (let i=1;i*n<a-2*c;i++) {
-            var area=0;
-            var p;
-            var x = c+ i*n;
-            var y= this.YC((x-452)*(x-452)/452);
-            
-            if (i==1){
-                area=n*(((n)-452)*((n)-452)/452);
-                p=area;
-                this.ui.context.beginPath();
-                this.ui.context.setLineDash([5, 15]);
-                this.ui.context.moveTo(c,y);
-                this.ui.context.lineTo(x,y);
-                this.ui.context.lineTo(x,b-c);
-                this.ui.context.lineTo(c,b-c);
-                this.ui.context.lineTo(c,y);
-                this.ui.context.stroke();
-                this.ui.context.save();
-                this.ui.context.fillStyle = 'black';
-                this.ui.context.fillText(x-60, x, b-2*c/3);
-                //this.app.ui.context.fillText(y, c/3, y);
-                //this.app.ui.context.fillRect(x,y,7,7);
-                this.ui.context.restore();
-                this.ui.context.fill();
-            }
-
-            else{
-                this.ui.context.beginPath();
-                this.ui.context.setLineDash([5, 15]);
-                this.ui.context.moveTo(x-n,y);
-                this.ui.context.lineTo(x,y);
-                this.ui.context.lineTo(x,b-c);
-                this.ui.context.lineTo(x-n,b-c);
-                this.ui.context.lineTo(x-n,y);
-                this.ui.context.stroke();
-                this.ui.context.save();
-                this.ui.context.fillStyle = 'black';
-                this.ui.context.fillText(x-60, x, b-2*c/3);
-                //this.app.ui.context.fillText(y, c/3, y);
-                //this.app.ui.context.fillRect(x,y,7,7);
-                this.ui.context.restore();
-                this.ui.context.fill();
-                area=p+n*(((i*n)-452)*((i*n)-452)/452);
-                p=area;
-                
-            }
-        }
-
-        this.ui.context.fillStyle = 'black';
-        this.ui.context.fillText("Area of the rectangles with lenght "+n, 3*a/5 , c);
-        this.ui.context.fillText(area.toFixed(2), 3*a/5 , c+30);
-        this.ui.needsUpdate = true;
-        this.ui.texture.needsUpdate = true;
-        console.log(area);
-        console.log('drugi timeout gotov');
-        this.ui.context.restore();
-    }
-    
-    YC(y) {
-        return this.b-this.c-y;
-    }
-
-    clearCanvas(){
-        this.ui.context.save();
-        this.ui.context.fillStyle = 'white';
-        this.ui.context.fillRect(0,0,this.a,this.b);
-        this.ui.needsUpdate = true;
-        this.ui.texture.needsUpdate = true;
-        console.log("drugi timeout gotov");
-        this.ui.context.restore();
-    }
-
-    // RenderFunction() renders the input funtion f on the canvas.
-    RenderFunction() {
-
-        var XSTEP= 5;
-        var first = true;
-        const a = this.a;
-        const b = this.b;
-        const c = this.c;
-        //this.ui.context.fillStyle = '#fff';
-        //this.ui.context.clearRect(0, 0, a, b);
-        //this.ui.context.clear();
-        //x and y axis with labels
-        this.ui.context.beginPath();
-        this.ui.context.moveTo(c,c);
-        this.ui.context.lineTo(c,b-c);
-        this.ui.context.lineTo(a-c,b-c);
-        this.ui.context.stroke();
-        this.ui.context.fillText("Quantity Demanded", a/2,b-c/4);
-        this.ui.context.save();
-        this.ui.context.rotate(-Math.PI/2);
-        this.ui.context.fillText("Price per kilogram", -2*b/3 , 2*c/3);
-        this.ui.context.restore(); 
-        //step for function drawing
-
-        
-
-        this.ui.context.save();
-        this.ui.context.beginPath() ;
-        for (var x = c; x <= a-c; x += XSTEP) {
-        var y = (x-452)*(x-452)/452 ;
-        if (first) {
-        this.ui.context.lineWidth = '3';
-        this.ui.context.moveTo(x,this.YC(y));
-        first = false ;
-        } else {
-        this.ui.context.lineTo(x,this.YC(y)) ;
-        this.ui.context.stroke() ;
-        this.ui.needsUpdate = true;
-        this.ui.texture.needsUpdate = true;
-        }
-        }
-        console.log('prvi timeout gotov');
-        this.ui.context.restore();
-    }
-
-    setupVR() {
+       
+    setupVR(){
         this.renderer.xr.enabled = true; 
-
+        
         const self = this;
-        const a = this.a;
-        const b = this.b;
-        const c = this.c;
-            
+        //let controller;
+    
+        //draw and label x and y axis
+        const a = this.ui.config.width;
+        const b = this.ui.config.height;
+        const c = 60;
+        //increments on x and y axis
+        const incx = (a-2*c)/ 15.3;
+        const incy = (b-2*c)/ 4.6;
+
         function onSessionStart(){
-            //adding mesh to scene
-            self.ui.mesh.position.set(0,0,-2);
+            //podesavanje mesa novog
+            self.ui.context.lineJoin = "round";  
+		    self.ui.context.strokeStyle = "black"; 
+		    self.ui.context.font = "20px Arial";
+		    self.ui.mesh.position.set(0,0,-2);
             self.scene.add(self.ui.mesh);
-            self.ui2.mesh.position.set(0,-1.7,-5);
-            self.scene.add(self.ui2.mesh);
-            //self.camera.attach( self.ui2.mesh );
-            self.RenderFunction();
-            console.log(self.ui2.config.width);
-            //setTimeout(self.rectangles,5000,50);
-            //setTimeout(self.rectangles,8000,100);
+            
+            //console.log("values of width and height"+ a + b);
+            //x i y osa sa oznakama
+            self.ui.context.beginPath();
+            self.ui.context.moveTo(c,c);
+            self.ui.context.lineTo(c,b-c);
+            self.ui.context.lineTo(a-c,b-c);
+            self.ui.context.stroke();
+            self.ui.context.fillText("Quantity Demanded", a/2,b-c/4);
+            self.ui.context.save();
+            self.ui.context.rotate(-Math.PI/2);
+            self.ui.context.fillText("Price per kilogram", -2*b/3 , 2*c/3);
+            self.ui.context.restore();
+
+
+            setTimeout(next1,3000);
+            setTimeout(rectangles,5000,60);
+            //setTimeout(next3,9000);
+            //setTimeout(next4,12000);
             
         }
-       
-        function onSessionEnd(){
-            self.camera.remove( self.ui2.mesh );
+
+        function next1(){
+            //update grafa
+            this.app.ui.context.fillStyle = 'gray';
+            this.app.ui.context.beginPath();
+			this.app.ui.context.moveTo(c,c);
+			this.app.ui.context.quadraticCurveTo(c,b-c,a-c,b-c);
+            this.app.ui.context.lineTo(c,b-c);
+            this.app.ui.context.lineTo(c,c);
+            this.app.ui.context.stroke();
+            this.app.ui.context.save();
+			this.app.ui.context.fill();
+            this.app.ui.context.rotate(Math.PI/4);
+            this.app.ui.context.fillStyle = 'black';
+            this.app.ui.context.font = "20px Arial";
+            this.app.ui.context.fillText("Demand Curve f(x)", a/2 , -b/80);
+            this.app.ui.context.restore();
+            this.app.ui.needsUpdate = true;
+			this.app.ui.texture.needsUpdate = true;
+			console.log('prvi timeout gotov');
+        }
+
+        function rectangles(n){
+
+            for (let i=1;i*n>a;i++) {
+                var x = c+ i*n;
+                var y= (b-c)-((1/452)*(x - 452)^2);
+                
+                if (i==1){
+                    this.app.ui.context.beginPath();
+                    this.app.ui.context.setLineDash([5, 15]);
+                    this.app.ui.context.moveTo(c,y);
+                    this.app.ui.context.lineTo(n,y);
+                    this.app.ui.context.lineTo(n,b-c);
+                    this.app.ui.context.lineTo(c,b-c);
+                    this.app.ui.context.lineTo(c,y);
+                    this.app.ui.context.stroke();
+                    this.app.ui.context.fill();
+                    this.app.ui.needsUpdate = true;
+			        this.app.ui.texture.needsUpdate = true;
+                }
+
+                else{
+                    this.app.ui.context.beginPath();
+                    this.app.ui.context.setLineDash([5, 15]);
+                    this.app.ui.context.moveTo(x-n,y);
+                    this.app.ui.context.lineTo(x,y);
+                    this.app.ui.context.lineTo(x,b-c);
+                    this.app.ui.context.lineTo(x-n,b-c);
+                    this.app.ui.context.lineTo(x-n,y);
+                    this.app.ui.context.stroke();
+                    this.app.ui.context.fill();
+                    this.app.ui.needsUpdate = true;
+			        this.app.ui.texture.needsUpdate = true;
+                }
+            }
+            console.log('drugi timeout gotov');
+
         }
 
 
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
-        const controller = this.renderer.xr.getController( 0 );
-        //controller.addEventListener( 'connected', onConnected );
+        const btn = new ARButton( this.renderer, {onSessionStart});
         
-        this.scene.add( controller );
-        this.controller = controller;
-
-        
+        //const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
         this.renderer.setAnimationLoop( this.render.bind(this) );
-
     }
-
+    
+   
    
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -319,7 +196,6 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        if ( this.renderer.xr.isPresenting ) this.ui2.update();
         this.renderer.render( this.scene, this.camera );
     }
 }
