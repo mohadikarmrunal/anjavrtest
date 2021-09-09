@@ -1,111 +1,132 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
-import { ParametricGeometries } from '../../libs/three/jsm/ParametricGeometries.js';
+import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
-import { ARButton } from '../../libs/ARButton.js';
-import { ControllerGestures } from '../../libs/ControllerGestures.js';
-import {CanvasTexture} from '../../libs/three/three.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
-
+import { ARButton } from '../../libs/ARButton.js';
+//import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
+import { LoadingBar } from '../../libs/LoadingBar.js';
+//import { Player } from '../../libs/Player.js';
+import { ControllerGestures } from '../../libs/ControllerGestures.js';
+//JUST SOME BASIC TEMPLATE FOR TESTING OBJECTS AND LOADERS
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
         
-		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
-		this.camera.position.set( 0, 0, 30);
-        
         this.clock = new THREE.Clock();
-
+        
+		this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+		
 		this.scene = new THREE.Scene();
         this.scene.add(this.camera);
-        
-		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 0.3);
-		this.scene.add(ambient);
-        
-        const light = new THREE.DirectionalLight();
-        light.position.set( 0.2, 1, 1);
-        this.scene.add(light);
+       
+		this.scene.add( new THREE.HemisphereLight( 0x606060, 0x404040 ) );
 
+        const light = new THREE.DirectionalLight( 0xffffff );
+        light.position.set( 1, 1, 1 ).normalize();
+		this.scene.add( light );
 			
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.renderer.outputEncoding = THREE.sRGBEncoding;
+        
 		container.appendChild( this.renderer.domElement );
-
+        
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
         this.controls.target.set(0, 3.5, 0);
         this.controls.update();
         
         this.stats = new Stats();
-
-       
-          this.createUI();
         
-        this.renderer.setAnimationLoop( this.render.bind(this) );
+        this.initScene();
+        this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
-
-    createUI() {
+    
+    initScene(){
+        this.loadingBar = new LoadingBar();
         
-        const config = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 194,
-            body:{
-                textAlign: 'center',
-                backgroundColor:'#ccc',
-                fontColor:'#000',
-                padding:40,
-                fontSize:50,
-            },
-            info:{ type: "text" }
-        }
+        this.assetsPath = '../../assets/';
+        const loader = new GLTFLoader().setPath(this.assetsPath);
+		const self = this;
 
+        loader.load(
+			// resource URL
+			'cart.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
 
-        const content = {
-            info: "graph"
-        }   
+                self.apple = gltf.scene;
+                //self.scene.add( self.apple ); 
+                self.loadingBar.visible = false;
+                self.apple.visible=false;
+				const scale = 1;
+				self.apple.scale.set(scale, scale, scale); 
+                
+			},
+			// called while loading is progressing
+			function ( xhr ) {
 
-        const ui = new CanvasUI( content, config );
-        this.ui = ui;
-        this.scene.add(this.ui.mesh);
-        this.ui.mesh.position.set(0.08, 0.01, -0.2);
-      
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened lol' );
+			}
+        );
     }
 
-   /* initScene(){
-        const geometry = new THREE.ParametricGeometry( ParametricGeometries.klein, 40, 30 );
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        material.wireframe=true;
-        this.boca = new THREE.Mesh( geometry, material );
-        this.boca.position.set(0,0,-4);
-        this.boca.scale.set(0.08,0.08,0.08);
-    }*/
-
-       
-   /* setupVR(){
+    setupVR(){
         this.renderer.xr.enabled = true; 
         
         const self = this;
-        function onSessionStart(){
-          self.scene.add(self.boca);  
-        }
+        //let controller;
+       /* function onSessionEnd(){
+            self.camera.remove( self.ui.mesh );
+        }*/
 
-        const btn = new ARButton( this.renderer, {onSessionStart});
-      
+        function onSessionStart(){
+             if(!self.apple.visible){
+                self.apple.visible=true;
+                self.apple.position.set( 0, 0, -1 ); 
+                self.scene.add( self.apple); 
+            }
+        }
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
+        /*controller = this.renderer.xr.getController( 0 );
+        //controller.addEventListener( 'select', onSelect );
+        //this.scene.add( controller );
+        this.gestures = new ControllerGestures( this.renderer );
+
+        this.gestures.addEventListener( 'tap', (ev)=>{
+            console.log( 'tap' ); 
+            if (!self.apple.visible){
+                self.apple.visible = true;
+                self.apple.position.set( 0, -0.3, -0.7 ).add( ev.position );
+                self.ui.mesh.position.set(0.1, 0.01, -0.2).add(ev.position);
+                self.ui2.mesh.position.set(-0.1, 0.01, -0.2).add(ev.position);
+                self.scene.add( self.apple); 
+                self.scene.add(self.ui.mesh);
+                self.scene.add(self.ui2.mesh);
+                setTimeout( this.plotting(),300000);
+            }
+        });
+        */
+
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
-    */
-    
+     
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize( window.innerWidth, window.innerHeight );  
     }
     
-	render( ) {   
+
+    render( ) {   
         const dt = this.clock.getDelta();
-        //this.boca.rotateY( 0.01 );
         this.stats.update();
         this.renderer.render( this.scene, this.camera );
     }

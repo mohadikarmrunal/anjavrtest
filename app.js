@@ -94,7 +94,7 @@ class App{
                 self.scene.add( self.apple); 
             }
         }
-        const btn = new ARButton( this.renderer, {onSessionStart});
+        const btn = new ARButton( this.renderer, { onSessionStart, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
         /*controller = this.renderer.xr.getController( 0 );
         //controller.addEventListener( 'select', onSelect );
         //this.scene.add( controller );

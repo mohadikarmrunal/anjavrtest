@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>MATHS IN AR</title>
+		<title>Approximating Area Under The Curve Using Rectangles</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <!--favicon -->
@@ -19,27 +19,17 @@
                 margin: 0;
                 padding: 0;
             }
-            
-            ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            }
-
         </style>
 	</head>
 	<body>
-        <h1>Examples</h1>
-        <ul>
-            <p>Determining prices using area under the demand curve.</p>
-            <li><a href="example1.html">1.1 Area Under the Curve</a></li>
-            <li><a href="example2.html">1.2 Approximating Area Under The Curve Using Rectangles</a></li>
-            <li><a href="example3.html">2.1 Random Variable and Probability</a></li>
-            <li><a href="example2.html">2.2 Poisson Distribution</a></li>
-            <li><a href="example2.html">2.3 Uniform Continuous Distribution</a></li>
-          </ul>
-       
-        <p></p>
+        <script src="../../libs/fas.js"></script>
+        <script type="module">
+            import { App } from './app3.js';
 
+            document.addEventListener("DOMContentLoaded", function(){
+                const app = new App();
+                window.app = app;
+            });
+        </script>
 	</body>
 </html>
