@@ -61,6 +61,7 @@ class App{
                 self.animations = {};
                 self.head = gltf.scene;
                 self.coinH = gltf.scene.children[0].children[0];
+                self.head.children[0].children[1].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossHead'] = gltf.animations[0];
@@ -100,7 +101,9 @@ class App{
 
                 self.animationsT = {};
                 self.tail = gltf.scene;
+                console.log(gltf.scene.children[0].children[1]);
                 self.coinT = gltf.scene.children[0].children[0];
+                self.tail.children[0].children[1].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animationsT['TossTail'] = gltf.animations[0];
@@ -168,9 +171,42 @@ class App{
 				console.log( 'An error happened with the coin' );
 			}
         );
+         
+        
+        //this.createUI();
 
 
+    }
 
+
+    createUI() {
+        
+        //setting up button canvasUI
+        const config = {
+            panelSize: { width: 2.6, height: 0.5 },
+            height: 128,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 58, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
+            button1: { type: "button", position:{ top: 70, left: 6.15 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
+            button2: { type: "button", position:{ top: 70, left: 107.3 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
+            button3: { type: "button", position:{ top: 70, left: 208.45}, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button3 },
+            button4: { type: "button", position:{ top: 70, left: 309.6 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button4 },
+            button5: { type: "button", position:{ top: 70, left: 410.75 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button5 },
+            //continue: { type: "button", position:{ top: 70, right: 10 }, width: 200, height: 52, fontColor: "#fff", backgroundColor: "#1bf", hover: "#3df", onSelect: button4 },
+            renderer: this.renderer
+        }
+        const content = {
+            info: "Select the lenght of the rectangles by pressing buttons",
+            button1: "10",
+            button2: "40",
+            button3: "70",
+            button4: "100",
+            button5: "130",
+        }
+
+        const ui = new CanvasUI( content, config );
+        this.ui = ui;
+       
     }
 
     setupVR(){
