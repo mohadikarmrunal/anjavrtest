@@ -54,16 +54,31 @@ class App{
 
         loader.load(
 			// resource URL
-			'cart.gltf',
+			'TossHead.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
-                self.apple = gltf.scene;
+                self.animations = {};
+                self.head = gltf.scene;
+                self.coinH = gltf.scene.children[0].children[0];
+                //gltf.scene.children[0].children[0] je coin
+                //gltf.scene.children[0].children[1] je plane
+                self.animations['TossHead'] = gltf.animations[0];
                 //self.scene.add( self.apple ); 
+                //console.log(gltf.animations);
+                self.mixer = new THREE.AnimationMixer( self.coinH );
+                const clip = self.animations['TossHead'];
+                const action = self.mixer.clipAction (clip);
+                //action.loop = THREE.LoopOnce;
+                action.enabled = true;
+                self.action = action;
+                //action.play();
+                //console.log (action);
                 self.loadingBar.visible = false;
-                self.apple.visible=false;
-				const scale = 1;
-				self.apple.scale.set(scale, scale, scale); 
+                self.head.visible=false;
+				const scale = 0.05;
+				self.head.scale.set(scale, scale, scale); 
+                self.head.position.set( 0, -0.5, -1 ); 
                 
 			},
 			// called while loading is progressing
@@ -73,9 +88,89 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened lol' );
+				console.log( 'An error happened with coin tossed to head' );
 			}
         );
+
+        loader.load(
+			// resource URL
+			'TossTail.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.animationsT = {};
+                self.tail = gltf.scene;
+                self.coinT = gltf.scene.children[0].children[0];
+                //gltf.scene.children[0].children[0] je coin
+                //gltf.scene.children[0].children[1] je plane
+                self.animationsT['TossTail'] = gltf.animations[0];
+                //self.scene.add( self.apple ); 
+                //console.log(gltf.animations);
+                self.mixerT = new THREE.AnimationMixer( self.coinT );
+                const clipT = self.animationsT['TossTail'];
+                const actionT = self.mixerT.clipAction (clipT);
+                //action.loop = THREE.LoopOnce;
+                actionT.enabled = true;
+                self.actionT = actionT;
+                //action.play();
+                //console.log (action);
+                self.loadingBar.visible = false;
+                self.tail.visible = false;
+				const scale = 0.05;
+				self.tail.scale.set(scale, scale, scale); 
+                self.tail.position.set( 0, -0.5, -1 ); 
+                
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with coin tossed to tail' );
+			}
+        );   
+
+        loader.load(
+			// resource URL
+			'Coin.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.coin = gltf.scene;
+                self.loadingBar.visible = false;
+                self.coin.visible = false;
+				const scale = 0.05;
+				self.coin.scale.set(scale, scale, scale); 
+                //console.log(self.coin.children[0]);
+                self.coin.children[0].rotateX(Math.PI/2);
+                console.log(Math.PI);
+                self.coin1 = self.coin.clone();
+                self.coin2 = self.coin.clone();
+                self.coin3 = self.coin.clone();
+                self.coin3.children[0].rotateX(Math.PI);
+                self.coin4 = self.coin.clone();
+                self.coin4.children[0].rotateX(Math.PI);
+                self.coin5 = self.coin.clone();
+                self.coin6 = self.coin.clone();
+                self.coin6.children[0].rotateX(Math.PI);
+                self.coin7 = self.coin.clone();
+                self.coin7.children[0].rotateX(Math.PI);
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with the coin' );
+			}
+        );
+
+
+
     }
 
     setupVR(){
@@ -88,33 +183,94 @@ class App{
         }*/
 
         function onSessionStart(){
-             if(!self.apple.visible){
-                self.apple.visible=true;
-                self.apple.position.set( 0, 0, -1 ); 
-                self.scene.add( self.apple); 
+             if(!self.head.visible){
+                
+                setTimeout(next1,3000);
+                setTimeout(next2,6000);
+                setTimeout(next3, 9000);
+                //self.scene.add( self.head);  
+                //console.log(self.action);  
+                //self.action.loop = THREE.LoopOnce;
+                //self.action.play();
             }
         }
+
+        function next1 (){
+            this.app.head.visible = true;
+            this.app.scene.add(this.app.head);
+            this.app.action.play();
+            //this.app.action.loop = THREE.LoopOnce;
+        }
+
+        function next2(){
+            this.app.head.visible = false;
+            this.app.tail.visible = true;
+            this.app.scene.add(this.app.tail);
+            this.app.actionT.play();
+            //this.app.actionT.loop = THREE.LoopOnce;
+        }
+
+        function next3(){
+            this.app.tail.visible = false;
+
+            this.app.coin.visible = true;
+            this.app.coin.position.set( -0.3, 0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin); 
+
+            this.app.coin1.visible = true;
+            this.app.coin1.position.set( -0.16, 0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin1); 
+
+            this.app.coin2.visible = true;
+            this.app.coin2.position.set( 0.16, 0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin2); 
+
+            this.app.coin3.visible = true;
+            this.app.coin3.position.set( 0.3, 0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin3); 
+
+            this.app.coin4.visible = true;
+            this.app.coin4.position.set( -0.3, -0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin4); 
+
+            this.app.coin5.visible = true;
+            this.app.coin5.position.set( -0.16, -0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin5); 
+
+            this.app.coin6.visible = true;
+            this.app.coin6.position.set( 0.16, -0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin6); 
+
+            this.app.coin7.visible = true;
+            this.app.coin7.position.set( 0.3, -0.15, -0.9 ); 
+            this.app.scene.add( this.app.coin7); 
+
+            
+        }
+
+        function onSessionEnd(){
+            self.scene.remove(self.head);
+            self.scene.remove(self.tail);
+            self.scene.remove(self.coin);
+            self.scene.remove(self.coin1);
+            self.scene.remove(self.coin2);
+            self.scene.remove(self.coin3);
+            self.scene.remove(self.coin4);
+            self.scene.remove(self.coin5);
+            self.scene.remove(self.coin6);
+            self.scene.remove(self.coin7);
+        }
+
+
+        
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
-        /*controller = this.renderer.xr.getController( 0 );
-        //controller.addEventListener( 'select', onSelect );
-        //this.scene.add( controller );
-        this.gestures = new ControllerGestures( this.renderer );
+        const controller = this.renderer.xr.getController( 0 );
+        //controller.addEventListener( 'connected', onConnected );
+        
+        this.scene.add( controller );
+        this.controller = controller;
 
-        this.gestures.addEventListener( 'tap', (ev)=>{
-            console.log( 'tap' ); 
-            if (!self.apple.visible){
-                self.apple.visible = true;
-                self.apple.position.set( 0, -0.3, -0.7 ).add( ev.position );
-                self.ui.mesh.position.set(0.1, 0.01, -0.2).add(ev.position);
-                self.ui2.mesh.position.set(-0.1, 0.01, -0.2).add(ev.position);
-                self.scene.add( self.apple); 
-                self.scene.add(self.ui.mesh);
-                self.scene.add(self.ui2.mesh);
-                setTimeout( this.plotting(),300000);
-            }
-        });
-        */
-
+        
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
      
@@ -128,6 +284,8 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
+        this.mixer.update( dt )
+        this.mixerT.update( dt )
         this.renderer.render( this.scene, this.camera );
     }
 }
