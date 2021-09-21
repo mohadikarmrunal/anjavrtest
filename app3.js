@@ -60,8 +60,8 @@ class App{
 
                 self.animations = {};
                 self.head = gltf.scene;
-                self.coinH = gltf.scene.children[0].children[0];
-                self.head.children[0].children[1].visible = false;
+                self.coinH = gltf.scene.children[0].children[1];
+                self.head.children[0].children[0].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossHead'] = gltf.animations[0];
@@ -102,15 +102,15 @@ class App{
                 self.animationsT = {};
                 self.tail = gltf.scene;
                 console.log(gltf.scene.children[0].children[1]);
-                self.coinT = gltf.scene.children[0].children[0];
-                self.tail.children[0].children[1].visible = false;
+                self.coinT = gltf.scene.children[0].children[1];
+                self.tail.children[0].children[0].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
-                self.animationsT['TossTail'] = gltf.animations[0];
+                self.animations['TossTail'] = gltf.animations[0];
                 //self.scene.add( self.apple ); 
                 //console.log(gltf.animations);
                 self.mixerT = new THREE.AnimationMixer( self.coinT );
-                const clipT = self.animationsT['TossTail'];
+                const clipT = self.animations['TossTail'];
                 const actionT = self.mixerT.clipAction (clipT);
                 //action.loop = THREE.LoopOnce;
                 actionT.enabled = true;
@@ -173,7 +173,7 @@ class App{
         );
          
         
-        //this.createUI();
+        this.createUI();
 
 
     }
@@ -181,31 +181,37 @@ class App{
 
     createUI() {
         
+        const self = this;
         //setting up button canvasUI
         const config = {
-            panelSize: { width: 2.6, height: 0.5 },
-            height: 128,
+            panelSize: { width: 0.7, height: 0.1 },
+            height: 39,
             info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 58, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
             button1: { type: "button", position:{ top: 70, left: 6.15 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
             button2: { type: "button", position:{ top: 70, left: 107.3 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
-            button3: { type: "button", position:{ top: 70, left: 208.45}, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button3 },
-            button4: { type: "button", position:{ top: 70, left: 309.6 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button4 },
-            button5: { type: "button", position:{ top: 70, left: 410.75 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button5 },
-            //continue: { type: "button", position:{ top: 70, right: 10 }, width: 200, height: 52, fontColor: "#fff", backgroundColor: "#1bf", hover: "#3df", onSelect: button4 },
             renderer: this.renderer
         }
         const content = {
-            info: "Select the lenght of the rectangles by pressing buttons",
-            button1: "10",
-            button2: "40",
-            button3: "70",
-            button4: "100",
-            button5: "130",
+            info: "Description of Random Variable:",
+            button1: "Counting number of Heads",
+            button2: "Counting number of Tails",
         }
 
         const ui = new CanvasUI( content, config );
         this.ui = ui;
+        this.ui.mesh.position.set(0, -0.3, -0.9);
+
+        function button1(){
+            const msg = "You have selected length 10";
+            console.log(msg);
+            self.ui.updateElement( "info", msg );
+        }
+        
+        function button2(){
+            const msg = "You have selected length 40";
+            console.log(msg);
+            self.ui.updateElement( "info", msg );
+        }
        
     }
 
@@ -280,6 +286,8 @@ class App{
             this.app.coin7.visible = true;
             this.app.coin7.position.set( 0.3, -0.15, -0.9 ); 
             this.app.scene.add( this.app.coin7); 
+
+            this.app.scene.add(this.app.ui.mesh);
 
             
         }
