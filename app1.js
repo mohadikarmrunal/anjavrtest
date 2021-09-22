@@ -47,7 +47,6 @@ class App{
 	}	
     
     initScene(){
-        console.log(this);
         this.loadingBar = new LoadingBar();
         
         this.assetsPath = '../../assets/';
@@ -73,7 +72,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened lol' );
+				console.log( 'An error happened with loading an apple' );
 			}
         );
 
@@ -95,7 +94,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened lol' );
+				console.log( 'An error happened with loading a cart' );
 			}
         );
 
@@ -145,7 +144,31 @@ class App{
         this.ui = ui;
         this.ui1 = ui1;
         this.ui2 = ui2;
-       
+
+        //positions
+        this.ui.mesh.position.set(0,0,-2);
+        this.ui1.mesh.position.set(0.3, 0.17, -0.9);
+        this.ui2.mesh.position.set(-0.3, 0.17, -0.9);
+    }
+
+    clearCanvas(){
+
+       //removing graph
+        this.ui.context.save();
+        this.ui.context.fillStyle = 'white';
+        this.ui.context.fillRect(0,0,this.ui.config.width,this.ui.config.height);
+        this.ui.needsUpdate = true;
+        this.ui.texture.needsUpdate = true;
+        this.ui.context.restore();
+
+        //restoring additional two canvases
+        this.ui1.updateElement('info', 'Price per kg');
+        this.ui2.updateElement('info', 'Sold in kg'); 
+        this.ui1.updateConfig ("body", "fontColor", "#000" );
+        this.ui1.updateConfig ("body", "fontColor", "#000" );
+        this.ui1.update();
+        this.ui2.update(); 
+        
     }
        
     setupVR(){
@@ -167,15 +190,14 @@ class App{
             self.ui.context.lineJoin = "round";  
 		    self.ui.context.strokeStyle = "black"; 
 		    self.ui.context.font = "20px Arial";
-		    self.ui.mesh.position.set(0,0,-2);
+            self.ui.context.fillStyle = 'black';
 		   // self.ui.needsUpdate = true;
-            //pozicioniranje mesheva starog
-            self.ui1.mesh.position.set(0.2, 0.05, -0.3);
-            self.ui2.mesh.position.set(-0.2, 0.05, -0.3);
+            self.ui1.mesh.visible = true;
+            self.ui2.mesh.visible = true;
             self.scene.add(self.ui1.mesh);
             self.scene.add(self.ui2.mesh);
             self.scene.add(self.ui.mesh);
-            
+
             //console.log("values of width and height"+ a + b);
             //x i y osa sa oznakama
             self.ui.context.beginPath();
@@ -190,14 +212,14 @@ class App{
             self.ui.context.restore();
 
             if(!self.apple.visible){
-                self.apple.visible=true;
-                self.apple.position.set( 0.3, 0.15, -0.9 ); 
+                self.apple.visible = true;
+                self.apple.position.set( 0.3, -0.03, -0.9 ); 
                 self.scene.add( self.apple); 
             }
 
             if(!self.cart.visible){
-                self.cart.visible=true;
-                self.cart.position.set( -0.3, -0.15, -0.9 ); 
+                self.cart.visible = true;
+                self.cart.position.set( -0.3, -0.07, -0.9); 
                 self.scene.add( self.cart); 
             }
 
@@ -208,13 +230,13 @@ class App{
             
         }
 
+
         function next1(){
             //update cijene i potraznje
-            console.log(this);
             this.app.ui1.updateElement('info', 'Price: 1.9e/kg');
             this.app.ui2.updateElement('info', 'Sold: 90 kg'); 
-            this.app.ui1.updateConfig ("body", "fontColor", "#0f7" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#0f7" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#5f0" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#5f0" );
             this.app.ui1.update();
             this.app.ui2.update();  
 
@@ -223,6 +245,7 @@ class App{
 			this.app.ui.context.moveTo(a-c,b-c);
 			this.app.ui.context.lineTo(9*incx,2.7*incy);
 			this.app.ui.context.stroke();
+            this.app.ui.context.save();
             this.app.ui.context.fillStyle = 'green';
             this.app.ui.context.fillRect(9*incx,2.7*incy,7,7);
 			//dashed vertical line with the label of quantity
@@ -243,11 +266,11 @@ class App{
 			this.app.ui.context.restore();
             this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
-			console.log('prvi timeout gotov');
+			//console.log('next1');
         }
 
         function next2(){
-            //update cijene i potraznje
+            //update price and demand
             this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
             this.app.ui2.updateElement('info', 'Sold: 60 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
@@ -281,12 +304,12 @@ class App{
 			this.app.ui.context.restore();
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
-			console.log('drugi timeout gotov');
+			//console.log('next2');
         }
 
         function next3(){
-            //update cijene i potraznje
-            console.log(this);
+            //update price and demand
+            //console.log(this);
             this.app.ui1.updateElement('info', 'Price: 3.7e/kg');
             this.app.ui2.updateElement('info', 'Sold:  30kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
@@ -330,7 +353,7 @@ class App{
             this.app.ui.context.restore();
             this.app.ui.needsUpdate = true;
             this.app.ui.texture.needsUpdate = true;
-            console.log('treci timeout gotov');
+            //console.log('next3');
             
         }
 
@@ -339,6 +362,7 @@ class App{
             this.app.ui2.mesh.visible = false;
             
             //filling the area
+            this.app.ui.context.save();
             this.app.ui.context.fillStyle = 'gray';
 			this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(a-c,b-c);
@@ -348,20 +372,32 @@ class App{
 			this.app.ui.context.fill();
             this.app.ui.context.fillStyle = 'black';
 			this.app.ui.context.font = "25px Arial";
-			this.app.ui.context.fillText("AREA = 352,59", a/4  , 3*b/4 );
+			this.app.ui.context.fillText("AREA = 352,59", 2*a/5  , 3*b/4 );
             this.app.ui.context.lineWidth = '4';
             this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(c,c);
 			this.app.ui.context.lineTo(a-c,b-c);
             this.app.ui.context.stroke();
+            this.app.ui.context.restore();
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
-			console.log('cetvrti timeout gotov');
+			//console.log('next4');
         }
 
-        const btn = new ARButton( this.renderer, {onSessionStart,sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }});
-        
-        //const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
+        function onSessionEnd(){
+            self.clearCanvas();
+            self.cart.visible = false;
+            self.apple.visible = false;
+            self.scene.remove(self.ui.mesh);
+            self.scene.remove(self.ui1.mesh);
+            self.scene.remove(self.ui2.mesh);
+            self.scene.remove(self.apple);
+            self.scene.remove(self.cart);
+            
+           
+        }
+
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }});
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
