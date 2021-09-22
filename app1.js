@@ -235,8 +235,8 @@ class App{
             //update cijene i potraznje
             this.app.ui1.updateElement('info', 'Price: 1.9e/kg');
             this.app.ui2.updateElement('info', 'Sold: 90 kg'); 
-            this.app.ui1.updateConfig ("body", "fontColor", "#5f0" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#5f0" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#114" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#114" );
             this.app.ui1.update();
             this.app.ui2.update();  
 

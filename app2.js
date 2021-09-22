@@ -74,13 +74,13 @@ class App{
         this.ui.context.strokeStyle = "black"; 
         this.ui.context.font = "20px Arial";
 
-         //draw and label x and y axis
-         const a = this.ui.config.width;
-         const b = this.ui.config.height;
-         const c = 60;
-         this.a = a;
-         this.b = b;
-         this.c = c;
+        //creating const for length and width
+        const a = this.ui.config.width;
+        const b = this.ui.config.height;
+        const c = 60;
+        this.a = a;
+        this.b = b;
+        this.c = c;
        
         //setting up button canvasUI
         const config2 = {
@@ -124,10 +124,10 @@ class App{
         this.ui3 = ui3;
 
 
-        //functions of the button
+        //functions of the buttons
+
         function button1(){
             const msg = "You have selected length 10";
-            //self.clearCanvas();
             self.rectangles(10);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
@@ -135,16 +135,14 @@ class App{
         
         function button2(){
             const msg = "You have selected length 40";
-            //self.clearCanvas();
-            self.rectangles(60);
+            self.rectangles(40);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
         }
         
         function button3(){
             const msg = "You have selected length 70";
-            //self.clearCanvas();
-            self.rectangles(80);
+            self.rectangles(70);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
 
@@ -152,7 +150,6 @@ class App{
 
         function button4(){
             const msg = "You have selected length 100";
-            //self.clearCanvas();
             self.rectangles(100);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
@@ -160,8 +157,7 @@ class App{
 
         function button5(){
             const msg = "You have selected length 130";
-            //self.clearCanvas();
-            self.rectangles(100);
+            self.rectangles(130);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
         }
@@ -244,7 +240,6 @@ class App{
         this.ui.needsUpdate = true;
         this.ui.texture.needsUpdate = true;
         console.log(area);
-        console.log('drugi timeout gotov');
         this.ui.context.restore();
     }
     
@@ -258,7 +253,7 @@ class App{
         this.ui.context.fillRect(0,0,this.a,this.b);
         this.ui.needsUpdate = true;
         this.ui.texture.needsUpdate = true;
-        console.log("drugi timeout gotov");
+        //console.log("clearCanvas");
         this.ui.context.restore();
     }
 
@@ -273,6 +268,7 @@ class App{
         //this.ui.context.fillStyle = '#fff';
         //this.ui.context.clearRect(0, 0, a, b);
         //this.ui.context.clear();
+
         //x and y axis with labels
         this.ui.context.beginPath();
         this.ui.context.moveTo(c,c);
@@ -290,10 +286,8 @@ class App{
         this.ui.context.font = "20px Arial";
         this.ui.context.fillText("Demand Curve f(x)", a/2 , -b/70);
         this.ui.context.restore();
+
         //step for function drawing
-
-        
-
         this.ui.context.save();
         this.ui.context.beginPath() ;
         for (var x = c; x <= a-c; x += XSTEP) {
@@ -310,7 +304,7 @@ class App{
         }
         }
         
-        console.log('prvi timeout gotov');
+        //console.log('renderFunction');
         this.ui.context.restore();
     }
 
@@ -326,22 +320,22 @@ class App{
             //adding mesh to scene
             self.ui.mesh.position.set(0,0,-2);
             self.scene.add(self.ui.mesh);
+
             self.ui2.mesh.position.set(0,-1.7,-5);
             self.scene.add(self.ui2.mesh);
+
             self.ui3.mesh.position.set(0,1.7,-5);
             self.scene.add(self.ui3.mesh);
-            //self.camera.attach( self.ui2.mesh );
+            
             self.RenderFunction();
-            console.log(self.ui2.config.width);
-            //setTimeout(self.rectangles,5000,50);
-            //setTimeout(self.rectangles,8000,100);
             
         }
        
         function onSessionEnd(){
-            self.camera.remove( self.ui1.mesh );
-            self.camera.remove( self.ui2.mesh );
-            self.camera.remove( self.ui3.mesh );
+            self.clearCanvas();
+            self.scene.remove( self.ui.mesh );
+            self.scene.remove( self.ui2.mesh );
+            self.scene.remove( self.ui3.mesh );
         }
 
 
