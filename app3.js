@@ -185,34 +185,121 @@ class App{
         //setting up button canvasUI
         const config = {
             panelSize: { width: 0.7, height: 0.1 },
-            height: 39,
-            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 58, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button1: { type: "button", position:{ top: 70, left: 6.15 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
-            button2: { type: "button", position:{ top: 70, left: 107.3 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
+            height: 73,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            button1: { type: "button", position:{ top: 39, left: 6 }, width: 240, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
+            button2: { type: "button", position:{ top: 39, left: 266 }, width: 240, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
             renderer: this.renderer
         }
+
+        const configH = {
+            panelSize: { width: 0.7, height: 0.1 },
+            height: 73,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            button0: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0H },
+            button1: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1H },
+            button2: { type: "button", position:{ top: 39, left: 186 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2H },
+            renderer: this.renderer
+        }
+
+        const configT = {
+            panelSize: { width: 0.7, height: 0.1 },
+            height: 73,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            button0: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0T },
+            button1: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1T },
+            button2: { type: "button", position:{ top: 39, left: 186 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2T },
+            renderer: this.renderer
+        }
+
         const content = {
             info: "Description of Random Variable:",
-            button1: "Counting number of Heads",
-            button2: "Counting number of Tails",
+            button1: "Head",
+            button2: "Tail",
+        }
+
+        const contentH = {
+            info: "Number of Heads Tossed",
+            button1: "1",
+            button2: "2",
+        }
+
+        const contentT = {
+            info: "Number of Tails Tossed",
+            button1: "1",
+            button2: "2",
         }
 
         const ui = new CanvasUI( content, config );
         this.ui = ui;
         this.ui.mesh.position.set(0, -0.3, -0.9);
 
+        const uiHead = new CanvasUI(contentH, config);
+        this.uiHead = uiHead;
+        this.uiHead.mesh.position.set(0, -0.3, -0.9);
+
+        const uiTail = new CanvasUI( contentT, config );
+        this.uiTail = uiTail;
+        this.uiTail.mesh.position.set(0, -0.3, -0.9);
+
         function button1(){
-            const msg = "You have selected length 10";
+            const msg = "You have selected head";
             console.log(msg);
+            self.ui.mesh.visible = false;
+            self.scene.add(self.uiHead.mesh);
             self.ui.updateElement( "info", msg );
         }
         
         function button2(){
-            const msg = "You have selected length 40";
+            const msg = "You have selected tail";
+            self.ui.mesh.visible = false;
+            self.scene.add(self.uiTail.mesh);
+            self.ui.updateElement( "info", msg );
+        }
+
+        function button0H(){
+            const msg = "You have counted cases where no heads are tossed";
+            console.log(msg);
+            self.ui.updateElement( "info", msg );
+        }
+        function button1H(){
+            const msg = "You have counted cases where 1 head is tossed";
+            console.log(msg);
+            self.ui.updateElement( "info", msg );
+        }
+        
+        function button2H(){
+            const msg = "You have counted cases where 2 heads are tossed";
+            console.log(msg);
+            self.ui.updateElement( "info", msg );
+        }
+
+        function button0T(){
+            const msg = "You have counted cases where no tails are tossed";
+            console.log(msg);
+            self.ui.updateElement( "info", msg );
+        }
+
+        function button1T(){
+            const msg = "You have counted cases where 1 tail ais tossed";
+            console.log(msg);
+            self.ui.updateElement( "info", msg );
+        }
+        
+        function button2T(){
+            const msg = "You have counted cases where 2 tails are tossed";
             console.log(msg);
             self.ui.updateElement( "info", msg );
         }
        
+    }
+
+    countingHeads(){
+        //this.ui.mesh.visible = false;
+    }
+
+    countingTails(){
+
     }
 
     setupVR(){
@@ -330,6 +417,11 @@ class App{
         this.stats.update();
         this.mixer.update( dt )
         this.mixerT.update( dt )
+        if ( this.renderer.xr.isPresenting ) {
+            this.ui.update();
+            this.uiHead.update();
+            this.uiTail.update();
+        }
         this.renderer.render( this.scene, this.camera );
     }
 }
