@@ -141,9 +141,11 @@ class App{
         const ui = new CanvasUI( content, config );
         const ui1 = new CanvasUI( content1, config1 );
         const ui2 = new CanvasUI( content2, config1 );
+        
         this.ui = ui;
         this.ui1 = ui1;
         this.ui2 = ui2;
+        console.log(this.ui.mesh);
 
         //positions
         this.ui.mesh.position.set(0,0,-2);
@@ -170,6 +172,21 @@ class App{
         this.ui2.update(); 
         
     }
+
+    converttoDemand(x){
+        return 382.5*x+7.65;
+    }
+
+    converttoPix(x){
+        return 25.621*this.converttoDemand(x)+60;
+    }
+
+    funk(x){
+        return -0.3*x+4.6;
+    }
+
+    
+
        
     setupVR(){
         this.renderer.xr.enabled = true; 
@@ -224,9 +241,9 @@ class App{
             }
 
             setTimeout(next1,3000);
-            setTimeout(next2,6000);
-            setTimeout(next3,9000);
-            setTimeout(next4,12000);
+            setTimeout(next2,4000);
+            setTimeout(next3,5000);
+            setTimeout(next4,6000);
             
         }
 
@@ -243,26 +260,26 @@ class App{
             //update grafa
             this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(a-c,b-c);
-			this.app.ui.context.lineTo(9*incx,2.7*incy);
+			this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
 			this.app.ui.context.stroke();
             this.app.ui.context.save();
             this.app.ui.context.fillStyle = 'green';
-            this.app.ui.context.fillRect(9*incx,2.7*incy,7,7);
+            this.app.ui.context.fillRect(9*incx+60,2.7*incy+60,7,7);
 			//dashed vertical line with the label of quantity
 			this.app.ui.context.beginPath();
 			this.app.ui.context.setLineDash([5, 15]);
-			this.app.ui.context.moveTo(9*incx,2.7*incy);
-			this.app.ui.context.lineTo(9*incx,b-c);
+			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
+			this.app.ui.context.lineTo(9*incx+60,b-c);
 			this.app.ui.context.stroke();
 			this.app.ui.context.font = "15px Arial";
-			this.app.ui.context.fillText("90", 9*incx, b-2*c/3);
+			this.app.ui.context.fillText("90", 9*incx+60, b-2*c/3);
 			//dashed horizontal line with the label of price
 			this.app.ui.context.beginPath();
 			this.app.ui.context.setLineDash([5, 12]);
-			this.app.ui.context.moveTo(9*incx,2.7*incy);
-			this.app.ui.context.lineTo(c,2.7*incy);
+			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
+			this.app.ui.context.lineTo(c,2.7*incy+60);
 			this.app.ui.context.stroke();
-			this.app.ui.context.fillText("1.9", c/3, 2.7*incy);
+			this.app.ui.context.fillText("1.9", c/3, 2.7*incy+60);
 			this.app.ui.context.restore();
             this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
@@ -280,27 +297,27 @@ class App{
 
             //second line
 			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(9*incx,2.7*incy);
-			this.app.ui.context.lineTo(6*incx,1.8*incy);
+			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
+			this.app.ui.context.lineTo(6*incx+60,1.8*incy+60);
 			this.app.ui.context.stroke();
             this.app.ui.context.fillStyle = 'blue';
-			this.app.ui.context.fillRect(6*incx,1.8*incy,7,7);
+			this.app.ui.context.fillRect(6*incx+60,1.8*incy+60,7,7);
 			this.app.ui.context.save();
 			//dashed vertical line with the label of quantity
 			this.app.ui.context.beginPath();
 			this.app.ui.context.setLineDash([5, 15]);
-			this.app.ui.context.moveTo(6*incx,1.8*incy);
-			this.app.ui.context.lineTo(6*incx,b-c);
+			this.app.ui.context.moveTo(6*incx+60,1.8*incy+60);
+			this.app.ui.context.lineTo(6*incx+60,b-c);
 			this.app.ui.context.stroke();
 			this.app.ui.context.font = "15px Arial";
-			this.app.ui.context.fillText("60", 6*incx, b-2*c/3);
+			this.app.ui.context.fillText("60", 6*incx+60, b-2*c/3);
 			//dashed horizontal line with the label of price
 			this.app.ui.context.beginPath();
 			this.app.ui.context.setLineDash([5, 15]);
-			this.app.ui.context.moveTo(6*incx,1.8*incy);
-			this.app.ui.context.lineTo(c,1.8*incy);
+			this.app.ui.context.moveTo(6*incx+60,1.8*incy+60);
+			this.app.ui.context.lineTo(c,1.8*incy+60);
 			this.app.ui.context.stroke();
-			this.app.ui.context.fillText("2.8", c/3 , 1.8*incy );
+			this.app.ui.context.fillText("2.8", c/3 , 1.8*incy+60 );
 			this.app.ui.context.restore();
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
@@ -319,30 +336,30 @@ class App{
 
             //third line
             this.app.ui.context.beginPath();
-            this.app.ui.context.moveTo(6*incx,1.8*incy);
-            this.app.ui.context.lineTo(3*incx,0.9*incy);
+            this.app.ui.context.moveTo(6*incx+60,1.8*incy+60);
+            this.app.ui.context.lineTo(3*incx+60,0.9*incy+60);
             this.app.ui.context.stroke();
             this.app.ui.context.fillStyle = 'red';
-            this.app.ui.context.fillRect(3*incx,0.9*incy,7,7);
+            this.app.ui.context.fillRect(3*incx+60,0.9*incy+60,7,7);
             this.app.ui.context.save();
             //dashed vertical line with the label of quantity
             this.app.ui.context.beginPath();
             this.app.ui.context.setLineDash([5, 15]);
-            this.app.ui.context.moveTo(3*incx,0.9*incy);
-            this.app.ui.context.lineTo(3*incx,b-c);
+            this.app.ui.context.moveTo(3*incx+60,0.9*incy+60);
+            this.app.ui.context.lineTo(3*incx+60,b-c);
             this.app.ui.context.stroke();
             this.app.ui.context.font = "15px Arial";
-            this.app.ui.context.fillText("30", 3*incx, b-2*c/3);
+            this.app.ui.context.fillText("30", 3*incx+60, b-2*c/3);
             //dashed horizontal line with the label of price
             this.app.ui.context.beginPath();
             this.app.ui.context.setLineDash([5, 15]);
-            this.app.ui.context.moveTo(3*incx,0.9*incy);
-            this.app.ui.context.lineTo(c,0.9*incy);
+            this.app.ui.context.moveTo(3*incx+60,0.9*incy+60);
+            this.app.ui.context.lineTo(c,0.9*incy+60);
             this.app.ui.context.stroke();
-            this.app.ui.context.fillText("3.7", c/3 , 0.9*incy );
+            this.app.ui.context.fillText("3.7", c/3 , 0.9*incy +60);
             this.app.ui.context.restore();
             this.app.ui.context.beginPath();
-            this.app.ui.context.moveTo(3*incx,0.9*incy);
+            this.app.ui.context.moveTo(3*incx+60,0.9*incy+60);
             this.app.ui.context.lineTo(c,c);
             this.app.ui.context.stroke();
             this.app.ui.context.save();
@@ -358,9 +375,14 @@ class App{
         }
 
         function next4(){
-            this.app.ui1.mesh.visible = false;
-            this.app.ui2.mesh.visible = false;
-            
+            //empty ui with price/demand
+            this.app.ui1.updateElement('info', '');
+            this.app.ui2.updateElement('info', ''); 
+            this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
+            this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
+            this.app.ui1.update();
+            this.app.ui2.update(); 
+
             //filling the area
             this.app.ui.context.save();
             this.app.ui.context.fillStyle = 'gray';
@@ -398,6 +420,114 @@ class App{
         }
 
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }});
+        this.gestures = new ControllerGestures( this.renderer );
+        
+        this.gestures.addEventListener( 'tap', (ev)=>{
+            console.log( 'tap' ); 
+            console.log(ev.position.x);
+            if (-0.02 <= ev.position.x && ev.position.x <= 0.02) {
+                self.clearCanvas();
+                var m = self.converttoPix(ev.position.x);
+                var n = self.converttoDemand(ev.position.x);
+                var t = self.funk(n);
+                var s = b-c-t*incy;
+                console.log(n*10);
+                console.log(s);
+
+                //drawing a function
+                self.ui.context.fillStyle = 'black';
+                self.ui.context.font = "25px Arial";
+                self.ui.context.save();
+                self.ui.context.beginPath();
+                self.ui.context.moveTo(c,c);
+                self.ui.context.lineTo(c,b-c);
+                self.ui.context.lineTo(a-c,b-c);
+                self.ui.context.lineTo(c,c);
+                self.ui.context.stroke();
+                self.ui.context.fillText("Quantity Demanded", a/2,b-c/4);
+                self.ui.context.save();
+                self.ui.context.rotate(-Math.PI/2);
+                self.ui.context.fillText("Price per kilogram", -2*b/3 , 2*c/3);
+                self.ui.context.restore();
+
+                //drawing a dashed vertical line
+                self.ui.context.save();
+                self.ui.context.beginPath();
+                self.ui.context.setLineDash([5, 15]);
+                self.ui.context.moveTo(m,s);
+                self.ui.context.lineTo(m,b-c);
+                self.ui.context.stroke();
+                self.ui.context.fillStyle = 'green';
+                self.ui.context.font = "15px Arial";
+                self.ui.context.fillText((n*10).toFixed(2), m  , b-2*c/3 );
+                 //drawing a dashed horizontal line
+                self.ui.context.beginPath();
+                self.ui.context.setLineDash([5, 15]);
+                self.ui.context.moveTo(m,s);
+                self.ui.context.lineTo(c,s);
+                self.ui.context.stroke();
+                self.ui.context.fillStyle = 'green';
+                //self.ui.context.rotate(-Math.PI/2);
+                self.ui.context.font = "15px Arial";
+                self.ui.context.fillText(t.toFixed(2),c/3,s);
+                self.ui.context.restore();
+
+                //filling up area of triangles
+                self.ui.context.save();
+                self.ui.context.fillStyle = 'gray';
+                self.ui.context.beginPath();
+                self.ui.context.moveTo(m,s);
+                self.ui.context.lineTo(a-c,b-c);
+                self.ui.context.lineTo(m,b-c);
+                self.ui.context.lineTo(m,s);
+                self.ui.context.fill();
+                self.ui.context.restore();
+
+                self.ui.context.save();
+                self.ui.context.fillStyle = 'gray';
+                self.ui.context.beginPath();
+                self.ui.context.moveTo(m,s);
+                self.ui.context.lineTo(c,s);
+                self.ui.context.lineTo(c,c);
+                self.ui.context.lineTo(m,s);
+                self.ui.context.fill();
+                self.ui.context.restore();
+
+                
+                //area of the triangles
+                var area1 = ((4.6-t)*n*5).toFixed(2);
+                var area2 = ((t*(153-n*10))/2).toFixed(2);
+
+                //self.ui.context.fillText(area1,m+c,b-c/2);
+                //self.ui.context.fillText(area2,m-c,2*c);
+
+                //update the ui-mesh showing the area of the triangles 
+                self.ui2.updateElement('info', 'Consumer Surplus:'+area1);
+                self.ui1.updateElement('info', 'Lost Wellfare:'+area2); 
+                self.ui1.updateConfig ("body", "fontColor", "#000" );
+                self.ui2.updateConfig ("body", "fontColor", "#000" );
+                self.ui1.updateConfig ("body", "fontSize", "30" );
+                self.ui1.updateConfig ("body", "fontSize", "30" );
+                self.ui1.update();
+                self.ui2.update(); 
+
+                //hide mesh
+                self.cart.visible = false;
+                self.apple.visible = false;
+
+            }
+
+
+            //self.ui.updateElement('info', 'tap' );
+            /*if (!self.knight.object.visible){
+                self.knight.object.visible = true;
+                self.knight.object.position.set( 0, -0.3, -0.5 ).add( ev.position );
+                self.scene.add( self.knight.object ); 
+            }*/
+
+        });
+        
+        
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
@@ -413,6 +543,9 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
+        if ( this.renderer.xr.isPresenting ){
+            this.gestures.update();
+        }
         this.renderer.render( this.scene, this.camera );
     }
 }

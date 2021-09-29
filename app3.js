@@ -60,8 +60,8 @@ class App{
 
                 self.animations = {};
                 self.head = gltf.scene;
-                self.coinH = gltf.scene.children[0].children[1];
-                self.head.children[0].children[0].visible = false;
+                self.coinH = gltf.scene.children[0].children[0];
+                self.head.children[0].children[1].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossHead'] = gltf.animations[0];
@@ -101,9 +101,9 @@ class App{
 
                 self.animationsT = {};
                 self.tail = gltf.scene;
-                console.log(gltf.scene.children[0].children[1]);
-                self.coinT = gltf.scene.children[0].children[1];
-                self.tail.children[0].children[0].visible = false;
+                //console.log(gltf.scene.children[0].children[1]);
+                self.coinT = gltf.scene.children[0].children[0];
+                self.tail.children[0].children[1].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossTail'] = gltf.animations[0];
@@ -196,9 +196,9 @@ class App{
             panelSize: { width: 0.7, height: 0.1 },
             height: 73,
             info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button0: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0H },
-            button1: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1H },
-            button2: { type: "button", position:{ top: 39, left: 186 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2H },
+            button0H: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0H },
+            button1H: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1H },
+            button2H: { type: "button", position:{ top: 39, left: 346 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2H },
             renderer: this.renderer
         }
 
@@ -206,9 +206,9 @@ class App{
             panelSize: { width: 0.7, height: 0.1 },
             height: 73,
             info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button0: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0T },
-            button1: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1T },
-            button2: { type: "button", position:{ top: 39, left: 186 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2T },
+            button0T: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0T },
+            button1T: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1T },
+            button2T: { type: "button", position:{ top: 39, left: 346 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2T },
             renderer: this.renderer
         }
 
@@ -220,87 +220,165 @@ class App{
 
         const contentH = {
             info: "Number of Heads Tossed",
-            button1: "1",
-            button2: "2",
+            button0H: "0",
+            button1H: "1",
+            button2H: "2",
         }
 
         const contentT = {
             info: "Number of Tails Tossed",
-            button1: "1",
-            button2: "2",
+            button0T: "0",
+            button1T: "1",
+            button2T: "2",
         }
 
         const ui = new CanvasUI( content, config );
         this.ui = ui;
         this.ui.mesh.position.set(0, -0.3, -0.9);
 
-        const uiHead = new CanvasUI(contentH, config);
+        const uiHead = new CanvasUI(contentH, configH);
         this.uiHead = uiHead;
         this.uiHead.mesh.position.set(0, -0.3, -0.9);
 
-        const uiTail = new CanvasUI( contentT, config );
+        const uiTail = new CanvasUI( contentT, configT );
         this.uiTail = uiTail;
         this.uiTail.mesh.position.set(0, -0.3, -0.9);
 
         function button1(){
-            const msg = "You have selected head";
-            console.log(msg);
-            self.ui.mesh.visible = false;
+            //const msg = "You have selected head";
+            self.scene.remove(self.ui.mesh);
             self.scene.add(self.uiHead.mesh);
-            self.ui.updateElement( "info", msg );
+            //self.ui.updateElement( "info", msg );
         }
         
         function button2(){
-            const msg = "You have selected tail";
-            self.ui.mesh.visible = false;
+            //const msg = "You have selected tail";
+            self.scene.remove(self.ui.mesh);
             self.scene.add(self.uiTail.mesh);
-            self.ui.updateElement( "info", msg );
+            //self.ui.updateElement( "info", msg );
         }
 
         function button0H(){
             const msg = "You have counted cases where no heads are tossed";
             console.log(msg);
-            self.ui.updateElement( "info", msg );
+            self.counting(0,0);
+            self.uiHead.updateElement( "info", msg );
         }
         function button1H(){
             const msg = "You have counted cases where 1 head is tossed";
             console.log(msg);
-            self.ui.updateElement( "info", msg );
+            self.counting(0,1);
+            self.uiHead.updateElement( "info", msg );
         }
         
         function button2H(){
-            const msg = "You have counted cases where 2 heads are tossed";
-            console.log(msg);
-            self.ui.updateElement( "info", msg );
+            const msg2h = "You have counted cases where 2 heads are tossed";
+            console.log(msg2h);
+            self.counting(0,2);
+            self.uiHead.updateElement( "info", msg2h );
         }
 
         function button0T(){
             const msg = "You have counted cases where no tails are tossed";
             console.log(msg);
-            self.ui.updateElement( "info", msg );
+            self.counting(1,0);
+            self.uiTail.updateElement( "info", msg );
         }
 
         function button1T(){
             const msg = "You have counted cases where 1 tail ais tossed";
             console.log(msg);
-            self.ui.updateElement( "info", msg );
+            self.counting(1,1);
+            self.uiTail.updateElement( "info", msg );
         }
         
         function button2T(){
             const msg = "You have counted cases where 2 tails are tossed";
             console.log(msg);
-            self.ui.updateElement( "info", msg );
+            self.counting(1,2);
+            self.uiTail.updateElement( "info", msg );
         }
        
     }
 
-    countingHeads(){
-        //this.ui.mesh.visible = false;
-    }
+    counting(x,y){
+        const self = this;
+        //x = 0 or 1, where 0 is head, tail is 1
+            if (x)
+            {
+                if (y==0)   {
+                    self.coin.visible = true;
+                    self.coin1.visible = true;
+                    self.coin2.visible = false;
+                    self.coin3.visible = false;
+                    self.coin4.visible = false;
+                    self.coin5.visible = false;
+                    self.coin6.visible = false;
+                    self.coin7.visible = false;
+                }
+                
+                if (y==1)  {
+                    self.coin.visible = false;
+                    self.coin1.visible = false;
+                    self.coin2.visible = true;
+                    self.coin3.visible = true;
+                    self.coin4.visible = true;
+                    self.coin5.visible = true;
+                    self.coin6.visible = false;
+                    self.coin7.visible = false;
+                }
 
-    countingTails(){
+                if (y==2)  {
+                    self.coin.visible = false;
+                    self.coin1.visible = false;
+                    self.coin2.visible = false;
+                    self.coin3.visible = false;
+                    self.coin4.visible = false;
+                    self.coin5.visible = false;
+                    self.coin6.visible = true;
+                    self.coin7.visible = true;
+                }
 
+
+            }
+            else {  
+                
+                if (y==0)   {
+                    self.coin.visible = false;
+                    self.coin1.visible = false;
+                    self.coin2.visible = false;
+                    self.coin3.visible = false;
+                    self.coin4.visible = false;
+                    self.coin5.visible = false;
+                    self.coin6.visible = true;
+                    self.coin7.visible = true;
+                }
+                
+                if (y==1)  {
+                    self.coin.visible = false;
+                    self.coin1.visible = false;
+                    self.coin2.visible = true;
+                    self.coin3.visible = true;
+                    self.coin4.visible = true;
+                    self.coin5.visible = true;
+                    self.coin6.visible = false;
+                    self.coin7.visible = false;
+                }
+
+                if (y==2)  {
+                    self.coin.visible = true;
+                    self.coin1.visible = true;
+                    self.coin2.visible = false;
+                    self.coin3.visible = false;
+                    self.coin4.visible = false;
+                    self.coin5.visible = false;
+                    self.coin6.visible = false;
+                    self.coin7.visible = false;
+                }
+
+            }
     }
+    
 
     setupVR(){
         this.renderer.xr.enabled = true; 
@@ -341,6 +419,8 @@ class App{
 
         function next3(){
             this.app.tail.visible = false;
+            this.app.scene.remove(self.head);
+            this.app.scene.remove(self.tail);
 
             this.app.coin.visible = true;
             this.app.coin.position.set( -0.3, 0.15, -0.9 ); 
@@ -380,8 +460,6 @@ class App{
         }
 
         function onSessionEnd(){
-            self.scene.remove(self.head);
-            self.scene.remove(self.tail);
             self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
@@ -390,6 +468,9 @@ class App{
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
+            self.scene.remove(self.ui.mesh);
+            self.scene.remove(self.uiHead.mesh);
+            self.scene.remove(self.uiTail.mesh);
         }
 
 

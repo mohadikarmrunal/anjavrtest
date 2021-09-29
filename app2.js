@@ -49,7 +49,7 @@ class App{
 
         const self = this;
 
-        const config = {
+        const config1 = {
             body:{ 
                 textAlign: 'center',
                 backgroundColor: '#fff', 
@@ -62,21 +62,47 @@ class App{
             }
 
 
-        const content = {
+        const content1 = {
                 info: ""
         }
 
-        const ui = new CanvasUI( content, config );
-        this.ui = ui;
+        const ui1 = new CanvasUI( content1, config1 );
+        this.ui1 = ui1;
+
+        const ui2 = new CanvasUI( content1, config1 );
+        this.ui2 = ui2;
+
+        const ui3 = new CanvasUI( content1, config1 );
+        this.ui3 = ui3;
+
+        const ui4 = new CanvasUI( content1, config1 );
+        this.ui4 = ui4;
+
+        const ui5 = new CanvasUI( content1, config1 );
+        this.ui5 = ui5;
+        
+        
 
         //setting up canvas for graph
-        this.ui.context.lineJoin = "round";  
-        this.ui.context.strokeStyle = "black"; 
-        this.ui.context.font = "20px Arial";
-
+        this.ui1.context.lineJoin = "round";  
+        this.ui1.context.strokeStyle = "black"; 
+        this.ui1.context.font = "20px Arial";
+        this.ui2.context.lineJoin = "round";  
+        this.ui2.context.strokeStyle = "black"; 
+        this.ui2.context.font = "20px Arial";
+        this.ui3.context.lineJoin = "round";  
+        this.ui3.context.strokeStyle = "black"; 
+        this.ui3.context.font = "20px Arial";
+        this.ui4.context.lineJoin = "round";  
+        this.ui4.context.strokeStyle = "black"; 
+        this.ui4.context.font = "20px Arial";
+        this.ui5.context.lineJoin = "round";  
+        this.ui5.context.strokeStyle = "black"; 
+        this.ui5.context.font = "20px Arial";
+        
         //creating const for length and width
-        const a = this.ui.config.width;
-        const b = this.ui.config.height;
+        const a = this.ui1.config.width;
+        const b = this.ui1.config.height;
         const c = 60;
         this.a = a;
         this.b = b;
@@ -105,8 +131,8 @@ class App{
             button5: "130",
         }
 
-        const ui2 = new CanvasUI( content2, config2 );
-        this.ui2 = ui2;
+        const ui6 = new CanvasUI( content2, config2 );
+        this.ui6 = ui6;
 
         const config3 = {
 
@@ -120,54 +146,55 @@ class App{
                 info: "\u222B\u0192(x) = 67942.04"
         }
 
-        const ui3 = new CanvasUI(content3, config3);
-        this.ui3 = ui3;
+        const ui7 = new CanvasUI(content3, config3);
+        this.ui7 = ui7;
 
 
         //functions of the buttons
 
         function button1(){
             const msg = "You have selected length 10";
-            self.rectangles(10);
+            self.rectangles(10,self.ui1);
             console.log(msg);
-            self.ui2.updateElement( "info", msg );
+            self.ui6.updateElement( "info", msg );
         }
         
         function button2(){
             const msg = "You have selected length 40";
-            self.rectangles(40);
+            self.rectangles(40,self.ui1);
             console.log(msg);
-            self.ui2.updateElement( "info", msg );
+            self.ui6.updateElement( "info", msg );
         }
         
         function button3(){
             const msg = "You have selected length 70";
-            self.rectangles(70);
+            self.rectangles(70,self.ui1);
             console.log(msg);
-            self.ui2.updateElement( "info", msg );
+            self.ui6.updateElement( "info", msg );
 
         }
 
         function button4(){
             const msg = "You have selected length 100";
-            self.rectangles(100);
+            self.rectangles(100,self.ui1);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
         }
 
         function button5(){
             const msg = "You have selected length 130";
-            self.rectangles(130);
+            self.rectangles(130,self.ui1);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
         }
 
     }
     
-    rectangles(n){
-        console.log(this);
-        this.clearCanvas();
-        this.RenderFunction();
+    rectangles(n, canv){
+        this.ui = canv;
+        //console.log(this);
+        this.clearCanvas(this.ui);
+        this.RenderFunction(this.ui);
         this.ui.context.save();
         this.ui.context.fillStyle = 'gray';
         const a = this.a;
@@ -247,7 +274,8 @@ class App{
         return this.b-this.c-y;
     }
 
-    clearCanvas(){
+    clearCanvas(canv){
+        this.ui = canv ;
         this.ui.context.save();
         this.ui.context.fillStyle = 'white';
         this.ui.context.fillRect(0,0,this.a,this.b);
@@ -258,8 +286,10 @@ class App{
     }
 
     // RenderFunction() renders the input funtion f on the canvas.
-    RenderFunction() {
-
+    RenderFunction(canv) {
+        this.ui = canv;
+        //console.log(canv);
+        //console.log(this.ui);
         var XSTEP= 5;
         var first = true;
         const a = this.a;
@@ -306,6 +336,7 @@ class App{
         
         //console.log('renderFunction');
         this.ui.context.restore();
+        
     }
 
     setupVR() {
@@ -318,24 +349,55 @@ class App{
             
         function onSessionStart(){
             //adding mesh to scene
-            self.ui.mesh.position.set(0,0,-2);
-            self.scene.add(self.ui.mesh);
+            self.ui1.mesh.position.set(-2,0,-2);
+            self.ui1.mesh.rotateY(Math.PI/2);
+            self.scene.add(self.ui1.mesh);
+            self.rectangles(100,self.ui1);
 
-            self.ui2.mesh.position.set(0,-1.7,-5);
+            self.ui2.mesh.position.set(-2,0,-4);
+            self.ui2.mesh.rotateY(Math.PI/4);
             self.scene.add(self.ui2.mesh);
+            self.rectangles(70,self.ui2);
 
-            self.ui3.mesh.position.set(0,1.7,-5);
+            self.ui3.mesh.position.set(0,0,-4);
             self.scene.add(self.ui3.mesh);
+            self.rectangles(40,self.ui3);
+
+            self.ui4.mesh.position.set(2,0,-4);
+            self.ui4.mesh.rotateY(-Math.PI/4);
+            self.scene.add(self.ui4.mesh);
+            self.rectangles(10,self.ui4);
+
+            self.ui5.mesh.position.set(2,0,-2);
+            self.ui5.mesh.rotateY(-Math.PI/2);
+            self.scene.add(self.ui5.mesh);
+            self.RenderFunction(self.ui5);
+
+            self.ui6.mesh.position.set(2,-1.7,-2);
+            self.ui6.mesh.rotateY(-Math.PI/2);
+            self.scene.add(self.ui6.mesh);
+
+            self.ui7.mesh.position.set(2,1.7,-2);
+            self.ui7.mesh.rotateY(-Math.PI/2);
+            self.scene.add(self.ui7.mesh);
             
-            self.RenderFunction();
             
         }
        
         function onSessionEnd(){
-            self.clearCanvas();
-            self.scene.remove( self.ui.mesh );
+            //self.clearCanvas();
+            self.clearCanvas(self.ui1);
+            self.clearCanvas(self.ui2);
+            self.clearCanvas(self.ui3);
+            self.clearCanvas(self.ui4);
+            self.clearCanvas(self.ui5);
+            self.scene.remove( self.ui1.mesh );
             self.scene.remove( self.ui2.mesh );
             self.scene.remove( self.ui3.mesh );
+            self.scene.remove( self.ui4.mesh );
+            self.scene.remove( self.ui5.mesh );
+            self.scene.remove( self.ui6.mesh );
+            self.scene.remove( self.ui7.mesh );
         }
 
 
@@ -362,7 +424,7 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        if ( this.renderer.xr.isPresenting ) this.ui2.update();
+        if ( this.renderer.xr.isPresenting ) this.ui6.update();
         this.renderer.render( this.scene, this.camera );
     }
 }
