@@ -110,15 +110,15 @@ class App{
        
         //setting up button canvasUI
         const config2 = {
-            panelSize: { width: 2.6, height: 0.5 },
-            height: 128,
-            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 58, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            panelSize: { height: 0.2 },
+            height: 102.4,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
             //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            button1: { type: "button", position:{ top: 70, left: 6.15 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
-            button2: { type: "button", position:{ top: 70, left: 107.3 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
-            button3: { type: "button", position:{ top: 70, left: 208.45}, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button3 },
-            button4: { type: "button", position:{ top: 70, left: 309.6 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button4 },
-            button5: { type: "button", position:{ top: 70, left: 410.75 }, width: 95, height: 52, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button5 },
+            button1: { type: "button", position:{ top: 54.4, left: 6.15 }, width: 95, height: 42, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
+            button2: { type: "button", position:{ top: 54.4, left: 107.3 }, width: 95, height: 42, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
+            button3: { type: "button", position:{ top: 54.4, left: 208.45}, width: 95, height: 42, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button3 },
+            button4: { type: "button", position:{ top: 54.4, left: 309.6 }, width: 95, height: 42, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button4 },
+            button5: { type: "button", position:{ top: 54.4, left: 410.75 }, width: 95, height: 42, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button5 },
             //continue: { type: "button", position:{ top: 70, right: 10 }, width: 200, height: 52, fontColor: "#fff", backgroundColor: "#1bf", hover: "#3df", onSelect: button4 },
             renderer: this.renderer
         }
@@ -136,8 +136,8 @@ class App{
 
         const config3 = {
 
-            panelSize: { width: 2.6, height: 0.5 },
-            height: 98.46,
+            panelSize: { height: 0.2 },
+            height: 102.4,
             info:{ type: "text", backgroundColor: "#fff", fontColor: "#000", fontSize: 40, padding:40, textAlign: 'center', fontStyle: 'Arial' },
         }
 
@@ -149,26 +149,34 @@ class App{
         const ui7 = new CanvasUI(content3, config3);
         this.ui7 = ui7;
 
+        this.ui8 = this.ui7.mesh.clone();
+
+        this.ui9 = this.ui7.mesh.clone();
+
+        this.ui10 = this.ui7.mesh.clone();
+
+        this.ui11 = this.ui7.mesh.clone();
+
 
         //functions of the buttons
 
         function button1(){
             const msg = "You have selected length 10";
-            self.rectangles(10,self.ui1);
+            self.rectangles(10,self.ui5);
             console.log(msg);
             self.ui6.updateElement( "info", msg );
         }
         
         function button2(){
             const msg = "You have selected length 40";
-            self.rectangles(40,self.ui1);
+            self.rectangles(40,self.ui5);
             console.log(msg);
             self.ui6.updateElement( "info", msg );
         }
         
         function button3(){
             const msg = "You have selected length 70";
-            self.rectangles(70,self.ui1);
+            self.rectangles(70,self.ui5);
             console.log(msg);
             self.ui6.updateElement( "info", msg );
 
@@ -176,14 +184,14 @@ class App{
 
         function button4(){
             const msg = "You have selected length 100";
-            self.rectangles(100,self.ui1);
+            self.rectangles(100,self.ui5);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
         }
 
         function button5(){
             const msg = "You have selected length 130";
-            self.rectangles(130,self.ui1);
+            self.rectangles(130,self.ui5);
             console.log(msg);
             self.ui2.updateElement( "info", msg );
         }
@@ -266,7 +274,7 @@ class App{
         this.ui.context.restore();
         this.ui.needsUpdate = true;
         this.ui.texture.needsUpdate = true;
-        console.log(area);
+        //console.log(area);
         this.ui.context.restore();
     }
     
@@ -348,50 +356,61 @@ class App{
         const c = this.c;
             
         function onSessionStart(){
-            //adding mesh to scene
+
+            //adding meshes to scene
             self.ui1.mesh.position.set(-2,0,-2);
             self.ui1.mesh.rotateY(Math.PI/2);
+            console.log(self.ui1.mesh);
             self.scene.add(self.ui1.mesh);
-            self.camera.add(self.ui1.mesh);
+            self.ui7.mesh.position.set(-2,1,-2);
+            self.ui7.mesh.rotateY(Math.PI/2);
+            self.scene.add(self.ui7.mesh);
             self.rectangles(100,self.ui1);
 
             self.ui2.mesh.position.set(-2,0,-4);
             self.ui2.mesh.rotateY(Math.PI/4);
             self.scene.add(self.ui2.mesh);
+            self.ui8.position.set(-2,1,-4);
+            self.ui8.rotateY(Math.PI/4);
+            self.scene.add(self.ui8);
             self.rectangles(70,self.ui2);
 
             self.ui3.mesh.position.set(0,0,-4);
             self.scene.add(self.ui3.mesh);
+            self.ui9.position.set(0,1,-4);
+            self.scene.add(self.ui9);
             self.rectangles(40,self.ui3);
 
             self.ui4.mesh.position.set(2,0,-4);
             self.ui4.mesh.rotateY(-Math.PI/4);
             self.scene.add(self.ui4.mesh);
+            self.ui10.position.set(2,1,-4);
+            self.ui10.rotateY(-Math.PI/4);
+            self.scene.add(self.ui10);
             self.rectangles(10,self.ui4);
 
             self.ui5.mesh.position.set(2,0,-2);
             self.ui5.mesh.rotateY(-Math.PI/2);
             self.scene.add(self.ui5.mesh);
+            self.ui11.position.set(2,1,-2);
+            self.ui11.rotateY(-Math.PI/2);
+            self.scene.add(self.ui11);
             self.RenderFunction(self.ui5);
-
-            self.ui6.mesh.position.set(2,-1.7,-2);
+            self.ui6.mesh.position.set(2,-1,-2);
             self.ui6.mesh.rotateY(-Math.PI/2);
             self.scene.add(self.ui6.mesh);
 
-            self.ui7.mesh.position.set(2,1.7,-2);
-            self.ui7.mesh.rotateY(-Math.PI/2);
-            self.scene.add(self.ui7.mesh);
-            
             
         }
        
         function onSessionEnd(){
-            //self.clearCanvas();
+
             self.clearCanvas(self.ui1);
             self.clearCanvas(self.ui2);
             self.clearCanvas(self.ui3);
             self.clearCanvas(self.ui4);
             self.clearCanvas(self.ui5);
+
             self.scene.remove( self.ui1.mesh );
             self.scene.remove( self.ui2.mesh );
             self.scene.remove( self.ui3.mesh );
@@ -399,10 +418,17 @@ class App{
             self.scene.remove( self.ui5.mesh );
             self.scene.remove( self.ui6.mesh );
             self.scene.remove( self.ui7.mesh );
+
+            self.scene.remove( self.ui8 );
+            self.scene.remove( self.ui9 );
+            self.scene.remove( self.ui10 );
+            self.scene.remove( self.ui11 );
+
+
         }
 
 
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd,sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
         const controller = this.renderer.xr.getController( 0 );
         //controller.addEventListener( 'connected', onConnected );
         
