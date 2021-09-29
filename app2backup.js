@@ -6,7 +6,6 @@ import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 //import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
 //import { LoadingBar } from '../../libs/LoadingBar.js';
-//KOPIJA APP2 samo da ne zajebem
 
 class App{
 	constructor(){
@@ -38,10 +37,6 @@ class App{
         this.controls.update();
         
         this.stats = new Stats();
-
-        // PRVI KOR -00000001
-        this.listener = new THREE.AudioListener();
-        this.camera.add( this.listener );
         
         this.createUI();
         this.setupVR();
@@ -49,7 +44,6 @@ class App{
         window.addEventListener('resize', this.resize.bind(this) );
 	
     }
-
 
     createUI(){
 
@@ -365,25 +359,6 @@ class App{
             
         function onSessionStart(){
 
-            if (self.speech === undefined) {
-
-                const sound = new THREE.Audio( self.listener );
-                
-                const audioLoader = new THREE.AudioLoader();
-                    audioLoader.load( 'audio/app2.mp3', ( buffer ) => {
-                        sound.setBuffer( buffer );
-                        sound.setLoop( false );
-                        sound.setVolume( 1.0 );
-                        sound.play();
-                    });
-
-                self.sound = sound;
-                self.speech = new THREE.Audio( self.listener );
-            } else {
-                self.sound.play();
-            }
-            
-
             //adding meshes to scene
             self.ui1.mesh.position.set(-2,0,-2);
             self.ui1.mesh.rotateY(Math.PI/2);
@@ -430,8 +405,6 @@ class App{
         }
        
         function onSessionEnd(){
-
-            if (self.sound && self.sound.isPlaying) self.sound.stop();
 
             self.clearCanvas(self.ui1);
             self.clearCanvas(self.ui2);
