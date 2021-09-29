@@ -352,6 +352,7 @@ class App{
             self.ui1.mesh.position.set(-2,0,-2);
             self.ui1.mesh.rotateY(Math.PI/2);
             self.scene.add(self.ui1.mesh);
+            self.camera.add(self.ui1.mesh);
             self.rectangles(100,self.ui1);
 
             self.ui2.mesh.position.set(-2,0,-4);
