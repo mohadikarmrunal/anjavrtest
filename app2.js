@@ -39,7 +39,7 @@ class App{
         
         this.stats = new Stats();
 
-        // PRVI KOR -00000001
+        
         this.listener = new THREE.AudioListener();
         this.camera.add( this.listener );
         
