@@ -45,6 +45,7 @@ class App{
         
         this.initScene();
         this.setupVR();
+        this.loadSound();
       
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
@@ -81,11 +82,20 @@ class App{
 
         loader.load(
 			// resource URL
-			'cart.gltf',
+			'cart2.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
+                self.animations = {};
                 self.cart = gltf.scene;
+                self.cartobj = gltf.scene.children[0];
+                self.animations['click'] = gltf.animations[0];
+                self.mixer = new THREE.AnimationMixer( self.cartobj );
+                const clip = self.animations['click'];
+                const action = self.mixer.clipAction (clip);
+                action.enabled = true;
+                self.action = action;
+                self.action.loop = THREE.LoopRepeat;
                 self.loadingBar.visible = false;
                 self.cart.visible=false;
 				//self.cart.scale.set(scale, scale, scale); 
@@ -101,6 +111,30 @@ class App{
 			}
         );
 
+        loader.load(
+			// resource URL
+			'mouse.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.cursor = gltf.scene;
+                self.loadingBar.visible = false;
+                self.cursor.visible=false;
+				const scale = 0.01;
+				self.cursor.scale.set(scale, scale, scale); 
+                self.cursor.rotateX(Math.PI/2);
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading a cursor' );
+			}
+        );
+
         this.createUI();
 
     }
@@ -108,6 +142,32 @@ class App{
     createUI() {
         
         const config1 = {
+            panelSize: { width: 0.1, height: 0.038 },
+            height: 194,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:65,
+                fontSize:55,
+            },
+            info:{ type: "text" }
+        }
+
+        const config2 = {
+            panelSize: { width: 0.1, height: 0.038 },
+            height: 194,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:65,
+                fontSize:55,
+            },
+            info:{ type: "text" }
+        }
+
+        const config4 = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 194,
             body:{
@@ -154,9 +214,9 @@ class App{
     
         const ui = new CanvasUI( content, config );
         const ui1 = new CanvasUI( content1, config1 );
-        const ui2 = new CanvasUI( content2, config1 );
+        const ui2 = new CanvasUI( content2, config2 );
         const ui3 = new CanvasUI( content3, config1 );
-        const ui4 = new CanvasUI( content4, config1 );
+        const ui4 = new CanvasUI( content4, config4 );
         
         this.ui = ui;
         this.ui1 = ui1;
@@ -176,7 +236,7 @@ class App{
 
     }
 
-    clearCanvas(){
+    clearCanvas(ind){
 
        //removing graph
         this.ui.context.save();
@@ -186,14 +246,31 @@ class App{
         this.ui.texture.needsUpdate = true;
         this.ui.context.restore();
 
+        //adding the x and y axis
+        this.ui.context.fillStyle = 'black';
+        this.ui.context.font = "25px Arial";
+        this.ui.context.save();
+        this.ui.context.beginPath();
+        this.ui.context.moveTo(this.c,this.c);
+        this.ui.context.lineTo(this.c,this.b-this.c);
+        this.ui.context.lineTo(this.a-this.c,this.b-this.c);
+        this.ui.context.stroke();
+        this.ui.context.fillText("Quantity Demanded", this.a/2,this.b-this.c/4);
+        this.ui.context.save();
+        this.ui.context.rotate(-Math.PI/2);
+        this.ui.context.fillText("Price per kilogram", -11*this.b/15 , 2*this.c/3);
+        this.ui.context.restore();
+
         //restoring additional two canvases
-        this.ui1.updateElement('info', 'Price per kg');
-        this.ui2.updateElement('info', 'Sold in kg'); 
-        this.ui1.updateConfig ("body", "fontColor", "#000" );
-        this.ui1.updateConfig ("body", "fontColor", "#000" );
-        this.ui1.update();
-        this.ui2.update(); 
-        
+        if (ind){
+            this.ui1.updateElement('info', 'Price per kg');
+            this.ui2.updateElement('info', 'Sold in kg'); 
+            this.ui1.updateConfig ("body", "fontColor", "#000" );
+            this.ui2.updateConfig ("body", "fontColor", "#000" );
+            this.ui2.updateConfig ("body", "fontSize", "55" );
+            this.ui1.update();
+            this.ui2.update(); 
+        }        
     }
 
     converttoDemand(x){
@@ -209,7 +286,22 @@ class App{
     }
 
     
+    loadSound(){
+        const self = this;
+        const sound = new THREE.Audio( self.listener );
+            
+        const audioLoader = new THREE.AudioLoader();
+            audioLoader.load( 'audio/app1.mp3', ( buffer ) => {
+                sound.setBuffer( buffer );
+                sound.setLoop( false );
+                sound.setVolume( 1.0 );
+                //sound.play();
+                console.log('sound');
+            });
 
+        this.sound = sound;
+        this.speech = new THREE.Audio( this.listener );
+    }
        
     setupVR(){
 
@@ -225,6 +317,9 @@ class App{
         const a = this.ui.config.width;
         const b = this.ui.config.height;
         const c = 60;
+        this.a = a;
+        this.b = b;
+        this.c = c;
         //increments on x and y axis
         const incx = (a-2*c)/ 15.3;
         const incy = (b-2*c)/ 4.6;
@@ -247,9 +342,21 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.scene.add(self.ui4.mesh);
 
+            self.clearCanvas(0);
+            self.ui.context.beginPath();
+            self.ui.context.moveTo(a-c,b-c);
+            self.ui.context.lineTo(c,c);
+            self.ui.context.stroke();
+            self.ui.context.save();
+            self.ui.context.rotate(Math.PI/4);
+            self.ui.context.fillStyle = 'black';
+            self.ui.context.font = "20px Arial";
+            self.ui.context.fillText("Demand Curve f(x)", a/2 , -b/80);
+            self.ui.context.restore();
+
             //console.log("values of width and height"+ a + b);
             //x i y osa sa oznakama
-            self.ui.context.beginPath();
+            /*self.ui.context.beginPath();
             self.ui.context.moveTo(c,c);
             self.ui.context.lineTo(c,b-c);
             self.ui.context.lineTo(a-c,b-c);
@@ -258,7 +365,7 @@ class App{
             self.ui.context.save();
             self.ui.context.rotate(-Math.PI/2);
             self.ui.context.fillText("Price per kilogram", -11*b/15 , 2*c/3);
-            self.ui.context.restore();
+            self.ui.context.restore();*/
 
             if(!self.apple.visible){
                 self.apple.visible = true;
@@ -272,45 +379,53 @@ class App{
                 self.scene.add( self.cart); 
             }
 
+           
+
             setTimeout(next1,1000);
-            setTimeout(next2,10000);
-            setTimeout(next3,11000);
-            setTimeout(next4,12000);
+            setTimeout(next2,52000);
+            setTimeout(next3,71000);
+            setTimeout(next4,76000);
+            setTimeout(next5,89000);
+            
+          
+            /*setTimeout(next2,1000);
+            setTimeout(next3,6000);
+            setTimeout(next4,11000);
+            setTimeout(next5,16000);*/
             
         }
 
-
         function next1(){
+            console.log('sound is playing');
+            this.app.sound.play();
+			console.log('SetTimeout1');
+        }
 
-            if (this.app.speech === undefined) {
+        function next2(){
 
-                const sound = new THREE.Audio( self.listener );
-                
-                const audioLoader = new THREE.AudioLoader();
-                    audioLoader.load( 'audio/app1.mp3', ( buffer ) => {
-                        sound.setBuffer( buffer );
-                        sound.setLoop( false );
-                        sound.setVolume( 1.0 );
-                        sound.play();
-                        console.log('sound');
-                    });
-
-                this.app.sound = sound;
-                this.app.speech = new THREE.Audio( this.app.listener );
-            } else {
-                this.app.sound.play();
-            }
-
-            //update cijene i potraznje
-            console.log('setTimeout1');
-            this.app.ui1.updateElement('info', 'Price: 1.9e/kg');
+            this.app.clearCanvas();
+            //update of the price and quantity in a ui1 and ui2
+            console.log('setTimeout2');
+            this.app.ui1.updateElement('info', 'Price: 1.9 \u20AC /kg');
             this.app.ui2.updateElement('info', 'Sold: 90 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#114" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#114" );
+            this.app.ui2.updateConfig ("body", "fontColor", "#114" );
             this.app.ui1.update();
             this.app.ui2.update();  
 
-            //update grafa
+            //adding a cursor
+            if(!this.app.cursor.visible){
+                this.app.cursor.visible = true;
+                this.app.cursor.position.set( -0.25, -0.01, -0.8); 
+                this.app.scene.add( this.app.cursor); 
+            }
+
+            //play the animation- fastest possible
+            this.app.action.play();
+            this.app.action.timeScale = 3;
+
+
+            //update of the graph
             this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(a-c,b-c);
 			this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
@@ -332,22 +447,27 @@ class App{
 			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
 			this.app.ui.context.lineTo(c,2.7*incy+60);
 			this.app.ui.context.stroke();
-			this.app.ui.context.fillText("1.9", c/3, 2.7*incy+60);
+			this.app.ui.context.fillText("1.9", c/3, 2.7*incy+30);
 			this.app.ui.context.restore();
             this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
 			//console.log('next1');
         }
 
-        function next2(){
-            console.log('setTimeout2');
+        function next3(){
+            console.log('setTimeout3');
             //update price and demand
-            this.app.ui1.updateElement('info', 'Price: 2.8e/kg');
+            this.app.ui1.updateElement('info', 'Price: 2.8 \u20AC /kg');
             this.app.ui2.updateElement('info', 'Sold: 60 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
+            this.app.ui2.updateConfig ("body", "fontColor", "#00f" );
             this.app.ui1.update();
             this.app.ui2.update();  
+
+            //update animation-mid
+            this.app.action.timeScale = 2;
+
+
 
             //second line
 			this.app.ui.context.beginPath();
@@ -378,15 +498,18 @@ class App{
 			//console.log('next2');
         }
 
-        function next3(){
+        function next4(){
             //update price and demand
-            console.log('setTimeout3');
-            this.app.ui1.updateElement('info', 'Price: 3.7e/kg');
+            console.log('setTimeout4');
+            this.app.ui1.updateElement('info', 'Price: 3.7 \u20AC /kg');
             this.app.ui2.updateElement('info', 'Sold:  30kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
+            this.app.ui2.updateConfig ("body", "fontColor", "#f00" );
             this.app.ui1.update();
             this.app.ui2.update();  
+
+            //play the animation-slow
+            this.app.action.timeScale = 1;
 
             //third line
             this.app.ui.context.beginPath();
@@ -428,16 +551,22 @@ class App{
             
         }
 
-        function next4(){
+        function next5(){
 
             this.app.control = true;
             //empty ui with price/demand
             this.app.ui1.updateElement('info', '');
             this.app.ui2.updateElement('info', ''); 
             this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
-            this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
+            this.app.ui2.updateConfig ("body", "fontColor", "#f00" );
             this.app.ui1.update();
             this.app.ui2.update(); 
+
+            //stop the animation
+            this.app.action.stop();
+
+            //remove the cursor
+            this.app.cursor.visible = false; 
 
             //filling the area
             this.app.ui.context.save();
@@ -457,9 +586,10 @@ class App{
 			this.app.ui.context.lineTo(a-c,b-c);
             this.app.ui.context.stroke();
             this.app.ui.context.restore();
+
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
-			//console.log('next4');
+			console.log('SetTimeout5');
         }
 
         function onSessionEnd(){
@@ -467,17 +597,21 @@ class App{
             if (self.sound && self.sound.isPlaying) self.sound.stop();
 
             self.control = false; 
-            self.clearCanvas();
+            self.action.reset();
+            self.action.stop();
+            self.clearCanvas(1);
+            self.cursor.visible = false;
             self.cart.visible = false;
             self.apple.visible = false;
             self.ui3.mesh.visible = false;
-            self.ui3.mesh.visible = false;
+            self.ui4.mesh.visible = false;
             self.scene.remove(self.ui.mesh);
             self.scene.remove(self.ui1.mesh);
             self.scene.remove(self.ui2.mesh);
             self.scene.remove(self.ui3.mesh);
             self.scene.remove(self.ui4.mesh);
             self.scene.remove(self.apple);
+            self.scene.remove(self.cursor);
             self.scene.remove(self.cart);
             
            
@@ -493,11 +627,13 @@ class App{
                 console.log( 'tap' ); 
                 //console.log(ev.position.x);
                 if (-0.02 <= ev.position.x && ev.position.x <= 0.02) {
-                    self.clearCanvas();
+                    self.clearCanvas(0);
                     var m = self.converttoPix(ev.position.x);
                     var n = self.converttoDemand(ev.position.x);
                     var t = self.funk(n);
                     var s = b-c-t*incy;
+                    var quant = (n*10).toFixed(2);
+                    var price = t.toFixed(2);
                     console.log(n*10);
                     console.log(s);
 
@@ -506,18 +642,11 @@ class App{
                     self.ui.context.font = "25px Arial";
                     self.ui.context.save();
                     self.ui.context.beginPath();
-                    self.ui.context.moveTo(c,c);
-                    self.ui.context.lineTo(c,b-c);
-                    self.ui.context.lineTo(a-c,b-c);
+                    self.ui.context.moveTo(a-c,b-c);
                     self.ui.context.lineTo(c,c);
                     self.ui.context.stroke();
-                    self.ui.context.fillText("Quantity Demanded", a/2,b-c/4);
-                    self.ui.context.save();
-                    self.ui.context.rotate(-Math.PI/2);
-                    self.ui.context.fillText("Price per kilogram", -11*b/15 , 2*c/3);
-                    self.ui.context.restore();
 
-                    //drawing a dashed vertical line-price
+                    //drawing a dashed vertical line-quantity
                     self.ui.context.save();
                     self.ui.context.beginPath();
                     self.ui.context.setLineDash([5, 15]);
@@ -526,9 +655,12 @@ class App{
                     self.ui.context.stroke();
                     self.ui.context.fillStyle = 'green';
                     self.ui.context.font = "15px Arial";
-                    self.ui.context.fillText((n*10).toFixed(2), m  , b-2*c/3 );
+                    self.ui.context.fillText(quant, m  , b-2*c/3 );
 
-                    //drawing a dashed horizontal line-demand
+                    //total revenue calculated
+                    const area = ((price*quant)/2).toFixed(2);
+
+                    //drawing a dashed horizontal line-price
                     self.ui.context.beginPath();
                     self.ui.context.setLineDash([5, 15]);
                     self.ui.context.moveTo(m,s);
@@ -536,7 +668,7 @@ class App{
                     self.ui.context.stroke();
                     self.ui.context.fillStyle = 'green';
                     self.ui.context.font = "15px Arial";
-                    self.ui.context.fillText(t.toFixed(2),c/3,s);
+                    self.ui.context.fillText(price,c/3,s);
                     self.ui.context.restore();
 
                     //shading the total revenue area
@@ -573,11 +705,15 @@ class App{
                     self.ui.context.fillStyle = 'black';
                     self.ui.context.font = "15px Arial";
                     self.ui.context.fillText('Total',m/2,(b-c+s)/2);
-                    self.ui.context.fillText('Revenue',m/2,(b-c+s)/2+10);
+                    self.ui.context.fillText('Revenue',m/2,(b-c+s)/2+20);
+                    self.ui.context.fillText(area + '\u20AC', m/2,(b-c+s)/2+40);
+                    self.ui.context.fillText('Price = '+ price+'\u20AC',2*(b-c)/3,c);
+                    self.ui.context.fillText('Quantity = '+ quant+ 'kg',2*(b-c)/3,c+20);
                     self.ui.context.restore();
 
                     
                     //area of the triangles
+
                     //consumer surplus
                     var area1 = ((4.6-t)*n*5).toFixed(2);
                     //lost welfare
@@ -593,19 +729,22 @@ class App{
                     self.ui1.updateConfig ("body", "fontColor", "#000" );
                     self.ui2.updateConfig ("body", "fontColor", "#000" );
                     self.ui1.updateConfig ("body", "fontSize", "50" );
-                    self.ui2.updateConfig ("body", "fontSize", "50" );
+                    self.ui2.updateConfig ("body", "fontSize", "42" );
                     self.ui1.update();
                     self.ui2.update(); 
                     self.ui3.mesh.visible = true;
                     self.ui4.mesh.visible = true;
-                    self.ui3.updateElement('info', area2);
-                    self.ui4.updateElement('info', area1);
+                    self.ui3.updateElement('info', area2+'\u20AC');
+                    self.ui4.updateElement('info', area1+'\u20AC');
+                    //self.ui3.updateConfig ("body", "fontColor", "#000" );
+                    self.ui4.updateConfig ("body", "fontColor", "#114" );
                     self.ui3.update();
                     self.ui4.update(); 
 
                     //hide mesh
                     self.cart.visible = false;
                     self.apple.visible = false;
+                    self.cursor.visible = false;
 
                 }
 
@@ -635,6 +774,7 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
+        this.mixer.update( dt )
         if ( this.renderer.xr.isPresenting ){
             this.gestures.update();
         }
