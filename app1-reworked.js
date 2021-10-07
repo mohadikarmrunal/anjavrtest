@@ -282,9 +282,9 @@ class App{
         this.ui2.mesh.position.set(-0.3, 0.17, -0.9);
         
         
-        this.ui1a.mesh.position.set(-1.5,0,-2);
+        this.ui1a.mesh.position.set(0,0,-2.5);
         this.ui2a.mesh.position.set(0,0,-3);
-        this.ui3a.mesh.position.set(1.5,0,-2);
+        this.ui3a.mesh.position.set(0,0,-2.5);
 
         this.ui1a.mesh.visible = false;
         this.ui2a.mesh.visible = false;
@@ -313,8 +313,6 @@ class App{
     clearCanvas(ind,canv){
         this.ui0 = canv;
        //removing graph
-        console.log(canv);
-        console.log(this.ui0);
         this.ui0.context.save();
         this.ui0.context.fillStyle = 'white';
         this.ui0.context.fillRect(0,0,this.ui0.config.width,this.ui0.config.height);
