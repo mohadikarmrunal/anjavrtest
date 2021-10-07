@@ -282,9 +282,9 @@ class App{
         this.ui2.mesh.position.set(-0.3, 0.17, -0.9);
         
         
-        this.ui1a.mesh.position.set(-0.7,0,-2.7);
-        this.ui2a.mesh.position.set(0,0,-3.4);
-        this.ui3a.mesh.position.set(0.7,0,-2.7);
+        this.ui1a.mesh.position.set(0,0,-2);
+        this.ui2a.mesh.position.set(0,0,-2);
+        this.ui3a.mesh.position.set(0,0,-2);
 
         this.ui1a.mesh.visible = false;
         this.ui2a.mesh.visible = false;
@@ -621,8 +621,6 @@ class App{
             this.app.ui1a.mesh.visible = true;
             this.app.ui2a.mesh.visible = true;
             this.app.ui3a.mesh.visible = true;
-
-            this.app.ui.mesh.visible = false;
 
             this.app.scene.add(this.app.ui1a.mesh);
             this.app.scene.add(this.app.ui2a.mesh);
