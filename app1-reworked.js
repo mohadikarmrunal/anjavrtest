@@ -622,6 +622,7 @@ class App{
             this.app.ui2a.mesh.visible = true;
             this.app.ui3a.mesh.visible = true;
 
+
             this.app.scene.add(this.app.ui1a.mesh);
             this.app.scene.add(this.app.ui2a.mesh);
             this.app.scene.add(this.app.ui3a.mesh);
