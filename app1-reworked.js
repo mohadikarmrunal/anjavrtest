@@ -282,9 +282,9 @@ class App{
         this.ui2.mesh.position.set(-0.3, 0.17, -0.9);
         
         
-        this.ui1a.mesh.position.set(0,0,-2.5);
+        this.ui1a.mesh.position.set(-0.5,0,-2.5);
         this.ui2a.mesh.position.set(0,0,-3);
-        this.ui3a.mesh.position.set(0,0,-2.5);
+        this.ui3a.mesh.position.set(0.5,0,-2.5);
 
         this.ui1a.mesh.visible = false;
         this.ui2a.mesh.visible = false;
@@ -435,17 +435,17 @@ class App{
 
            
 
-            /*setTimeout(next1,1000);
+            setTimeout(next1,1000);
             setTimeout(next2,52000);
             setTimeout(next3,71000);
             setTimeout(next4,76000);
-            setTimeout(next5,89000);*/
+            setTimeout(next5,89000);
             
           
-            setTimeout(next2,1000);
+            /*setTimeout(next2,1000);
             setTimeout(next3,2000);
             setTimeout(next4,3000);
-            setTimeout(next5,4000);
+            setTimeout(next5,4000);*/
             
         }
 
