@@ -46,6 +46,8 @@ class App{
         this.initScene();
         this.setupVR();
         this.loadSound();
+        console.log(window.innerHeight);
+        console.log(window.innerWidth);
       
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
@@ -653,7 +655,7 @@ class App{
 
                 console.log( 'tap' ); 
                 //console.log(ev.position.x);
-                if (-0.04 <= ev.position.x && ev.position.x <= 0.04) {
+                if (-0.08 <= ev.position.x && ev.position.x <= 0.08) {
                     self.clearCanvas(0);
                     var m = self.converttoPix(ev.position.x);
                     var n = self.converttoDemand(ev.position.x);
