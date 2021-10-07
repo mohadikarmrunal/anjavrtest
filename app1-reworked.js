@@ -622,6 +622,8 @@ class App{
             this.app.ui2a.mesh.visible = true;
             this.app.ui3a.mesh.visible = true;
 
+            this.app.ui.mesh.visible = false;
+
             this.app.scene.add(this.app.ui1a.mesh);
             this.app.scene.add(this.app.ui2a.mesh);
             this.app.scene.add(this.app.ui3a.mesh);
@@ -634,8 +636,10 @@ class App{
             //stop the animation
             this.app.action.stop();
 
-            //remove the cursor
+            //remove the 3Dobjects
             this.app.cursor.visible = false; 
+            this.app.cart.visible = false;
+            this.app.apple.visible = false;
 
             //first canvas- ui
             //this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
@@ -721,7 +725,7 @@ class App{
             this.app.ui1a.context.fillText('Quantity = 76.5 kg',2*(b-c)/3,c+20);
             this.app.ui1a.context.fillText('Consumer Surpluss =  99.45 \u20AC',2*(b-c)/3,c+40);
             this.app.ui1a.context.restore();
-            this.app.ui1a.mesh.rotateY(-Math.PI);
+            this.app.ui1a.mesh.rotateY(-Math.PI/2);
 
             //third canvas= ui2 (6*incx+60,1.8*incy+60);
             this.app.ui2a.context.save();
@@ -764,7 +768,7 @@ class App{
             this.app.ui2a.context.fillText('Quantity = 60 kg',2*(b-c)/3,c+20);
             this.app.ui2a.context.fillText('Consumer Surpluss =  54 \u20AC',2*(b-c)/3,c+40);
             this.app.ui2a.context.restore();
-            this.app.ui2a.mesh.rotateY(-2*Math.PI);
+            this.app.ui2a.mesh.rotateY(-Math.PI);
 
             //fourth canvas= ui2 3*incx+60,0.9*incy+60
             this.app.ui3a.context.save();
@@ -807,7 +811,7 @@ class App{
             this.app.ui3a.context.fillText('Quantity = 30 kg',2*(b-c)/3,c+20);
             this.app.ui3a.context.fillText('Consumer Surpluss =  18 \u20AC',2*(b-c)/3,c+40);
             this.app.ui3a.context.restore();
-            this.app.ui3a.mesh.rotateY(Math.PI);
+            this.app.ui3a.mesh.rotateY(Math.PI/2);
             
             /*this.app.cursor1.visible = true;
             this.app.cursor1.position.set (-0.04, 0 , -0.3);
@@ -841,9 +845,9 @@ class App{
             self.scene.remove(self.cursor);
             self.scene.remove(self.cart);
 
-            self.ui1a.mesh.rotateX(Math.PI);
-            self.ui2a.mesh.rotateX(2*Math.PI);
-            self.ui3a.mesh.rotateX(-Math.PI);
+            self.ui1a.mesh.rotateY(Math.PI/2);
+            self.ui2a.mesh.rotateY(Math.PI);
+            self.ui3a.mesh.rotateY(-Math.PI/2);
             self.ui1a.mesh.visible = false;
             self.ui2a.mesh.visible = false;
             self.ui3a.mesh.visible = false;
