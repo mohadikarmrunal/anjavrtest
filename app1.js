@@ -113,7 +113,7 @@ class App{
 
         loader.load(
 			// resource URL
-			'mouse.gltf',
+			'cursor.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -123,6 +123,8 @@ class App{
 				const scale = 0.01;
 				self.cursor.scale.set(scale, scale, scale); 
                 self.cursor.rotateX(Math.PI/2);
+                self.cursor1 = self.cursor.clone();
+                self.cursor2 = self.cursor.clone();
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -354,18 +356,6 @@ class App{
             self.ui.context.fillText("Demand Curve f(x)", a/2 , -b/80);
             self.ui.context.restore();
 
-            //console.log("values of width and height"+ a + b);
-            //x i y osa sa oznakama
-            /*self.ui.context.beginPath();
-            self.ui.context.moveTo(c,c);
-            self.ui.context.lineTo(c,b-c);
-            self.ui.context.lineTo(a-c,b-c);
-            self.ui.context.stroke();
-            self.ui.context.fillText("Quantity Demanded", a/2,b-c/4);
-            self.ui.context.save();
-            self.ui.context.rotate(-Math.PI/2);
-            self.ui.context.fillText("Price per kilogram", -11*b/15 , 2*c/3);
-            self.ui.context.restore();*/
 
             if(!self.apple.visible){
                 self.apple.visible = true;
@@ -381,17 +371,17 @@ class App{
 
            
 
-            setTimeout(next1,1000);
+            /*setTimeout(next1,1000);
             setTimeout(next2,52000);
             setTimeout(next3,71000);
             setTimeout(next4,76000);
-            setTimeout(next5,89000);
+            setTimeout(next5,89000);*/
             
           
-            /*setTimeout(next2,1000);
-            setTimeout(next3,6000);
-            setTimeout(next4,11000);
-            setTimeout(next5,16000);*/
+            setTimeout(next2,1000);
+            setTimeout(next3,2000);
+            setTimeout(next4,3000);
+            setTimeout(next5,4000);
             
         }
 
@@ -416,7 +406,7 @@ class App{
             //adding a cursor
             if(!this.app.cursor.visible){
                 this.app.cursor.visible = true;
-                this.app.cursor.position.set( -0.25, -0.01, -0.8); 
+                this.app.cursor.position.set( -0.25, -0.01, -0.86); 
                 this.app.scene.add( this.app.cursor); 
             }
 
@@ -568,24 +558,61 @@ class App{
             //remove the cursor
             this.app.cursor.visible = false; 
 
+            //middle of the x-axis and corresponding y value
+            var u = b/2;
+            var v = (-u+452);
+            var w = (b-c)-v;
+
             //filling the area
             this.app.ui.context.save();
-            this.app.ui.context.fillStyle = 'gray';
+            this.app.ui.context.fillStyle = 'yellow';
 			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(a-c,b-c);
-			this.app.ui.context.lineTo(c,c);
+			this.app.ui.context.moveTo(u,w);
+			this.app.ui.context.lineTo(u,b-c);
 			this.app.ui.context.lineTo(c,b-c);
-			this.app.ui.context.lineTo(a-c,b-c);
+			this.app.ui.context.lineTo(c,w);
 			this.app.ui.context.fill();
-            this.app.ui.context.fillStyle = 'black';
-			this.app.ui.context.font = "25px Arial";
-			this.app.ui.context.fillText("AREA = 352,59", 2*a/5  , 3*b/4 );
+            //drawing a bolder line for demand curve
             this.app.ui.context.lineWidth = '4';
             this.app.ui.context.beginPath();
 			this.app.ui.context.moveTo(c,c);
 			this.app.ui.context.lineTo(a-c,b-c);
             this.app.ui.context.stroke();
+            //surpluss
+            this.app.ui.context.fillStyle = 'green';
+			this.app.ui.context.beginPath();
+			this.app.ui.context.moveTo(u,w);
+			this.app.ui.context.lineTo(c,w);
+			this.app.ui.context.lineTo(c,c);
+			this.app.ui.context.lineTo(u,w);
+			this.app.ui.context.fill();
+            //lostwellfare
+            this.app.ui.context.fillStyle = 'gray';
+			this.app.ui.context.beginPath();
+			this.app.ui.context.moveTo(u,w);
+			this.app.ui.context.lineTo(u,b-c);
+			this.app.ui.context.lineTo(b-c,b-c);
+			this.app.ui.context.lineTo(u,w);
+			this.app.ui.context.fill();
+            //adding labels
+            this.app.ui.context.fillStyle = 'black';
+			this.app.ui.context.font = "15px Arial";
+			this.app.ui.context.fillText("Total", b/4  , (b-c)-v/2);
+            this.app.ui.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
+            this.app.ui.context.fillText("176.33 \u20AC", b/4  , (b-c)-v/2+40 );
+            this.app.ui.context.fillText('Price = 2.305 \u20AC',2*(b-c)/3,c);
+            this.app.ui.context.fillText('Quantity = 76.5 kg',2*(b-c)/3,c+20);
+
             this.app.ui.context.restore();
+
+            
+            /*this.app.cursor1.visible = true;
+            this.app.cursor1.position.set (-0.04, 0 , -0.3);
+            this.app.scene.add(self.cursor1);
+
+            this.app.cursor2.visible = true;
+            this.app.cursor2.position.set (0.04, 0 , -0.3);
+            this.app.scene.add(self.cursor2);*/
 
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
@@ -626,7 +653,7 @@ class App{
 
                 console.log( 'tap' ); 
                 //console.log(ev.position.x);
-                if (-0.02 <= ev.position.x && ev.position.x <= 0.02) {
+                if (-0.04 <= ev.position.x && ev.position.x <= 0.04) {
                     self.clearCanvas(0);
                     var m = self.converttoPix(ev.position.x);
                     var n = self.converttoDemand(ev.position.x);
@@ -658,7 +685,7 @@ class App{
                     self.ui.context.fillText(quant, m  , b-2*c/3 );
 
                     //total revenue calculated
-                    const area = ((price*quant)/2).toFixed(2);
+                    const area = (price*quant).toFixed(2);
 
                     //drawing a dashed horizontal line-price
                     self.ui.context.beginPath();
@@ -702,6 +729,7 @@ class App{
                     self.ui.context.lineTo(m,b-c);
                     self.ui.context.lineTo(m,s);
                     self.ui.context.fill();
+                    //adding labels
                     self.ui.context.fillStyle = 'black';
                     self.ui.context.font = "15px Arial";
                     self.ui.context.fillText('Total',m/2,(b-c+s)/2);
