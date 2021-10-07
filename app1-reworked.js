@@ -282,9 +282,9 @@ class App{
         this.ui2.mesh.position.set(-0.3, 0.17, -0.9);
         
         
-        this.ui1a.mesh.position.set(0,0,-2);
-        this.ui2a.mesh.position.set(0,0,-2);
-        this.ui3a.mesh.position.set(0,0,-2);
+        this.ui1a.mesh.position.set(-1.5,0,-2);
+        this.ui2a.mesh.position.set(0,0,-3);
+        this.ui3a.mesh.position.set(1.5,0,-2);
 
         this.ui1a.mesh.visible = false;
         this.ui2a.mesh.visible = false;
