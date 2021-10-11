@@ -4,9 +4,7 @@ import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
-//import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
-//import { Player } from '../../libs/Player.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
 //demand curve 
 class App{
@@ -43,11 +41,8 @@ class App{
         this.listener = new THREE.AudioListener();
         this.camera.add( this.listener );
 
-        //this.loadSound();
         this.initScene();
         this.setupVR();
-        
-      
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
@@ -77,7 +72,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading an apple' );
+				console.log( 'An error happened with loading an apple!' );
 			}
         );
 
@@ -98,8 +93,7 @@ class App{
                 self.action = action;
                 self.action.loop = THREE.LoopRepeat;
                 self.loadingBar.visible = false;
-                self.cart.visible=false;
-				//self.cart.scale.set(scale, scale, scale); 
+                self.cart.visible=false; 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -108,7 +102,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading a cart' );
+				console.log( 'An error happened with loading a cart!' );
 			}
         );
 
@@ -126,7 +120,6 @@ class App{
                 self.cursor.rotateX(Math.PI/2);
                 self.cursor1 = self.cursor.clone();
                 self.cursor2 = self.cursor.clone();
-                console.log('cart loaded');
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -135,7 +128,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading a cursor' );
+				console.log( 'An error happened with loading a cursor!' );
 			}
         );
 
@@ -159,19 +152,6 @@ class App{
         }
 
         const config2 = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 194,
-            body:{
-                textAlign: 'center',
-                backgroundColor:'#ccc',
-                fontColor:'#000',
-                padding:65,
-                fontSize:55,
-            },
-            info:{ type: "text" }
-        }
-
-        const config4 = {
             panelSize: { width: 0.1, height: 0.038 },
             height: 194,
             body:{
@@ -208,8 +188,6 @@ class App{
             info: "Sold in kg"
         }
 
-       
-
         const config = {
             body:{ 
                 textAlign: 'center',
@@ -221,7 +199,6 @@ class App{
             },
             info:{ type: "text" }
         }
-
 
         const config1a = {
             body:{ 
@@ -272,11 +249,9 @@ class App{
         this.ui = ui;
         this.ui1 = ui1;
         this.ui2 = ui2;
-
         this.ui1a = ui1a;
         this.ui2a = ui2a;
         this.ui3a = ui3a;
-        //console.log(this.ui.mesh);
 
         const a = this.ui.config.width;
         const b = this.ui.config.height;
@@ -332,7 +307,8 @@ class App{
         const b = this.b;
         const c = this.c;
         const v = (-(b/2)+452);
-    
+
+        //total revenue
         this.ui0.context.save();
         this.ui0.context.fillStyle = 'yellow';
 		this.ui0.context.beginPath();
@@ -425,23 +401,7 @@ class App{
         return -0.3*x+4.6;
     }
 
-    
-    loadSound(){
-        
-        const sound = new THREE.Audio( this.listener );
-            
-        const audioLoader = new THREE.AudioLoader();
-            audioLoader.load( 'audio/app1.mp3', ( buffer ) => {
-                sound.setBuffer( buffer );
-                sound.setLoop( false );
-                sound.setVolume( 1.0 );
-                //sound.play();
-                console.log('sound');
-            });
 
-        this.sound = sound;
-        this.speech = new THREE.Audio( this.listener );
-    }
        
     setupVR(){
 
@@ -449,7 +409,6 @@ class App{
         this.control = control;
 
         this.renderer.xr.enabled = true; 
-        
         const self = this;
 
         //increments on x and y axis and measurements
@@ -505,13 +464,11 @@ class App{
         }
 
         function next1(){
-            console.log('sound is playing');
+            console.log('Sound is playing!');
             this.app.sound.play();
-			console.log('SetTimeout1');
         }
 
         function next2(){
-
             this.app.clearCanvas(0,this.app.ui);
 
             //update of the price and quantity in a ui1 and ui2
@@ -530,7 +487,7 @@ class App{
                 this.app.scene.add( this.app.cursor); 
             }
 
-            //play the animation- fastest possible
+            //play the animation very fast
             this.app.action.play();
             this.app.action.timeScale = 3;
 
@@ -561,11 +518,9 @@ class App{
 			this.app.ui.context.restore();
             this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
-			//console.log('next1');
         }
 
         function next3(){
-            console.log('setTimeout3');
             //update price and demand
             this.app.ui1.updateElement('info', 'Price: 2.8 \u20AC /kg');
             this.app.ui2.updateElement('info', 'Sold: 60 kg'); 
@@ -574,10 +529,8 @@ class App{
             this.app.ui1.update();
             this.app.ui2.update();  
 
-            //update animation-mid
+            //update animation-mid speed
             this.app.action.timeScale = 2;
-
-
 
             //second line
 			this.app.ui.context.beginPath();
@@ -605,7 +558,6 @@ class App{
 			this.app.ui.context.restore();
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
-			//console.log('next2');
         }
 
         function next4(){
@@ -657,12 +609,10 @@ class App{
             this.app.ui.context.restore();
             this.app.ui.needsUpdate = true;
             this.app.ui.texture.needsUpdate = true;
-            //console.log('next3');
             
         }
 
         function next5(){
-
             //middle of the x-axis and corresponding y value
             var u = b/2;
             var v = (-u+452);
@@ -681,7 +631,7 @@ class App{
             this.app.scene.add(this.app.ui2a.mesh);
             this.app.scene.add(this.app.ui3a.mesh);
 
-            //draw basics on every canvas
+            //draw axis and curve on every canvas
             this.app.clearCanvas(0,this.app.ui1a);
             this.app.clearCanvas(0,this.app.ui2a);
             this.app.clearCanvas(0,this.app.ui3a);
@@ -704,7 +654,6 @@ class App{
             this.app.ui3a.mesh.rotateY(Math.PI/2);
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
-			console.log('SetTimeout5');
         }
 
         function onSessionEnd(){
@@ -747,8 +696,6 @@ class App{
                 sound.setBuffer( buffer );
                 sound.setLoop( false );
                 sound.setVolume( 1.0 );
-                //sound.play();
-                //console.log('sound');
             });
              self.sound = sound;
              self.speech = new THREE.Audio( self.listener );
@@ -757,9 +704,9 @@ class App{
               resolve("Sound loaded!");
             }
          else {
-              reject(Error("Sound did not load"));
+              reject(Error("Sound did not load."));
             }
-          });
+        });
 
 
         promise.then(function(result) {
@@ -768,7 +715,6 @@ class App{
                 console.log(error);
             });
        
-       // const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }});
 
         this.gestures = new ControllerGestures( this.renderer );
         this.renderer.setAnimationLoop( this.render.bind(this) );
