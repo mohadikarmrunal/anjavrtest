@@ -42,10 +42,11 @@ class App{
 
         this.listener = new THREE.AudioListener();
         this.camera.add( this.listener );
-        
+
+        //this.loadSound();
         this.initScene();
         this.setupVR();
-        this.loadSound();
+        
       
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
@@ -125,6 +126,7 @@ class App{
                 self.cursor.rotateX(Math.PI/2);
                 self.cursor1 = self.cursor.clone();
                 self.cursor2 = self.cursor.clone();
+                console.log('cart loaded');
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -276,6 +278,13 @@ class App{
         this.ui3a = ui3a;
         //console.log(this.ui.mesh);
 
+        const a = this.ui.config.width;
+        const b = this.ui.config.height;
+        const c = 60;
+        this.a = a;
+        this.b = b;
+        this.c = c;
+
         //positions
         this.ui.mesh.position.set(0,0,-2);
         this.ui1.mesh.position.set(0.3, 0.17, -0.9);
@@ -307,6 +316,63 @@ class App{
         this.ui3a.context.strokeStyle = "black"; 
         this.ui3a.context.font = "20px Arial";
         this.ui3a.context.fillStyle = 'black';
+
+    }
+
+    settingupUI(canv,u,w,i,j,k,l){
+
+        this.ui0 = canv;
+        
+        //i=total revenue
+        //j=price 
+        //k=quantity
+        //l=consumer surpluss
+
+        const a = this.a;
+        const b = this.b;
+        const c = this.c;
+        const v = (-(b/2)+452);
+    
+        this.ui0.context.save();
+        this.ui0.context.fillStyle = 'yellow';
+		this.ui0.context.beginPath();
+		this.ui0.context.moveTo(u,w);
+		this.ui0.context.lineTo(u,b-c);
+		this.ui0.context.lineTo(c,b-c);
+		this.ui0.context.lineTo(c,w);
+		this.ui0.context.fill();
+        //drawing a bolder line for demand curve
+        this.ui0.context.lineWidth = '4';
+        this.ui0.context.beginPath();
+		this.ui0.context.moveTo(c,c);
+		this.ui0.context.lineTo(a-c,b-c);
+        this.ui0.context.stroke();
+        //surpluss
+        this.ui0.context.fillStyle = 'green';
+		this.ui0.context.beginPath();
+		this.ui0.context.moveTo(u,w);
+		this.ui0.context.lineTo(c,w);
+		this.ui0.context.lineTo(c,c);
+		this.ui0.context.lineTo(u,w);
+		this.ui0.context.fill();
+        //lostwellfare
+        this.ui0.context.fillStyle = 'gray';
+		this.ui0.context.beginPath();
+		this.ui0.context.moveTo(u,w);
+		this.ui0.context.lineTo(u,b-c);
+		this.ui0.context.lineTo(b-c,b-c);
+		this.ui0.context.lineTo(u,w);
+		this.ui0.context.fill();
+        //adding labels
+        this.ui0.context.fillStyle = 'black';
+		this.ui0.context.font = "15px Arial";
+		this.ui0.context.fillText("Total", b/4  , (b-c)-v/2);
+        this.ui0.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
+        this.ui0.context.fillText(i + "\u20AC", b/4  , (b-c)-v/2+40 );
+        this.ui0.context.fillText('Price = '+j+' \u20AC',2*(b-c)/3,c);
+        this.ui0.context.fillText('Quantity = '+k+' kg',2*(b-c)/3,c+20);
+        this.ui0.context.fillText('Consumer Surpluss =  '+l+' \u20AC',2*(b-c)/3,c+40);
+        this.ui0.context.restore();
 
     }
 
@@ -361,8 +427,8 @@ class App{
 
     
     loadSound(){
-        const self = this;
-        const sound = new THREE.Audio( self.listener );
+        
+        const sound = new THREE.Audio( this.listener );
             
         const audioLoader = new THREE.AudioLoader();
             audioLoader.load( 'audio/app1.mp3', ( buffer ) => {
@@ -385,22 +451,16 @@ class App{
         this.renderer.xr.enabled = true; 
         
         const self = this;
-        //let controller;
-    
-        //draw and label x and y axis
-        const a = this.ui.config.width;
-        const b = this.ui.config.height;
-        const c = 60;
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        //increments on x and y axis
+
+        //increments on x and y axis and measurements
+        const a = this.a;
+        const b = this.b;
+        const c = this.c;
         const incx = (a-2*c)/ 15.3;
         const incy = (b-2*c)/ 4.6;
 
         function onSessionStart(){
 
-		   // self.ui.needsUpdate = true;
             self.ui1.mesh.visible = true;
             self.ui2.mesh.visible = true;
             self.scene.add(self.ui.mesh);
@@ -441,11 +501,6 @@ class App{
             setTimeout(next4,76000);
             setTimeout(next5,89000);
             
-          
-            /*setTimeout(next2,1000);
-            setTimeout(next3,2000);
-            setTimeout(next4,3000);
-            setTimeout(next5,4000);*/
             
         }
 
@@ -458,6 +513,7 @@ class App{
         function next2(){
 
             this.app.clearCanvas(0,this.app.ui);
+
             //update of the price and quantity in a ui1 and ui2
             console.log('setTimeout2');
             this.app.ui1.updateElement('info', 'Price: 1.9 \u20AC /kg');
@@ -638,186 +694,14 @@ class App{
             this.app.cart.visible = false;
             this.app.apple.visible = false;
 
-            //first canvas- ui
-            //this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
-            this.app.ui.context.save();
-            this.app.ui.context.fillStyle = 'yellow';
-			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
-			this.app.ui.context.lineTo(9*incx+60,b-c);
-			this.app.ui.context.lineTo(c,b-c);
-			this.app.ui.context.lineTo(c,2.7*incy+60);
-			this.app.ui.context.fill();
-            //drawing a bolder line for demand curve
-            this.app.ui.context.lineWidth = '4';
-            this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(c,c);
-			this.app.ui.context.lineTo(a-c,b-c);
-            this.app.ui.context.stroke();
-            //surpluss
-            this.app.ui.context.fillStyle = 'green';
-			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
-			this.app.ui.context.lineTo(c,2.7*incy+60);
-			this.app.ui.context.lineTo(c,c);
-			this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
-			this.app.ui.context.fill();
-            //lostwellfare
-            this.app.ui.context.fillStyle = 'gray';
-			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
-			this.app.ui.context.lineTo(9*incx+60,b-c);
-			this.app.ui.context.lineTo(b-c,b-c);
-			this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
-			this.app.ui.context.fill();
-            //adding labels
-            this.app.ui.context.fillStyle = 'black';
-			this.app.ui.context.font = "15px Arial";
-			this.app.ui.context.fillText("Total", b/4  , (b-c)-v/2);
-            this.app.ui.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
-            this.app.ui.context.fillText("171 \u20AC", b/4  , (b-c)-v/2+40 );
-            this.app.ui.context.fillText('Price = 1.9 \u20AC',2*(b-c)/3,c);
-            this.app.ui.context.fillText('Quantity = 90 kg',2*(b-c)/3,c+20);
-            this.app.ui.context.fillText('Consumer Surpluss =  121.5 \u20AC',2*(b-c)/3,c+40);
-            this.app.ui.context.restore();
-
-            //second canvas- ui1a
-            this.app.ui1a.context.save();
-            this.app.ui1a.context.fillStyle = 'yellow';
-			this.app.ui1a.context.beginPath();
-			this.app.ui1a.context.moveTo(u,w);
-			this.app.ui1a.context.lineTo(u,b-c);
-			this.app.ui1a.context.lineTo(c,b-c);
-			this.app.ui1a.context.lineTo(c,w);
-			this.app.ui1a.context.fill();
-            //drawing a bolder line for demand curve
-            this.app.ui1a.context.lineWidth = '4';
-            this.app.ui1a.context.beginPath();
-			this.app.ui1a.context.moveTo(c,c);
-			this.app.ui1a.context.lineTo(a-c,b-c);
-            this.app.ui1a.context.stroke();
-            //surpluss
-            this.app.ui1a.context.fillStyle = 'green';
-			this.app.ui1a.context.beginPath();
-			this.app.ui1a.context.moveTo(u,w);
-			this.app.ui1a.context.lineTo(c,w);
-			this.app.ui1a.context.lineTo(c,c);
-			this.app.ui1a.context.lineTo(u,w);
-			this.app.ui1a.context.fill();
-            //lostwellfare
-            this.app.ui1a.context.fillStyle = 'gray';
-			this.app.ui1a.context.beginPath();
-			this.app.ui1a.context.moveTo(u,w);
-			this.app.ui1a.context.lineTo(u,b-c);
-			this.app.ui1a.context.lineTo(b-c,b-c);
-			this.app.ui1a.context.lineTo(u,w);
-			this.app.ui1a.context.fill();
-            //adding labels
-            this.app.ui1a.context.fillStyle = 'black';
-			this.app.ui1a.context.font = "15px Arial";
-			this.app.ui1a.context.fillText("Total", b/4  , (b-c)-v/2);
-            this.app.ui1a.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
-            this.app.ui1a.context.fillText("176.33 \u20AC", b/4  , (b-c)-v/2+40 );
-            this.app.ui1a.context.fillText('Price = 2.305 \u20AC',2*(b-c)/3,c);
-            this.app.ui1a.context.fillText('Quantity = 76.5 kg',2*(b-c)/3,c+20);
-            this.app.ui1a.context.fillText('Consumer Surpluss =  99.45 \u20AC',2*(b-c)/3,c+40);
-            this.app.ui1a.context.restore();
+            //set up all the ui and rotate them
+            this.app.settingupUI(this.app.ui,9*incx+60,2.7*incy+60, 171, 1.9, 90, 121.5);
+            this.app.settingupUI(this.app.ui1a,u,w,176.33, 2.305,76.5,99.45);
             this.app.ui1a.mesh.rotateY(-Math.PI/2);
-
-            //third canvas= ui2 (6*incx+60,1.8*incy+60);
-            this.app.ui2a.context.save();
-            this.app.ui2a.context.fillStyle = 'yellow';
-			this.app.ui2a.context.beginPath();
-			this.app.ui2a.context.moveTo(6*incx+60,1.8*incy+60);
-			this.app.ui2a.context.lineTo(6*incx+60,b-c);
-			this.app.ui2a.context.lineTo(c,b-c);
-			this.app.ui2a.context.lineTo(c,1.8*incy+60);
-			this.app.ui2a.context.fill();
-            //drawing a bolder line for demand curve
-            this.app.ui2a.context.lineWidth = '4';
-            this.app.ui2a.context.beginPath();
-			this.app.ui2a.context.moveTo(c,c);
-			this.app.ui2a.context.lineTo(a-c,b-c);
-            this.app.ui2a.context.stroke();
-            //surpluss
-            this.app.ui2a.context.fillStyle = 'green';
-			this.app.ui2a.context.beginPath();
-			this.app.ui2a.context.moveTo(6*incx+60,1.8*incy+60);
-			this.app.ui2a.context.lineTo(c,1.8*incy+60);
-			this.app.ui2a.context.lineTo(c,c);
-			this.app.ui2a.context.lineTo(6*incx+60,1.8*incy+60);
-			this.app.ui2a.context.fill();
-            //lostwellfare
-            this.app.ui2a.context.fillStyle = 'gray';
-			this.app.ui2a.context.beginPath();
-			this.app.ui2a.context.moveTo(6*incx+60,1.8*incy+60);
-			this.app.ui2a.context.lineTo(6*incx+60,b-c);
-			this.app.ui2a.context.lineTo(b-c,b-c);
-			this.app.ui2a.context.lineTo(6*incx+60,1.8*incy+60);
-			this.app.ui2a.context.fill();
-            //adding labels
-            this.app.ui2a.context.fillStyle = 'black';
-			this.app.ui2a.context.font = "15px Arial";
-			this.app.ui2a.context.fillText("Total", b/4  , (b-c)-v/2);
-            this.app.ui2a.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
-            this.app.ui2a.context.fillText("168 \u20AC", b/4  , (b-c)-v/2+40 );
-            this.app.ui2a.context.fillText('Price = 2.8 \u20AC',2*(b-c)/3,c);
-            this.app.ui2a.context.fillText('Quantity = 60 kg',2*(b-c)/3,c+20);
-            this.app.ui2a.context.fillText('Consumer Surpluss =  54 \u20AC',2*(b-c)/3,c+40);
-            this.app.ui2a.context.restore();
+            this.app.settingupUI(this.app.ui2a, 6*incx+60,1.8*incy+60,168,2.8,60,54);
             this.app.ui2a.mesh.rotateY(-Math.PI);
-
-            //fourth canvas= ui2 3*incx+60,0.9*incy+60
-            this.app.ui3a.context.save();
-            this.app.ui3a.context.fillStyle = 'yellow';
-			this.app.ui3a.context.beginPath();
-			this.app.ui3a.context.moveTo(3*incx+60,0.9*incy+60);
-			this.app.ui3a.context.lineTo(3*incx+60,b-c);
-			this.app.ui3a.context.lineTo(c,b-c);
-			this.app.ui3a.context.lineTo(c,0.9*incy+60);
-			this.app.ui3a.context.fill();
-            //drawing a bolder line for demand curve
-            this.app.ui3a.context.lineWidth = '4';
-            this.app.ui3a.context.beginPath();
-			this.app.ui3a.context.moveTo(c,c);
-			this.app.ui3a.context.lineTo(a-c,b-c);
-            this.app.ui3a.context.stroke();
-            //surplus
-            this.app.ui3a.context.fillStyle = 'green';
-			this.app.ui3a.context.beginPath();
-			this.app.ui3a.context.moveTo(3*incx+60,0.9*incy+60);
-			this.app.ui3a.context.lineTo(c,0.9*incy+60);
-			this.app.ui3a.context.lineTo(c,c);
-			this.app.ui3a.context.lineTo(3*incx+60,0.9*incy+60);
-			this.app.ui3a.context.fill();
-            //lostwellfare
-            this.app.ui3a.context.fillStyle = 'gray';
-			this.app.ui3a.context.beginPath();
-			this.app.ui3a.context.moveTo(3*incx+60,0.9*incy+60);
-			this.app.ui3a.context.lineTo(3*incx+60,b-c);
-			this.app.ui3a.context.lineTo(b-c,b-c);
-			this.app.ui3a.context.lineTo(3*incx+60,0.9*incy+60);
-			this.app.ui3a.context.fill();
-            //adding labels
-            this.app.ui3a.context.fillStyle = 'black';
-			this.app.ui3a.context.font = "15px Arial";
-			this.app.ui3a.context.fillText("Total", b/4  , (b-c)-v/2);
-            this.app.ui3a.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
-            this.app.ui3a.context.fillText("111 \u20AC", b/4  , (b-c)-v/2+40 );
-            this.app.ui3a.context.fillText('Price = 3.7 \u20AC',2*(b-c)/3,c);
-            this.app.ui3a.context.fillText('Quantity = 30 kg',2*(b-c)/3,c+20);
-            this.app.ui3a.context.fillText('Consumer Surpluss =  18 \u20AC',2*(b-c)/3,c+40);
-            this.app.ui3a.context.restore();
+            this.app.settingupUI(this.app.ui3a, 3*incx+60, 0.9*incy+60, 111, 3.7, 30, 18);
             this.app.ui3a.mesh.rotateY(Math.PI/2);
-            
-            /*this.app.cursor1.visible = true;
-            this.app.cursor1.position.set (-0.04, 0 , -0.3);
-            this.app.scene.add(self.cursor1);
-
-            this.app.cursor2.visible = true;
-            this.app.cursor2.position.set (0.04, 0 , -0.3);
-            this.app.scene.add(self.cursor2);*/
-
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
 			console.log('SetTimeout5');
@@ -830,6 +714,7 @@ class App{
             self.action.reset();
             self.action.stop();
             self.clearCanvas(1,self.ui);
+
             self.cursor.visible = false;
             self.cart.visible = false;
             self.apple.visible = false;
@@ -845,21 +730,50 @@ class App{
             self.ui1a.mesh.rotateY(Math.PI/2);
             self.ui2a.mesh.rotateY(Math.PI);
             self.ui3a.mesh.rotateY(-Math.PI/2);
+
             self.ui1a.mesh.visible = false;
             self.ui2a.mesh.visible = false;
             self.ui3a.mesh.visible = false;
+
             self.scene.remove(self.ui1a.mesh);
             self.scene.remove(self.ui3a.mesh);
             self.scene.remove(self.ui2a.mesh);
         }
 
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }});
+        var promise = new Promise(function(resolve, reject) {
+             const sound = new THREE.Audio( self.listener );
+            const audioLoader = new THREE.AudioLoader();
+            audioLoader.load( 'audio/app1.mp3', ( buffer ) => {
+                sound.setBuffer( buffer );
+                sound.setLoop( false );
+                sound.setVolume( 1.0 );
+                //sound.play();
+                //console.log('sound');
+            });
+             self.sound = sound;
+             self.speech = new THREE.Audio( self.listener );
+        
+         if (!(self.speech===undefined)) {
+              resolve("Sound loaded!");
+            }
+         else {
+              reject(Error("Sound did not load"));
+            }
+          });
+
+
+        promise.then(function(result) {
+            const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
+            console.log(result)}, function (error){
+                console.log(error);
+            });
+       
+       // const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }});
+
         this.gestures = new ControllerGestures( this.renderer );
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
-   
-   
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();

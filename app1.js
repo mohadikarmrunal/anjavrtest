@@ -46,8 +46,6 @@ class App{
         this.initScene();
         this.setupVR();
         this.loadSound();
-        console.log(window.innerHeight);
-        console.log(window.innerWidth);
       
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
@@ -187,6 +185,19 @@ class App{
         const content = {
             info: ""
         }
+
+        const content1a = {
+            info: ""
+        }
+
+        const content2a = {
+            info: ""
+        }
+
+        const content3a = {
+            info: ""
+        }
+
         const content1 = {
             info: "Price per kg"
         }   
@@ -195,13 +206,7 @@ class App{
             info: "Sold in kg"
         }
 
-        const content3 = {
-            info: ""
-        }
-
-        const content4 = {
-            info: ""
-        }
+       
 
         const config = {
             body:{ 
@@ -215,55 +220,120 @@ class App{
             info:{ type: "text" }
         }
 
-    
+
+        const config1a = {
+            body:{ 
+                textAlign: 'center',
+                backgroundColor: '#fff', 
+                fontColor:'#000', 
+                borderRadius: 6,
+                padding:50,
+                fontSize:50,
+            },
+            info:{ type: "text" }
+        }
+
+        const config2a = {
+            body:{ 
+                textAlign: 'center',
+                backgroundColor: '#fff', 
+                fontColor:'#000', 
+                borderRadius: 6,
+                padding:50,
+                fontSize:50,
+            },
+            info:{ type: "text" }
+        }
+
+        const config3a = {
+            body:{ 
+                textAlign: 'center',
+                backgroundColor: '#fff', 
+                fontColor:'#000', 
+                borderRadius: 6,
+                padding:50,
+                fontSize:50,
+            },
+            info:{ type: "text" }
+        }
+
+
+       
         const ui = new CanvasUI( content, config );
         const ui1 = new CanvasUI( content1, config1 );
         const ui2 = new CanvasUI( content2, config2 );
-        const ui3 = new CanvasUI( content3, config1 );
-        const ui4 = new CanvasUI( content4, config4 );
+        const ui1a = new CanvasUI( content1a, config1a );
+        const ui2a = new CanvasUI( content2a, config2a );
+        const ui3a = new CanvasUI( content3a, config3a );
+        
         
         this.ui = ui;
         this.ui1 = ui1;
         this.ui2 = ui2;
-        this.ui3 = ui3;
-        this.ui4 = ui4;
+
+        this.ui1a = ui1a;
+        this.ui2a = ui2a;
+        this.ui3a = ui3a;
         //console.log(this.ui.mesh);
 
         //positions
         this.ui.mesh.position.set(0,0,-2);
         this.ui1.mesh.position.set(0.3, 0.17, -0.9);
         this.ui2.mesh.position.set(-0.3, 0.17, -0.9);
-        this.ui3.mesh.position.set(0.3, 0.13, -0.9);
-        this.ui4.mesh.position.set(-0.3, 0.13, -0.9);
-        this.ui3.mesh.visible = false;
-        this.ui4.mesh.visible = false;
+        
+        
+        this.ui1a.mesh.position.set(-0.5,0,-2.5);
+        this.ui2a.mesh.position.set(0,0,-3);
+        this.ui3a.mesh.position.set(0.5,0,-2.5);
+
+        this.ui1a.mesh.visible = false;
+        this.ui2a.mesh.visible = false;
+        this.ui3a.mesh.visible = false;
+
+        //setting up style of the line
+        this.ui.context.lineJoin = "round";  
+        this.ui.context.strokeStyle = "black"; 
+        this.ui.context.font = "20px Arial";
+        this.ui.context.fillStyle = 'black';
+        this.ui1a.context.lineJoin = "round";  
+        this.ui1a.context.strokeStyle = "black"; 
+        this.ui1a.context.font = "20px Arial";
+        this.ui1a.context.fillStyle = 'black';
+        this.ui2a.context.lineJoin = "round";  
+        this.ui2a.context.strokeStyle = "black"; 
+        this.ui2a.context.font = "20px Arial";
+        this.ui2a.context.fillStyle = 'black';
+        this.ui3a.context.lineJoin = "round";  
+        this.ui3a.context.strokeStyle = "black"; 
+        this.ui3a.context.font = "20px Arial";
+        this.ui3a.context.fillStyle = 'black';
 
     }
 
-    clearCanvas(ind){
-
+    clearCanvas(ind,canv){
+        this.ui0 = canv;
        //removing graph
-        this.ui.context.save();
-        this.ui.context.fillStyle = 'white';
-        this.ui.context.fillRect(0,0,this.ui.config.width,this.ui.config.height);
-        this.ui.needsUpdate = true;
-        this.ui.texture.needsUpdate = true;
-        this.ui.context.restore();
+        this.ui0.context.save();
+        this.ui0.context.fillStyle = 'white';
+        this.ui0.context.fillRect(0,0,this.ui0.config.width,this.ui0.config.height);
+        this.ui0.needsUpdate = true;
+        this.ui0.texture.needsUpdate = true;
+        this.ui0.context.restore();
 
         //adding the x and y axis
-        this.ui.context.fillStyle = 'black';
-        this.ui.context.font = "25px Arial";
-        this.ui.context.save();
-        this.ui.context.beginPath();
-        this.ui.context.moveTo(this.c,this.c);
-        this.ui.context.lineTo(this.c,this.b-this.c);
-        this.ui.context.lineTo(this.a-this.c,this.b-this.c);
-        this.ui.context.stroke();
-        this.ui.context.fillText("Quantity Demanded", this.a/2,this.b-this.c/4);
-        this.ui.context.save();
-        this.ui.context.rotate(-Math.PI/2);
-        this.ui.context.fillText("Price per kilogram", -11*this.b/15 , 2*this.c/3);
-        this.ui.context.restore();
+        this.ui0.context.fillStyle = 'black';
+        this.ui0.context.font = "25px Arial";
+        this.ui0.context.save();
+        this.ui0.context.beginPath();
+        this.ui0.context.moveTo(this.c,this.c);
+        this.ui0.context.lineTo(this.c,this.b-this.c);
+        this.ui0.context.lineTo(this.a-this.c,this.b-this.c);
+        this.ui0.context.stroke();
+        this.ui0.context.fillText("Quantity Demanded", this.a/2,this.b-this.c/4);
+        this.ui0.context.save();
+        this.ui0.context.rotate(-Math.PI/2);
+        this.ui0.context.fillText("Price per kilogram", -11*this.b/15 , 2*this.c/3);
+        this.ui0.context.restore();
 
         //restoring additional two canvases
         if (ind){
@@ -330,23 +400,15 @@ class App{
 
         function onSessionStart(){
 
-    
-
-            //podesavanje mesa novog
-            self.ui.context.lineJoin = "round";  
-		    self.ui.context.strokeStyle = "black"; 
-		    self.ui.context.font = "20px Arial";
-            self.ui.context.fillStyle = 'black';
 		   // self.ui.needsUpdate = true;
             self.ui1.mesh.visible = true;
             self.ui2.mesh.visible = true;
             self.scene.add(self.ui.mesh);
             self.scene.add(self.ui1.mesh);
             self.scene.add(self.ui2.mesh);
-            self.scene.add(self.ui3.mesh);
-            self.scene.add(self.ui4.mesh);
+            
 
-            self.clearCanvas(0);
+            self.clearCanvas(0,self.ui);
             self.ui.context.beginPath();
             self.ui.context.moveTo(a-c,b-c);
             self.ui.context.lineTo(c,c);
@@ -373,17 +435,17 @@ class App{
 
            
 
-            /*setTimeout(next1,1000);
+            setTimeout(next1,1000);
             setTimeout(next2,52000);
             setTimeout(next3,71000);
             setTimeout(next4,76000);
-            setTimeout(next5,89000);*/
+            setTimeout(next5,89000);
             
           
-            setTimeout(next2,1000);
+            /*setTimeout(next2,1000);
             setTimeout(next3,2000);
             setTimeout(next4,3000);
-            setTimeout(next5,4000);
+            setTimeout(next5,4000);*/
             
         }
 
@@ -395,7 +457,7 @@ class App{
 
         function next2(){
 
-            this.app.clearCanvas();
+            this.app.clearCanvas(0,this.app.ui);
             //update of the price and quantity in a ui1 and ui2
             console.log('setTimeout2');
             this.app.ui1.updateElement('info', 'Price: 1.9 \u20AC /kg');
@@ -545,34 +607,46 @@ class App{
 
         function next5(){
 
-            this.app.control = true;
-            //empty ui with price/demand
-            this.app.ui1.updateElement('info', '');
-            this.app.ui2.updateElement('info', ''); 
-            this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
-            this.app.ui2.updateConfig ("body", "fontColor", "#f00" );
-            this.app.ui1.update();
-            this.app.ui2.update(); 
-
-            //stop the animation
-            this.app.action.stop();
-
-            //remove the cursor
-            this.app.cursor.visible = false; 
-
             //middle of the x-axis and corresponding y value
             var u = b/2;
             var v = (-u+452);
             var w = (b-c)-v;
+            this.app.control = true;
 
-            //filling the area
+            //visibility
+            this.app.ui1.mesh.visible = false;
+            this.app.ui2.mesh.visible = false;
+            this.app.ui1a.mesh.visible = true;
+            this.app.ui2a.mesh.visible = true;
+            this.app.ui3a.mesh.visible = true;
+
+
+            this.app.scene.add(this.app.ui1a.mesh);
+            this.app.scene.add(this.app.ui2a.mesh);
+            this.app.scene.add(this.app.ui3a.mesh);
+
+            //draw basics on every canvas
+            this.app.clearCanvas(0,this.app.ui1a);
+            this.app.clearCanvas(0,this.app.ui2a);
+            this.app.clearCanvas(0,this.app.ui3a);
+
+            //stop the animation
+            this.app.action.stop();
+
+            //remove the 3Dobjects
+            this.app.cursor.visible = false; 
+            this.app.cart.visible = false;
+            this.app.apple.visible = false;
+
+            //first canvas- ui
+            //this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
             this.app.ui.context.save();
             this.app.ui.context.fillStyle = 'yellow';
 			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(u,w);
-			this.app.ui.context.lineTo(u,b-c);
+			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
+			this.app.ui.context.lineTo(9*incx+60,b-c);
 			this.app.ui.context.lineTo(c,b-c);
-			this.app.ui.context.lineTo(c,w);
+			this.app.ui.context.lineTo(c,2.7*incy+60);
 			this.app.ui.context.fill();
             //drawing a bolder line for demand curve
             this.app.ui.context.lineWidth = '4';
@@ -583,30 +657,158 @@ class App{
             //surpluss
             this.app.ui.context.fillStyle = 'green';
 			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(u,w);
-			this.app.ui.context.lineTo(c,w);
+			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
+			this.app.ui.context.lineTo(c,2.7*incy+60);
 			this.app.ui.context.lineTo(c,c);
-			this.app.ui.context.lineTo(u,w);
+			this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
 			this.app.ui.context.fill();
             //lostwellfare
             this.app.ui.context.fillStyle = 'gray';
 			this.app.ui.context.beginPath();
-			this.app.ui.context.moveTo(u,w);
-			this.app.ui.context.lineTo(u,b-c);
+			this.app.ui.context.moveTo(9*incx+60,2.7*incy+60);
+			this.app.ui.context.lineTo(9*incx+60,b-c);
 			this.app.ui.context.lineTo(b-c,b-c);
-			this.app.ui.context.lineTo(u,w);
+			this.app.ui.context.lineTo(9*incx+60,2.7*incy+60);
 			this.app.ui.context.fill();
             //adding labels
             this.app.ui.context.fillStyle = 'black';
 			this.app.ui.context.font = "15px Arial";
 			this.app.ui.context.fillText("Total", b/4  , (b-c)-v/2);
             this.app.ui.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
-            this.app.ui.context.fillText("176.33 \u20AC", b/4  , (b-c)-v/2+40 );
-            this.app.ui.context.fillText('Price = 2.305 \u20AC',2*(b-c)/3,c);
-            this.app.ui.context.fillText('Quantity = 76.5 kg',2*(b-c)/3,c+20);
-
+            this.app.ui.context.fillText("171 \u20AC", b/4  , (b-c)-v/2+40 );
+            this.app.ui.context.fillText('Price = 1.9 \u20AC',2*(b-c)/3,c);
+            this.app.ui.context.fillText('Quantity = 90 kg',2*(b-c)/3,c+20);
+            this.app.ui.context.fillText('Consumer Surpluss =  121.5 \u20AC',2*(b-c)/3,c+40);
             this.app.ui.context.restore();
 
+            //second canvas- ui1a
+            this.app.ui1a.context.save();
+            this.app.ui1a.context.fillStyle = 'yellow';
+			this.app.ui1a.context.beginPath();
+			this.app.ui1a.context.moveTo(u,w);
+			this.app.ui1a.context.lineTo(u,b-c);
+			this.app.ui1a.context.lineTo(c,b-c);
+			this.app.ui1a.context.lineTo(c,w);
+			this.app.ui1a.context.fill();
+            //drawing a bolder line for demand curve
+            this.app.ui1a.context.lineWidth = '4';
+            this.app.ui1a.context.beginPath();
+			this.app.ui1a.context.moveTo(c,c);
+			this.app.ui1a.context.lineTo(a-c,b-c);
+            this.app.ui1a.context.stroke();
+            //surpluss
+            this.app.ui1a.context.fillStyle = 'green';
+			this.app.ui1a.context.beginPath();
+			this.app.ui1a.context.moveTo(u,w);
+			this.app.ui1a.context.lineTo(c,w);
+			this.app.ui1a.context.lineTo(c,c);
+			this.app.ui1a.context.lineTo(u,w);
+			this.app.ui1a.context.fill();
+            //lostwellfare
+            this.app.ui1a.context.fillStyle = 'gray';
+			this.app.ui1a.context.beginPath();
+			this.app.ui1a.context.moveTo(u,w);
+			this.app.ui1a.context.lineTo(u,b-c);
+			this.app.ui1a.context.lineTo(b-c,b-c);
+			this.app.ui1a.context.lineTo(u,w);
+			this.app.ui1a.context.fill();
+            //adding labels
+            this.app.ui1a.context.fillStyle = 'black';
+			this.app.ui1a.context.font = "15px Arial";
+			this.app.ui1a.context.fillText("Total", b/4  , (b-c)-v/2);
+            this.app.ui1a.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
+            this.app.ui1a.context.fillText("176.33 \u20AC", b/4  , (b-c)-v/2+40 );
+            this.app.ui1a.context.fillText('Price = 2.305 \u20AC',2*(b-c)/3,c);
+            this.app.ui1a.context.fillText('Quantity = 76.5 kg',2*(b-c)/3,c+20);
+            this.app.ui1a.context.fillText('Consumer Surpluss =  99.45 \u20AC',2*(b-c)/3,c+40);
+            this.app.ui1a.context.restore();
+            this.app.ui1a.mesh.rotateY(-Math.PI/2);
+
+            //third canvas= ui2 (6*incx+60,1.8*incy+60);
+            this.app.ui2a.context.save();
+            this.app.ui2a.context.fillStyle = 'yellow';
+			this.app.ui2a.context.beginPath();
+			this.app.ui2a.context.moveTo(6*incx+60,1.8*incy+60);
+			this.app.ui2a.context.lineTo(6*incx+60,b-c);
+			this.app.ui2a.context.lineTo(c,b-c);
+			this.app.ui2a.context.lineTo(c,1.8*incy+60);
+			this.app.ui2a.context.fill();
+            //drawing a bolder line for demand curve
+            this.app.ui2a.context.lineWidth = '4';
+            this.app.ui2a.context.beginPath();
+			this.app.ui2a.context.moveTo(c,c);
+			this.app.ui2a.context.lineTo(a-c,b-c);
+            this.app.ui2a.context.stroke();
+            //surpluss
+            this.app.ui2a.context.fillStyle = 'green';
+			this.app.ui2a.context.beginPath();
+			this.app.ui2a.context.moveTo(6*incx+60,1.8*incy+60);
+			this.app.ui2a.context.lineTo(c,1.8*incy+60);
+			this.app.ui2a.context.lineTo(c,c);
+			this.app.ui2a.context.lineTo(6*incx+60,1.8*incy+60);
+			this.app.ui2a.context.fill();
+            //lostwellfare
+            this.app.ui2a.context.fillStyle = 'gray';
+			this.app.ui2a.context.beginPath();
+			this.app.ui2a.context.moveTo(6*incx+60,1.8*incy+60);
+			this.app.ui2a.context.lineTo(6*incx+60,b-c);
+			this.app.ui2a.context.lineTo(b-c,b-c);
+			this.app.ui2a.context.lineTo(6*incx+60,1.8*incy+60);
+			this.app.ui2a.context.fill();
+            //adding labels
+            this.app.ui2a.context.fillStyle = 'black';
+			this.app.ui2a.context.font = "15px Arial";
+			this.app.ui2a.context.fillText("Total", b/4  , (b-c)-v/2);
+            this.app.ui2a.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
+            this.app.ui2a.context.fillText("168 \u20AC", b/4  , (b-c)-v/2+40 );
+            this.app.ui2a.context.fillText('Price = 2.8 \u20AC',2*(b-c)/3,c);
+            this.app.ui2a.context.fillText('Quantity = 60 kg',2*(b-c)/3,c+20);
+            this.app.ui2a.context.fillText('Consumer Surpluss =  54 \u20AC',2*(b-c)/3,c+40);
+            this.app.ui2a.context.restore();
+            this.app.ui2a.mesh.rotateY(-Math.PI);
+
+            //fourth canvas= ui2 3*incx+60,0.9*incy+60
+            this.app.ui3a.context.save();
+            this.app.ui3a.context.fillStyle = 'yellow';
+			this.app.ui3a.context.beginPath();
+			this.app.ui3a.context.moveTo(3*incx+60,0.9*incy+60);
+			this.app.ui3a.context.lineTo(3*incx+60,b-c);
+			this.app.ui3a.context.lineTo(c,b-c);
+			this.app.ui3a.context.lineTo(c,0.9*incy+60);
+			this.app.ui3a.context.fill();
+            //drawing a bolder line for demand curve
+            this.app.ui3a.context.lineWidth = '4';
+            this.app.ui3a.context.beginPath();
+			this.app.ui3a.context.moveTo(c,c);
+			this.app.ui3a.context.lineTo(a-c,b-c);
+            this.app.ui3a.context.stroke();
+            //surplus
+            this.app.ui3a.context.fillStyle = 'green';
+			this.app.ui3a.context.beginPath();
+			this.app.ui3a.context.moveTo(3*incx+60,0.9*incy+60);
+			this.app.ui3a.context.lineTo(c,0.9*incy+60);
+			this.app.ui3a.context.lineTo(c,c);
+			this.app.ui3a.context.lineTo(3*incx+60,0.9*incy+60);
+			this.app.ui3a.context.fill();
+            //lostwellfare
+            this.app.ui3a.context.fillStyle = 'gray';
+			this.app.ui3a.context.beginPath();
+			this.app.ui3a.context.moveTo(3*incx+60,0.9*incy+60);
+			this.app.ui3a.context.lineTo(3*incx+60,b-c);
+			this.app.ui3a.context.lineTo(b-c,b-c);
+			this.app.ui3a.context.lineTo(3*incx+60,0.9*incy+60);
+			this.app.ui3a.context.fill();
+            //adding labels
+            this.app.ui3a.context.fillStyle = 'black';
+			this.app.ui3a.context.font = "15px Arial";
+			this.app.ui3a.context.fillText("Total", b/4  , (b-c)-v/2);
+            this.app.ui3a.context.fillText("Revenue", b/4  ,(b-c)-v/2+20);
+            this.app.ui3a.context.fillText("111 \u20AC", b/4  , (b-c)-v/2+40 );
+            this.app.ui3a.context.fillText('Price = 3.7 \u20AC',2*(b-c)/3,c);
+            this.app.ui3a.context.fillText('Quantity = 30 kg',2*(b-c)/3,c+20);
+            this.app.ui3a.context.fillText('Consumer Surpluss =  18 \u20AC',2*(b-c)/3,c+40);
+            this.app.ui3a.context.restore();
+            this.app.ui3a.mesh.rotateY(Math.PI/2);
             
             /*this.app.cursor1.visible = true;
             this.app.cursor1.position.set (-0.04, 0 , -0.3);
@@ -624,171 +826,35 @@ class App{
         function onSessionEnd(){
 
             if (self.sound && self.sound.isPlaying) self.sound.stop();
-
             self.control = false; 
             self.action.reset();
             self.action.stop();
-            self.clearCanvas(1);
+            self.clearCanvas(1,self.ui);
             self.cursor.visible = false;
             self.cart.visible = false;
             self.apple.visible = false;
-            self.ui3.mesh.visible = false;
-            self.ui4.mesh.visible = false;
+        
             self.scene.remove(self.ui.mesh);
             self.scene.remove(self.ui1.mesh);
             self.scene.remove(self.ui2.mesh);
-            self.scene.remove(self.ui3.mesh);
-            self.scene.remove(self.ui4.mesh);
+           
             self.scene.remove(self.apple);
             self.scene.remove(self.cursor);
             self.scene.remove(self.cart);
-            
-           
+
+            self.ui1a.mesh.rotateY(Math.PI/2);
+            self.ui2a.mesh.rotateY(Math.PI);
+            self.ui3a.mesh.rotateY(-Math.PI/2);
+            self.ui1a.mesh.visible = false;
+            self.ui2a.mesh.visible = false;
+            self.ui3a.mesh.visible = false;
+            self.scene.remove(self.ui1a.mesh);
+            self.scene.remove(self.ui3a.mesh);
+            self.scene.remove(self.ui2a.mesh);
         }
 
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }});
         this.gestures = new ControllerGestures( this.renderer );
-        
-        this.gestures.addEventListener( 'tap', (ev)=>{
-
-            if (self.control){
-
-                console.log( 'tap' ); 
-                //console.log(ev.position.x);
-                if (-0.08 <= ev.position.x && ev.position.x <= 0.08) {
-                    self.clearCanvas(0);
-                    var m = self.converttoPix(ev.position.x);
-                    var n = self.converttoDemand(ev.position.x);
-                    var t = self.funk(n);
-                    var s = b-c-t*incy;
-                    var quant = (n*10).toFixed(2);
-                    var price = t.toFixed(2);
-                    console.log(n*10);
-                    console.log(s);
-
-                    //drawing a function
-                    self.ui.context.fillStyle = 'black';
-                    self.ui.context.font = "25px Arial";
-                    self.ui.context.save();
-                    self.ui.context.beginPath();
-                    self.ui.context.moveTo(a-c,b-c);
-                    self.ui.context.lineTo(c,c);
-                    self.ui.context.stroke();
-
-                    //drawing a dashed vertical line-quantity
-                    self.ui.context.save();
-                    self.ui.context.beginPath();
-                    self.ui.context.setLineDash([5, 15]);
-                    self.ui.context.moveTo(m,s);
-                    self.ui.context.lineTo(m,b-c);
-                    self.ui.context.stroke();
-                    self.ui.context.fillStyle = 'green';
-                    self.ui.context.font = "15px Arial";
-                    self.ui.context.fillText(quant, m  , b-2*c/3 );
-
-                    //total revenue calculated
-                    const area = (price*quant).toFixed(2);
-
-                    //drawing a dashed horizontal line-price
-                    self.ui.context.beginPath();
-                    self.ui.context.setLineDash([5, 15]);
-                    self.ui.context.moveTo(m,s);
-                    self.ui.context.lineTo(c,s);
-                    self.ui.context.stroke();
-                    self.ui.context.fillStyle = 'green';
-                    self.ui.context.font = "15px Arial";
-                    self.ui.context.fillText(price,c/3,s);
-                    self.ui.context.restore();
-
-                    //shading the total revenue area
-                    self.ui.context.save();
-                    self.ui.context.fillStyle = 'yellow';
-                    self.ui.context.beginPath();
-                    self.ui.context.moveTo(m,s);
-                    self.ui.context.lineTo(m,b-c);
-                    self.ui.context.lineTo(c,b-c);
-                    self.ui.context.lineTo(c,s);
-                    self.ui.context.fill();
-                    self.ui.context.restore();
-
-                    //shading the consumers surplus area
-                    self.ui.context.save();
-                    self.ui.context.fillStyle = 'green';
-                    self.ui.context.beginPath();
-                    self.ui.context.moveTo(m,s);
-                    self.ui.context.lineTo(c,s);
-                    self.ui.context.lineTo(c,c);
-                    self.ui.context.lineTo(m,s);
-                    self.ui.context.fill();
-                    self.ui.context.restore();
-
-                    //shading the lost welfare area
-                    self.ui.context.save();
-                    self.ui.context.fillStyle = 'gray';
-                    self.ui.context.beginPath();
-                    self.ui.context.moveTo(m,s);
-                    self.ui.context.lineTo(a-c,b-c);
-                    self.ui.context.lineTo(m,b-c);
-                    self.ui.context.lineTo(m,s);
-                    self.ui.context.fill();
-                    //adding labels
-                    self.ui.context.fillStyle = 'black';
-                    self.ui.context.font = "15px Arial";
-                    self.ui.context.fillText('Total',m/2,(b-c+s)/2);
-                    self.ui.context.fillText('Revenue',m/2,(b-c+s)/2+20);
-                    self.ui.context.fillText(area + '\u20AC', m/2,(b-c+s)/2+40);
-                    self.ui.context.fillText('Price = '+ price+'\u20AC',2*(b-c)/3,c);
-                    self.ui.context.fillText('Quantity = '+ quant+ 'kg',2*(b-c)/3,c+20);
-                    self.ui.context.restore();
-
-                    
-                    //area of the triangles
-
-                    //consumer surplus
-                    var area1 = ((4.6-t)*n*5).toFixed(2);
-                    //lost welfare
-                    var area2 = ((t*(153-n*10))/2).toFixed(2);
-                    console.log(area1);
-                    console.log(area2);
-                    //self.ui.context.fillText(area1,m+c,b-c/2);
-                    //self.ui.context.fillText(area2,m-c,2*c);
-
-                    //update the ui-meshes showing the area of the triangles 
-                    self.ui1.updateElement('info', 'Lost Wellfare'); 
-                    self.ui2.updateElement('info', 'Consumer Surplus');
-                    self.ui1.updateConfig ("body", "fontColor", "#000" );
-                    self.ui2.updateConfig ("body", "fontColor", "#000" );
-                    self.ui1.updateConfig ("body", "fontSize", "50" );
-                    self.ui2.updateConfig ("body", "fontSize", "42" );
-                    self.ui1.update();
-                    self.ui2.update(); 
-                    self.ui3.mesh.visible = true;
-                    self.ui4.mesh.visible = true;
-                    self.ui3.updateElement('info', area2+'\u20AC');
-                    self.ui4.updateElement('info', area1+'\u20AC');
-                    //self.ui3.updateConfig ("body", "fontColor", "#000" );
-                    self.ui4.updateConfig ("body", "fontColor", "#114" );
-                    self.ui3.update();
-                    self.ui4.update(); 
-
-                    //hide mesh
-                    self.cart.visible = false;
-                    self.apple.visible = false;
-                    self.cursor.visible = false;
-
-                }
-
-
-                //self.ui.updateElement('info', 'tap' );
-                /*if (!self.knight.object.visible){
-                    self.knight.object.visible = true;
-                    self.knight.object.position.set( 0, -0.3, -0.5 ).add( ev.position );
-                    self.scene.add( self.knight.object ); 
-                }*/
-            }
-        });
-        
-        
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
