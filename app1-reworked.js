@@ -699,8 +699,10 @@ class App{
             });
              self.sound = sound;
              self.speech = new THREE.Audio( self.listener );
+             const controlspeech = true;
+             self.controlspeech = controlspeech;
         
-         if (!(self.speech===undefined)) {
+         if (self.controlspeech) {
               resolve("Sound loaded!");
             }
          else {
