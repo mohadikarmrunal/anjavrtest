@@ -365,24 +365,8 @@ class App{
             
         function onSessionStart(){
 
-            if (self.speech === undefined) {
-
-                const sound = new THREE.Audio( self.listener );
-                
-                const audioLoader = new THREE.AudioLoader();
-                    audioLoader.load( 'audio/app2.mp3', ( buffer ) => {
-                        sound.setBuffer( buffer );
-                        sound.setLoop( false );
-                        sound.setVolume( 1.0 );
-                        sound.play();
-                    });
-
-                self.sound = sound;
-                self.speech = new THREE.Audio( self.listener );
-            } else {
-                self.sound.play();
-            }
             
+            self.sound.play();
 
             //adding meshes to scene
             self.ui1.mesh.position.set(-2,0,-2);
@@ -466,8 +450,35 @@ class App{
 
         }
 
+        var promise = new Promise(function(resolve, reject) {
+             const sound = new THREE.Audio( self.listener );
+             const audioLoader = new THREE.AudioLoader();
+              audioLoader.load( 'audio/app2.mp3', ( buffer ) => {
+               sound.setBuffer( buffer );
+               sound.setLoop( false );
+               sound.setVolume( 1.0 );
+           });
+            self.sound = sound;
+            self.speech = new THREE.Audio( self.listener );
+            const controlspeech = true;
+            self.controlspeech = controlspeech;
+       
+        if (self.controlspeech) {
+             resolve("Sound loaded!");
+           }
+        else {
+             reject(Error("Sound did not load."));
+           }
+       });
 
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
+
+        promise.then(function(result) {
+               const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
+               console.log(result)}, function (error){
+               console.log(error);
+           });
+
+
         const controller = this.renderer.xr.getController( 0 );
         //controller.addEventListener( 'connected', onConnected );
         

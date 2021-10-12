@@ -711,15 +711,14 @@ class App{
         });
 
 
-        promise.then(function(result) {
-            const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
-            console.log(result)}, function (error){
+         promise.then(function(result) {
+                const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
+                console.log(result)}, function (error){
                 console.log(error);
             });
-       
 
-        this.gestures = new ControllerGestures( this.renderer );
-        this.renderer.setAnimationLoop( this.render.bind(this) );
+         this.gestures = new ControllerGestures( this.renderer );
+         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
     
     resize(){
