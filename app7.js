@@ -59,7 +59,7 @@ class App{
                 self.animations = {};
                 self.head = gltf.scene;
                 self.coinH = gltf.scene.children[0].children[1];
-                self.head.children[0].children[1].visible = false;
+                self.head.children[0].children[0].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossHead'] = gltf.animations[0];
@@ -101,7 +101,7 @@ class App{
                 self.tail = gltf.scene;
                 //console.log(gltf.scene.children[0].children[1]);
                 self.coinT = gltf.scene.children[0].children[1];
-                self.tail.children[0].children[1].visible = false;
+                self.tail.children[0].children[0].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossTail'] = gltf.animations[0];
@@ -279,22 +279,22 @@ class App{
 
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0,0.45,-1);
+        this.ui1.mesh.position.set(0,0.45,-1.1);
         this.ui1.mesh.material.opacity = 0.3;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(0,0.45,-2);
+        this.ui2.mesh.position.set(0,0.45,-2.1);
         this.ui2.mesh.material.opacity = 0.3;
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,0.45,-3);
+        this.ui3.mesh.position.set(0,0.45,-3.1);
         this.ui3.mesh.material.opacity = 0.3;  
 
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
-        this.ui4.mesh.position.set(0,0.45,-4);
+        this.ui4.mesh.position.set(0,0.45,-4.1);
         this.ui4.mesh.material.opacity = 0.3;
        
     }
