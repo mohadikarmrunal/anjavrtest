@@ -1,112 +1,156 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
-import { ParametricGeometries } from '../../libs/three/jsm/ParametricGeometries.js';
+//import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
-import { ARButton } from '../../libs/ARButton.js';
-import { ControllerGestures } from '../../libs/ControllerGestures.js';
-import {CanvasTexture} from '../../libs/three/three.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
+import { ARButton } from '../../libs/ARButton.js';
+//import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
+//import { LoadingBar } from '../../libs/LoadingBar.js';
+//pokusavamo namjestiti prozitnu teksturu ui-ja
 
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
         
-		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
-		this.camera.position.set( 0, 0, 30);
-        
         this.clock = new THREE.Clock();
-
+        
+		this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+		
 		this.scene = new THREE.Scene();
         this.scene.add(this.camera);
-        
-		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 0.3);
-		this.scene.add(ambient);
-        
-        const light = new THREE.DirectionalLight();
-        light.position.set( 0.2, 1, 1);
-        this.scene.add(light);
+       
+		this.scene.add( new THREE.HemisphereLight( 0x606060, 0x404040 ) );
 
+        const light = new THREE.DirectionalLight( 0xffffff );
+        light.position.set( 1, 1, 1 ).normalize();
+		this.scene.add( light );
 			
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.renderer.outputEncoding = THREE.sRGBEncoding;
+        
 		container.appendChild( this.renderer.domElement );
-
+        
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
         this.controls.target.set(0, 3.5, 0);
         this.controls.update();
         
         this.stats = new Stats();
 
-       
-          this.createUI();
+        this.listener = new THREE.AudioListener();
+        this.camera.add( this.listener );
         
-        this.renderer.setAnimationLoop( this.render.bind(this) );
-        window.addEventListener('resize', this.resize.bind(this) );
-	}	
+        this.createUI();
+        this.setupVR();
 
-    createUI() {
-        
-        const config = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 194,
-            body:{
+        window.addEventListener('resize', this.resize.bind(this) );
+	
+    }
+
+
+    createUI(){
+
+        const self = this;
+
+        const config1 = {
+            body:{ 
                 textAlign: 'center',
-                backgroundColor:'#ccc',
-                fontColor:'#000',
-                padding:40,
+                backgroundColor: '#fff', 
+                fontColor:'#000', 
+                borderRadius: 6,
+                padding:50,
                 fontSize:50,
             },
             info:{ type: "text" }
+            }
+
+
+        const content1 = {
+                info: ""
         }
 
-
-        const content = {
-            info: "graph"
-        }   
-
-        const ui = new CanvasUI( content, config );
+        const ui = new CanvasUI( content1, config1 );
         this.ui = ui;
-        this.scene.add(this.ui.mesh);
-        this.ui.mesh.position.set(0.08, 0.01, -0.2);
-      
+        this.ui.mesh.material.opacity = 0.3;
     }
+   
 
-   /* initScene(){
-        const geometry = new THREE.ParametricGeometry( ParametricGeometries.klein, 40, 30 );
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        material.wireframe=true;
-        this.boca = new THREE.Mesh( geometry, material );
-        this.boca.position.set(0,0,-4);
-        this.boca.scale.set(0.08,0.08,0.08);
-    }*/
+    setupVR() {
 
-       
-   /* setupVR(){
-        this.renderer.xr.enabled = true; 
-        
         const self = this;
+        this.renderer.xr.enabled = true; 
+
+        
+            
         function onSessionStart(){
-          self.scene.add(self.boca);  
+
+            self.ui.mesh.position.set(0,0,-2);
+            self.scene.add(self.ui.mesh);
+            
+        }
+       
+        function onSessionEnd(){
+
+            if (self.sound && self.sound.isPlaying) self.sound.stop();
+
         }
 
-        const btn = new ARButton( this.renderer, {onSessionStart});
-      
+        var promise = new Promise(function(resolve, reject) {
+             const sound = new THREE.Audio( self.listener );
+             const audioLoader = new THREE.AudioLoader();
+              audioLoader.load( 'audio/app2.mp3', ( buffer ) => {
+               sound.setBuffer( buffer );
+               sound.setLoop( false );
+               sound.setVolume( 1.0 );
+           });
+            self.sound = sound;
+            self.speech = new THREE.Audio( self.listener );
+            const controlspeech = true;
+            self.controlspeech = controlspeech;
+       
+        if (self.controlspeech) {
+             resolve("Sound loaded!");
+           }
+        else {
+             reject(Error("Sound did not load."));
+           }
+       });
+
+
+        promise.then(function(result) {
+               const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
+               console.log(result)}, function (error){
+               console.log(error);
+           });
+
+
+        const controller = this.renderer.xr.getController( 0 );
+        //controller.addEventListener( 'connected', onConnected );
+        
+        this.scene.add( controller );
+        this.controller = controller;
+
+        
         this.renderer.setAnimationLoop( this.render.bind(this) );
+
     }
-    */
-    
+
+   
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize( window.innerWidth, window.innerHeight );  
     }
     
-	render( ) {   
+
+    render( ) {   
         const dt = this.clock.getDelta();
-        //this.boca.rotateY( 0.01 );
         this.stats.update();
+        if ( this.renderer.xr.isPresenting ) {
+            this.ui.update();
+        }
         this.renderer.render( this.scene, this.camera );
     }
 }

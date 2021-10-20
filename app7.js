@@ -38,7 +38,6 @@ class App{
         this.controls.update();
         
         this.stats = new Stats();
-        
         this.initScene();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
@@ -147,7 +146,6 @@ class App{
 				self.coin.scale.set(scale, scale, scale); 
                 //console.log(self.coin.children[0]);
                 self.coin.children[0].rotateX(Math.PI/2);
-                console.log(Math.PI);
                 self.coin1 = self.coin.clone();
                 self.coin2 = self.coin.clone();
                 self.coin3 = self.coin.clone();
@@ -170,9 +168,37 @@ class App{
 				console.log( 'An error happened with the coin' );
 			}
         );
+
+        loader.load(
+			// resource URL
+			'cursor.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.cursor = gltf.scene;
+                self.loadingBar.visible = false;
+                self.cursor.visible = false;
+				const scale = 0.04;
+				self.cursor.scale.set(scale, scale, scale); 
+                self.cursor.rotateX(Math.PI/2);
+                self.cursor.position.set (0,-0.7,-1);
+                self.cursor1 = self.cursor.clone();
+                self.cursor2 = self.cursor.clone();
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading a cursor' );
+			}
+        );
          
         
         this.createUI();
+        this.createBoxes();
 
 
     }
@@ -181,123 +207,112 @@ class App{
     createUI() {
         
         const self = this;
+
         //setting up button canvasUI
-        const config = {
-            panelSize: { width: 0.7, height: 0.1 },
-            height: 73,
-            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button1: { type: "button", position:{ top: 39, left: 6 }, width: 240, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
-            button2: { type: "button", position:{ top: 39, left: 266 }, width: 240, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
-            renderer: this.renderer
+        const config1 = {
+            panelSize: { width: 0.6, height: 0.3 },
+            height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:65,
+                fontSize:55,
+            },
+            info:{ type: "text" }
         }
 
-        const configH = {
-            panelSize: { width: 0.7, height: 0.1 },
-            height: 73,
-            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button0H: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0H },
-            button1H: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1H },
-            button2H: { type: "button", position:{ top: 39, left: 346 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2H },
-            renderer: this.renderer
+        const content1 = {
+            info: "Event"
         }
 
-        const configT = {
-            panelSize: { width: 0.7, height: 0.1 },
-            height: 73,
-            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', padding: 10 ,width: 500, height: 28, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button0T: { type: "button", position:{ top: 39, left: 6 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button0T },
-            button1T: { type: "button", position:{ top: 39, left: 176 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button1T },
-            button2T: { type: "button", position:{ top: 39, left: 346 }, width: 160, height: 28, fontSize: 25, fontColor: "#fff", padding: 10, backgroundColor: "#02f", hover: "#3df", onSelect: button2T },
-            renderer: this.renderer
+        const config2 = {
+            panelSize: { width: 0.6, height: 0.3 },
+            height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:65,
+                fontSize:55,
+            },
+            info:{ type: "text" }
         }
 
-        const content = {
-            info: "Description of Random Variable:",
-            button1: "Head",
-            button2: "Tail",
+        const content2 = {
+            info: "Sample Space"
         }
 
-        const contentH = {
-            info: "Number of Heads Tossed",
-            button0H: "0",
-            button1H: "1",
-            button2H: "2",
+        const config3 = {
+            panelSize: { width: 0.6, height: 0.3 },
+            height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:65,
+                fontSize:55,
+            },
+            info:{ type: "text" }
         }
 
-        const contentT = {
-            info: "Number of Tails Tossed",
-            button0T: "0",
-            button1T: "1",
-            button2T: "2",
+        const content3 = {
+            info: "Random Variables"
         }
 
-        const ui = new CanvasUI( content, config );
-        this.ui = ui;
-        this.ui.mesh.position.set(0, -0.3, -0.9);
-
-        const uiHead = new CanvasUI(contentH, configH);
-        this.uiHead = uiHead;
-        this.uiHead.mesh.position.set(0, -0.3, -0.9);
-
-        const uiTail = new CanvasUI( contentT, configT );
-        this.uiTail = uiTail;
-        this.uiTail.mesh.position.set(0, -0.3, -0.9);
-
-        function button1(){
-            //const msg = "You have selected head";
-            self.scene.remove(self.ui.mesh);
-            self.scene.add(self.uiHead.mesh);
-            //self.ui.updateElement( "info", msg );
-        }
-        
-        function button2(){
-            //const msg = "You have selected tail";
-            self.scene.remove(self.ui.mesh);
-            self.scene.add(self.uiTail.mesh);
-            //self.ui.updateElement( "info", msg );
+        const config4 = {
+            panelSize: { width: 0.6, height: 0.3 },
+            height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:65,
+                fontSize:55,
+            },
+            info:{ type: "text" }
         }
 
-        function button0H(){
-            const msg = "You have counted cases where no heads are tossed";
-            console.log(msg);
-            self.counting(0,0);
-            self.uiHead.updateElement( "info", msg );
-        }
-        function button1H(){
-            const msg = "You have counted cases where 1 head is tossed";
-            console.log(msg);
-            self.counting(0,1);
-            self.uiHead.updateElement( "info", msg );
-        }
-        
-        function button2H(){
-            const msg2h = "You have counted cases where 2 heads are tossed";
-            console.log(msg2h);
-            self.counting(0,2);
-            self.uiHead.updateElement( "info", msg2h );
+        const content4 = {
+            info: "Probability Distribution"
         }
 
-        function button0T(){
-            const msg = "You have counted cases where no tails are tossed";
-            console.log(msg);
-            self.counting(1,0);
-            self.uiTail.updateElement( "info", msg );
-        }
+        const ui1 = new CanvasUI(content1, config1);
+        this.ui1 = ui1;
+        this.ui1.mesh.position.set(0,0.45,-1);
+        this.ui1.mesh.material.opacity = 0.3;
 
-        function button1T(){
-            const msg = "You have counted cases where 1 tail ais tossed";
-            console.log(msg);
-            self.counting(1,1);
-            self.uiTail.updateElement( "info", msg );
-        }
-        
-        function button2T(){
-            const msg = "You have counted cases where 2 tails are tossed";
-            console.log(msg);
-            self.counting(1,2);
-            self.uiTail.updateElement( "info", msg );
-        }
+        const ui2 = new CanvasUI(content2, config2);
+        this.ui2 = ui2;
+        this.ui2.mesh.position.set(-1,0.45,-1);
+        this.ui2.mesh.material.opacity = 0.3;
+
+        const ui3 = new CanvasUI(content3, config3);
+        this.ui3 = ui3;
+        this.ui3.mesh.position.set(0,0.45,-1);
+        this.ui3.mesh.material.opacity = 0.3;  
+
+        const ui4 = new CanvasUI(content4, config4);
+        this.ui4 = ui4;
+        this.ui4.mesh.position.set(1,0.45,-1);
+        this.ui4.mesh.material.opacity = 0.3;
        
+    }
+
+    createBoxes(){
+        const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+        const geometry3 = new THREE.BoxGeometry( 0.2, 0.4, 0.2 );
+        const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+        const cube1 = new THREE.Mesh( geometry, material );
+        const cube2 = new THREE.Mesh( geometry, material );
+        const cube3 = new THREE.Mesh( geometry3, material );
+        this.cube1 = cube1;
+        this.cube2 = cube2;
+        this.cube3 = cube3;
+        this.cube1.position.set(0.75,-0.1,-1);
+        this.cube2.position.set(1.25,-0.1,-1);
+        this.cube3.position.set(1,0,-1);
+        
     }
 
     counting(x,y){
@@ -380,20 +395,17 @@ class App{
     
 
     setupVR(){
-        this.renderer.xr.enabled = true; 
-        
+        this.renderer.xr.enabled = true;   
         const self = this;
-        //let controller;
-       /* function onSessionEnd(){
-            self.camera.remove( self.ui.mesh );
-        }*/
+        
 
         function onSessionStart(){
              if(!self.head.visible){
                 
                 setTimeout(next1,3000);
                 setTimeout(next2,6000);
-                setTimeout(next3, 9000);
+                setTimeout(next4,9000);
+                //setTimeout(next3, 9000);
                 //self.scene.add( self.head);  
                 //console.log(self.action);  
                 //self.action.loop = THREE.LoopOnce;
@@ -402,6 +414,11 @@ class App{
         }
 
         function next1 (){
+            this.app.cursor.visible = true; 
+            this.app.scene.add(this.app.cursor);
+            this.app.ui1.mesh.visible = true;
+            this.app.scene.add(this.app.ui1.mesh);
+            
             this.app.head.visible = true;
             this.app.scene.add(this.app.head);
             this.app.action.play();
@@ -420,6 +437,7 @@ class App{
             this.app.tail.visible = false;
             this.app.scene.remove(self.head);
             this.app.scene.remove(self.tail);
+            
 
             this.app.coin.visible = true;
             this.app.coin.position.set( -0.3, 0.15, -0.9 ); 
@@ -454,8 +472,65 @@ class App{
             this.app.scene.add( this.app.coin7); 
 
             this.app.scene.add(this.app.ui.mesh);
+        }
 
+        function next4(){
+            const self = this.app;
+
+            self.ui1.mesh.visible = false;
+            self.scene.remove(self.ui1.mesh);
             
+            self.tail.visible = false;
+            self.scene.remove(self.head);
+            self.scene.remove(self.tail);
+            self.scene.remove(self.cursor);
+            
+            //adding the meshes
+            self.scene.add(this.app.ui2.mesh);
+            self.ui2.mesh.visible = true;
+            self.scene.add(this.app.ui3.mesh);
+            self.ui3.mesh.visible = true;
+            self.scene.add(this.app.ui4.mesh);
+            self.ui4.mesh.visible = true;
+
+            //adding coins 
+            self.coin.visible = true;
+            self.coin.position.set( -1.3, 0.15, -1 ); 
+            self.scene.add( self.coin); 
+            self.coin1.visible = true;
+            self.coin1.position.set( -1.16, 0.15, -1 ); 
+            self.scene.add( self.coin1); 
+            self.coin2.visible = true;
+            self.coin2.position.set( -0.84, 0.15, -1 ); 
+            self.scene.add( self.coin2); 
+            self.coin3.visible = true;
+            self.coin3.position.set( -0.7, 0.15, -1 ); 
+            self.scene.add( self.coin3); 
+            self.coin4.visible = true;
+            self.coin4.position.set( -1.3, -0.15, -1 ); 
+            self.scene.add( self.coin4); 
+            self.coin5.visible = true;
+            self.coin5.position.set( -1.16, -0.15, -1 ); 
+            self.scene.add( self.coin5); 
+            self.coin6.visible = true;
+            self.coin6.position.set( -0.84, -0.15, -1 ); 
+            self.scene.add( self.coin6); 
+            self.coin7.visible = true;
+            self.coin7.position.set( -0.7, -0.15, -1 ); 
+            self.scene.add( self.coin7); 
+            
+
+            //addingboxes
+            self.scene.add(self.cube1);
+            self.cube1.visible = true;
+            self.scene.add(self.cube2);
+            self.cube2.visible = true;
+            self.scene.add(self.cube3);
+            self.cube3.visible = true;
+
+
+
+
         }
 
         function onSessionEnd(){
@@ -467,9 +542,9 @@ class App{
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
-            self.scene.remove(self.ui.mesh);
-            self.scene.remove(self.uiHead.mesh);
-            self.scene.remove(self.uiTail.mesh);
+            self.scene.remove(self.ui2.mesh);
+            self.scene.remove(self.ui3.mesh);
+            self.scene.remove(self.ui4.mesh);
         }
 
 
@@ -497,11 +572,11 @@ class App{
         this.stats.update();
         this.mixer.update( dt )
         this.mixerT.update( dt )
-        if ( this.renderer.xr.isPresenting ) {
+       /* if ( this.renderer.xr.isPresenting ) {
             this.ui.update();
             this.uiHead.update();
             this.uiTail.update();
-        }
+        }*/
         this.renderer.render( this.scene, this.camera );
     }
 }
