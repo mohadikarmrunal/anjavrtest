@@ -279,22 +279,22 @@ class App{
 
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0,0.45,-1.1);
+        this.ui1.mesh.position.set(0,0,-1.1);
         this.ui1.mesh.material.opacity = 0.3;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(0,0.45,-2.1);
+        this.ui2.mesh.position.set(0,0,-2.1);
         this.ui2.mesh.material.opacity = 0.3;
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,0.45,-3.1);
+        this.ui3.mesh.position.set(0,0,-3.1);
         this.ui3.mesh.material.opacity = 0.3;  
 
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
-        this.ui4.mesh.position.set(0,0.45,-4.1);
+        this.ui4.mesh.position.set(0,0,-4.1);
         this.ui4.mesh.material.opacity = 0.3;
        
     }
