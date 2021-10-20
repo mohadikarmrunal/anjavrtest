@@ -38,6 +38,7 @@ class App{
         this.controls.update();
         
         this.stats = new Stats();
+        this.createBoxes();
         this.initScene();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
@@ -197,13 +198,9 @@ class App{
 			}
         );
          
-        
         this.createUI();
-        this.createBoxes();
-
-
+        
     }
-
 
     createUI() {
         
@@ -298,32 +295,108 @@ class App{
         this.ui4.mesh.position.set(0,0,-4.6);
         this.ui4.mesh.material.opacity = 0.8;
 
-        //button
-        const configb1 = {
+
+
+        //button for the question1
+        function buttonq1f(){
+            const msg = "False answer!";
+            console.log(msg);
+            self.uiq1.updateElement( "info", msg );
+        }
+
+        function buttonq1t(){
+
+            self.uiq1.mesh.visible = false;
+            self.scene.remove(self.uiq1.mesh);
+            //remove all the coins
+            self.scene.remove(self.coin);
+            self.scene.remove(self.coin1);
+            self.scene.remove(self.coin2);
+            self.scene.remove(self.coin3);
+            self.scene.remove(self.coin4);
+            self.scene.remove(self.coin5);
+            self.scene.remove(self.coin6);
+            self.scene.remove(self.coin7);
+            //remove the canvases
+            self.ui2.mesh.visible = false;
+            self.scene.remove(self.ui2.mesh);
+            //display the next canvas
+            self.ui3.mesh.visible = true;
+            self.scene.add(self.ui3.mesh);
+
+            //addingboxes
+            self.cube1.visible = true;
+            self.cube2.visible = true;
+            self.cube3.visible = true;
+            console.log(self.cube1);
+            self.scene.add(self.cube1);
+            self.scene.add(self.cube2);
+            self.scene.add(self.cube3);
+            
+
+        }
+
+       
+        const configq1 = {
             panelSize: { height: 0.2 },
             height: 102.4,
             info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button1: { type: "button", position:{ top: 54.4, left: 6.15 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
+            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
+            button1: { type: "button", position:{ top: 54.4, left: 6 }, width: 250, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq1t },
+            button2: { type: "button", position:{ top: 54.4, left: 256 }, width: 250, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq1f },
+            renderer: this.renderer
+        }
+        const contentq1 = {
+            info: "Random Variable that counts heads has the displayed set for it's: ",
+            button1: "DOMAIN",
+            button2: "CODOMAIN",
+           
+        } 
+
+        const uiq1 = new CanvasUI( contentq1, configq1 );
+        this.uiq1 = uiq1;
+        this.uiq1.mesh.position.set(0,0,-1);
+        this.uiq1.mesh.visibile = false;
+
+
+        function button1next(){
+            console.log('It is time for the first question of the day');
+            const self = this.app;
+            self.ui2.mesh.visible = true;
+            self.uiq1.mesh.visible = true;
+            self.scene.add(self.uiq1.mesh);
+           
+
+        }
+
+        function button1(){
+            //we need to play the sound here as well
+            console.log('Button for the first sound on the second canvas was pressed');
+            // testni komand self.ui2.mesh.visible = false;
+            self.uib1.mesh.visible = false;
+            self.scene.remove(self.uib1.mesh);
+            setTimeout(button1next,3000);
+        }
+
+
+        //button for the sound 1
+        const configb1 = {
+            panelSize: { height: 0.1, width: 0.1},
+            height: 512,
+            backgroundColor: '#ccc',
+            button1: { type: "button", position:{ top: 6, left: 6 }, width:500 , height: 500, padding:100, fontColor: "#fff", fontSize:100, backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
             renderer: this.renderer
         }
         const contentb1 = {
-            info: "press for the sound",
             button1: "sound yayy!",
         }
 
         const uib1 = new CanvasUI( contentb1, configb1 );
         this.uib1 = uib1;
-        this.uib1.mesh.position.set(0,-1,-2);
-        
-        function button1next(){
-            const self = this.app;
-            self.ui2.mesh.visible = true;
-        }
+        this.uib1.mesh.position.set(0.2,0.2,-1);
 
-        function button1(){
-            self.ui2.mesh.visible = false;
-            setTimeout(button1next,3000);
-        }
+
+       
        
     }
 
@@ -569,26 +642,20 @@ class App{
 
             
             
-            //addingboxes
-            self.scene.add(self.cube1);
-            self.cube1.visible = true;
-            self.scene.add(self.cube2);
-            self.cube2.visible = true;
-            self.scene.add(self.cube3);
-            self.cube3.visible = true;
+            
 
 
         }
 
         function onSessionEnd(){
-            self.scene.remove(self.coin);
+            /*self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
             self.scene.remove(self.coin3);
             self.scene.remove(self.coin4);
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
-            self.scene.remove(self.coin7);
+            self.scene.remove(self.coin7);*/
             self.scene.remove(self.ui2.mesh);
             self.scene.remove(self.ui3.mesh);
             self.scene.remove(self.ui4.mesh);
@@ -624,6 +691,11 @@ class App{
             this.uiHead.update();
             this.uiTail.update();
         }*/
+
+        if ( this.renderer.xr.isPresenting ) {
+            this.uib1.update();
+            this.uiq1.update();
+        }
         this.renderer.render( this.scene, this.camera );
     }
 }
