@@ -297,6 +297,33 @@ class App{
         this.ui4 = ui4;
         this.ui4.mesh.position.set(0,0,-4.6);
         this.ui4.mesh.material.opacity = 0.8;
+
+        //button
+        const configb1 = {
+            panelSize: { height: 0.2 },
+            height: 102.4,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            button1: { type: "button", position:{ top: 54.4, left: 6.15 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
+            renderer: this.renderer
+        }
+        const contentb1 = {
+            info: "press for the sound",
+            button1: "sound yayy!",
+        }
+
+        const uib1 = new CanvasUI( contentb1, configb1 );
+        this.uib1 = uib1;
+        this.uib1.mesh.position.set(0,-1,-2);
+        
+        function button1next(){
+            const self = this.app;
+            self.ui2.mesh.visible = true;
+        }
+
+        function button1(){
+            self.ui2.mesh.visible = false;
+            setTimeout(button1next,3000);
+        }
        
     }
 
@@ -486,24 +513,10 @@ class App{
             self.coin7.position.set( 0.3, -0.15, -2 ); 
             self.scene.add( self.coin7); 
            
-            //adding a cursor for now but to be replaced with an icon
-            self.cursor1.visible = true;
-            self.cursor1.position.set(0.7,0.15,-2);
-            self.scene.add(self.cursor1);
-
-            function cursor1(){
-
-                console.log('ovdje ce se trebati pokazati mesh nakon odredjenog vremena, a ovdje je this'+this);
-                this.ui2.mesh.visibility = true;
-                
-
-            }
-
-            self.cursor1.addEventListener('click',function(){
-                console.log('Kursor 1 je pritisnut,ovdje trebamo promijeniti desavanje');
-                this.ui2.mesh.visible = false;
-                setTimeout(cursor1,3000);
-            })
+            //adding a button for now but to be replaced with an icon for sound
+            self.uib1.mesh.visible = true;
+            self.scene.add(self.uib1.mesh);
+            
 
            
             
