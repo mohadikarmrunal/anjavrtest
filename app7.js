@@ -302,7 +302,7 @@ class App{
     createBoxes(){
         const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
         const geometry3 = new THREE.BoxGeometry( 0.2, 0.4, 0.2 );
-        const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+        const material = new THREE.MeshBasicMaterial( {color: 0xe268f} );
         const cube1 = new THREE.Mesh( geometry, material );
         const cube2 = new THREE.Mesh( geometry, material );
         const cube3 = new THREE.Mesh( geometry3, material );
