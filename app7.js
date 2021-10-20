@@ -58,7 +58,7 @@ class App{
 
                 self.animations = {};
                 self.head = gltf.scene;
-                self.coinH = gltf.scene.children[0].children[0];
+                self.coinH = gltf.scene.children[0].children[1];
                 self.head.children[0].children[1].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
@@ -100,7 +100,7 @@ class App{
                 self.animationsT = {};
                 self.tail = gltf.scene;
                 //console.log(gltf.scene.children[0].children[1]);
-                self.coinT = gltf.scene.children[0].children[0];
+                self.coinT = gltf.scene.children[0].children[1];
                 self.tail.children[0].children[1].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
@@ -284,17 +284,17 @@ class App{
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-1,0.45,-1);
+        this.ui2.mesh.position.set(0,0.45,-2);
         this.ui2.mesh.material.opacity = 0.3;
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,0.45,-1);
+        this.ui3.mesh.position.set(0,0.45,-3);
         this.ui3.mesh.material.opacity = 0.3;  
 
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
-        this.ui4.mesh.position.set(1,0.45,-1);
+        this.ui4.mesh.position.set(0,0.45,-4);
         this.ui4.mesh.material.opacity = 0.3;
        
     }
@@ -309,9 +309,13 @@ class App{
         this.cube1 = cube1;
         this.cube2 = cube2;
         this.cube3 = cube3;
-        this.cube1.position.set(0.75,-0.1,-1);
+        this.cube1.position.set(-0.25,-0.1,-4);
+        this.cube3.position.set(0,0,-4);
+        this.cube2.position.set(0.25,-0.1,-4);
+       
+        /*this.cube1.position.set(0.75,-0.1,-1);
         this.cube2.position.set(1.25,-0.1,-1);
-        this.cube3.position.set(1,0,-1);
+        this.cube3.position.set(1,0,-1);*/
         
     }
 
@@ -494,7 +498,7 @@ class App{
             self.ui4.mesh.visible = true;
 
             //adding coins 
-            self.coin.visible = true;
+            /*self.coin.visible = true;
             self.coin.position.set( -1.3, 0.15, -1 ); 
             self.scene.add( self.coin); 
             self.coin1.visible = true;
@@ -517,9 +521,35 @@ class App{
             self.scene.add( self.coin6); 
             self.coin7.visible = true;
             self.coin7.position.set( -0.7, -0.15, -1 ); 
-            self.scene.add( self.coin7); 
+            self.scene.add( self.coin7); */
             
 
+            //adding coins 
+            self.coin.visible = true;
+            self.coin.position.set( -0.3, 0.15, -2 ); 
+            self.scene.add( self.coin); 
+            self.coin1.visible = true;
+            self.coin1.position.set( -0.16, 0.15, -2 ); 
+            self.scene.add( self.coin1); 
+            self.coin2.visible = true;
+            self.coin2.position.set( 0.16, 0.15, -2 ); 
+            self.scene.add( self.coin2); 
+            self.coin3.visible = true;
+            self.coin3.position.set( 0.3, 0.15, -2 ); 
+            self.scene.add( self.coin3); 
+            self.coin4.visible = true;
+            self.coin4.position.set( -0.3, -0.15, -2 ); 
+            self.scene.add( self.coin4); 
+            self.coin5.visible = true;
+            self.coin5.position.set( -0.16, -0.15, -2 ); 
+            self.scene.add( self.coin5); 
+            self.coin6.visible = true;
+            self.coin6.position.set( 0.16, -0.15, -2 ); 
+            self.scene.add( self.coin6); 
+            self.coin7.visible = true;
+            self.coin7.position.set( 0.3, -0.15, -2 ); 
+            self.scene.add( self.coin7); 
+            
             //addingboxes
             self.scene.add(self.cube1);
             self.cube1.visible = true;
