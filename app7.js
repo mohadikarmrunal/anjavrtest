@@ -210,8 +210,8 @@ class App{
 
         //setting up button canvasUI
         const config1 = {
-            panelSize: { width: 0.6, height: 0.3 },
-            height: 256,
+            //panelSize: { width: 0.6, height: 0.3 },
+            //height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
@@ -227,8 +227,8 @@ class App{
         }
 
         const config2 = {
-            panelSize: { width: 0.6, height: 0.3 },
-            height: 256,
+            //panelSize: { width: 0.6, height: 0.3 },
+            //height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
@@ -244,8 +244,8 @@ class App{
         }
 
         const config3 = {
-            panelSize: { width: 0.6, height: 0.3 },
-            height: 256,
+            //panelSize: { width: 0.6, height: 0.3 },
+            //height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
@@ -261,8 +261,8 @@ class App{
         }
 
         const config4 = {
-            panelSize: { width: 0.6, height: 0.3 },
-            height: 256,
+            //panelSize: { width: 0.6, height: 0.3 },
+            //height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
