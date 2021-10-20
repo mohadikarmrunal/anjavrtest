@@ -251,11 +251,18 @@ class App{
                 padding:65,
                 fontSize:55,
             },
-            info:{ type: "text" }
+            info:{ type: "text", position:{ top: 6, left: 6 }, width: 500, height: 100, padding:17, fontSize: 36},
+            //info0: { type: "text", position:{ top: 150, left: 6 }, width: 160, height: 100, padding:17},
+            info1: { type: "text", position:{ top: 150, left: 176 }, width: 160, height: 100, padding:17},
+            //info2: { type: "text", position:{ top: 150, left: 346 }, width: 160, height: 100, padding:17},
         }
 
         const content3 = {
-            info: "Random Variables"
+            info: "Random Variables X counts number of the heads tossed",
+            //info0: "X=0",
+            info1: "X=2",
+            //info2: "X=2",
+
         }
 
         const config4 = {
@@ -295,20 +302,42 @@ class App{
         this.ui4.mesh.position.set(0,0,-4.6);
         this.ui4.mesh.material.opacity = 0.8;
 
+        //button for the question 2
 
-
-        //button for the question1
-        function buttonq1f(){
+        function buttonq2f(){
             const msg = "False answer!";
             console.log(msg);
-            self.uiq1.updateElement( "info", msg );
+            self.uiq2.updateElement( "info", msg );
+        }
+        function buttonq2ff(){
+            const msg = "False answer!";
+            console.log(msg);
+            self.uiq2.updateElement( "info", msg );
         }
 
-        function buttonq1t(){
+        function buttonq2t(){
 
-            self.uiq1.mesh.visible = false;
-            self.scene.remove(self.uiq1.mesh);
-            //remove all the coins
+            //remove the third canvas
+            self.ui3.mesh.visible = false;
+            self.scene.remove(self.ui3.mesh);
+
+            //return the coins in the right position then delete them from the scene
+            self.coin.position.set( -0.3, 0.15, -2 ); 
+            self.coin1.position.set( -0.16, 0.15, -2 ); 
+            self.coin2.position.set( 0.16, 0.15, -2 ); 
+            self.coin3.position.set( 0.3, 0.15, -2 ); 
+            self.coin4.position.set( -0.3, -0.15, -2 ); 
+            self.coin5.position.set( -0.16, -0.15, -2 ); 
+            self.coin6.position.set( 0.16, -0.15, -2 ); 
+            self.coin7.position.set( 0.3, -0.15, -2 ); 
+            self.coin.visible = false;
+            self.coin1.visible = false;
+            self.coin2.visible = false;
+            self.coin3.visible = false;
+            self.coin4.visible = false;
+            self.coin5.visible = false;
+            self.coin6.visible = false;
+            self.coin7.visible = false;
             self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
@@ -317,23 +346,83 @@ class App{
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
-            //remove the canvases
+
+            //remove the canvas of the second question
+            self.uiq2.mesh.visible = false;
+            self.scene.remove(self.uiq2.mesh);
+
+            //display the third canvas
+            self.ui4.mesh.visible = true;
+            self.scene.add(self.ui4.mesh);
+
+            //sada ukidamo sve i otvaramo zadnji canvas i dodajemo zadnji sound 
+        }
+
+        const configq2 = {
+            panelSize: { height: 0.2 },
+            height: 102.4,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
+            button1: { type: "button", position:{ top: 54.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq2f },
+            button2: { type: "button", position:{ top: 54.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq2ff },
+            button3: { type: "button", position:{ top: 54.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq2t },
+
+            renderer: this.renderer
+        }
+        const contentq2 = {
+            info: "What is the value of random variable X that corresponds to the shown event",
+            button1: "X<1",
+            button2: "X=1",
+            button3: "X<=1",
+           
+        } 
+
+        const uiq2 = new CanvasUI(contentq2,configq2);
+        this.uiq2 = uiq2;
+        this.uiq2.mesh.position.set(0,-1,-3.6);
+        this.uiq2.mesh.visible = false;
+
+        //button for the question1
+        function buttonq1f(){
+            const msg = "False answer!";
+            console.log(msg);
+            self.uiq1.updateElement( "info", msg );
+        }
+
+        function button2next(){
+            console.log('It is time for the second question!');
+            const self = this.app;
+            self.counting(0,1);
+            self.coin.visible = true;
+            self.coin1.visible = true;
+            //add the mesh for the second question
+            self.uiq2.mesh.visible = true;
+            self.scene.add(self.uiq2.mesh);
+
+        }
+
+        function buttonq1t(){
+
+            self.uiq1.mesh.visible = false;
+            self.scene.remove(self.uiq1.mesh);
+            
+            //remove the second canvases
             self.ui2.mesh.visible = false;
             self.scene.remove(self.ui2.mesh);
-            //display the next canvas
+            //display the third canvas
             self.ui3.mesh.visible = true;
             self.scene.add(self.ui3.mesh);
-
-            //addingboxes
-            self.cube1.visible = true;
-            self.cube2.visible = true;
-            self.cube3.visible = true;
-            console.log(self.cube1);
-            self.scene.add(self.cube1);
-            self.scene.add(self.cube2);
-            self.scene.add(self.cube3);
-            
-
+            //move the coins to a different position;
+            self.coin.position.set( -0.3, 0.15, -3.2 ); 
+            self.coin1.position.set( -0.16, 0.15, -3.2 ); 
+            self.coin2.position.set( 0.16, 0.15, -3.2 ); 
+            self.coin3.position.set( 0.3, 0.15, -3.2 ); 
+            self.coin4.position.set( -0.3, -0.15, -3.2 ); 
+            self.coin5.position.set( -0.16, -0.15, -3.2 ); 
+            self.coin6.position.set( 0.16, -0.15, -3.2 ); 
+            self.coin7.position.set( 0.3, -0.15, -3.2 ); 
+            self.counting(0,2);
+            setTimeout(button2next,4000);
         }
 
        
@@ -355,7 +444,7 @@ class App{
 
         const uiq1 = new CanvasUI( contentq1, configq1 );
         this.uiq1 = uiq1;
-        this.uiq1.mesh.position.set(0,0,-1);
+        this.uiq1.mesh.position.set(0,0,-2.6);
         this.uiq1.mesh.visibile = false;
 
 
@@ -640,7 +729,14 @@ class App{
             self.scene.add( self.coin7); */
             
 
-            
+            //addingboxes
+            self.cube1.visible = true;
+            self.cube2.visible = true;
+            self.cube3.visible = true;
+            console.log(self.cube1);
+            self.scene.add(self.cube1);
+            self.scene.add(self.cube2);
+            self.scene.add(self.cube3);
             
             
 
@@ -648,14 +744,14 @@ class App{
         }
 
         function onSessionEnd(){
-            /*self.scene.remove(self.coin);
+            self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
             self.scene.remove(self.coin3);
             self.scene.remove(self.coin4);
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
-            self.scene.remove(self.coin7);*/
+            self.scene.remove(self.coin7);
             self.scene.remove(self.ui2.mesh);
             self.scene.remove(self.ui3.mesh);
             self.scene.remove(self.ui4.mesh);
@@ -695,6 +791,7 @@ class App{
         if ( this.renderer.xr.isPresenting ) {
             this.uib1.update();
             this.uiq1.update();
+            this.uiq2.update();
         }
         this.renderer.render( this.scene, this.camera );
     }
