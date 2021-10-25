@@ -348,15 +348,15 @@ class App{
             renderer: this.renderer
         }
         const contentq3 = {
-            info: "What is the probability that X<=1?",
-            button1: "1/2",
-            button2: "3/4",
-            button3: "1/4",
+            info: "What is the probability that X \u2264 1?",
+            button1: "\u00BD",
+            button2: "\u00BE",
+            button3: "\u00BC",
            
         } 
         const uiq3 = new CanvasUI(contentq3,configq3);
         this.uiq3 = uiq3;
-        this.uiq3.mesh.position.set(0,0.2,-1);
+        this.uiq3.mesh.position.set(0,-0.7,-5.6);
         this.uiq3.mesh.visible = false;
 
         //button for the sound #3 connected to canvas #4
@@ -391,8 +391,10 @@ class App{
         }
         const uib3 = new CanvasUI( contentb3, configb3 );
         this.uib3 = uib3;
-        this.uib3.mesh.position.set(0.7,0.45,-5.6);
+        this.uib3.mesh.position.set(0.7,0.4,-5.6);
         this.uib3.mesh.visible = false;
+        this.uib3.mesh.scale.set(2,2,2);
+
 
         //button for the question #2
         function buttonq2f(){
@@ -471,11 +473,11 @@ class App{
             info: "What is the value of random variable X that corresponds to the shown event",
             button1: "X<1",
             button2: "X=1",
-            button3: "X<=1",
+            button3: "X \u2264 1",
         } 
         const uiq2 = new CanvasUI(contentq2,configq2);
         this.uiq2 = uiq2;
-        this.uiq2.mesh.position.set(0,-0.2,-1);
+        this.uiq2.mesh.position.set(0,-0.7,-4.1);
         this.uiq2.mesh.visible = false;
 
        //button for the sound #2 for the canvas #3
@@ -513,8 +515,10 @@ class App{
         }
         const uib2 = new CanvasUI( contentb2, configb2 );
         this.uib2 = uib2;
-        this.uib2.mesh.position.set(0.7,0.45,-4.1);
+        this.uib2.mesh.position.set(0.7,0.4,-4.1);
         this.uib2.mesh.visible = false;
+        this.uib2.mesh.scale.set(2,2,2);
+
 
         //button for question #1
         function buttonq1f(){
@@ -567,7 +571,7 @@ class App{
         } 
         const uiq1 = new CanvasUI( contentq1, configq1 );
         this.uiq1 = uiq1;
-        this.uiq1.mesh.position.set(0,0,-1);
+        this.uiq1.mesh.position.set(0,-0.7,-2.6);
         this.uiq1.mesh.visibile = false;
 
         //button for sound #1 for the canvas #2
@@ -602,8 +606,9 @@ class App{
 
         const uib1 = new CanvasUI( contentb1, configb1 );
         this.uib1 = uib1;
-        this.uib1.mesh.position.set(0.7,0.45,-2.6);
-        this.uib1.mesh.visible = false;   
+        this.uib1.mesh.position.set(0.7,0.4,-2.6);
+        this.uib1.mesh.visible = false; 
+        this.uib1.mesh.scale.set(2,2,2);
     }
 
     createBoxes(){
@@ -616,9 +621,14 @@ class App{
         this.cube1 = cube1;
         this.cube2 = cube2;
         this.cube3 = cube3;
-        this.cube1.position.set(-0.25,-0.1,-4.3);
-        this.cube3.position.set(0,0,-4);
-        this.cube2.position.set(0.25,-0.1,-4.3);
+        this.cube1.position.set(-0.25,-0.2,-5.4);
+        this.cube3.position.set(0,-0.1,-5.4);
+        this.cube2.position.set(0.25,-0.2,-5.4);
+
+        function tapped(){
+            this.cube1.mesh.material.opacity = 0.3;
+        }
+        this.cube1.addEventListener('tap',tapped);
        
         /*this.cube1.position.set(0.75,-0.1,-1);
         this.cube2.position.set(1.25,-0.1,-1);
@@ -792,7 +802,7 @@ class App{
             self.coin7.position.set( 0.3, -0.15, -2 ); 
             self.scene.add( self.coin7); 
            
-            //adding a button for now but to be replaced with an icon for sound
+            //adding a button for the sound
             self.uib1.mesh.visible = true;
             self.scene.add(self.uib1.mesh);
             
@@ -840,6 +850,7 @@ class App{
         }
 
         function onSessionEnd(){
+
             self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
