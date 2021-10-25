@@ -285,7 +285,7 @@ class App{
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
         this.ui1.mesh.position.set(0,0,-1.1);
-        this.ui1.mesh.material.opacity = 0.3;
+        this.ui1.mesh.material.opacity = 0.8;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
@@ -294,16 +294,107 @@ class App{
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,0,-3.6);
+        this.ui3.mesh.position.set(0,0,-4.1);
         this.ui3.mesh.material.opacity = 0.8;  
 
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
-        this.ui4.mesh.position.set(0,0,-4.6);
+        this.ui4.mesh.position.set(0,0,-5.6);
         this.ui4.mesh.material.opacity = 0.8;
 
-        //button for the question 2
 
+
+
+
+
+        //button for the question #3
+        function buttonq3f(){
+            const msg = "False answer!";
+            console.log(msg);
+            self.uiq3.updateElement( "info", msg );
+        }
+        function buttonq3ff(){
+            const msg = "False answer!";
+            console.log(msg);
+            self.uiq3.updateElement( "info", msg );
+        }
+        function buttonq3t(){
+            //remove the forth canvas
+            self.ui4.mesh.visible = false;
+            self.scene.remove(self.ui4.mesh);
+
+            //remove the canvas for the third question
+            self.uiq3.mesh.visible = false;
+            self.scene.remove(self.uiq3.mesh);
+
+            //reset the probability distribution cuboids
+            self.cube1.visible = false;
+            self.cube2.visible = false;
+            self.cube3.visible = false;
+            self.scene.remove(self.cube1);
+            self.scene.remove(self.cube2);
+            self.scene.remove(self.cube3);
+
+            //add a congrats sign in the future
+        }
+        const configq3 = {
+            panelSize: { height: 0.2 },
+            height: 102.4,
+            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
+            button1: { type: "button", position:{ top: 54.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq3f },
+            button2: { type: "button", position:{ top: 54.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq3t },
+            button3: { type: "button", position:{ top: 54.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: buttonq3ff },
+            renderer: this.renderer
+        }
+        const contentq3 = {
+            info: "What is the probability that X<=1?",
+            button1: "1/2",
+            button2: "3/4",
+            button3: "1/4",
+           
+        } 
+        const uiq3 = new CanvasUI(contentq3,configq3);
+        this.uiq3 = uiq3;
+        this.uiq3.mesh.position.set(0,0.2,-1);
+        this.uiq3.mesh.visible = false;
+
+        //button for the sound #3 connected to canvas #4
+        function button3next(){
+            console.log('It is time for the third question on the forth canvas!');
+            const self = this.app;
+
+            //add the mesh for the third question
+            self.uiq3.mesh.visible = true;
+            self.scene.add(self.uiq3.mesh); 
+        }
+        function button3(){
+            //we need to play the sound here as well
+            console.log('Button for the thirs sound on the forth canvas was pressed');
+
+            // hide the pressed button for the sound
+            self.uib3.mesh.visible = false;
+            self.scene.remove(self.uib3.mesh);
+
+            //allow time for the voice over and then display the question
+            setTimeout(button3next,3000);
+        }
+        const configb3 = {
+            panelSize: { height: 0.1, width: 0.1},
+            height: 512,
+            backgroundColor: '#ccc',
+            buttonb3: { type: "button", position:{ top: 100, left: 50 }, fontColor: "#fff", fontSize:100, hover: "#3df", onSelect: button3 },
+            renderer: this.renderer
+        }
+        const contentb3 = {
+            buttonb3: "<path> M 153.6 72.2 L 153.6 72.2 M 153.6 72.2 L 153.6 72.2 L 72 72.2 L 72 240.2 L 153.6 240.2 L 241 291 L 241 13 M 299.2 112.2 C 359.2 127.4 368.8 193 299.2 217 Z </path>",
+        }
+        const uib3 = new CanvasUI( contentb3, configb3 );
+        this.uib3 = uib3;
+        this.uib3.mesh.position.set(0.7,0.45,-5.6);
+        this.uib3.mesh.visible = false;
+
+        //button for the question #2
         function buttonq2f(){
             const msg = "False answer!";
             console.log(msg);
@@ -314,12 +405,14 @@ class App{
             console.log(msg);
             self.uiq2.updateElement( "info", msg );
         }
-
         function buttonq2t(){
-
             //remove the third canvas
             self.ui3.mesh.visible = false;
             self.scene.remove(self.ui3.mesh);
+
+            //remove the canvas of the second question
+            self.uiq2.mesh.visible = false;
+            self.scene.remove(self.uiq2.mesh);
 
             //return the coins in the right position then delete them from the scene
             self.coin.position.set( -0.3, 0.15, -2 ); 
@@ -347,17 +440,22 @@ class App{
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
 
-            //remove the canvas of the second question
-            self.uiq2.mesh.visible = false;
-            self.scene.remove(self.uiq2.mesh);
-
-            //display the third canvas
+            //display the forth and final canvas
             self.ui4.mesh.visible = true;
             self.scene.add(self.ui4.mesh);
 
-            //sada ukidamo sve i otvaramo zadnji canvas i dodajemo zadnji sound 
-        }
+            //display the probability distribution cuboids
+            self.cube1.visible = true;
+            self.cube2.visible = true;
+            self.cube3.visible = true;
+            self.scene.add(self.cube1);
+            self.scene.add(self.cube2);
+            self.scene.add(self.cube3);
 
+            //display the button for the sound
+            self.uib3.mesh.visible = true;
+            self.scene.add(self.uib3.mesh);   
+        }
         const configq2 = {
             panelSize: { height: 0.2 },
             height: 102.4,
@@ -374,33 +472,56 @@ class App{
             button1: "X<1",
             button2: "X=1",
             button3: "X<=1",
-           
         } 
-
         const uiq2 = new CanvasUI(contentq2,configq2);
         this.uiq2 = uiq2;
-        this.uiq2.mesh.position.set(0,-1,-3.6);
+        this.uiq2.mesh.position.set(0,-0.2,-1);
         this.uiq2.mesh.visible = false;
 
-        //button for the question1
+       //button for the sound #2 for the canvas #3
+        function button2next(){
+            console.log('It is time for the second question on the third canvas!');
+            const self = this.app;
+            self.counting(0,1);
+            self.coin.visible = true;
+            self.coin1.visible = true;
+
+            //add the mesh for the second question
+            self.uiq2.mesh.visible = true;
+            self.scene.add(self.uiq2.mesh);
+        }
+        function button2(){
+            //we need to play the sound here as well
+            console.log('Button for the second sound on the third canvas was pressed');
+
+            // hide the pressed button for the sound
+            self.uib2.mesh.visible = false;
+            self.scene.remove(self.uib2.mesh);
+
+            //allow time for the voice over and then display the question
+            setTimeout(button2next,3000);
+        }
+        const configb2 = {
+            panelSize: { height: 0.1, width: 0.1},
+            height: 512,
+            backgroundColor: '#ccc',
+            buttonb2: { type: "button", position:{ top: 100, left: 50 }, fontColor: "#fff", fontSize:100, hover: "#3df", onSelect: button2 },
+            renderer: this.renderer
+        }
+        const contentb2 = {
+            buttonb2: "<path> M 153.6 72.2 L 153.6 72.2 M 153.6 72.2 L 153.6 72.2 L 72 72.2 L 72 240.2 L 153.6 240.2 L 241 291 L 241 13 M 299.2 112.2 C 359.2 127.4 368.8 193 299.2 217 Z </path>",
+        }
+        const uib2 = new CanvasUI( contentb2, configb2 );
+        this.uib2 = uib2;
+        this.uib2.mesh.position.set(0.7,0.45,-4.1);
+        this.uib2.mesh.visible = false;
+
+        //button for question #1
         function buttonq1f(){
             const msg = "False answer!";
             console.log(msg);
             self.uiq1.updateElement( "info", msg );
         }
-
-        function button2next(){
-            console.log('It is time for the second question!');
-            const self = this.app;
-            self.counting(0,1);
-            self.coin.visible = true;
-            self.coin1.visible = true;
-            //add the mesh for the second question
-            self.uiq2.mesh.visible = true;
-            self.scene.add(self.uiq2.mesh);
-
-        }
-
         function buttonq1t(){
 
             self.uiq1.mesh.visible = false;
@@ -409,9 +530,11 @@ class App{
             //remove the second canvases
             self.ui2.mesh.visible = false;
             self.scene.remove(self.ui2.mesh);
+
             //display the third canvas
             self.ui3.mesh.visible = true;
             self.scene.add(self.ui3.mesh);
+
             //move the coins to a different position;
             self.coin.position.set( -0.3, 0.15, -3.2 ); 
             self.coin1.position.set( -0.16, 0.15, -3.2 ); 
@@ -422,10 +545,11 @@ class App{
             self.coin6.position.set( 0.16, -0.15, -3.2 ); 
             self.coin7.position.set( 0.3, -0.15, -3.2 ); 
             self.counting(0,2);
-            setTimeout(button2next,4000);
-        }
 
-       
+            //display the button for the sound
+            self.uib2.mesh.visible = true;
+            self.scene.add(self.uib2.mesh);
+        }
         const configq1 = {
             panelSize: { height: 0.2 },
             height: 102.4,
@@ -441,52 +565,45 @@ class App{
             button2: "CODOMAIN",
            
         } 
-
         const uiq1 = new CanvasUI( contentq1, configq1 );
         this.uiq1 = uiq1;
-        this.uiq1.mesh.position.set(0,0,-2.6);
+        this.uiq1.mesh.position.set(0,0,-1);
         this.uiq1.mesh.visibile = false;
 
-
+        //button for sound #1 for the canvas #2
         function button1next(){
             console.log('It is time for the first question of the day');
             const self = this.app;
             self.ui2.mesh.visible = true;
             self.uiq1.mesh.visible = true;
             self.scene.add(self.uiq1.mesh);
-           
-
         }
-
         function button1(){
             //we need to play the sound here as well
             console.log('Button for the first sound on the second canvas was pressed');
+
             // testni komand self.ui2.mesh.visible = false;
             self.uib1.mesh.visible = false;
             self.scene.remove(self.uib1.mesh);
+
+            //delay for the question
             setTimeout(button1next,3000);
         }
-
-
-        //button for the sound 1
         const configb1 = {
             panelSize: { height: 0.1, width: 0.1},
             height: 512,
             backgroundColor: '#ccc',
-            button1: { type: "button", position:{ top: 6, left: 6 }, width:500 , height: 500, padding:100, fontColor: "#fff", fontSize:100, backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
+            buttonb1: { type: "button", position:{ top: 100, left: 50 }, fontColor: "#fff", fontSize:100, hover: "#3df", onSelect: button1 },
             renderer: this.renderer
         }
         const contentb1 = {
-            button1: "sound yayy!",
+            buttonb1: "<path> M 153.6 72.2 L 153.6 72.2 M 153.6 72.2 L 153.6 72.2 L 72 72.2 L 72 240.2 L 153.6 240.2 L 241 291 L 241 13 M 299.2 112.2 C 359.2 127.4 368.8 193 299.2 217 Z </path>",
         }
 
         const uib1 = new CanvasUI( contentb1, configb1 );
         this.uib1 = uib1;
-        this.uib1.mesh.position.set(0.2,0.2,-1);
-
-
-       
-       
+        this.uib1.mesh.position.set(0.7,0.45,-2.6);
+        this.uib1.mesh.visible = false;   
     }
 
     createBoxes(){
@@ -687,21 +804,7 @@ class App{
         function next4(){
             const self = this.app;
 
-            //ovo sam sve uradila u next3
-            //self.ui1.mesh.visible = false;
-            //self.scene.remove(self.ui1.mesh);
-            //self.tail.visible = false;
-            //self.scene.remove(self.head);
-            //self.scene.remove(self.tail);
-            //self.scene.remove(self.cursor);
-            
-            //adding the meshes
-            
-            self.scene.add(this.app.ui3.mesh);
-            self.ui3.mesh.visible = true;
-            self.scene.add(this.app.ui4.mesh);
-            self.ui4.mesh.visible = true;
-
+            //ne treba mi al cuvam ovo zbog koda atm
             //adding coins 
             /*self.coin.visible = true;
             self.coin.position.set( -1.3, 0.15, -1 ); 
@@ -729,14 +832,7 @@ class App{
             self.scene.add( self.coin7); */
             
 
-            //addingboxes
-            self.cube1.visible = true;
-            self.cube2.visible = true;
-            self.cube3.visible = true;
-            console.log(self.cube1);
-            self.scene.add(self.cube1);
-            self.scene.add(self.cube2);
-            self.scene.add(self.cube3);
+            
             
             
 
@@ -790,8 +886,11 @@ class App{
 
         if ( this.renderer.xr.isPresenting ) {
             this.uib1.update();
+            this.uib2.update();
+            this.uib3.update();
             this.uiq1.update();
             this.uiq2.update();
+            this.uiq3.update();
         }
         this.renderer.render( this.scene, this.camera );
     }
