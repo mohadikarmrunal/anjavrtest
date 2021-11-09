@@ -7,7 +7,7 @@ import { ARButton } from '../../libs/ARButton.js';
 //import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 //import { Player } from '../../libs/Player.js';
-import { ControllerGestures } from '../../libs/ControllerGestures.js';
+//import { ControllerGestures } from '../../libs/ControllerGestures.js';
 
 
 class App{
@@ -38,7 +38,7 @@ class App{
         this.controls = new OrbitControls( this.camera, this.renderer.domElement );
         this.controls.target.set(0, 3.5, 0);
         this.controls.update();
-        
+
         this.stats = new Stats();
         this.createBoxes();
         this.initScene();
@@ -180,7 +180,6 @@ class App{
 
                 self.T3 = gltf.scene;
                 self.loadingBar.visible = false;
-                self.T3.visible = false;
 				const scale = 0.1;
                 self.T3.scale.set(scale, scale, scale); 
                 
@@ -197,18 +196,14 @@ class App{
                 self.T7.position.set(0.3,-0.13,-3.2);
 
                 //add them to the scene
-                self.scene.add(self.T3);
                 self.T3.visible = false; 
-                self.scene.add(self.T4);
+                self.scene.add(self.T3);
                 self.T4.visible = false;
-                self.scene.add(self.T6);
+                self.scene.add(self.T4);
                 self.T6.visible = false;
-                self.scene.add(self.T7);
+                self.scene.add(self.T6);
                 self.T7.visible = false;
-
-
-               
-
+                self.scene.add(self.T7);
                 
 				
 			},
@@ -219,7 +214,50 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with the coin' );
+				console.log( 'An error happened with the T for tail' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'H.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.H0 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.H0.scale.set(scale, scale, scale); 
+                
+                self.H1 = self.H0.clone();
+                self.H2 = self.H0.clone();
+                self.H5 = self.H0.clone();
+
+                //positions
+                self.H0.position.set(-0.3,0.17,-3.2);
+                self.H1.position.set(-0.16,0.17,-3.2);
+                self.H2.position.set(0.16,0.17,-3.2);
+                self.H5.position.set(-0.16,-0.13,-3.2);
+
+                //add them to the scene
+                self.H0.visible = false; 
+                self.scene.add(self.H0);
+                self.H1.visible = false;
+                self.scene.add(self.H1);
+                self.H2.visible = false;
+                self.scene.add(self.H2);
+                self.H5.visible = false;
+                self.scene.add(self.H5);
+               
+				
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with the H for heads' );
 			}
         );
 
@@ -250,7 +288,7 @@ class App{
 				console.log( 'An error happened with loading a cursor' );
 			}
         );
-         
+
         this.createUI();
         
     }
@@ -313,7 +351,7 @@ class App{
         const content3 = {
             info: "Random Variable",
             //info0: "X=0",
-            info1: "X=2",
+            info1: "X=0",
             //info2: "X=2",
 
         }
@@ -340,7 +378,6 @@ class App{
         this.ui1.mesh.position.set(0,0.4,-1.1);
         this.ui1.mesh.material.opacity = 0.3;
         this.ui1.mesh.material.transparent = true;
-        console.log(this.ui1.mesh.material);
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
@@ -348,25 +385,17 @@ class App{
         this.ui2.mesh.material.opacity = 0.3;
         this.ui2.mesh.material.transparent = true;
 
-
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
         this.ui3.mesh.position.set(0,0,-4.1);
         this.ui3.mesh.material.opacity = 0.3; 
         this.ui3.mesh.material.transparent = true;
  
-
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
         this.ui4.mesh.position.set(0,0,-5.6);
         this.ui4.mesh.material.opacity = 0.3;
         this.ui4.mesh.material.transparent = true;
-
-
-
-
-
-
 
         //button for the question #3
         function buttonq3f(){
@@ -533,17 +562,16 @@ class App{
             height: 102.4,
             info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
             //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            button1: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2f },
-            button2: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2ff },
-            button3: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2t },
-
+            buttonq21: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2f },
+            buttonq22: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2ff },
+            buttonq23: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2t },
             renderer: this.renderer
         }
         const contentq2 = {
             info: "What is the value of random variable X that corresponds to the shown event",
-            button1: "X<1",
-            button2: "X=1",
-            button3: "X \u2264 1",
+            buttonq21: "X<1",
+            buttonq22: "X=1",
+            buttonq23: "X \u2264 1",
         } 
         const uiq2 = new CanvasUI(contentq2,configq2);
         this.uiq2 = uiq2;
@@ -552,8 +580,10 @@ class App{
 
        //button for the sound #2 for the canvas #3
         function button2next(){
+
             console.log('It is time for the second question on the third canvas!');
             const self = this.app;
+
             self.counting(0,1);
             self.coin.visible = true;
             self.coin1.visible = true;
@@ -562,14 +592,13 @@ class App{
             self.T6.visible = false;
             self.T7.visible = false;
 
-
             //add the mesh for the second question
             self.uiq2.mesh.visible = true;
             self.scene.add(self.uiq2.mesh);
         }
         function button2(){
             //we need to play the sound here as well
-            console.log('Button for the second sound on the third canvas was pressed');
+            console.log('Button for the second sound on the third canvas was pressed!');
 
             // hide the pressed button for the sound
             self.uib2.mesh.visible = false;
@@ -578,6 +607,7 @@ class App{
             //allow time for the voice over and then display the question
             setTimeout(button2next,3000);
         }
+
         const configb2 = {
             panelSize: { height: 0.1, width: 0.1},
             height: 512,
@@ -593,6 +623,7 @@ class App{
         this.uib2.mesh.position.set(0.7,0.4,-4.1);
         this.uib2.mesh.visible = false;
         this.uib2.mesh.scale.set(2,2,2);
+        //this.uib2.config.buttonb2.disabled = true;
 
 
         //button for question #1
@@ -602,7 +633,7 @@ class App{
             self.uiq1.updateElement( "info", msg );
         }
         function buttonq1t(){
-
+            //remove the question mesh
             self.uiq1.mesh.visible = false;
             self.scene.remove(self.uiq1.mesh);
             
@@ -632,8 +663,6 @@ class App{
             self.coin5.children[0].rotateX(Math.PI/2);
             self.coin6.children[0].rotateX(Math.PI/2);
             self.coin7.children[0].rotateX(Math.PI/2);
-
-
             self.counting(0,0);
 
             //display letters
@@ -646,19 +675,20 @@ class App{
             self.uib2.mesh.visible = true;
             self.scene.add(self.uib2.mesh);
         }
+
         const configq1 = {
             panelSize: { height: 0.2 },
             height: 102.4,
             info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
             //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            button1: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1t },
-            button2: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 261 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1f },
+            buttonq1t: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1t },
+            buttonq1f: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 261 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1f },
             renderer: this.renderer
         }
         const contentq1 = {
             info: "Random Variable that counts heads has the displayed set for it's: ",
-            button1: "DOMAIN",
-            button2: "CODOMAIN",
+            buttonq1t: "DOMAIN",
+            buttonq1f: "CODOMAIN",
            
         } 
         const uiq1 = new CanvasUI( contentq1, configq1 );
@@ -670,7 +700,7 @@ class App{
         function button1next(){
             console.log('It is time for the first question of the day');
             const self = this.app;
-            self.ui2.mesh.visible = true;
+            //self.ui2.mesh.visible = true;
             self.uiq1.mesh.visible = true;
             self.scene.add(self.uiq1.mesh);
         }
@@ -698,27 +728,12 @@ class App{
 
         const uib1 = new CanvasUI( contentb1, configb1 );
         this.uib1 = uib1;
-        this.uib1.mesh.position.set(0.7,0.4,-2.6);
+        //this.uib1.mesh.position.set(0.7,0.4,-2.6);
+        this.uib1.mesh.position.set(0.7,0,-1);
         this.uib1.mesh.visible = false; 
         this.uib1.mesh.scale.set(2,2,2);
     }
 
-    createText(){
-
-        const textH = new THREE.TextGeometry( 'H', {
-            font: "Verdana",
-            size: 100,
-            height: 5,
-            curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 10,
-            bevelSize: 8,
-            bevelOffset: 0,
-            bevelSegments: 5
-
-        });
-        this.textH = textH;
-    }
 
     createBoxes(){
 
@@ -827,6 +842,7 @@ class App{
     
 
     setupVR(){
+        
         this.renderer.xr.enabled = true;   
         const self = this;
         
@@ -844,11 +860,6 @@ class App{
                 //trebam i treci setTimeout da bih ukinula sve 
                 setTimeout(next3,6000);
 
-                //setTimeout(next3, 9000);
-                //self.scene.add( self.head);  
-                //console.log(self.action);  
-                //self.action.loop = THREE.LoopOnce;
-                //self.action.play();
             }
         }
 
@@ -925,46 +936,8 @@ class App{
             
         }
 
-        function next4(){
-            const self = this.app;
-
-            //ne treba mi al cuvam ovo zbog koda atm
-            //adding coins 
-            /*self.coin.visible = true;
-            self.coin.position.set( -1.3, 0.15, -1 ); 
-            self.scene.add( self.coin); 
-            self.coin1.visible = true;
-            self.coin1.position.set( -1.16, 0.15, -1 ); 
-            self.scene.add( self.coin1); 
-            self.coin2.visible = true;
-            self.coin2.position.set( -0.84, 0.15, -1 ); 
-            self.scene.add( self.coin2); 
-            self.coin3.visible = true;
-            self.coin3.position.set( -0.7, 0.15, -1 ); 
-            self.scene.add( self.coin3); 
-            self.coin4.visible = true;
-            self.coin4.position.set( -1.3, -0.15, -1 ); 
-            self.scene.add( self.coin4); 
-            self.coin5.visible = true;
-            self.coin5.position.set( -1.16, -0.15, -1 ); 
-            self.scene.add( self.coin5); 
-            self.coin6.visible = true;
-            self.coin6.position.set( -0.84, -0.15, -1 ); 
-            self.scene.add( self.coin6); 
-            self.coin7.visible = true;
-            self.coin7.position.set( -0.7, -0.15, -1 ); 
-            self.scene.add( self.coin7); */
-            
-
-            
-            
-            
-
-
-        }
 
         function onSessionEnd(){
-
             self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
@@ -985,12 +958,10 @@ class App{
 
         
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
-        const controller = this.renderer.xr.getController( 0 );
-        //controller.addEventListener( 'connected', onConnected );
         
-        this.scene.add( controller );
-        this.controller = controller;
-
+        //controller.addEventListener( 'connected', onConnected );
+        const controller = this.renderer.xr.getController( 0 );
+  
         
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
@@ -1005,14 +976,7 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        this.mixer.update( dt )
-        this.mixerT.update( dt )
-       /* if ( this.renderer.xr.isPresenting ) {
-            this.ui.update();
-            this.uiHead.update();
-            this.uiTail.update();
-        }*/
-
+   
         if ( this.renderer.xr.isPresenting ) {
             this.uib1.update();
             this.uib2.update();
@@ -1020,11 +984,16 @@ class App{
             this.uiq1.update();
             this.uiq2.update();
             this.uiq3.update();
+            this.mixer.update( dt ) 
+            this.mixerT.update( dt )
         }
+
+        if(this.T3!=undefined){
         this.T3.children[0].rotateY(0.05);
         this.T4.children[0].rotateY(0.05);
         this.T6.children[0].rotateY(0.05);
         this.T7.children[0].rotateY(0.05);
+    }
         this.renderer.render( this.scene, this.camera );
     }
 }
