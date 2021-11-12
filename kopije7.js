@@ -190,20 +190,16 @@ class App{
                 self.T7 = self.T3.clone();
 
                 //positions
-                self.T3.position.set(0.3,0.17,-3.2);
-                self.T4.position.set(-0.3,-0.13,-3.2);
-                self.T6.position.set(0.16,-0.13,-3.2);
-                self.T7.position.set(0.3,-0.13,-3.2);
+                self.T3.position.set(0.3,0.17,-3.8);
+                self.T4.position.set(-0.3,-0.13,-3.8);
+                self.T6.position.set(0.16,-0.13,-3.8);
+                self.T7.position.set(0.3,-0.13,-3.8);
 
                 //add them to the scene
                 self.T3.visible = false; 
-                self.scene.add(self.T3);
                 self.T4.visible = false;
-                self.scene.add(self.T4);
                 self.T6.visible = false;
-                self.scene.add(self.T6);
                 self.T7.visible = false;
-                self.scene.add(self.T7);
                 
 				
 			},
@@ -234,20 +230,16 @@ class App{
                 self.H5 = self.H0.clone();
 
                 //positions
-                self.H0.position.set(-0.3,0.17,-3.2);
-                self.H1.position.set(-0.16,0.17,-3.2);
-                self.H2.position.set(0.16,0.17,-3.2);
-                self.H5.position.set(-0.16,-0.13,-3.2);
+                self.H0.position.set(-0.3,0.17,-3.8);
+                self.H1.position.set(-0.16,0.17,-3.8);
+                self.H2.position.set(0.16,0.17,-3.8);
+                self.H5.position.set(-0.16,-0.13,-3.8);
 
                 //add them to the scene
-                self.H0.visible = false; 
-                self.scene.add(self.H0);
+                self.H0.visible = false;
                 self.H1.visible = false;
-                self.scene.add(self.H1);
                 self.H2.visible = false;
-                self.scene.add(self.H2);
                 self.H5.visible = false;
-                self.scene.add(self.H5);
                
 				
 			},
@@ -351,7 +343,7 @@ class App{
         const content3 = {
             info: "Random Variable",
             //info0: "X=0",
-            info1: "X=0",
+            info1: "",
             //info2: "X=2",
 
         }
@@ -460,7 +452,7 @@ class App{
         }
         function button3(){
             //we need to play the sound here as well
-            console.log('Button for the thirs sound on the forth canvas was pressed');
+            console.log('Button for the third sound on the forth canvas was pressed');
 
             // hide the pressed button for the sound
             self.uib3.mesh.visible = false;
@@ -507,14 +499,14 @@ class App{
             self.scene.remove(self.uiq2.mesh);
 
             //return the coins in the right position then delete them from the scene
-            self.coin.position.set( -0.3, 0.15, -2 ); 
-            self.coin1.position.set( -0.16, 0.15, -2 ); 
-            self.coin2.position.set( 0.16, 0.15, -2 ); 
-            self.coin3.position.set( 0.3, 0.15, -2 ); 
-            self.coin4.position.set( -0.3, -0.15, -2 ); 
-            self.coin5.position.set( -0.16, -0.15, -2 ); 
-            self.coin6.position.set( 0.16, -0.15, -2 ); 
-            self.coin7.position.set( 0.3, -0.15, -2 ); 
+            self.coin.position.set( -0.3, 0.15, -2.3 ); 
+            self.coin1.position.set( -0.16, 0.15, -2.3 ); 
+            self.coin2.position.set( 0.16, 0.15, -2.3 ); 
+            self.coin3.position.set( 0.3, 0.15, -2.3 ); 
+            self.coin4.position.set( -0.3, -0.15, -2.3 ); 
+            self.coin5.position.set( -0.16, -0.15, -2.3 ); 
+            self.coin6.position.set( 0.16, -0.15, -2.3 ); 
+            self.coin7.position.set( 0.3, -0.15, -2.3 ); 
             //rotate them down
             self.coin.children[0].rotateX(-Math.PI/2);
             self.coin1.children[0].rotateX(-Math.PI/2);
@@ -540,6 +532,14 @@ class App{
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
+            //remove letters
+            self.scene.remove(self.H0);
+            self.scene.remove(self.H1);
+            self.scene.remove(self.H2);
+            self.scene.remove(self.T3);
+            self.scene.remove(self.T4);
+            self.scene.remove(self.H5);
+           
 
             //display the forth and final canvas
             self.ui4.mesh.visible = true;
@@ -588,9 +588,20 @@ class App{
             self.coin.visible = true;
             self.coin1.visible = true;
 
+            //remove X=0 on the canvas
+            self.ui3.updateElement( "info1", "" );
+
             //coin visibility
             self.T6.visible = false;
             self.T7.visible = false;
+            self.scene.remove(self.T6);
+            self.scene.remove(self.T7);
+
+            //remove the spheres
+            self.sphere1.visible = false;
+            self.scene.remove(self.sphere1);
+            self.sphere2.visible = false;
+            self.scene.remove(self.sphere2);
 
             //add the mesh for the second question
             self.uiq2.mesh.visible = true;
@@ -623,7 +634,6 @@ class App{
         this.uib2.mesh.position.set(0.7,0.4,-4.1);
         this.uib2.mesh.visible = false;
         this.uib2.mesh.scale.set(2,2,2);
-        //this.uib2.config.buttonb2.disabled = true;
 
 
         //button for question #1
@@ -642,18 +652,19 @@ class App{
             self.scene.remove(self.ui2.mesh);
 
             //display the third canvas
+            self.ui3.updateElement( "info1", "X=0" );
             self.ui3.mesh.visible = true;
             self.scene.add(self.ui3.mesh);
 
             //move the coins to a different position;
-            self.coin.position.set( -0.3, 0.15, -3.2 ); 
-            self.coin1.position.set( -0.16, 0.15, -3.2 ); 
-            self.coin2.position.set( 0.16, 0.15, -3.2 ); 
-            self.coin3.position.set( 0.3, 0.15, -3.2 ); 
-            self.coin4.position.set( -0.3, -0.15, -3.2 ); 
-            self.coin5.position.set( -0.16, -0.15, -3.2 ); 
-            self.coin6.position.set( 0.16, -0.15, -3.2 ); 
-            self.coin7.position.set( 0.3, -0.15, -3.2 ); 
+            self.coin.position.set( -0.3, 0.15, -3.8 ); 
+            self.coin1.position.set( -0.16, 0.15, -3.8 ); 
+            self.coin2.position.set( 0.16, 0.15, -3.8 ); 
+            self.coin3.position.set( 0.3, 0.15, -3.8 ); 
+            self.coin4.position.set( -0.3, -0.15, -3.8 ); 
+            self.coin5.position.set( -0.16, -0.15, -3.8 ); 
+            self.coin6.position.set( 0.16, -0.15, -3.8 ); 
+            self.coin7.position.set( 0.3, -0.15, -3.8 ); 
             //rotate them
             self.coin.children[0].rotateX(Math.PI/2);
             self.coin1.children[0].rotateX(Math.PI/2);
@@ -663,13 +674,31 @@ class App{
             self.coin5.children[0].rotateX(Math.PI/2);
             self.coin6.children[0].rotateX(Math.PI/2);
             self.coin7.children[0].rotateX(Math.PI/2);
-            self.counting(0,0);
 
             //display letters
-            //self.T3.visible = true;
-            //self.T4.visible = true;
+            self.H0.visible = true;
+            self.scene.add(self.H0);
+            self.H1.visible = true;
+            self.scene.add(self.H1);
+            self.H2.visible = true;
+            self.scene.add(self.H2);
+            self.T3.visible = true;
+            self.scene.add(self.T3);
+            self.T4.visible = true;
+            self.scene.add(self.T4);
+            self.H5.visible = true;
+            self.scene.add(self.H5);
             self.T6.visible = true;
+            self.scene.add(self.T6);
             self.T7.visible = true;
+            self.scene.add(self.T7);
+
+            //add the shapes for the events
+            self.sphere1.visible = true;
+            self.scene.add(self.sphere1);
+            self.sphere2.visible = true;
+            self.scene.add(self.sphere2);
+
 
             //display the button for the sound
             self.uib2.mesh.visible = true;
@@ -728,8 +757,7 @@ class App{
 
         const uib1 = new CanvasUI( contentb1, configb1 );
         this.uib1 = uib1;
-        //this.uib1.mesh.position.set(0.7,0.4,-2.6);
-        this.uib1.mesh.position.set(0.7,0,-1);
+        this.uib1.mesh.position.set(0.7,0.4,-2.6);
         this.uib1.mesh.visible = false; 
         this.uib1.mesh.scale.set(2,2,2);
     }
@@ -751,6 +779,17 @@ class App{
         this.cube3.position.set(0,-0.1,-5.4);
         this.cube2.position.set(0.25,-0.2,-5.4);
 
+        //sphere
+        const geometrys = new THREE.IcosahedronBufferGeometry( 0.2, 2 );
+        const materials = new THREE.MeshBasicMaterial ({color: 0xffff00});
+        const sphere1 = new THREE.Mesh(geometrys,materials);
+        this.sphere1 = sphere1;
+        this.sphere1.visible = false;
+        this.sphere1.material.opacity = 0.3;
+        this.sphere1.material.transparent = true;
+        this.sphere2 = this.sphere1.clone();
+        this.sphere1.position.set(-0.23,0.17,-3.8);
+        this.sphere2.position.set(0.23,-0.13,-3.8);
        /* function onCubeTap(event){
             if (event.target == self.cube1) {
                 console.log("you have pressed on the cube");
@@ -903,28 +942,28 @@ class App{
 
             //adding coins 
             self.coin.visible = true;
-            self.coin.position.set( -0.3, 0.15, -2 ); 
+            self.coin.position.set( -0.3, 0.15, -2.3 ); 
             self.scene.add( self.coin); 
             self.coin1.visible = true;
-            self.coin1.position.set( -0.16, 0.15, -2 ); 
+            self.coin1.position.set( -0.16, 0.15, -2.3 ); 
             self.scene.add( self.coin1); 
             self.coin2.visible = true;
-            self.coin2.position.set( 0.16, 0.15, -2 ); 
+            self.coin2.position.set( 0.16, 0.15, -2.3 ); 
             self.scene.add( self.coin2); 
             self.coin3.visible = true;
-            self.coin3.position.set( 0.3, 0.15, -2 ); 
+            self.coin3.position.set( 0.3, 0.15, -2.3 ); 
             self.scene.add( self.coin3); 
             self.coin4.visible = true;
-            self.coin4.position.set( -0.3, -0.15, -2 ); 
+            self.coin4.position.set( -0.3, -0.15, -2.3 ); 
             self.scene.add( self.coin4); 
             self.coin5.visible = true;
-            self.coin5.position.set( -0.16, -0.15, -2 ); 
+            self.coin5.position.set( -0.16, -0.15, -2.3 ); 
             self.scene.add( self.coin5); 
             self.coin6.visible = true;
-            self.coin6.position.set( 0.16, -0.15, -2 ); 
+            self.coin6.position.set( 0.16, -0.15, -2.3); 
             self.scene.add( self.coin6); 
             self.coin7.visible = true;
-            self.coin7.position.set( 0.3, -0.15, -2 ); 
+            self.coin7.position.set( 0.3, -0.15, -2.3 ); 
             self.scene.add( self.coin7); 
            
             //adding a button for the sound
@@ -958,11 +997,10 @@ class App{
 
         
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
-        
-        //controller.addEventListener( 'connected', onConnected );
         const controller = this.renderer.xr.getController( 0 );
-  
-        
+        this.scene.add( controller );
+        this.controller = controller;
+
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
      
@@ -978,6 +1016,7 @@ class App{
         this.stats.update();
    
         if ( this.renderer.xr.isPresenting ) {
+            this.ui3.update();
             this.uib1.update();
             this.uib2.update();
             this.uib3.update();
@@ -993,6 +1032,10 @@ class App{
         this.T4.children[0].rotateY(0.05);
         this.T6.children[0].rotateY(0.05);
         this.T7.children[0].rotateY(0.05);
+        this.H0.children[0].rotateY(0.05);
+        this.H1.children[0].rotateY(0.05);
+        this.H2.children[0].rotateY(0.05);
+        this.H5.children[0].rotateY(0.05);
     }
         this.renderer.render( this.scene, this.camera );
     }
