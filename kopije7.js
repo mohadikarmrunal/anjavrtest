@@ -255,6 +255,81 @@ class App{
 
         loader.load(
 			// resource URL
+			'0.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.text0 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.text0.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.text0.position.set(-0.35,-0.1,-5.4);
+                self.text0.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=0 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'1.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.text1 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.text1.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.text1.position.set(-0.1,0.1,-5.4);
+                self.text1.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=1 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'2.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.text2 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.text2.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.text2.position.set(0.15,-0.1,-5.4);
+                self.text2.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=2 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
 			'cursor.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
@@ -417,6 +492,15 @@ class App{
             self.scene.remove(self.cube2);
             self.scene.remove(self.cube3);
 
+            //remove the text
+            self.text0.visible = false;
+            self.text1.visible = false;
+            self.text2.visible = false;
+            self.scene.remove(self.text0);
+            self.scene.remove(self.text1);
+            self.scene.remove(self.text2);
+
+
             //add a congrats sign in the future
         }
         const configq3 = {
@@ -552,6 +636,16 @@ class App{
             self.scene.add(self.cube1);
             self.scene.add(self.cube2);
             self.scene.add(self.cube3);
+
+            self.text0.visible = true;
+            self.text1.visible = true;
+            self.text2.visible = true;
+            self.scene.add(self.text0);
+            self.scene.add(self.text1);
+            self.scene.add(self.text2);
+
+
+
 
             //display the button for the sound
             self.uib3.mesh.visible = true;
