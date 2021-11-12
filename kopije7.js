@@ -753,12 +753,14 @@ class App{
             //move the coins to a different position;
             self.coin.position.set( -0.3, 0.15, -3.8 ); 
             self.coin1.position.set( -0.16, 0.15, -3.8 ); 
-            self.coin2.position.set( 0.16, 0.15, -3.8 ); 
-            self.coin3.position.set( 0.3, 0.15, -3.8 ); 
-            self.coin4.position.set( -0.3, -0.15, -3.8 ); 
-            self.coin5.position.set( -0.16, -0.15, -3.8 ); 
-            self.coin6.position.set( 0.16, -0.15, -3.8 ); 
-            self.coin7.position.set( 0.3, -0.15, -3.8 ); 
+
+            self.coin2.position.set( -0.3, -0.15, -3.8 ); 
+            self.coin3.position.set(-0.16, -0.15, -3.8 ); 
+            self.coin4.position.set( 0.16, -0.15, -3.8 ); 
+            self.coin5.position.set( 0.3, -0.15, -3.8 ); 
+
+            self.coin6.position.set( -0.3, -0.45, -3.8 ); 
+            self.coin7.position.set( -0.16, -0.45, -3.8 ); 
             //rotate them
             self.coin.children[0].rotateX(Math.PI/2);
             self.coin1.children[0].rotateX(Math.PI/2);
@@ -770,6 +772,16 @@ class App{
             self.coin7.children[0].rotateX(Math.PI/2);
 
             //display letters
+            self.H0.position.set(-0.3,0.17,-3.8);
+            self.H1.position.set(-0.16,0.17,-3.8);
+            self.H2.position.set(-0.3,-0.13,-3.8);
+            self.T3.position.set(-0.16,-0.13,-3.8);
+            self.T4.position.set(0.16,-0.13,-3.8);
+            self.H5.position.set(0.3,-0.13,-3.8);
+            self.T6.position.set(-0.3,-0.43,-3.8);
+            self.T7.position.set(-0.16,-0.43,-3.8);
+
+
             self.H0.visible = true;
             self.scene.add(self.H0);
             self.H1.visible = true;
