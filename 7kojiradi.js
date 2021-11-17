@@ -40,8 +40,8 @@ class App{
         this.controls.update();
 
         this.stats = new Stats();
-        this.createBoxes();
         this.initScene();
+        this.createBoxes();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
@@ -103,8 +103,8 @@ class App{
                 self.animationsT = {};
                 self.tail = gltf.scene;
                 //console.log(gltf.scene.children[0].children[1]);
-                self.coinT = gltf.scene.children[0].children[0];
-                self.tail.children[0].children[1].visible = false;
+                self.coinT = gltf.scene.children[0].children[1];
+                self.tail.children[0].children[0].visible = false;
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossTail'] = gltf.animations[0];
@@ -255,6 +255,156 @@ class App{
 
         loader.load(
 			// resource URL
+			'0.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.text0 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.text0.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.text0.position.set(-0.35,-0.1,-5.4);
+                self.text0.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=0 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'1.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.text1 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.text1.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.text1.position.set(-0.1,0.1,-5.4);
+                self.text1.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=1 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'2.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.text2 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.text2.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.text2.position.set(0.15,-0.1,-5.4);
+                self.text2.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=2 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'num0.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.num0 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.num0.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.num0.position.set(0.45,0.17,-3.8);
+                self.num0.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=0 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'num1.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.num1 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self. num1.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.num1.position.set(0.45,-0.13,-3.8);
+                self.num1.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=0 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'num2.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.num2 = gltf.scene;
+                self.loadingBar.visible = false;
+				const scale = 0.1;
+                self.num2.scale.set(scale, scale, scale); 
+                
+                //positions
+                self.num2.position.set(0.45,-0.43,-3.8);
+                self.num2.visible = false;	
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading X=0 text' );
+			}
+        );
+
+        loader.load(
+			// resource URL
 			'cursor.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
@@ -334,18 +484,11 @@ class App{
                 padding:50,
                 fontSize:45,
             },
-            info:{ type: "text", fontFamily: 'Verdana', position:{ top: 6, left: 6 }, width: 500, height: 100, padding:17, fontSize: 36},
-            //info0: { type: "text", position:{ top: 150, left: 6 }, width: 160, height: 100, padding:17},
-            info1: { type: "text", fontFamily: 'Verdana', position:{ top: 150, left: 176 }, width: 160, height: 100, padding:17},
-            //info2: { type: "text", position:{ top: 150, left: 346 }, width: 160, height: 100, padding:17},
+            info:{ type: "text", fontFamily: 'Verdana'}
         }
 
         const content3 = {
-            info: "Random Variable",
-            //info0: "X=0",
-            info1: "",
-            //info2: "X=2",
-
+            info: "RANDOM VARIABLE"
         }
 
         const config4 = {
@@ -358,7 +501,7 @@ class App{
                 padding:50,
                 fontSize:45,
             },
-            info:{ type: "text", fontFamily: 'Verdana' }
+            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 100, padding: 20}
         }
 
         const content4 = {
@@ -416,6 +559,15 @@ class App{
             self.scene.remove(self.cube1);
             self.scene.remove(self.cube2);
             self.scene.remove(self.cube3);
+
+            //remove the text
+            self.text0.visible = false;
+            self.text1.visible = false;
+            self.text2.visible = false;
+            self.scene.remove(self.text0);
+            self.scene.remove(self.text1);
+            self.scene.remove(self.text2);
+
 
             //add a congrats sign in the future
         }
@@ -553,22 +705,32 @@ class App{
             self.scene.add(self.cube2);
             self.scene.add(self.cube3);
 
+            self.text0.visible = true;
+            self.text1.visible = true;
+            self.text2.visible = true;
+            self.scene.add(self.text0);
+            self.scene.add(self.text1);
+            self.scene.add(self.text2);
+
+
+
+
             //display the button for the sound
             self.uib3.mesh.visible = true;
             self.scene.add(self.uib3.mesh);   
         }
         const configq2 = {
-            panelSize: { height: 0.2 },
-            height: 102.4,
-            info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            panelSize: { height: 0.3 },
+            height: 153.6,
+            info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 7.2 }, textAlign: 'center', width: 500, height: 92.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial',padding: 30},
             //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            buttonq21: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2f },
-            buttonq22: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2ff },
-            buttonq23: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2t },
+            buttonq21: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2f },
+            buttonq22: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2ff },
+            buttonq23: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2t },
             renderer: this.renderer
         }
         const contentq2 = {
-            info: "What is the value of random variable X that corresponds to the shown event",
+            info: "What is the value of random variable X that corresponds to the shown event?",
             buttonq21: "X<1",
             buttonq22: "X=1",
             buttonq23: "X \u2264 1",
@@ -588,26 +750,27 @@ class App{
             self.coin.visible = true;
             self.coin1.visible = true;
 
-            //remove X=0 on the canvas
-            self.ui3.updateElement( "info1", "" );
-
             //coin visibility
-            self.H0.visible = true;
-            self.scene.add(self.H0);
-            self.H1.visible = true;
-            self.scene.add(self.H1);
-            self.H2.visible = true;
-            self.scene.add(self.H2);
-            self.T3.visible = true;
-            self.scene.add(self.T3);
-            self.T4.visible = true;
-            self.scene.add(self.T4);
-            self.H5.visible = true;
-            self.scene.add(self.H5);
             self.T6.visible = false;
             self.T7.visible = false;
             self.scene.remove(self.T6);
             self.scene.remove(self.T7);
+
+            //remove the spheres
+            self.sphere1.visible = false;
+            self.scene.remove(self.sphere1);
+            self.sphere2.visible = false;
+            self.scene.remove(self.sphere2);
+            self.sphere3.visible = false;
+            self.scene.remove(self.sphere3);
+
+            //remove numbers
+            self.num0.visible = false;
+            self.scene.remove(self.num0);
+            self.num1.visible = false;
+            self.scene.remove(self.num1);
+            self.num2.visible = false;
+            self.scene.remove(self.num2);
 
             //add the mesh for the second question
             self.uiq2.mesh.visible = true;
@@ -658,19 +821,20 @@ class App{
             self.scene.remove(self.ui2.mesh);
 
             //display the third canvas
-            self.ui3.updateElement( "info1", "X=0" );
             self.ui3.mesh.visible = true;
             self.scene.add(self.ui3.mesh);
 
             //move the coins to a different position;
-            self.coin.position.set( -0.3, 0.15, -3.8 ); 
-            self.coin1.position.set( -0.16, 0.15, -3.8 ); 
-            self.coin2.position.set( 0.16, 0.15, -3.8 ); 
-            self.coin3.position.set( 0.3, 0.15, -3.8 ); 
-            self.coin4.position.set( -0.3, -0.15, -3.8 ); 
-            self.coin5.position.set( -0.16, -0.15, -3.8 ); 
-            self.coin6.position.set( 0.16, -0.15, -3.8 ); 
-            self.coin7.position.set( 0.3, -0.15, -3.8 ); 
+            self.coin.position.set( -0.45, 0.15, -3.8 ); 
+            self.coin1.position.set( -0.31, 0.15, -3.8 ); 
+
+            self.coin2.position.set( -0.45, -0.15, -3.8 ); 
+            self.coin3.position.set(-0.31, -0.15, -3.8 ); 
+            self.coin4.position.set( -0.06, -0.15, -3.8 ); 
+            self.coin5.position.set( 0.08, -0.15, -3.8 ); 
+
+            self.coin6.position.set( -0.45, -0.45, -3.8 ); 
+            self.coin7.position.set( -0.31, -0.45, -3.8 ); 
             //rotate them
             self.coin.children[0].rotateX(Math.PI/2);
             self.coin1.children[0].rotateX(Math.PI/2);
@@ -680,13 +844,51 @@ class App{
             self.coin5.children[0].rotateX(Math.PI/2);
             self.coin6.children[0].rotateX(Math.PI/2);
             self.coin7.children[0].rotateX(Math.PI/2);
-            self.counting(0,0);
 
             //display letters
+            self.H0.position.set(-0.45,0.17,-3.8);
+            self.H1.position.set(-0.31,0.17,-3.8);
+            self.H2.position.set(-0.45,-0.13,-3.8);
+            self.T3.position.set(-0.36,-0.13,-3.8);
+            self.T4.position.set(-0.06,-0.13,-3.8);
+            self.H5.position.set(0.08,-0.13,-3.8);
+            self.T6.position.set(-0.45,-0.43,-3.8);
+            self.T7.position.set(-0.36,-0.43,-3.8);
+
+
+            self.H0.visible = true;
+            self.scene.add(self.H0);
+            self.H1.visible = true;
+            self.scene.add(self.H1);
+            self.H2.visible = true;
+            self.scene.add(self.H2);
+            self.T3.visible = true;
+            self.scene.add(self.T3);
+            self.T4.visible = true;
+            self.scene.add(self.T4);
+            self.H5.visible = true;
+            self.scene.add(self.H5);
             self.T6.visible = true;
             self.scene.add(self.T6);
             self.T7.visible = true;
             self.scene.add(self.T7);
+
+            //add the shapes for the events
+            self.sphere1.visible = true;
+            self.scene.add(self.sphere1);
+            self.sphere2.visible = true;
+            self.scene.add(self.sphere2);
+            self.sphere3.visible = true;
+            self.scene.add(self.sphere3);
+
+            //add numbers
+            self.num0.visible = true;
+            self.scene.add(self.num0);
+            self.num1.visible = true;
+            self.scene.add(self.num1);
+            self.num2.visible = true;
+            self.scene.add(self.num2);
+
 
             //display the button for the sound
             self.uib2.mesh.visible = true;
@@ -694,16 +896,16 @@ class App{
         }
 
         const configq1 = {
-            panelSize: { height: 0.2 },
-            height: 102.4,
-            info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
+            panelSize: { height: 0.3 },
+            height: 153.6,
+            info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 7.2 }, textAlign: 'center', width: 500, height: 92.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial', padding: 30},
             //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            buttonq1t: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1t },
-            buttonq1f: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 261 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1f },
+            buttonq1t: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 6 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1t },
+            buttonq1f: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 261 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1f },
             renderer: this.renderer
         }
         const contentq1 = {
-            info: "Random Variable that counts heads has the displayed set for it's: ",
+            info: " Is the displayed set domain or codomain of the random variable?",
             buttonq1t: "DOMAIN",
             buttonq1f: "CODOMAIN",
            
@@ -767,6 +969,37 @@ class App{
         this.cube3.position.set(0,-0.1,-5.4);
         this.cube2.position.set(0.25,-0.2,-5.4);
 
+        //sphere
+        const geometrys = new THREE.CylinderGeometry( 0.03, 0.03, 0.56, 32 );
+        const geometrys2 = new THREE.CylinderGeometry( 0.03, 0.03, 0.17, 32 );
+        const material1 = new THREE.MeshBasicMaterial ({color: 0xffff00});
+        const material2 = new THREE.MeshBasicMaterial ({color: 0x1fad10});
+        const material3 = new THREE.MeshBasicMaterial ({color: 0x2b1596});
+
+        const sphere1 = new THREE.Mesh(geometrys,material1);
+        this.sphere1 = sphere1;
+        this.sphere1.rotateZ(Math.PI/2);
+        this.sphere1.visible = false;
+        this.sphere1.material.opacity = 0.8;
+   
+        //short cylinder
+        const sphere2 = new THREE.Mesh(geometrys2,material2);
+        this.sphere2 = sphere2;
+        this.sphere2.visible = false;
+        this.sphere2.rotateZ(Math.PI/2);
+        this.sphere2.material.opacity = 0.8;
+        this.sphere2.material.transparent = true;
+
+        //third cylinder
+        const sphere3 = new THREE.Mesh(geometrys,material3);
+        this.sphere3 = sphere3;
+        this.sphere3.rotateZ(Math.PI/2);
+        this.sphere3.visible = false;
+        this.sphere3.material.opacity = 0.8;
+
+        this.sphere1.position.set(0.12,0.19,-3.8);
+        this.sphere2.position.set(0.315,-0.11,-3.8);
+        this.sphere3.position.set(0.12,-0.41, -3.8);
        /* function onCubeTap(event){
             if (event.target == self.cube1) {
                 console.log("you have pressed on the cube");
@@ -993,7 +1226,6 @@ class App{
         this.stats.update();
    
         if ( this.renderer.xr.isPresenting ) {
-            this.ui3.update();
             this.uib1.update();
             this.uib2.update();
             this.uib3.update();
@@ -1004,7 +1236,7 @@ class App{
             this.mixerT.update( dt )
         }
 
-        if(this.T3!=undefined){
+        if(this.T3!=undefined && this.H0!=undefined){
         this.T3.children[0].rotateY(0.05);
         this.T4.children[0].rotateY(0.05);
         this.T6.children[0].rotateY(0.05);

@@ -39,6 +39,8 @@ class App{
         this.controls.target.set(0, 3.5, 0);
         this.controls.update();
 
+        this.listener = new THREE.AudioListener();
+
         this.stats = new Stats();
         this.initScene();
         this.createBoxes();
@@ -435,6 +437,24 @@ class App{
         
     }
 
+    playSound( sndname ){
+        // load a sound and set it as the Audio object's buffer
+        const sound = this.speech;
+        const self = this;
+        const audioLoader = new THREE.AudioLoader();
+        audioLoader.load( `audio/${sndname}.mp3`, ( buffer ) => {
+            if (sound.isPlaying) sound.stop();
+            sound.setBuffer( buffer );
+            sound.setLoop( false );
+            sound.setVolume( 1.0 );
+            sound.play();
+        });
+        if (sndname == 'canvas1')  self.canvas1 = sound;
+        if (sndname == 'canvas2')  self.canvas2 = sound;
+        if (sndname == 'canvas3')  self.canvas3 = sound;
+        if (sndname == 'canvas4')  self.canvas4 = sound;
+    }
+
     createUI() {
         
         const self = this;
@@ -488,7 +508,7 @@ class App{
         }
 
         const content3 = {
-            info: "RANDOM VARIABLE"
+            info: "RANDOM VARIABLE X"
         }
 
         const config4 = {
@@ -501,7 +521,7 @@ class App{
                 padding:50,
                 fontSize:45,
             },
-            info:{ type: "text", fontFamily: 'Verdana', width: 512 }
+            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40}
         }
 
         const content4 = {
@@ -602,16 +622,21 @@ class App{
             self.uiq3.mesh.visible = true;
             self.scene.add(self.uiq3.mesh); 
         }
-        function button3(){
-            //we need to play the sound here as well
+        function button3(){        
             console.log('Button for the third sound on the forth canvas was pressed');
 
+            //stop the previous sound and play the sound for canvas 4
+            if (self.canvas3.isPlaying) {
+                self.canvas3.stop();
+            }
+            self.playSound('canvas4');
             // hide the pressed button for the sound
             self.uib3.mesh.visible = false;
             self.scene.remove(self.uib3.mesh);
 
             //allow time for the voice over and then display the question
-            setTimeout(button3next,3000);
+            timeoutb3 = setTimeout(button3next,40000);
+            self.timeoutb3 = timeoutb3;
         }
         const configb3 = {
             panelSize: { height: 0.1, width: 0.1},
@@ -629,6 +654,7 @@ class App{
         this.uib3.mesh.visible = false;
         this.uib3.mesh.scale.set(2,2,2);
 
+        var timeoutb1, timeoutb2, timeoutb3
 
         //button for the question #2
         function buttonq2f(){
@@ -684,6 +710,7 @@ class App{
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
+            self.coinrotation = false;
             //remove letters
             self.scene.remove(self.H0);
             self.scene.remove(self.H1);
@@ -692,7 +719,6 @@ class App{
             self.scene.remove(self.T4);
             self.scene.remove(self.H5);
            
-
             //display the forth and final canvas
             self.ui4.mesh.visible = true;
             self.scene.add(self.ui4.mesh);
@@ -711,9 +737,6 @@ class App{
             self.scene.add(self.text0);
             self.scene.add(self.text1);
             self.scene.add(self.text2);
-
-
-
 
             //display the button for the sound
             self.uib3.mesh.visible = true;
@@ -777,7 +800,13 @@ class App{
             self.scene.add(self.uiq2.mesh);
         }
         function button2(){
-            //we need to play the sound here as well
+
+            //stop the previous sound and play the sound for canvas 3
+            if (self.canvas2.isPlaying) {
+                self.canvas2.stop();
+            }
+            self.playSound('canvas3');
+
             console.log('Button for the second sound on the third canvas was pressed!');
 
             // hide the pressed button for the sound
@@ -785,7 +814,8 @@ class App{
             self.scene.remove(self.uib2.mesh);
 
             //allow time for the voice over and then display the question
-            setTimeout(button2next,3000);
+            timeoutb2 = setTimeout(button2next,37000);
+            self.timeoutb2 = timeoutb2;
         }
 
         const configb2 = {
@@ -844,6 +874,8 @@ class App{
             self.coin5.children[0].rotateX(Math.PI/2);
             self.coin6.children[0].rotateX(Math.PI/2);
             self.coin7.children[0].rotateX(Math.PI/2);
+
+            self.coinrotation = true;
 
             //display letters
             self.H0.position.set(-0.45,0.17,-3.8);
@@ -924,15 +956,21 @@ class App{
             self.scene.add(self.uiq1.mesh);
         }
         function button1(){
-            //we need to play the sound here as well
+            
             console.log('Button for the first sound on the second canvas was pressed');
 
-            // testni komand self.ui2.mesh.visible = false;
+            //stop the previous sound and play the sound for the second canvas
+            if (self.canvas1.isPlaying) {
+                self.canvas1.stop();
+            }
+            self.playSound('canvas2');
+
+            //remove the button for the sound
             self.uib1.mesh.visible = false;
             self.scene.remove(self.uib1.mesh);
-
             //delay for the question
-            setTimeout(button1next,3000);
+            timeoutb1 = setTimeout(button1next,24000);
+            self.timeoutb1 = timeoutb1;
         }
         const configb1 = {
             panelSize: { height: 0.1, width: 0.1},
@@ -1098,16 +1136,28 @@ class App{
 
         function onSessionStart(){
 
-            //play the sound
+            self.sound.play();
 
              if(!self.head.visible){
 
-                //kad krene que za animaciju ide prvi setTimeout
-                setTimeout(next1,2000);
-                //da bi se desila animacija trebam i drugi setTimeout
-                setTimeout(next2,4000);
-                //trebam i treci setTimeout da bih ukinula sve 
-                setTimeout(next3,6000);
+                self.coinrotation = false;
+
+                var timeout1, timeout2, timeout3
+
+                self.ui1.mesh.visible = true;
+                self.scene.add(self.ui1.mesh);
+
+                self.cursor.visible = true; 
+                self.scene.add(self.cursor);
+                //next 1 starts the animation of the coins
+                timeout1 = setTimeout(next1,31000);
+                self.timeout1 = timeout1;
+                //nextr 2 tosses the second coin; I need 2 seconds between them
+                timeout2 = setTimeout(next2,33000);
+                self.timeout2 = timeout2;
+                //stops the animation and shows the second canvas
+                timeout3 = setTimeout(next3,35000);
+                self.timeout3 = timeout3;
 
             }
         }
@@ -1115,12 +1165,6 @@ class App{
         function next1 (){
             const self = this.app;
 
-            self.cursor.visible = true; 
-            self.scene.add(self.cursor);
-
-            self.ui1.mesh.visible = true;
-            self.scene.add(self.ui1.mesh);
-            
             self.head.visible = true;
             self.scene.add(self.head);
             self.action.play();
@@ -1128,10 +1172,13 @@ class App{
         }
 
         function next2(){
-            this.app.head.visible = false;
-            this.app.tail.visible = true;
-            this.app.scene.add(this.app.tail);
-            this.app.actionT.play();
+            const self = this.app;
+            
+            self.head.visible = false;
+            self.tail.visible = true;
+            self.scene.add(this.app.tail);
+            self.actionT.play();
+            self.playSound('canvas1');
             //this.app.actionT.loop = THREE.LoopOnce;
         }
 
@@ -1187,6 +1234,24 @@ class App{
 
 
         function onSessionEnd(){
+
+            if (self.sound && self.sound.isPlaying) self.sound.stop();
+            if (self.canvas1 && self.canvas1.isPlaying) self.canvas1.stop();
+            if (self.canvas2 && self.canvas2.isPlaying) self.canvas2.stop();
+            if (self.canvas3 && self.canvas3.isPlaying) self.canvas3.stop();
+            if (self.canvas4 && self.canvas4.isPlaying) self.canvas4.stop();
+
+            if (self.coinrotation) {
+                self.coin.children[0].rotateX(-Math.PI/2);
+                self.coin1.children[0].rotateX(-Math.PI/2);
+                self.coin2.children[0].rotateX(-Math.PI/2);
+                self.coin3.children[0].rotateX(-Math.PI/2);
+                self.coin4.children[0].rotateX(-Math.PI/2);
+                self.coin5.children[0].rotateX(-Math.PI/2);
+                self.coin6.children[0].rotateX(-Math.PI/2);
+                self.coin7.children[0].rotateX(-Math.PI/2);
+            }
+
             self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
@@ -1195,6 +1260,7 @@ class App{
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
+            self.scene.remove(self.ui1.mesh);
             self.scene.remove(self.ui2.mesh);
             self.scene.remove(self.ui3.mesh);
             self.scene.remove(self.ui4.mesh);
@@ -1202,12 +1268,73 @@ class App{
             self.scene.remove(self.T4);
             self.scene.remove(self.T6);
             self.scene.remove(self.T7);
+            if (self.uib1) self.scene.remove(self.uib1.mesh);
+            if (self.uib2) self.scene.remove(self.uib2.mesh);
+            if (self.uib3) self.scene.remove(self.uib3.mesh);
+            if (self.uiq1) self.scene.remove(self.uiq1.mesh);
+            if (self.uiq2) self.scene.remove(self.uiq2.mesh);
+            if (self.uiq3) self.scene.remove(self.uiq3.mesh);
+
+            clearTimeout(self.timeout1);
+            clearTimeout(self.timeout2);
+            clearTimeout(self.timeout3);
+            clearTimeout(self.timeoutb1);
+            clearTimeout(self.timeoutb2);
+            clearTimeout(self.timeoutb3);
+
+            if (self.sphere1) self.scene.remove(self.sphere1);
+            if (self.sphere2) self.scene.remove(self.sphere2);
+            if (self.sphere3) self.scene.remove(self.sphere3);
+            if (self.num0) self.scene.remove(self.num0);
+            if (self.num1) self.scene.remove(self.num1);
+            if (self.num2) self.scene.remove(self.num2);
+            if (self.H0) self.scene.remove(self.H0);
+            if (self.H1) self.scene.remove(self.H1);
+            if (self.H2) self.scene.remove(self.H2);
+            if (self.H5) self.scene.remove(self.H5);
+            if (self.head) self.scene.remove(self.head);
+            if (self.tail) self.scene.remove(self.tail);
+            if (self.cursor) self.scene.remove(self.cursor);
+            if (self.cube1) self.scene.remove(self.cube1);
+            if (self.cube2) self.scene.remove(self.cube2);
+            if (self.cube3) self.scene.remove(self.cube3);
+            if (self.text0) self.scene.remove(self.text0);
+            if (self.text1) self.scene.remove(self.text1);
+            if (self.text2) self.scene.remove(self.text2);
         }
 
+        var promise = new Promise(function(resolve, reject) {
+            const sound = new THREE.Audio( self.listener );
+            const audioLoader = new THREE.AudioLoader();
+             audioLoader.load( 'audio/intoapp3.mp3', ( buffer ) => {
+              sound.setBuffer( buffer );
+              sound.setLoop( false );
+              sound.setVolume( 1.0 );
+          });
+           self.sound = sound;
+           self.speech = new THREE.Audio( self.listener );
+           const controlspeech = true;
+           self.controlspeech = controlspeech;
+      
+            if (self.controlspeech) {
+            resolve("Sound loaded!");
+            }
+             else {
+            reject(Error("Sound did not load."));
+            }
+         });
 
-        
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } ); 
+
+       promise.then(function(result) {
+               console.log(result);
+              const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
+              console.log(result)}, function (error){    
+                  console.log(error);
+        });
+
+
         const controller = this.renderer.xr.getController( 0 );
+
         this.scene.add( controller );
         this.controller = controller;
 
