@@ -484,7 +484,6 @@ class App{
         
         this.scene.add( controller );
         this.controller = controller;
-
         
         this.renderer.setAnimationLoop( this.render.bind(this) );
 

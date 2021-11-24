@@ -78,7 +78,7 @@ class App{
 
         loader.load(
 			// resource URL
-			'cart2.gltf',
+			'cart.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -244,14 +244,17 @@ class App{
         const ui1a = new CanvasUI( content1a, config1a );
         const ui2a = new CanvasUI( content2a, config2a );
         const ui3a = new CanvasUI( content3a, config3a );
-        
-        
+
         this.ui = ui;
         this.ui1 = ui1;
         this.ui2 = ui2;
         this.ui1a = ui1a;
         this.ui2a = ui2a;
         this.ui3a = ui3a;
+
+        this.ui1a.mesh.rotateY(-Math.PI/2);
+        this.ui2a.mesh.rotateY(-Math.PI);
+        this.ui3a.mesh.rotateY(Math.PI/2);
 
         const a = this.ui.config.width;
         const b = this.ui.config.height;
@@ -400,8 +403,6 @@ class App{
     funk(x){
         return -0.3*x+4.6;
     }
-
-
        
     setupVR(){
 
@@ -419,6 +420,8 @@ class App{
         const incy = (b-2*c)/ 4.6;
 
         function onSessionStart(){
+
+            var timeout1, timeout2, timeout3, timeout4, timeout5
 
             self.ui1.mesh.visible = true;
             self.ui2.mesh.visible = true;
@@ -452,15 +455,16 @@ class App{
                 self.scene.add( self.cart); 
             }
 
-           
-
-            setTimeout(next1,1000);
-            setTimeout(next2,52000);
-            setTimeout(next3,71000);
-            setTimeout(next4,76000);
-            setTimeout(next5,89000);
-            
-            
+            timeout1 = setTimeout(next1,1000);
+            timeout2 = setTimeout(next2,52000);
+            timeout3 = setTimeout(next3,71000);
+            timeout4 = setTimeout(next4,76000);
+            timeout5 = setTimeout(next5,89000);
+            self.timeout1 = timeout1;
+            self.timeout2 = timeout2;
+            self.timeout3 = timeout3;
+            self.timeout4 = timeout4;
+            self.timeout5 = timeout5;            
         }
 
         function next1(){
@@ -490,7 +494,6 @@ class App{
             //play the animation very fast
             this.app.action.play();
             this.app.action.timeScale = 3;
-
 
             //update of the graph
             this.app.ui.context.beginPath();
@@ -647,11 +650,8 @@ class App{
             //set up all the ui and rotate them
             this.app.settingupUI(this.app.ui,9*incx+60,2.7*incy+60, 171, 1.9, 90, 121.5);
             this.app.settingupUI(this.app.ui1a,u,w,176.33, 2.305,76.5,99.45);
-            this.app.ui1a.mesh.rotateY(-Math.PI/2);
             this.app.settingupUI(this.app.ui2a, 6*incx+60,1.8*incy+60,168,2.8,60,54);
-            this.app.ui2a.mesh.rotateY(-Math.PI);
             this.app.settingupUI(this.app.ui3a, 3*incx+60, 0.9*incy+60, 111, 3.7, 30, 18);
-            this.app.ui3a.mesh.rotateY(Math.PI/2);
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
         }
@@ -676,9 +676,7 @@ class App{
             self.scene.remove(self.cursor);
             self.scene.remove(self.cart);
 
-            self.ui1a.mesh.rotateY(Math.PI/2);
-            self.ui2a.mesh.rotateY(Math.PI);
-            self.ui3a.mesh.rotateY(-Math.PI/2);
+            
 
             self.ui1a.mesh.visible = false;
             self.ui2a.mesh.visible = false;
@@ -687,6 +685,12 @@ class App{
             self.scene.remove(self.ui1a.mesh);
             self.scene.remove(self.ui3a.mesh);
             self.scene.remove(self.ui2a.mesh);
+
+            clearTimeout(self.timeout1);
+            clearTimeout(self.timeout2);
+            clearTimeout(self.timeout3);
+            clearTimeout(self.timeout4);
+            clearTimeout(self.timeout5);
         }
 
         var promise = new Promise(function(resolve, reject) {
@@ -731,9 +735,10 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
-        this.mixer.update( dt )
+        
         if ( this.renderer.xr.isPresenting ){
             this.gestures.update();
+            this.mixer.update( dt )
         }
         this.renderer.render( this.scene, this.camera );
     }
