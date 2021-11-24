@@ -94,6 +94,7 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with coin tossed to head' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
 			}
         );
 
@@ -136,6 +137,8 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with coin tossed to tail' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+
 			}
         );   
 
@@ -172,6 +175,8 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with the coin' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+
 			}
         );
 
@@ -431,6 +436,8 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with loading a cursor' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+
 			}
         );
 
@@ -1126,35 +1133,6 @@ class App{
         this.renderer.xr.enabled = true;   
         const self = this;
         
-
-        function onSessionStart(){
-
-            self.sound.play();
-
-             if(!self.head.visible){
-
-                self.coinrotation = false;
-
-                var timeout1, timeout2, timeout3
-
-                self.ui1.mesh.visible = true;
-                self.scene.add(self.ui1.mesh);
-
-                self.cursor.visible = true; 
-                self.scene.add(self.cursor);
-                //next 1 starts the animation of the coins
-                timeout1 = setTimeout(next1,31000);
-                self.timeout1 = timeout1;
-                //nextr 2 tosses the second coin; I need 2 seconds between them
-                timeout2 = setTimeout(next2,33000);
-                self.timeout2 = timeout2;
-                //stops the animation and shows the second canvas
-                timeout3 = setTimeout(next3,35000);
-                self.timeout3 = timeout3;
-
-            }
-        }
-
         function next1 (){
             const self = this.app;
 
@@ -1218,11 +1196,35 @@ class App{
            
             //adding a button for the sound
             self.uib1.mesh.visible = true;
-            self.scene.add(self.uib1.mesh);
+            self.scene.add(self.uib1.mesh);        
+        }
+        
+        function onSessionStart(){
             
+            self.sound.play();
 
-           
-            
+             if(!self.head.visible){
+
+                self.coinrotation = false;
+
+                var timeout1, timeout2, timeout3
+
+                self.ui1.mesh.visible = true;
+                self.scene.add(self.ui1.mesh);
+
+                self.cursor.visible = true; 
+                self.scene.add(self.cursor);
+                //next 1 starts the animation of the coins
+                timeout1 = setTimeout(next1,31000);
+                self.timeout1 = timeout1;
+                //nextr 2 tosses the second coin; I need 2 seconds between them
+                timeout2 = setTimeout(next2,33000);
+                self.timeout2 = timeout2;
+                //stops the animation and shows the second canvas
+                timeout3 = setTimeout(next3,35000);
+                self.timeout3 = timeout3;
+
+            }
         }
 
 

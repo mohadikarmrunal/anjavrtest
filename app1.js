@@ -73,6 +73,8 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with loading an apple!' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+
 			}
         );
 
@@ -103,6 +105,8 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with loading a cart!' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+
 			}
         );
 
@@ -129,6 +133,8 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with loading a cursor!' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+
 			}
         );
 
@@ -419,54 +425,6 @@ class App{
         const incx = (a-2*c)/ 15.3;
         const incy = (b-2*c)/ 4.6;
 
-        function onSessionStart(){
-
-            var timeout1, timeout2, timeout3, timeout4, timeout5
-
-            self.ui1.mesh.visible = true;
-            self.ui2.mesh.visible = true;
-            self.scene.add(self.ui.mesh);
-            self.scene.add(self.ui1.mesh);
-            self.scene.add(self.ui2.mesh);
-            
-
-            self.clearCanvas(0,self.ui);
-            self.ui.context.beginPath();
-            self.ui.context.moveTo(a-c,b-c);
-            self.ui.context.lineTo(c,c);
-            self.ui.context.stroke();
-            self.ui.context.save();
-            self.ui.context.rotate(Math.PI/4);
-            self.ui.context.fillStyle = 'black';
-            self.ui.context.font = "20px Arial";
-            self.ui.context.fillText("Demand Curve f(x)", a/2 , -b/80);
-            self.ui.context.restore();
-
-
-            if(!self.apple.visible){
-                self.apple.visible = true;
-                self.apple.position.set( 0.3, -0.03, -0.9 ); 
-                self.scene.add( self.apple); 
-            }
-
-            if(!self.cart.visible){
-                self.cart.visible = true;
-                self.cart.position.set( -0.3, -0.07, -0.9); 
-                self.scene.add( self.cart); 
-            }
-
-            timeout1 = setTimeout(next1,1000);
-            timeout2 = setTimeout(next2,52000);
-            timeout3 = setTimeout(next3,71000);
-            timeout4 = setTimeout(next4,76000);
-            timeout5 = setTimeout(next5,89000);
-            self.timeout1 = timeout1;
-            self.timeout2 = timeout2;
-            self.timeout3 = timeout3;
-            self.timeout4 = timeout4;
-            self.timeout5 = timeout5;            
-        }
-
         function next1(){
             console.log('Sound is playing!');
             this.app.sound.play();
@@ -654,6 +612,54 @@ class App{
             this.app.settingupUI(this.app.ui3a, 3*incx+60, 0.9*incy+60, 111, 3.7, 30, 18);
 			this.app.ui.needsUpdate = true;
 			this.app.ui.texture.needsUpdate = true;
+        }
+
+        function onSessionStart(){
+
+            var timeout1, timeout2, timeout3, timeout4, timeout5
+
+            self.ui1.mesh.visible = true;
+            self.ui2.mesh.visible = true;
+            self.scene.add(self.ui.mesh);
+            self.scene.add(self.ui1.mesh);
+            self.scene.add(self.ui2.mesh);
+            
+
+            self.clearCanvas(0,self.ui);
+            self.ui.context.beginPath();
+            self.ui.context.moveTo(a-c,b-c);
+            self.ui.context.lineTo(c,c);
+            self.ui.context.stroke();
+            self.ui.context.save();
+            self.ui.context.rotate(Math.PI/4);
+            self.ui.context.fillStyle = 'black';
+            self.ui.context.font = "20px Arial";
+            self.ui.context.fillText("Demand Curve f(x)", a/2 , -b/80);
+            self.ui.context.restore();
+
+
+            if(!self.apple.visible){
+                self.apple.visible = true;
+                self.apple.position.set( 0.3, -0.03, -0.9 ); 
+                self.scene.add( self.apple); 
+            }
+
+            if(!self.cart.visible){
+                self.cart.visible = true;
+                self.cart.position.set( -0.3, -0.07, -0.9); 
+                self.scene.add( self.cart); 
+            }
+
+            timeout1 = setTimeout(next1,1000);
+            timeout2 = setTimeout(next2,52000);
+            timeout3 = setTimeout(next3,71000);
+            timeout4 = setTimeout(next4,76000);
+            timeout5 = setTimeout(next5,89000);
+            self.timeout1 = timeout1;
+            self.timeout2 = timeout2;
+            self.timeout3 = timeout3;
+            self.timeout4 = timeout4;
+            self.timeout5 = timeout5;            
         }
 
         function onSessionEnd(){
