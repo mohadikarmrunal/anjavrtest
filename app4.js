@@ -1,6 +1,7 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
 import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
+import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
 import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
@@ -40,10 +41,27 @@ class App{
 
         this.stats = new Stats();
         this.initScene();
-        this.createBoxes();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
+
+    set action(name){
+		if (this.actionName == name) return;
+		
+		const clip = this.animations[name];
+		
+        if (clip!==undefined){
+			const action = this.mixer.clipAction( clip );
+              
+			this.actionName = name;
+			if (this.curAction) this.curAction.crossFadeTo(action, 0.5);
+            
+            action.enabled = true;
+			action.play();
+            
+            this.curAction = action;
+		}
+	}
     
     initScene(){
         console.log('initScene');
@@ -51,37 +69,33 @@ class App{
         
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
+        loader.setDRACOLoader( dracoLoader );
 		const self = this;
-
+        
         loader.load(
 			// resource URL
-			'TossHead.gltf',
+			'worker1.glb',
 			// called when the resource is loaded
 			function ( gltf ) {
 
                 self.animations = {};
-                self.head = gltf.scene;
-                self.coinH = gltf.scene.children[0].children[1];
-                self.head.children[0].children[0].visible = false;
-                //gltf.scene.children[0].children[0] je coin
-                //gltf.scene.children[0].children[1] je plane
-                self.animations['TossHead'] = gltf.animations[0];
-                //self.scene.add( self.apple ); 
-                //console.log(gltf.animations);
-                self.mixer = new THREE.AnimationMixer( self.coinH );
-                const clip = self.animations['TossHead'];
-                const action = self.mixer.clipAction (clip);
-                //action.loop = THREE.LoopOnce;
-                action.enabled = true;
-                self.action = action;
-                //action.play();
-                //console.log (action);
-                self.loadingBar.visible = false;
-                self.head.visible=false;
-				const scale = 0.05;
-				self.head.scale.set(scale, scale, scale); 
-                self.head.position.set( 0, -0.5, -1 ); 
                 
+                gltf.animations.forEach( (anim)=>{
+                    self.animations[anim.name] = anim;
+                })
+                /////
+
+                self.worker = gltf.scene.children[0];
+                //self.worker.rotateZ(-Math.PI/2);
+                //self.worker.rotateX(-Math.PI/10);
+                const scale = 0.01;
+				self.worker.scale.set(scale, scale, scale); 
+                self.mixer = new THREE.AnimationMixer( self.worker );
+
+                self.loadingBar.visible = false;
+                self.action = 'idle';            
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -94,49 +108,8 @@ class App{
 			}
         );
 
-        loader.load(
-			// resource URL
-			'TossTail.gltf',
-			// called when the resource is loaded
-			function ( gltf ) {
 
-                self.animationsT = {};
-                self.tail = gltf.scene;
-                //console.log(gltf.scene.children[0].children[1]);
-                self.coinT = gltf.scene.children[0].children[1];
-                self.tail.children[0].children[0].visible = false;
-                //gltf.scene.children[0].children[0] je coin
-                //gltf.scene.children[0].children[1] je plane
-                self.animations['TossTail'] = gltf.animations[0];
-                //self.scene.add( self.apple ); 
-                //console.log(gltf.animations);
-                self.mixerT = new THREE.AnimationMixer( self.coinT );
-                const clipT = self.animations['TossTail'];
-                const actionT = self.mixerT.clipAction (clipT);
-                //action.loop = THREE.LoopOnce;
-                actionT.enabled = true;
-                self.actionT = actionT;
-                //action.play();
-                //console.log (action);
-                self.loadingBar.visible = false;
-                self.tail.visible = false;
-				const scale = 0.05;
-				self.tail.scale.set(scale, scale, scale); 
-                self.tail.position.set( 0, -0.5, -1 ); 
-                
-			},
-			// called while loading is progressing
-			function ( xhr ) {
-
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
-			},
-			// called when loading has errors
-			function ( error ) {
-				console.log( 'An error happened with coin tossed to tail' );
-			}
-        );   
-
-        this.createUI();
+        //this.createUI();
         
     }
 
@@ -193,10 +166,12 @@ class App{
         
         function onSessionStart(){
 
-            self.sound.play();
-            var timeout1, timeout2, timeout3;
-            timeout1 = setTimeout(next1,31000);
-            self.timeout1 = timeout1;
+            self.scene.add(self.worker);
+            //self.action = 'answer';
+
+            //var timeout1, timeout2, timeout3;
+            //timeout1 = setTimeout(next1,31000);
+            //self.timeout1 = timeout1;
             
         }
 
@@ -207,7 +182,7 @@ class App{
 
         function onSessionEnd(){
 
-            if (self.sound && self.sound.isPlaying) self.sound.stop();
+            //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
 
         var promise = new Promise(function(resolve, reject) {
@@ -262,7 +237,7 @@ class App{
         this.stats.update();
    
         if ( this.renderer.xr.isPresenting ) {
-            
+            this.mixer.update( dt )
         }
 
         this.renderer.render( this.scene, this.camera );
