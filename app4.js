@@ -66,7 +66,6 @@ class App{
     initScene(){
         console.log('initScene');
         this.loadingBar = new LoadingBar();
-        
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
         const dracoLoader = new DRACOLoader();
@@ -76,7 +75,7 @@ class App{
         
         loader.load(
 			// resource URL
-			'worker1.glb',
+			'radnica.glb',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -86,16 +85,19 @@ class App{
                     self.animations[anim.name] = anim;
                 })
                 /////
+                console.log(gltf.scene);
 
                 self.worker = gltf.scene.children[0];
                 //self.worker.rotateZ(-Math.PI/2);
                 //self.worker.rotateX(-Math.PI/10);
-                const scale = 0.01;
+                const scale = 0.006;
 				self.worker.scale.set(scale, scale, scale); 
+                self.worker.rotateZ(Math.PI/2);
                 self.mixer = new THREE.AnimationMixer( self.worker );
+                self.worker.position.set(0.3,-1,-2);
 
                 self.loadingBar.visible = false;
-                self.action = 'idle';            
+                self.action = 'Answer';            
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -105,6 +107,43 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with coin tossed to head' );
+                alert ('Problem sa radnicom');
+			}
+        );
+
+        loader.load(
+			// resource URL
+			'telephone.glb',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.animationsT = {};
+                console.log(gltf.scene);
+                self.tel = gltf.scene;
+                const scale = 0.8;
+                self.tel.scale.set(scale, scale, scale);
+                self.tel.position.set(0,-1,-2);
+
+                self.phone = gltf.scene.children[2];
+                self.animationsT['Ring'] = gltf.animations[0];
+                self.mixerT = new THREE.AnimationMixer( self.phone );
+                const clipT = self.animationsT['Ring'];
+                const actionT = self.mixerT.clipAction (clipT);
+                actionT.enabled = true;
+                self.actionT = actionT;
+                self.loadingBar.visible = false;
+                //self.action = 'Idle';            
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with coin tossed to head' );
+                alert ('Problem sa telefonom');
+
 			}
         );
 
@@ -167,6 +206,10 @@ class App{
         function onSessionStart(){
 
             self.scene.add(self.worker);
+            self.scene.add(self.tel);
+            self.actionT.play();
+
+
             //self.action = 'answer';
 
             //var timeout1, timeout2, timeout3;
@@ -237,7 +280,8 @@ class App{
         this.stats.update();
    
         if ( this.renderer.xr.isPresenting ) {
-            this.mixer.update( dt )
+           this.mixer.update( dt );
+           this.mixerT.update(dt);
         }
 
         this.renderer.render( this.scene, this.camera );
