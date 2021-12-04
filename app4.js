@@ -95,11 +95,11 @@ class App{
                 self.worker = gltf.scene.children[0];
                 //self.worker.rotateZ(-Math.PI/2);
                 //self.worker.rotateX(-Math.PI/10);
-                const scale = 0.0075;
+                const scale = 0.015;
 				self.worker.scale.set(scale, scale, scale); 
                 self.worker.rotateZ(Math.PI/2);
                 self.mixer = new THREE.AnimationMixer( self.worker );
-                self.worker.position.set(0.3,-1,-2);
+                self.worker.position.set(0.3,-1,-3);
 
                 self.loadingBar.visible = false;
                 self.action = 'Answer';   
@@ -128,7 +128,9 @@ class App{
                 self.animationsT = {};
                 console.log(gltf.scene);
                 self.tel = gltf.scene;
-                self.tel.position.set(-0.3,-1,-2);
+                const scale = 2;
+                self.tel.scale.set(scale, scale, scale);
+                self.tel.position.set(-0.3,-1,-3);
 
                 if (gltf.scene.children[1].name == 'phone') {
                     self.phone = gltf.scene.children[1];
