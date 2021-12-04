@@ -43,6 +43,7 @@ class App{
         this.initScene();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
+        
         var teltest, worktest
         this.teltest = teltest;
         this.worktest = worktest;
@@ -99,7 +100,7 @@ class App{
 				self.worker.scale.set(scale, scale, scale); 
                 self.worker.rotateZ(Math.PI/2);
                 self.mixer = new THREE.AnimationMixer( self.worker );
-                self.worker.position.set(0.3,-1,-3);
+                self.worker.position.set(0.3,-1.05,-3);
 
                 self.loadingBar.visible = false;
                 self.action = 'Answer';   
@@ -130,7 +131,7 @@ class App{
                 self.tel = gltf.scene;
                 const scale = 2;
                 self.tel.scale.set(scale, scale, scale);
-                self.tel.position.set(-0.3,-1,-3);
+                self.tel.position.set(-0.6,-1,-3);
 
                 if (gltf.scene.children[1].name == 'phone') {
                     self.phone = gltf.scene.children[1];
