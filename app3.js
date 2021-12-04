@@ -64,8 +64,16 @@ class App{
 
                 self.animations = {};
                 self.head = gltf.scene;
-                self.coinH = gltf.scene.children[0].children[1];
-                self.head.children[0].children[0].visible = false;
+
+                if (gltf.scene.children[0].children[1].name == 'Coin'){
+                    self.coinH = gltf.scene.children[0].children[1];
+                    self.head.children[0].children[0].visible = false;
+                }
+                else {
+                    self.coinH = gltf.scene.children[0].children[0];
+                    self.head.children[0].children[1].visible = false;
+                }
+                
                 //gltf.scene.children[0].children[0] je coin
                 //gltf.scene.children[0].children[1] je plane
                 self.animations['TossHead'] = gltf.animations[0];
@@ -106,11 +114,16 @@ class App{
 
                 self.animationsT = {};
                 self.tail = gltf.scene;
-                //console.log(gltf.scene.children[0].children[1]);
-                self.coinT = gltf.scene.children[0].children[1];
-                self.tail.children[0].children[0].visible = false;
-                //gltf.scene.children[0].children[0] je coin
-                //gltf.scene.children[0].children[1] je plane
+                
+                if (gltf.scene.children[0].children[1].name == 'Coin'){
+                    self.coinT = gltf.scene.children[0].children[1];
+                    self.tail.children[0].children[0].visible = false;
+                }
+                else {
+                    self.coinT = gltf.scene.children[0].children[0];
+                    self.tail.children[0].children[1].visible = false;
+                }
+
                 self.animations['TossTail'] = gltf.animations[0];
                 //self.scene.add( self.apple ); 
                 //console.log(gltf.animations);
