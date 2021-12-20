@@ -40,19 +40,18 @@ class App{
 
         this.stats = new Stats();
         this.initScene();
-        this.createBoxes();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
     
     initScene(){
         console.log('initScene');
-        this.loadingBar = new LoadingBar();
+        //this.loadingBar = new LoadingBar();
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
 		const self = this;
 
-        loader.load(
+       /* loader.load(
 			// resource URL
 			'TossHead.gltf',
 			// called when the resource is loaded
@@ -133,7 +132,7 @@ class App{
 			function ( error ) {
 				console.log( 'An error happened with coin tossed to tail' );
 			}
-        );   
+        );   */
 
         this.createUI();
         
@@ -175,7 +174,7 @@ class App{
         }
 
         const content1 = {
-            info: "EXPERIMENT"
+            info: ""
         }
 
         const ui1 = new CanvasUI(content1, config1);
@@ -183,29 +182,77 @@ class App{
         this.ui1.mesh.position.set(0,0.4,-1.1);
         this.ui1.mesh.material.opacity = 0.3;
         this.ui1.mesh.material.transparent = true;
+        self.seconds = 30;
     }
 
     setupVR(){
 
         this.renderer.xr.enabled = true;   
         const self = this;
+        var interval1, interval2, interval3;
+        self.case = 0;
         
-        function onSessionStart(){
-
-            self.sound.play();
-            var timeout1, timeout2, timeout3;
-            timeout1 = setTimeout(next1,31000);
-            self.timeout1 = timeout1;
-            
+        function count(){
+            if (self.seconds == -1) {
+                self.seconds = 30;
+                if (self.case == 1) clearInterval(interval1);
+                if (self.case == 2) clearInterval(interval2);
+                if (self.case == 3) clearInterval(interval3);
+            }
+            else {
+                self.ui1.updateElement('info', self.seconds.toString());
+                self.seconds = self.seconds -1;
+            }
         }
 
-        function next1 (){
-            const self = this.app;
+        function next1() {
+            //first 30 seconds
+            self.case = 1;
+            console.log("prvi timeout");
+            interval1 = setInterval(count,1000);
+
+        }
+
+        function next2() {
+            //second 30 seconds
+            self.case = 2;
+            console.log("drugi timeout");
+            interval2 = setInterval(count,1000);
+        }
+
+        function next3() {
+            //third 30 seconds
+            self.case = 3;
+            console.log("treci timeout");
+            interval3 = setInterval(count,1000);
+        }
+
+       
+
+        function onSessionStart(){
+
+            self.ui1.mesh.visible = true;
+            self.scene.add(self.ui1.mesh);
+            self.camera.add(self.ui1.mesh);
+
+            //self.sound.play();
+            var timeout1, timeout2, timeout3, timeout4;
+           // self.timeout1 = timeout1;
+           timeout1 = setTimeout(next1, 1000);
+           timeout2 = setTimeout(next2, 41000);
+           timeout3 = setTimeout(next3, 81000);
+
+
+
+
+            
         }
 
 
         function onSessionEnd(){
-
+            
+            self.scene.remove(self.ui1.mesh);
+            self.camera.remove(self.ui1.mesh);
             if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
 
@@ -259,9 +306,10 @@ class App{
     render( ) {   
         const dt = this.clock.getDelta();
         this.stats.update();
+
    
         if ( this.renderer.xr.isPresenting ) {
-            
+                this.ui1.update();
         }
 
         this.renderer.render( this.scene, this.camera );

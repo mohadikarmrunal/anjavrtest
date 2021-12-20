@@ -51,7 +51,7 @@ class App{
         this.worktest = false;
 	}	
 
-    set action(name){
+   /* set action(name){
 		if (this.actionName == name) return;
 		
 		const clip = this.animations[name];
@@ -67,7 +67,7 @@ class App{
             
             this.curAction = action;
 		}
-	}
+	}*/
     
     initScene(){
         console.log('initScene');
@@ -99,11 +99,24 @@ class App{
                 const scale = 0.015;
 				self.worker.scale.set(scale, scale, scale); 
                 self.worker.rotateZ(Math.PI/2);
-                self.mixer = new THREE.AnimationMixer( self.worker );
                 self.worker.position.set(0.3,-1.05,-3);
 
+                //animations
+                self.mixer = new THREE.AnimationMixer( self.worker );
+                const clipI = self.animations['Idle'];
+                const clipA = self.animations['Answer'];
+                const actionI = self.mixer.clipAction (clipI);
+                const actionA = self.mixer.clipAction (clipA);
+                actionI.enable = true;
+                actionA.enable = true;
+                self.actionI = actionI;
+                self.actionA = actionA;
+                self.actionA.loop = THREE.LoopOnce;
+
+
                 self.loadingBar.visible = false;
-                self.action = 'Answer';   
+                self.actionI.play(); 
+  
                 self.worktest = true;         
 			},
 			// called while loading is progressing
@@ -114,7 +127,7 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with coin tossed to head' );
-                alert ('Problem sa radnicom');
+                alert ('Objects did not load properly. Please refresh the page!');
                 self.worktest = false;         
 
 			}
@@ -145,9 +158,10 @@ class App{
                 const actionT = self.mixerT.clipAction (clipT);
                 actionT.enabled = true;
                 self.actionT = actionT;
+                self.actionT.loop = THREE.LoopOnce;
+
                 self.loadingBar.visible = false;
                 self.teltest = true;
-                //self.action = 'Idle';            
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -157,14 +171,14 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with coin tossed to head' );
-                alert ('Problem sa telefonom');
+                alert ('Objects did not load properly. Please refresh the page!');
                 self.teltest = false;
 
 			}
         );
 
 
-        //this.createUI();
+        this.createUI();
         
     }
 
@@ -180,67 +194,236 @@ class App{
             sound.setVolume( 1.0 );
             sound.play();
         });
-        if (sndname == 'canvas1')  self.canvas1 = sound;
-        if (sndname == 'canvas2')  self.canvas2 = sound;
-        if (sndname == 'canvas3')  self.canvas3 = sound;
-        if (sndname == 'canvas4')  self.canvas4 = sound;
     }
 
     createUI() {
         const self = this;
 
-        //setting up button canvasUI
+        //canvas for the timer
         const config1 = {
-            panelSize: { width: 0.6, height: 0.2 },
-            height: 512/3,
-            body:{
-                textAlign: 'center',
-                backgroundColor:'#ccc',
-                fontColor:'#000',
-                padding: 65,
-                fontSize:45,
-            },
-            info:{ type: "text", fontFamily: 'Verdana'}
+            panelSize: { width: 0.3, height: 0.2 },
+            height: 512/1.5,
+            info:{ type: "text", position:{ top: 130, left: 6 }, width: 500 , height: 200, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
         }
 
         const content1 = {
-            info: "EXPERIMENT"
+            info: ""
         }
+
+        //counter canvas 
+        const config2 = {
+            panelSize: { width: 0.3, height: 0.2 },
+            height: 512/1.5,
+            info:{ type: "text", position:{ top: 130, left: 6 }, width: 500 , height: 200, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
+        }
+
+        const content2 = {
+            info: "COUNTER: 0"
+        }
+
+        //experiment canvas
+        const config3 = {
+            panelSize: { width: 1, height: 0.25 },
+            height: 128,
+            info:{ type: "text", position:{ top: 6, left: 6 } , width: 500, height: 60, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30},
+            info1:{ type: "text", position:{ top: 60, left: 6 } , width: 160, height: 56, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30},
+            info2:{ type: "text", position:{ top: 60, left: 176 } , width: 160, height: 56, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30},
+            info3:{ type: "text", position:{ top: 60, left: 346 } , width: 160, height: 56, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30},
+
+        }
+
+        const content3 = {
+            info: "EXPERIMENT",
+            info1: "",
+            info2: "",
+            info3: "",
+
+        }   
+
+        //creating materials for canvases
+        const material1 = new THREE.MeshPhysicalMaterial ();
+        material1.color = new THREE.Color(0x2d7ac8);
+        material1.opacity = 0.45;
+        material1.roughness = 0.377;
+        material1.metalness = 0.389;
+        material1.reflectivity = 0.7;
+        material1.clearcoat = 0.7;
+        material1.transparent = true;
+        const material2 = material1.clone();
+        const material3 = material1.clone();
 
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0,0.4,-1.1);
-        this.ui1.mesh.material.opacity = 0.3;
-        this.ui1.mesh.material.transparent = true;
+        this.ui1.mesh.position.set(-0.3,0.8,-1);
+        this.ui1.mesh.material = material1;
+        this.ui1.mesh.material.map = this.ui1.texture;        
+        self.seconds = 30;
+
+        const ui2 = new CanvasUI(content2, config2);
+        this.ui2 = ui2;
+        this.ui2.mesh.position.set(-0.3,0,-1);
+        this.ui2.mesh.material = material2;
+        this.ui2.mesh.material.map = this.ui2.texture;  
+
+        const ui3 = new CanvasUI(content3, config3);
+        this.ui3 = ui3;
+        this.ui3.mesh.position.set(0,-0.8,-1);
+        this.ui3.mesh.material = material3;
+        this.ui3.mesh.material.map = this.ui3.texture;  
     }
 
     setupVR(){
 
         this.renderer.xr.enabled = true;   
         const self = this;
+        //case tells us which experiment is ongoing
+        self.case = 0;
+        //counts the calls
+        self.counter = 0;
+
+        function count(number){
+
+            if (self.seconds % number == 0 && self.seconds>0) {
+                self.counter = self.counter + 1;   
+                console.log (self);
+                console.log("djeljivo");
+                self.actionT.reset();
+                self.actionA.reset();
+                self.actionT.play();
+                self.actionA.play();
+                self.ui2.updateElement('info', "COUNTER: "+self.counter.toString());
+            }
+
+            if ( self.seconds < 5 && self.second!= -1){
+                self.ui1.mesh.material.color = new THREE.Color(0xf22602);
+            }
+
+            if (self.seconds == -1) {
+                self.seconds = 30;
+
+                self.ui1.mesh.material.color = new THREE.Color(0x2d7ac8);
+                self.ui1.updateElement('info', "00:00:00");
+                self.ui2.updateElement('info', "COUNTER: 0");
+
+                if (self.case == 1) {
+                    clearInterval(self.interval1);
+                    self.ui3.updateElement('info1', self.counter.toString());
+                    self.counter = 0;
+                }
+
+                if (self.case == 2) {
+                    clearInterval(self.interval2);
+                    self.ui3.updateElement('info2', self.counter.toString());
+                    self.counter = 0;
+                }
+
+                if (self.case == 3) {
+                    clearInterval(self.interval3);
+                    self.ui3.updateElement('info3', self.counter.toString());
+                    self.counter = 0;
+                }
+
+            }
+
+            else {
+                self.ui1.updateElement('info', "00:00:"+self.seconds.toString());
+                self.seconds = self.seconds -1;
+            }
+        }
+
+        function next1() {
+            //first experiment
+            //num1, num2, num3 are numbers of phonecalls in each of the experiments
+            //number1, number2, number3 are used to determine in which second will the phone ring
+            const num1 = (Math.floor((Math.random() * 5)+3));
+            const number1 = Math.floor(30/num1);
+            self.case = 1;
+            console.log("prvi timeout");
+            console.log(number1);
+            self.interval1 = setInterval(count,1000,number1);
+        }
+
+        function next2() {
+            //second experiment
+            const num2 = (Math.floor((Math.random() * 5)+3));
+            const number2 = Math.floor(30/num2);            
+            self.case = 2;
+            console.log("drugi timeout");
+            console.log(number2);
+            self.interval2 = setInterval(count,1000,number2);
+        }
+
+        function next3() {
+            //third experiment
+            const num3 = (Math.floor((Math.random() * 5)+3));
+            const number3 = Math.floor(30/num3);
+            self.case = 3;
+            console.log("treci timeout");
+            console.log(number3);
+            self.interval3 = setInterval(count,1000,number3);
+        }
         
         function onSessionStart(){
 
             self.scene.add(self.worker);
             self.scene.add(self.tel);
-            self.actionT.play();
+
+            self.ui1.mesh.visible = true;
+            self.scene.add(self.ui1.mesh);
+            self.camera.add(self.ui1.mesh);
 
 
-            //self.action = 'answer';
+            self.ui2.mesh.visible = true;
+            self.scene.add(self.ui2.mesh);
+            self.camera.add(self.ui2.mesh);
 
-            //var timeout1, timeout2, timeout3;
-            //timeout1 = setTimeout(next1,31000);
-            //self.timeout1 = timeout1;
+
+            self.ui3.mesh.visible = true;
+            self.scene.add(self.ui3.mesh);
+            self.camera.add(self.ui3.mesh);
+
+            //self.sound.play();
+            var timeout1, timeout2, timeout3, timeout4;
+            timeout1 = setTimeout(next1, 1000);
+            timeout2 = setTimeout(next2, 41000);
+            timeout3 = setTimeout(next3, 81000);
+            self.timeout1 = timeout1;
+            self.timeout2 = timeout2;
+            self.timeout3 = timeout3;
+
+
             
         }
 
-        function next1 (){
-            const self = this.app;
-        }
-
-
         function onSessionEnd(){
 
+            self.ui1.updateElement('info', "00:00:00");                
+            self.ui1.mesh.material.color = new THREE.Color(0x2d7ac8);
+
+
+            self.scene.remove(self.ui1.mesh);
+            self.camera.remove(self.ui1.mesh);
+
+            self.ui2.updateElement('info', "COUNTER: 0");
+            self.scene.remove(self.ui2.mesh);
+            self.camera.remove(self.ui2.mesh);
+
+            self.ui3.updateElement('info1', "");
+            self.ui3.updateElement('info2', "");
+            self.ui3.updateElement('info3', "");
+            self.scene.remove(self.ui3.mesh);
+            self.camera.remove(self.ui3.mesh);
+
+            clearTimeout(self.timeout1);
+            clearTimeout(self.timeout2);
+            clearTimeout(self.timeout3);
+            clearInterval(self.interval1);
+            clearInterval(self.interval2);
+            clearInterval(self.interval3);
+            self.case = 0;
+            self.seconds = 30;
+            self.counter = 0;
+            
             //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
 
@@ -299,6 +482,9 @@ class App{
         if ( this.renderer.xr.isPresenting ) {
            this.mixer.update( dt );
            this.mixerT.update(dt);
+           this.ui1.update();
+           this.ui2.update();
+           this.ui3.update();
         }
 
         this.renderer.render( this.scene, this.camera );
