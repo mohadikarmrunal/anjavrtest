@@ -64,6 +64,7 @@ class App{
                 self.apple.visible=false;
 				const scale = 0.06;
 				self.apple.scale.set(scale, scale, scale); 
+                console.log("apple");
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -94,8 +95,9 @@ class App{
                 action.enabled = true;
                 self.action = action;
                 self.action.loop = THREE.LoopRepeat;
-                self.loadingBar.visible = false;
                 self.cart.visible=false; 
+                console.log("car");
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -117,13 +119,14 @@ class App{
 			function ( gltf ) {
 
                 self.cursor = gltf.scene;
-                self.loadingBar.visible = false;
                 self.cursor.visible=false;
 				const scale = 0.01;
 				self.cursor.scale.set(scale, scale, scale); 
                 self.cursor.rotateX(Math.PI/2);
                 self.cursor1 = self.cursor.clone();
                 self.cursor2 = self.cursor.clone();
+                console.log("cursor");
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {

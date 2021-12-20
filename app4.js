@@ -113,9 +113,9 @@ class App{
                 self.actionA = actionA;
                 self.actionA.loop = THREE.LoopOnce;
 
-
+                self.actionI.play();              
                 self.loadingBar.visible = false;
-                self.actionI.play(); 
+
   
                 self.worktest = true;         
 			},
@@ -159,8 +159,6 @@ class App{
                 actionT.enabled = true;
                 self.actionT = actionT;
                 self.actionT.loop = THREE.LoopOnce;
-
-                self.loadingBar.visible = false;
                 self.teltest = true;
 			},
 			// called while loading is progressing
@@ -286,8 +284,6 @@ class App{
 
             if (self.seconds % number == 0 && self.seconds>0) {
                 self.counter = self.counter + 1;   
-                console.log (self);
-                console.log("djeljivo");
                 self.actionT.reset();
                 self.actionA.reset();
                 self.actionT.play();
@@ -339,8 +335,7 @@ class App{
             const num1 = (Math.floor((Math.random() * 5)+3));
             const number1 = Math.floor(30/num1);
             self.case = 1;
-            console.log("prvi timeout");
-            console.log(number1);
+            console.log("first experiment with "+num1.toString()+" phonecalls");
             self.interval1 = setInterval(count,1000,number1);
         }
 
@@ -349,8 +344,7 @@ class App{
             const num2 = (Math.floor((Math.random() * 5)+3));
             const number2 = Math.floor(30/num2);            
             self.case = 2;
-            console.log("drugi timeout");
-            console.log(number2);
+            console.log("second experiment with "+num2.toString()+" phonecalls");
             self.interval2 = setInterval(count,1000,number2);
         }
 
@@ -359,8 +353,7 @@ class App{
             const num3 = (Math.floor((Math.random() * 5)+3));
             const number3 = Math.floor(30/num3);
             self.case = 3;
-            console.log("treci timeout");
-            console.log(number3);
+            console.log("third experiment with "+num3.toString()+" phonecalls");
             self.interval3 = setInterval(count,1000,number3);
         }
 

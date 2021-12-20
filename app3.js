@@ -87,12 +87,14 @@ class App{
                 self.action = action;
                 //action.play();
                 //console.log (action);
-                self.loadingBar.visible = false;
                 self.head.visible=false;
 				const scale = 0.05;
 				self.head.scale.set(scale, scale, scale); 
                 self.head.position.set( 0, -0.5, -1 ); 
-                
+                console.log('TossHead');
+
+                if (self.coin!=undefined && self.coin!=undefined)  self.loadingBar.visible = false;
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -114,6 +116,7 @@ class App{
 
                 self.animationsT = {};
                 self.tail = gltf.scene;
+
                 
                 if (gltf.scene.children[0].children[1].name == 'Coin'){
                     self.coinT = gltf.scene.children[0].children[1];
@@ -135,12 +138,13 @@ class App{
                 self.actionT = actionT;
                 //action.play();
                 //console.log (action);
-                self.loadingBar.visible = false;
                 self.tail.visible = false;
 				const scale = 0.05;
 				self.tail.scale.set(scale, scale, scale); 
                 self.tail.position.set( 0, -0.5, -1 ); 
-                
+                console.log('TossTail');
+
+                if (self.head!=undefined && self.coin!=undefined)  self.loadingBar.visible = false;
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -162,7 +166,6 @@ class App{
 			function ( gltf ) {
 
                 self.coin = gltf.scene;
-                self.loadingBar.visible = false;
                 self.coin.visible = false;
 				const scale = 0.05;
 				self.coin.scale.set(scale, scale, scale); 
@@ -179,6 +182,11 @@ class App{
                 self.coin6 = self.coin.clone();
                 self.coin7 = self.coin.clone();
                 self.coin.children[0].rotateX(Math.PI);
+                console.log('Coin');
+
+                if (self.head!=undefined && self.tail!=undefined)  self.loadingBar.visible = false;
+
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -200,7 +208,6 @@ class App{
 			function ( gltf ) {
 
                 self.T3 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self.T3.scale.set(scale, scale, scale); 
                 
@@ -221,6 +228,8 @@ class App{
                 self.T4.visible = false;
                 self.T6.visible = false;
                 self.T7.visible = false;
+                console.log('T');
+
                 
 				
 			},
@@ -242,7 +251,6 @@ class App{
 			function ( gltf ) {
 
                 self.H0 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self.H0.scale.set(scale, scale, scale); 
                 
@@ -261,6 +269,8 @@ class App{
                 self.H1.visible = false;
                 self.H2.visible = false;
                 self.H5.visible = false;
+                console.log('H');
+
                
 				
 			},
@@ -281,13 +291,14 @@ class App{
 			function ( gltf ) {
 
                 self.text0 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self.text0.scale.set(scale, scale, scale); 
                 
                 //positions
                 self.text0.position.set(-0.35,-0.1,-5.4);
                 self.text0.visible = false;	
+                console.log('0');
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -306,13 +317,14 @@ class App{
 			function ( gltf ) {
 
                 self.text1 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self.text1.scale.set(scale, scale, scale); 
                 
                 //positions
                 self.text1.position.set(-0.1,0.1,-5.4);
                 self.text1.visible = false;	
+                console.log('1');
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -331,13 +343,14 @@ class App{
 			function ( gltf ) {
 
                 self.text2 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self.text2.scale.set(scale, scale, scale); 
                 
                 //positions
                 self.text2.position.set(0.15,-0.1,-5.4);
                 self.text2.visible = false;	
+                console.log('2');
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -356,13 +369,14 @@ class App{
 			function ( gltf ) {
 
                 self.num0 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self.num0.scale.set(scale, scale, scale); 
                 
                 //positions
                 self.num0.position.set(0.45,0.17,-3.8);
-                self.num0.visible = false;	
+                self.num0.visible = false;
+                console.log('num0');
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -381,13 +395,14 @@ class App{
 			function ( gltf ) {
 
                 self.num1 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self. num1.scale.set(scale, scale, scale); 
                 
                 //positions
                 self.num1.position.set(0.45,-0.13,-3.8);
                 self.num1.visible = false;	
+                console.log('num1');
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -406,13 +421,14 @@ class App{
 			function ( gltf ) {
 
                 self.num2 = gltf.scene;
-                self.loadingBar.visible = false;
 				const scale = 0.1;
                 self.num2.scale.set(scale, scale, scale); 
                 
                 //positions
                 self.num2.position.set(0.45,-0.43,-3.8);
                 self.num2.visible = false;	
+                console.log('num2');
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -431,7 +447,6 @@ class App{
 			function ( gltf ) {
 
                 self.cursor = gltf.scene;
-                self.loadingBar.visible = false;
                 self.cursor.visible = false;
 				const scale = 0.04;
 				self.cursor.scale.set(scale, scale, scale); 
@@ -440,6 +455,8 @@ class App{
                 self.cursor1 = self.cursor.clone();
                 self.cursor2 = self.cursor.clone();
                 self.cursor3 = self.cursor.clone();
+                console.log('cursor');
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
