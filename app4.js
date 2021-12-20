@@ -254,20 +254,20 @@ class App{
 
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(-0.3,0.8,-1);
+        this.ui1.mesh.position.set(-0.2,0.4,-1);
         this.ui1.mesh.material = material1;
         this.ui1.mesh.material.map = this.ui1.texture;        
         self.seconds = 30;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.3,0,-1);
+        this.ui2.mesh.position.set(-0.2,0,-1);
         this.ui2.mesh.material = material2;
         this.ui2.mesh.material.map = this.ui2.texture;  
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,-0.85,-1);
+        this.ui3.mesh.position.set(0,-0.4,-1);
         this.ui3.mesh.material = material3;
         self.ui3.mesh.material.color = new THREE.Color(0xf22602);
         this.ui3.mesh.material.map = this.ui3.texture;  
