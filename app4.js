@@ -199,9 +199,9 @@ class App{
 
         //canvas for the timer
         const config1 = {
-            panelSize: { width: 0.3, height: 0.2 },
-            height: 512/1.5,
-            info:{ type: "text", position:{ top: 130, left: 6 }, width: 500 , height: 200, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
+            panelSize: { width: 0.3, height: 0.1 },
+            height: 512/3,
+            info:{ type: "text", position:{ top: 50, left: 6 }, width: 500 , height: 60, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
         }
 
         const content1 = {
@@ -210,9 +210,9 @@ class App{
 
         //counter canvas 
         const config2 = {
-            panelSize: { width: 0.3, height: 0.2 },
-            height: 512/1.5,
-            info:{ type: "text", position:{ top: 130, left: 6 }, width: 500 , height: 200, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
+            panelSize: { width: 0.3, height: 0.1 },
+            height: 512/3,
+            info:{ type: "text", position:{ top: 50, left: 6 }, width: 500 , height: 60, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
         }
 
         const content2 = {
@@ -221,12 +221,12 @@ class App{
 
         //experiment canvas
         const config3 = {
-            panelSize: { width: 1, height: 0.25 },
-            height: 128,
-            info:{ type: "text", position:{ top: 6, left: 6 } , width: 500, height: 60, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30},
-            info1:{ type: "text", position:{ top: 60, left: 6 } , width: 160, height: 56, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30},
-            info2:{ type: "text", position:{ top: 60, left: 176 } , width: 160, height: 56, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30},
-            info3:{ type: "text", position:{ top: 60, left: 346 } , width: 160, height: 56, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30},
+            panelSize: { width: 1, height: 0.2 },
+            height: 102.4,
+            info:{ type: "text", position:{ top: 8, left: 6 } , width: 500, height: 50, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding: 15},
+            info1:{ type: "text", position:{ top: 50, left: 6 } , width: 160, height: 40, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30, padding: 15},
+            info2:{ type: "text", position:{ top: 50, left: 176 } , width: 160, height: 40, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30, padding: 15},
+            info3:{ type: "text", position:{ top: 50, left: 346 } , width: 160, height: 40, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30, padding: 15},
 
         }
 
