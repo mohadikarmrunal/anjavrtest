@@ -267,8 +267,9 @@ class App{
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,-0.8,-1);
+        this.ui3.mesh.position.set(0,-0.85,-1);
         this.ui3.mesh.material = material3;
+        self.ui3.mesh.material.color = new THREE.Color(0xf22602);
         this.ui3.mesh.material.map = this.ui3.texture;  
     }
 
@@ -362,6 +363,22 @@ class App{
             console.log(number3);
             self.interval3 = setInterval(count,1000,number3);
         }
+
+        function next4(){
+
+            self.scene.remove(self.ui1.mesh);
+            self.camera.remove(self.ui1.mesh);
+
+            self.scene.remove(self.ui2.mesh);
+            self.camera.remove(self.ui2.mesh);
+
+            self.actionA.reset();
+            self.actionT.reset();
+           
+            self.scene.remove(self.worker);
+            self.scene.remove(self.tel);
+
+        }
         
         function onSessionStart(){
 
@@ -372,11 +389,9 @@ class App{
             self.scene.add(self.ui1.mesh);
             self.camera.add(self.ui1.mesh);
 
-
             self.ui2.mesh.visible = true;
             self.scene.add(self.ui2.mesh);
             self.camera.add(self.ui2.mesh);
-
 
             self.ui3.mesh.visible = true;
             self.scene.add(self.ui3.mesh);
@@ -387,9 +402,13 @@ class App{
             timeout1 = setTimeout(next1, 1000);
             timeout2 = setTimeout(next2, 41000);
             timeout3 = setTimeout(next3, 81000);
+            timeout4 = setTimeout(next4, 121000);
+
             self.timeout1 = timeout1;
             self.timeout2 = timeout2;
             self.timeout3 = timeout3;
+            self.timeout4 = timeout4;
+
 
 
             
@@ -417,6 +436,7 @@ class App{
             clearTimeout(self.timeout1);
             clearTimeout(self.timeout2);
             clearTimeout(self.timeout3);
+            clearTimeout(self.timeout4);
             clearInterval(self.interval1);
             clearInterval(self.interval2);
             clearInterval(self.interval3);
