@@ -247,8 +247,10 @@ class App{
         material1.reflectivity = 0.7;
         material1.clearcoat = 0.7;
         material1.transparent = true;
+        const material = material1.clone();
         const material2 = material1.clone();
         const material3 = material1.clone();
+        
 
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
@@ -269,6 +271,49 @@ class App{
         this.ui3.mesh.material = material3;
         self.ui3.mesh.material.color = new THREE.Color(0xf22602);
         this.ui3.mesh.material.map = this.ui3.texture;  
+
+        //material for the board
+        const material4 = new THREE.MeshPhysicalMaterial ();
+        material4.color = new THREE.Color(0xf3f5f7);
+        material4.transparent = true;
+        material4.roughness = 0;
+        material4.metalness = 0.4;
+        material4.reflectivity = 1;
+        material4.clearcoat = 0.7;
+        material4.clearcoatRoughness = 1;
+
+
+        //creating 3D cylinders for the frequency diagram
+        const geometry1 = new THREE.CylinderGeometry( 0.03, 0.03, 0.26, 32 );
+        const geometry2 = new THREE.CylinderGeometry( 0.03, 0.03, 0.4, 32 );
+        const geometry3 = new THREE.CylinderGeometry( 0.03, 0.03, 0.48, 32 );
+        const geometry4 = new THREE.CylinderGeometry( 0.03, 0.03, 0.36, 32 );
+        const geometry5 = new THREE.CylinderGeometry( 0.03, 0.03, 0.3, 32 );
+        const geometry6 = new THREE.BoxGeometry (0.6,0.02,0.4);
+
+        const cylinder1 = new THREE.Mesh(geometry1,material);
+        const cylinder2 = new THREE.Mesh(geometry2,material);
+        const cylinder3 = new THREE.Mesh(geometry3,material);
+        const cylinder4 = new THREE.Mesh(geometry4,material);
+        const cylinder5 = new THREE.Mesh(geometry5,material);
+        const cube = new THREE.Mesh (geometry6, material4);
+
+        this.cyl1 = cylinder1;
+        this.cyl2 = cylinder2;
+        this.cyl3 = cylinder3;
+        this.cyl4 = cylinder4;
+        this.cyl5 = cylinder5;
+        this.cube = cube;
+        this.cyl1.position.set(-0.2,-0.11,-1); 
+        this.cyl2.position.set(-0.1,-0.04,-1); 
+        this.cyl3.position.set(0,0,-1); 
+        this.cyl4.position.set(0.1,-0.06,-1); 
+        this.cyl5.position.set(0.2,-0.09,-1); 
+        this.cube.position.set(0,-0.23,-1);
+        console.log(window.innerWidth);
+
+
+
     }
 
     setupVR(){
@@ -365,11 +410,25 @@ class App{
             self.scene.remove(self.ui2.mesh);
             self.camera.remove(self.ui2.mesh);
 
+
+            self.scene.remove(self.ui3.mesh);
+            self.camera.remove(self.ui3.mesh);
+
             self.actionA.reset();
             self.actionT.reset();
            
             self.scene.remove(self.worker);
             self.scene.remove(self.tel);
+
+            //add the histograms to the scene
+            self.scene.add(self.cyl1);
+            self.scene.add(self.cyl2);
+            self.scene.add(self.cyl3);
+            self.scene.add(self.cyl4);
+            self.scene.add(self.cyl5);
+            self.scene.add(self.cube);
+
+
 
         }
         
@@ -393,9 +452,13 @@ class App{
             //self.sound.play();
             var timeout1, timeout2, timeout3, timeout4;
             timeout1 = setTimeout(next1, 1000);
-            timeout2 = setTimeout(next2, 41000);
-            timeout3 = setTimeout(next3, 81000);
-            timeout4 = setTimeout(next4, 121000);
+            //timeout2 = setTimeout(next2, 41000);
+            //timeout3 = setTimeout(next3, 81000);
+            //timeout4 = setTimeout(next4, 121000);
+            //just a version for testing so that I dont have to wait 
+            timeout4 = setTimeout(next4, 41000);
+
+
 
             self.timeout1 = timeout1;
             self.timeout2 = timeout2;
@@ -436,6 +499,14 @@ class App{
             self.case = 0;
             self.seconds = 30;
             self.counter = 0;
+
+            self.scene.remove(self.cyl1);
+            self.scene.remove(self.cyl2);
+            self.scene.remove(self.cyl3);
+            self.scene.remove(self.cyl4);
+            self.scene.remove(self.cyl5);
+            self.scene.remove(self.cube);
+            
             
             //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
