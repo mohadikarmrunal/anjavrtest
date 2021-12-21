@@ -281,6 +281,8 @@ class App{
         material4.reflectivity = 1;
         material4.clearcoat = 0.7;
         material4.clearcoatRoughness = 1;
+        material.transparent = false;
+
 
 
         //creating 3D cylinders for the frequency diagram
@@ -290,6 +292,8 @@ class App{
         const geometry4 = new THREE.CylinderGeometry( 0.03, 0.03, 0.36, 32 );
         const geometry5 = new THREE.CylinderGeometry( 0.03, 0.03, 0.3, 32 );
         const geometry6 = new THREE.BoxGeometry (0.6,0.02,0.4);
+
+
 
         const cylinder1 = new THREE.Mesh(geometry1,material);
         const cylinder2 = new THREE.Mesh(geometry2,material);
