@@ -7,6 +7,8 @@ import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
+import { FontLoader } from '../../libs/FontLoader.js';
+import { TextGeometry } from '../../libs/TextGeometry.js';
 
 
 
@@ -177,7 +179,6 @@ class App{
 			}
         );
 
-
         this.createUI();
         
     }
@@ -312,7 +313,7 @@ class App{
         const geometry16 = new THREE.CylinderGeometry( 0.03, 0.03, 0.192, 32 );
         const geometry17 = new THREE.CylinderGeometry( 0.03, 0.03, 0.114, 32 );
 
-        const geometry8 = new THREE.BoxGeometry (0.8,0.02,0.4);
+        const geometry8 = new THREE.BoxGeometry (0.8,0.02,0.6);
 
         const cylinder1 = new THREE.Mesh(geometry1,material);
         const cylinder2 = new THREE.Mesh(geometry2,material);
@@ -378,6 +379,121 @@ class App{
 
         this.cube.position.set(0,-0.23,-1);
         console.log(window.innerWidth);
+
+
+        //text for the histograph 
+        const loaderf = new FontLoader();
+
+        loaderf.load( 'assets/helvetiker_regular.typeface.json', function ( font ) {
+
+	         const geometryT2 = new TextGeometry( 'X=2', {
+		         font: font,
+		         size: 5,
+		         height: 2.5,
+		         bevelEnabled: true,
+                 bevelThickness: 2,
+                 bevelSize: 0.5,
+		         bevelSegments: 1
+	        } );
+
+            const geometryT3 = new TextGeometry( 'X=3', {
+                font: font,
+                size: 5,
+                height: 2.5,
+                bevelEnabled: true,
+                bevelThickness: 2,
+                bevelSize: 0.5,
+                bevelSegments: 1
+           } );
+
+           const geometryT4 = new TextGeometry( 'X=4', {
+                font: font,
+                size: 5,
+                height: 2.5,
+                bevelEnabled: true,
+                bevelThickness: 2,
+                bevelSize: 0.5,
+                bevelSegments: 1
+            } );
+
+            const geometryT5 = new TextGeometry( 'X=5', {
+                font: font,
+                size: 5,
+                height: 2.5,
+                bevelEnabled: true,
+                bevelThickness: 2,
+                bevelSize: 0.5,
+                bevelSegments: 1
+        } );
+
+            const geometryT6 = new TextGeometry( 'X=6', {
+                font: font,
+                size: 5,
+                height: 2.5,
+                bevelEnabled: true,
+                bevelThickness: 2,
+                bevelSize: 0.5,
+                bevelSegments: 1
+            } );
+
+            const geometryT7 = new TextGeometry( 'X=7', {
+                font: font,
+                size: 5,
+                height: 2.5,
+                bevelEnabled: true,
+                bevelThickness: 2,
+                bevelSize: 0.5,
+                bevelSegments: 1
+            } );
+
+
+            const geometryT8 = new TextGeometry( 'X=8', {
+                font: font,
+                size: 5,
+                height: 2.5,
+                bevelEnabled: true,
+                bevelThickness: 2,
+                bevelSize: 0.5,
+                bevelSegments: 1
+            } );
+
+
+            const text2 = new THREE.Mesh (geometryT2, material5);
+            const text3 = new THREE.Mesh (geometryT3, material5);
+            const text4 = new THREE.Mesh (geometryT4, material5);
+            const text5 = new THREE.Mesh (geometryT5, material5);
+            const text6 = new THREE.Mesh (geometryT6, material5);
+            const text7 = new THREE.Mesh (geometryT7, material5);
+            const text8 = new THREE.Mesh (geometryT8, material5);
+
+
+            self.text2 = text2;
+            self.text3 = text3;
+            self.text4 = text4;
+            self.text5 = text5;
+            self.text6 = text6;
+            self.text7 = text7;
+            self.text8 = text8;
+
+            self.text2.scale.set(0.006,0.006,0.006);
+            self.text3.scale.set(0.006,0.006,0.006);
+            self.text4.scale.set(0.006,0.006,0.006);
+            self.text5.scale.set(0.006,0.006,0.006);
+            self.text6.scale.set(0.006,0.006,0.006);
+            self.text7.scale.set(0.006,0.006,0.006);
+            self.text8.scale.set(0.006,0.006,0.006);
+
+            self.text2.position.set(-0.35,-0.22,-0.85);     
+            self.text3.position.set(-0.25,-0.22,-0.85);
+            self.text4.position.set(-0.15,-0.22,-0.85);
+            self.text5.position.set(-0.05,-0.22,-0.85);
+            self.text6.position.set(0.05,-0.22,-0.85);
+            self.text7.position.set(0.15,-0.22,-0.85);
+            self.text8.position.set(0.25,-0.22,-0.85);
+        } );
+
+        
+
 
 
 
@@ -482,7 +598,6 @@ class App{
             self.scene.remove(self.ui2.mesh);
             self.camera.remove(self.ui2.mesh);
 
-
             self.scene.remove(self.ui3.mesh);
             self.camera.remove(self.ui3.mesh);
 
@@ -509,6 +624,15 @@ class App{
             self.scene.add(self.cyl15);
             self.scene.add(self.cyl16);
             self.scene.add(self.cyl17);
+
+            //adding text
+            self.scene.add(self.text2);
+            self.scene.add(self.text3);
+            self.scene.add(self.text4);
+            self.scene.add(self.text5);
+            self.scene.add(self.text6);
+            self.scene.add(self.text7);
+            self.scene.add(self.text8);
         }
 
         function next5(){
@@ -622,6 +746,15 @@ class App{
             self.scene.remove(self.cyl17);
 
             self.scene.remove(self.cube);
+
+
+            self.scene.remove(self.text2);
+            self.scene.remove(self.text3);
+            self.scene.remove(self.text4);
+            self.scene.remove(self.text5);
+            self.scene.remove(self.text6);
+            self.scene.remove(self.text7);
+            self.scene.remove(self.text8);
 
             
             //if (self.sound && self.sound.isPlaying) self.sound.stop();
