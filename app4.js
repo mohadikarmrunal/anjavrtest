@@ -367,6 +367,15 @@ class App{
         this.cyl16.position.set(0.2,-0.124,-1); 
         this.cyl17.position.set(0.3,-0.163,-1); 
 
+        this.cyl11.visible = false;
+        this.cyl12.visible = false;
+        this.cyl13.visible = false;
+        this.cyl14.visible = false;
+        this.cyl15.visible = false;
+        this.cyl16.visible = false;
+        this.cyl17.visible = false;
+
+
         this.cube.position.set(0,-0.23,-1);
         console.log(window.innerWidth);
 
@@ -378,11 +387,14 @@ class App{
 
         this.renderer.xr.enabled = true;   
         const self = this;
+        //used to enable the swipe option
         self.swipeoption = false;
         //case tells us which experiment is ongoing
         self.case = 0;
         //counts the calls
         self.counter = 0;
+        //keeps track of what is displayed
+        self.display = 1;
 
         function count(number){
 
@@ -489,6 +501,14 @@ class App{
             self.scene.add(self.cyl6);
             self.scene.add(self.cyl7);
             self.scene.add(self.cube);
+            //add the second histogram to the scene, but they are not visible
+            self.scene.add(self.cyl11);
+            self.scene.add(self.cyl12);
+            self.scene.add(self.cyl13);
+            self.scene.add(self.cyl14);
+            self.scene.add(self.cyl15);
+            self.scene.add(self.cyl16);
+            self.scene.add(self.cyl17);
         }
 
         function next5(){
@@ -567,6 +587,23 @@ class App{
             self.case = 0;
             self.seconds = 30;
             self.counter = 0;
+            self.swipeoption = false;
+
+            self.cyl11.visible = false;
+            self.cyl12.visible = false;
+            self.cyl13.visible = false;
+            self.cyl14.visible = false;
+            self.cyl15.visible = false;
+            self.cyl16.visible = false;
+            self.cyl17.visible = false;
+
+            self.cyl1.material.wireframe = false;
+            self.cyl2.material.wireframe = false;
+            self.cyl3.material.wireframe = false;
+            self.cyl4.material.wireframe = false;
+            self.cyl5.material.wireframe = false;
+            self.cyl6.material.wireframe = false;
+            self.cyl7.material.wireframe = false;
 
             self.scene.remove(self.cyl1);
             self.scene.remove(self.cyl2);
@@ -584,16 +621,8 @@ class App{
             self.scene.remove(self.cyl16);
             self.scene.remove(self.cyl17);
 
-            self.cyl1.material.wireframe = false;
-            self.cyl2.material.wireframe = false;
-            self.cyl3.material.wireframe = false;
-            self.cyl4.material.wireframe = false;
-            self.cyl5.material.wireframe = false;
-            self.cyl6.material.wireframe = false;
-            self.cyl7.material.wireframe = false;
-
             self.scene.remove(self.cube);
-            
+
             
             //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
@@ -638,29 +667,52 @@ class App{
 
         this.gestures = new ControllerGestures( this.renderer );
 
-        this.gestures.addEventListener( 'swipe', (ev)=>{
+        this.gestures.addEventListener( 'pan', (ev)=>{
             //console.log( ev );   
             //self.ui.updateElement('info', `swipe ${ev.direction}` );
             if (self.swipeoption) {
 
-                console.log(ev.direction);
+                if (self.display==1){
 
-                self.cyl1.material.wireframe = true;
-                self.cyl2.material.wireframe = true;
-                self.cyl3.material.wireframe = true;
-                self.cyl4.material.wireframe = true;
-                self.cyl5.material.wireframe = true;
-                self.cyl6.material.wireframe = true;
-                self.cyl7.material.wireframe = true;
-    
-                self.scene.add(self.cyl11);
-                self.scene.add(self.cyl12);
-                self.scene.add(self.cyl13);
-                self.scene.add(self.cyl14);
-                self.scene.add(self.cyl15);
-                self.scene.add(self.cyl16);
-                self.scene.add(self.cyl17);
+                    self.cyl1.material.wireframe = true;
+                    self.cyl2.material.wireframe = true;
+                    self.cyl3.material.wireframe = true;
+                    self.cyl4.material.wireframe = true;
+                    self.cyl5.material.wireframe = true;
+                    self.cyl6.material.wireframe = true;
+                    self.cyl7.material.wireframe = true;
+
+                    self.cyl11.visible = true;
+                    self.cyl12.visible = true;
+                    self.cyl13.visible = true;
+                    self.cyl14.visible = true;
+                    self.cyl15.visible = true;
+                    self.cyl16.visible = true;
+                    self.cyl17.visible = true; 
+                    self.display = 2;
+                }   
+
+                else {
+                    self.cyl11.visible = false;
+                    self.cyl12.visible = false;
+                    self.cyl13.visible = false;
+                    self.cyl14.visible = false;
+                    self.cyl15.visible = false;
+                    self.cyl16.visible = false;
+                    self.cyl17.visible = false; 
+                
+                    self.cyl1.material.wireframe = false;
+                    self.cyl2.material.wireframe = false;
+                    self.cyl3.material.wireframe = false;
+                    self.cyl4.material.wireframe = false;
+                    self.cyl5.material.wireframe = false;
+                    self.cyl6.material.wireframe = false;
+                    self.cyl7.material.wireframe = false;
+                    self.display = 1;
+
+                }
             }
+
            
         });
 
