@@ -243,6 +243,29 @@ class App{
 
         }   
 
+        //frequency canvas1
+        const config4 = {
+            panelSize: { width: 0.3, height: 0.1 },
+            height: 512/3,
+            body:{ type: "text", textAlign: 'center', fontFamily: 'Verdana', fontSize: 50}
+        }
+
+        const content4 = {
+            body: ""
+        }
+
+         //frequency canvas2
+         const config5 = {
+            panelSize: { width: 0.3, height: 0.1 },
+            height: 512/3,
+            body:{ type: "text", textAlign: 'center', fontFamily: 'Verdana', fontSize: 50}
+        }
+
+        const content5 = {
+            body: ""
+        }
+
+
         //creating materials for canvases
         const material1 = new THREE.MeshPhysicalMaterial ();
         material1.color = new THREE.Color(0x2d7ac8);
@@ -256,6 +279,24 @@ class App{
         const material2 = material1.clone();
         const material3 = material1.clone();
         
+        //material for the board
+        const material4 = new THREE.MeshPhysicalMaterial ();
+        material4.color = new THREE.Color(0xf3f5f7);
+        material4.transparent = true;
+        material4.roughness = 0;
+        material4.metalness = 0.4;
+        material4.reflectivity = 1;
+        material4.clearcoat = 0.7;
+        material4.clearcoatRoughness = 1;
+
+        //material for the cylinders when displaying both |   material for the theoretical frequencies
+        const material5 = new THREE.MeshPhysicalMaterial ();
+        material5.color = new THREE.Color(0x008a49);
+        material5.roughness = 0.08;
+        material5.metalness = 0.8;
+        material5.reflectivity = 0.5;
+        material5.clearcoatRoughness = 1;
+        material5.flatShading = true;
 
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
@@ -277,25 +318,18 @@ class App{
         self.ui3.mesh.material.color = new THREE.Color(0xf22602);
         this.ui3.mesh.material.map = this.ui3.texture;  
 
-        //material for the board
-        const material4 = new THREE.MeshPhysicalMaterial ();
-        material4.color = new THREE.Color(0xf3f5f7);
-        material4.transparent = true;
-        material4.roughness = 0;
-        material4.metalness = 0.4;
-        material4.reflectivity = 1;
-        material4.clearcoat = 0.7;
-        material4.clearcoatRoughness = 1;
-
-        //material for the cylinders when displaying both |   material for the theoretical frequencies
-        const material5 = new THREE.MeshPhysicalMaterial ();
-        material5.color = new THREE.Color(0x008a49);
-        material5.roughness = 0.08;
-        material5.metalness = 0.8;
-        material5.reflectivity = 0.5;
-        material5.clearcoatRoughness = 1;
-        material5.flatShading = true;
+        const ui4 = new CanvasUI(content4, config4);
+        this.ui4 = ui4;
+        this.ui4.mesh.position.set(-0.2,0,-1);
+        this.ui4.mesh.material = material4;
        
+
+        const ui5 = new CanvasUI(content5, config5);
+        this.ui5 = ui5;
+        this.ui5.mesh.position.set(-0.2,0,-1);
+        this.ui5.mesh.material = material5;
+        this.ui5.mesh.visible = false;
+
         //creating 3D cylinders for the frequency diagram |   theoretical frequency 
         const geometry1 = new THREE.CylinderGeometry( 0.03, 0.03, 0.16, 32 );
         const geometry2 = new THREE.CylinderGeometry( 0.03, 0.03, 0.34, 32 );
@@ -457,6 +491,26 @@ class App{
                 bevelSegments: 1
             } );
 
+            const geometryF1 = new TextGeometry( 'Frequency Distribution', {
+                font: font,
+                size: 5,
+                height: 2.5,
+                bevelEnabled: true,
+                bevelThickness: 2,
+                bevelSize: 0.5,
+                bevelSegments: 1
+           } );
+
+           const geometryF2 = new TextGeometry( 'Poisson Frequency Distribution', {
+            font: font,
+            size: 5,
+            height: 2.5,
+            bevelEnabled: true,
+            bevelThickness: 2,
+            bevelSize: 0.5,
+            bevelSegments: 1
+       } );
+
 
             const text2 = new THREE.Mesh (geometryT2, material5);
             const text3 = new THREE.Mesh (geometryT3, material5);
@@ -465,6 +519,10 @@ class App{
             const text6 = new THREE.Mesh (geometryT6, material5);
             const text7 = new THREE.Mesh (geometryT7, material5);
             const text8 = new THREE.Mesh (geometryT8, material5);
+            //labels for frequency distributions
+            const text9 = new THREE.Mesh (geometryF1, material4);
+            const text10 = new THREE.Mesh (geometryF2, material5);
+
 
 
             self.text2 = text2;
@@ -474,6 +532,8 @@ class App{
             self.text6 = text6;
             self.text7 = text7;
             self.text8 = text8;
+            self.text9 = text9;
+            self.text10 = text10;
 
             self.text2.scale.set(0.006,0.006,0.006);
             self.text3.scale.set(0.006,0.006,0.006);
@@ -482,6 +542,9 @@ class App{
             self.text6.scale.set(0.006,0.006,0.006);
             self.text7.scale.set(0.006,0.006,0.006);
             self.text8.scale.set(0.006,0.006,0.006);
+            self.text9.scale.set(0.006,0.006,0.006);
+            self.text10.scale.set(0.006,0.006,0.006);
+
 
             self.text2.position.set(-0.35,-0.22,-0.85);     
             self.text3.position.set(-0.25,-0.22,-0.85);
@@ -490,6 +553,11 @@ class App{
             self.text6.position.set(0.05,-0.22,-0.85);
             self.text7.position.set(0.15,-0.22,-0.85);
             self.text8.position.set(0.25,-0.22,-0.85);
+            self.text9.position.set(-0.2,0.2,-0.85);
+            self.text10.position.set(-0.25,0.2,-0.85);
+
+            self.text10.visible = false;
+
         } );
 
         
@@ -633,7 +701,14 @@ class App{
             self.scene.add(self.text6);
             self.scene.add(self.text7);
             self.scene.add(self.text8);
+        
+            //adding canvases and text
+            self.scene.add(self.ui4.mesh);
+            self.scene.add(self.ui5.mesh);
+            self.scene.add(self.text9);
+            self.scene.add(self.text10);
         }
+
 
         function next5(){
 
@@ -666,16 +741,10 @@ class App{
             timeout4 = setTimeout(next4, 41000);
             //timeout5 = setTimeout(next5, 44000);
 
-
-
-
             self.timeout1 = timeout1;
             self.timeout2 = timeout2;
             self.timeout3 = timeout3;
             self.timeout4 = timeout4;
-
-
-
             
         }
 
@@ -747,7 +816,6 @@ class App{
 
             self.scene.remove(self.cube);
 
-
             self.scene.remove(self.text2);
             self.scene.remove(self.text3);
             self.scene.remove(self.text4);
@@ -756,6 +824,10 @@ class App{
             self.scene.remove(self.text7);
             self.scene.remove(self.text8);
 
+            self.scene.remove(self.ui4.mesh);
+            self.scene.remove(self.ui5.mesh);
+            self.scene.remove(self.text9);
+            self.scene.remove(self.text10);
             
             //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
@@ -801,8 +873,7 @@ class App{
         this.gestures = new ControllerGestures( this.renderer );
 
         this.gestures.addEventListener( 'pan', (ev)=>{
-            //console.log( ev );   
-            //self.ui.updateElement('info', `swipe ${ev.direction}` );
+
             if (self.swipeoption) {
 
                 if (self.display==1){
@@ -823,6 +894,12 @@ class App{
                     self.cyl16.visible = true;
                     self.cyl17.visible = true; 
                     self.display = 2;
+                    
+                    self.ui4.mesh.visible = false;
+                    self.ui5.mesh.visible = true;
+
+                    self.text9.visible = false;
+                    self.text10.visible = true;
                 }   
 
                 else {
@@ -842,6 +919,14 @@ class App{
                     self.cyl6.material.wireframe = false;
                     self.cyl7.material.wireframe = false;
                     self.display = 1;
+
+
+                    self.ui4.mesh.visible = true;
+                    self.ui5.mesh.visible = false;
+
+
+                    self.text9.visible = true;
+                    self.text10.visible = false;
 
                 }
             }
