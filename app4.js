@@ -6,6 +6,8 @@ import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
+import { ControllerGestures } from '../../libs/ControllerGestures.js';
+
 
 
 class App{
@@ -221,12 +223,14 @@ class App{
 
         //experiment canvas
         const config3 = {
-            panelSize: { width: 1, height: 0.2 },
-            height: 102.4,
-            info:{ type: "text", position:{ top: 8, left: 6 } , width: 500, height: 50, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding: 15},
-            info1:{ type: "text", position:{ top: 50, left: 6 } , width: 160, height: 40, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30, padding: 15},
-            info2:{ type: "text", position:{ top: 50, left: 176 } , width: 160, height: 40, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30, padding: 15},
-            info3:{ type: "text", position:{ top: 50, left: 346 } , width: 160, height: 40, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 30, padding: 15},
+            //panelSize: { width: 1, height: 0.2 },
+            panelSize: {height:0.2},
+            height: window.innerWidth/5,
+            width: window.innerWidth,
+            info:{ type: "text", position:{ top: 10, left: 10 } , width: window.innerWidth-20 , height: (window.innerWidth/20), textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding: 15},
+            info1:{ type: "text", position:{ top: (window.innerWidth/10), left: 20} , width: (window.innerWidth-40)/4, height: (window.innerWidth/20)*2, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
+            info2:{ type: "text", position:{ top: (window.innerWidth/10), left: (window.innerWidth-40)/4+40 } , width: (window.innerWidth-40)/4, height: (window.innerWidth/20)*2, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
+            info3:{ type: "text", position:{ top: (window.innerWidth/10), left: (window.innerWidth-40)/2+60} , width: (window.innerWidth-40)/4, height: (window.innerWidth/20)*2, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
 
         }
 
@@ -246,8 +250,8 @@ class App{
         material1.metalness = 0.389;
         material1.reflectivity = 0.7;
         material1.clearcoat = 0.7;
-        material1.transparent = true;
         const material = material1.clone();
+        material1.transparent = true;
         const material2 = material1.clone();
         const material3 = material1.clone();
         
@@ -281,38 +285,88 @@ class App{
         material4.reflectivity = 1;
         material4.clearcoat = 0.7;
         material4.clearcoatRoughness = 1;
-        material.transparent = false;
 
-
-
-        //creating 3D cylinders for the frequency diagram
-        const geometry1 = new THREE.CylinderGeometry( 0.03, 0.03, 0.26, 32 );
-        const geometry2 = new THREE.CylinderGeometry( 0.03, 0.03, 0.4, 32 );
-        const geometry3 = new THREE.CylinderGeometry( 0.03, 0.03, 0.48, 32 );
-        const geometry4 = new THREE.CylinderGeometry( 0.03, 0.03, 0.36, 32 );
+        //material for the cylinders when displaying both |   material for the theoretical frequencies
+        const material5 = new THREE.MeshPhysicalMaterial ();
+        material5.color = new THREE.Color(0x008a49);
+        material5.roughness = 0.08;
+        material5.metalness = 0.8;
+        material5.reflectivity = 0.5;
+        material5.clearcoatRoughness = 1;
+        material5.flatShading = true;
+       
+        //creating 3D cylinders for the frequency diagram |   theoretical frequency 
+        const geometry1 = new THREE.CylinderGeometry( 0.03, 0.03, 0.16, 32 );
+        const geometry2 = new THREE.CylinderGeometry( 0.03, 0.03, 0.34, 32 );
+        const geometry3 = new THREE.CylinderGeometry( 0.03, 0.03, 0.44, 32 );
+        const geometry4 = new THREE.CylinderGeometry( 0.03, 0.03, 0.38, 32 );
         const geometry5 = new THREE.CylinderGeometry( 0.03, 0.03, 0.3, 32 );
-        const geometry6 = new THREE.BoxGeometry (0.6,0.02,0.4);
+        const geometry6 = new THREE.CylinderGeometry( 0.03, 0.03, 0.24, 32 );
+        const geometry7 = new THREE.CylinderGeometry( 0.03, 0.03, 0.14, 32 );
 
+        const geometry11 = new THREE.CylinderGeometry( 0.03, 0.03, 0.19, 32 );
+        const geometry12 = new THREE.CylinderGeometry( 0.03, 0.03, 0.304, 32 );
+        const geometry13 = new THREE.CylinderGeometry( 0.03, 0.03, 0.364, 32 );
+        const geometry14 = new THREE.CylinderGeometry( 0.03, 0.03, 0.35, 32 );
+        const geometry15 = new THREE.CylinderGeometry( 0.03, 0.03, 0.278, 32 );
+        const geometry16 = new THREE.CylinderGeometry( 0.03, 0.03, 0.192, 32 );
+        const geometry17 = new THREE.CylinderGeometry( 0.03, 0.03, 0.114, 32 );
 
+        const geometry8 = new THREE.BoxGeometry (0.8,0.02,0.4);
 
         const cylinder1 = new THREE.Mesh(geometry1,material);
         const cylinder2 = new THREE.Mesh(geometry2,material);
         const cylinder3 = new THREE.Mesh(geometry3,material);
         const cylinder4 = new THREE.Mesh(geometry4,material);
         const cylinder5 = new THREE.Mesh(geometry5,material);
-        const cube = new THREE.Mesh (geometry6, material4);
+        const cylinder6 = new THREE.Mesh(geometry6,material);
+        const cylinder7 = new THREE.Mesh(geometry7,material);
+
+        const cylinder11 = new THREE.Mesh(geometry11,material5);
+        const cylinder12 = new THREE.Mesh(geometry12,material5);
+        const cylinder13 = new THREE.Mesh(geometry13,material5);
+        const cylinder14 = new THREE.Mesh(geometry14,material5);
+        const cylinder15 = new THREE.Mesh(geometry15,material5);
+        const cylinder16 = new THREE.Mesh(geometry16,material5);
+        const cylinder17 = new THREE.Mesh(geometry17,material5);
+
+        const cube = new THREE.Mesh (geometry8, material4);
 
         this.cyl1 = cylinder1;
         this.cyl2 = cylinder2;
         this.cyl3 = cylinder3;
         this.cyl4 = cylinder4;
         this.cyl5 = cylinder5;
+        this.cyl6 = cylinder6;
+        this.cyl7 = cylinder7;
+
+        this.cyl11 = cylinder11;
+        this.cyl12 = cylinder12;
+        this.cyl13 = cylinder13;
+        this.cyl14 = cylinder14;
+        this.cyl15 = cylinder15;
+        this.cyl16 = cylinder16;
+        this.cyl17 = cylinder17;
+
         this.cube = cube;
-        this.cyl1.position.set(-0.2,-0.11,-1); 
-        this.cyl2.position.set(-0.1,-0.04,-1); 
-        this.cyl3.position.set(0,0,-1); 
-        this.cyl4.position.set(0.1,-0.06,-1); 
-        this.cyl5.position.set(0.2,-0.09,-1); 
+
+        this.cyl1.position.set(-0.3,-0.14,-1); 
+        this.cyl2.position.set(-0.2,-0.05,-1); 
+        this.cyl3.position.set(-0.1,0,-1); 
+        this.cyl4.position.set(0,-0.03,-1); 
+        this.cyl5.position.set(0.1,-0.07,-1); 
+        this.cyl6.position.set(0.2,-0.1,-1); 
+        this.cyl7.position.set(0.3,-0.15,-1); 
+
+
+        this.cyl11.position.set(-0.3,-0.176,-1); 
+        this.cyl12.position.set(-0.2,-0.068,-1); 
+        this.cyl13.position.set(-0.1,-0.038,-1); 
+        this.cyl14.position.set(0,-0.045,-1); 
+        this.cyl15.position.set(0.1,-0.081,-1); 
+        this.cyl16.position.set(0.2,-0.124,-1); 
+        this.cyl17.position.set(0.3,-0.163,-1); 
+
         this.cube.position.set(0,-0.23,-1);
         console.log(window.innerWidth);
 
@@ -324,6 +378,7 @@ class App{
 
         this.renderer.xr.enabled = true;   
         const self = this;
+        self.swipeoption = false;
         //case tells us which experiment is ongoing
         self.case = 0;
         //counts the calls
@@ -408,6 +463,7 @@ class App{
 
         function next4(){
 
+            self.swipeoption = true;
             self.scene.remove(self.ui1.mesh);
             self.camera.remove(self.ui1.mesh);
 
@@ -430,9 +486,12 @@ class App{
             self.scene.add(self.cyl3);
             self.scene.add(self.cyl4);
             self.scene.add(self.cyl5);
+            self.scene.add(self.cyl6);
+            self.scene.add(self.cyl7);
             self.scene.add(self.cube);
+        }
 
-
+        function next5(){
 
         }
         
@@ -454,13 +513,15 @@ class App{
             self.camera.add(self.ui3.mesh);
 
             //self.sound.play();
-            var timeout1, timeout2, timeout3, timeout4;
+            var timeout1, timeout2, timeout3, timeout4, timeout5;
             timeout1 = setTimeout(next1, 1000);
             //timeout2 = setTimeout(next2, 41000);
             //timeout3 = setTimeout(next3, 81000);
             //timeout4 = setTimeout(next4, 121000);
             //just a version for testing so that I dont have to wait 
             timeout4 = setTimeout(next4, 41000);
+            //timeout5 = setTimeout(next5, 44000);
+
 
 
 
@@ -475,6 +536,9 @@ class App{
         }
 
         function onSessionEnd(){
+
+            self.scene.remove(self.worker);
+            self.scene.remove(self.phone);
 
             self.ui1.updateElement('info', "00:00:00");                
             self.ui1.mesh.material.color = new THREE.Color(0x2d7ac8);
@@ -509,6 +573,25 @@ class App{
             self.scene.remove(self.cyl3);
             self.scene.remove(self.cyl4);
             self.scene.remove(self.cyl5);
+            self.scene.remove(self.cyl6);
+            self.scene.remove(self.cyl7);
+
+            self.scene.remove(self.cyl11);
+            self.scene.remove(self.cyl12);
+            self.scene.remove(self.cyl13);
+            self.scene.remove(self.cyl14);
+            self.scene.remove(self.cyl15);
+            self.scene.remove(self.cyl16);
+            self.scene.remove(self.cyl17);
+
+            self.cyl1.material.wireframe = false;
+            self.cyl2.material.wireframe = false;
+            self.cyl3.material.wireframe = false;
+            self.cyl4.material.wireframe = false;
+            self.cyl5.material.wireframe = false;
+            self.cyl6.material.wireframe = false;
+            self.cyl7.material.wireframe = false;
+
             self.scene.remove(self.cube);
             
             
@@ -553,6 +636,34 @@ class App{
         this.scene.add( controller );
         this.controller = controller;
 
+        this.gestures = new ControllerGestures( this.renderer );
+
+        this.gestures.addEventListener( 'swipe', (ev)=>{
+            //console.log( ev );   
+            //self.ui.updateElement('info', `swipe ${ev.direction}` );
+            if (self.swipeoption) {
+
+                console.log(ev.direction);
+
+                self.cyl1.material.wireframe = true;
+                self.cyl2.material.wireframe = true;
+                self.cyl3.material.wireframe = true;
+                self.cyl4.material.wireframe = true;
+                self.cyl5.material.wireframe = true;
+                self.cyl6.material.wireframe = true;
+                self.cyl7.material.wireframe = true;
+    
+                self.scene.add(self.cyl11);
+                self.scene.add(self.cyl12);
+                self.scene.add(self.cyl13);
+                self.scene.add(self.cyl14);
+                self.scene.add(self.cyl15);
+                self.scene.add(self.cyl16);
+                self.scene.add(self.cyl17);
+            }
+           
+        });
+
         this.renderer.setAnimationLoop( this.render.bind(this) );
     }
      
@@ -573,6 +684,7 @@ class App{
            this.ui1.update();
            this.ui2.update();
            this.ui3.update();
+           this.gestures.update();
         }
 
         this.renderer.render( this.scene, this.camera );
