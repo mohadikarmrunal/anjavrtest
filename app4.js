@@ -225,18 +225,18 @@ class App{
 
         //experiment canvas
         const config3 = {
-            panelSize: {width: 0.6, height: 0.1},
-            height: 512/6,
-            info:{ type: "text", position:{ top: 5, left: 6 } , width: 500 , height: 35, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding: 15},
-            info1:{ type: "text", position:{ top: 45.33, left: 46} , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
-            info2:{ type: "text", position:{ top: 45.33, left: 156} , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
-            info3:{ type: "text", position:{ top: 45.33, left: 266 } , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
-            info4:{ type: "text", position:{ top: 45.33, left: 376 } , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
+            panelSize: {width: 0.1, height: 0.6},
+            width: 85.333,
+            info:{ type: "text", position:{ top: 10, left: 7.665 } , width: 70 , height: 92, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding:5},
+            info1:{ type: "text", position:{ top: 127, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
+            info2:{ type: "text", position:{ top: 222, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
+            info3:{ type: "text", position:{ top: 317, left: 7.665 } , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
+            info4:{ type: "text", position:{ top: 412, left: 7.665 } , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
 
         }
 
         const content3 = {
-            info: "EXPERIMENT",
+            info: "RESULT",
             info1: "",
             info2: "",
             info3: "",
@@ -244,28 +244,39 @@ class App{
 
         }   
 
-        //frequency canvas1
-        const config4 = {
-            panelSize: { width: 0.1, height: 0.1 },
-            height: 512,
-            body:{ type: "text", textAlign: 'center', fontFamily: 'Verdana', fontSize: 50}
+        const config6 = {
+            panelSize: { width: 0.5, height: 0.5 },
+            //height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:50,
+                fontSize:45,
+            },
+            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40}
         }
 
-        const content4 = {
-            body: "?"
+        const content6 = {
+            info: "FREQUENCY DISTRIBUTION"
         }
 
-         //frequency canvas2
-         const config5 = {
-            panelSize: { width: 0.1, height: 0.1 },
-            height: 512,
-            body:{ type: "text", textAlign: 'center', fontFamily: 'Verdana', fontSize: 50}
+        const config7 = {
+            panelSize: { width: 0.5, height: 0.5 },
+            //height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:50,
+                fontSize:45,
+            },
+            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40}
         }
 
-        const content5 = {
-            body: "?"
+        const content7 = {
+            info: "POISSON FREQUENCY DISTRIBUTION"
         }
-
 
         //creating materials for canvases
         const material1 = new THREE.MeshPhysicalMaterial ();
@@ -300,18 +311,13 @@ class App{
         material5.flatShading = true;
 
         //material for experiment
-        material3.color = new THREE.Color(0x107451);
+        material3.color = new THREE.Color(0x7ebea2);
         material3.roughness = 0;
         material3.metalness = 0.555;
         material3.reflectivity = 0.377;
         material3.clearcoat = 0.15;
         material3.clearcoatRoughness = 0.17;
-
-
-
-
-
-
+        material3.transparent = false;
 
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
@@ -328,21 +334,66 @@ class App{
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,-0.43,-0.6);
+        this.ui3.mesh.position.set(0.2,0,-0.65);
         this.ui3.mesh.material = material3;
-        //self.ui3.mesh.material.color = new THREE.Color(0xf22602);
         this.ui3.mesh.material.map = this.ui3.texture;  
 
+        const ui6 = new CanvasUI(content6, config6);
+        this.ui6 = ui6;
+        this.ui6.mesh.position.set(0,0,-0.5);
+        self.ui6.mesh.visible = false;
+
+
+        const ui7 = new CanvasUI(content7, config7);
+        this.ui7 = ui7;
+        this.ui7.mesh.position.set(0,0,-0.5);
+        self.ui7.mesh.visible = false;
+
+
+        function button1(){
+            console.log('dugme radi');
+            self.ui6.mesh.visible = true;
+        }
+
+        function button2(){
+            console.log('dugme radi');
+            self.ui7.mesh.visible = true;
+        }
+
+        //frequency canvas1
+         const config4 = {
+            panelSize: { width: 0.06, height: 0.06 },
+            height: 512,
+            body: {backgroundColor: '#049'},
+            buttonb1: { type: "button", position:{ top: 60, left: 100 }, fontColor: "#fff", fontSize:100, hover: "#4c5ba6", onSelect: button1 },
+            renderer: this.renderer        }
+
+        const content4 = {
+            buttonb1: "<path>  M 230.4 108.3 L 230.4 108.3 M 230.4 108.3 L 229.5 108 L 109.5 106.5 C 109.5 106.5 109.5 106.5 109.5 106.5 L 85.5 105 C 94.5 108 109.5 111 109.5 123 L 109.5 123 L 108 360.3 L 230.4 360.3 L 261 361.5 C 246 355.5 234 352.5 234 331.5 Z Z M 138 28 A 1.5 1.5 90 0 0 175.5 70.5 A 1 1 0 0 0 139 27 </path>",
+        }
+       
+
+        //frequency canvas2
+         const config5 = {
+            panelSize: { width: 0.06, height: 0.06 },
+            height: 512,
+            body: {backgroundColor: '#049'},
+            buttonb2: { type: "button", position:{ top: 60, left: 100 }, fontColor: "#fff", fontSize:100, hover: "#4c5ba6", onSelect: button2 },
+            renderer: this.renderer
+        }
+
+        const content5 = {
+            //body: "?"
+            buttonb2: "<path>  M 230.4 108.3 L 230.4 108.3 M 230.4 108.3 L 229.5 108 L 109.5 106.5 C 109.5 106.5 109.5 106.5 109.5 106.5 L 85.5 105 C 94.5 108 109.5 111 109.5 123 L 109.5 123 L 108 360.3 L 230.4 360.3 L 261 361.5 C 246 355.5 234 352.5 234 331.5 Z Z M 138 28 A 1.5 1.5 90 0 0 175.5 70.5 A 1 1 0 0 0 139 27 </path>",
+        }
+    
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
-        this.ui4.mesh.position.set(-0.2,0,-1);
-        this.ui4.mesh.material = material4;
-       
+        this.ui4.mesh.position.set(0.27,0.22,-0.85);        
 
         const ui5 = new CanvasUI(content5, config5);
         this.ui5 = ui5;
-        this.ui5.mesh.position.set(-0.2,0,-1);
-        this.ui5.mesh.material = material5;
+        this.ui5.mesh.position.set(0.37,0.22,-0.85);
         this.ui5.mesh.visible = false;
 
         //creating 3D cylinders for the frequency diagram |   theoretical frequency 
@@ -535,7 +586,7 @@ class App{
             const text7 = new THREE.Mesh (geometryT7, material5);
             const text8 = new THREE.Mesh (geometryT8, material5);
             //labels for frequency distributions
-            const text9 = new THREE.Mesh (geometryF1, material4);
+            const text9 = new THREE.Mesh (geometryF1, material);
             const text10 = new THREE.Mesh (geometryF2, material5);
 
 
@@ -712,11 +763,21 @@ class App{
             self.scene.add(self.text7);
             self.scene.add(self.text8);
         
-            //adding canvases and text
+            //adding button-canvases and text
             self.scene.add(self.ui4.mesh);
             self.scene.add(self.ui5.mesh);
             self.scene.add(self.text9);
             self.scene.add(self.text10);
+
+            //disable the button2
+            //self.ui5.config.buttonb1.disable = true;
+            //console.log(self.ui5.config.buttonb2);
+
+            //adding canvases with theory
+            self.scene.add(self.ui6.mesh);
+            self.camera.add(self.ui6.mesh);
+            self.scene.add(self.ui7.mesh);
+            self.camera.add(self.ui7.mesh);
         }
 
 
@@ -761,7 +822,8 @@ class App{
         function onSessionEnd(){
 
             self.scene.remove(self.worker);
-            self.scene.remove(self.phone);
+            self.scene.remove(self.tel);
+
 
             self.ui1.updateElement('info', "00:00:00");                
             self.ui1.mesh.material.color = new THREE.Color(0x2d7ac8);
@@ -838,6 +900,13 @@ class App{
             self.scene.remove(self.ui5.mesh);
             self.scene.remove(self.text9);
             self.scene.remove(self.text10);
+
+            self.ui6.mesh.visible = false;
+            self.scene.remove(self.ui6.mesh);
+            self.camera.remove(self.ui6.mesh);
+            self.ui7.mesh.visible = false;
+            self.scene.remove(self.ui7.mesh);
+            self.camera.remove(self.ui7.mesh);
             
             //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
@@ -964,6 +1033,8 @@ class App{
            this.ui1.update();
            this.ui2.update();
            this.ui3.update();
+           this.ui4.update();
+           this.ui5.update();
            this.gestures.update();
         }
 
