@@ -102,8 +102,8 @@ class App{
                 //self.worker.rotateX(-Math.PI/10);
                 const scale = 0.015;
 				self.worker.scale.set(scale, scale, scale); 
-                self.worker.rotateZ(Math.PI/2);
-                self.worker.position.set(0.3,-1.05,-3);
+                self.worker.rotateZ(Math.PI/4);
+                self.worker.position.set(0.3,-2.05,-3);
 
                 //animations
                 self.mixer = new THREE.AnimationMixer( self.worker );
@@ -148,7 +148,8 @@ class App{
                 self.tel = gltf.scene;
                 const scale = 2;
                 self.tel.scale.set(scale, scale, scale);
-                self.tel.position.set(-0.6,-1,-3);
+                self.tel.position.set(-0.6,-2,-3);
+                self.tel.rotateX(-Math.PI/8);
 
                 if (gltf.scene.children[1].name == 'phone') {
                     self.phone = gltf.scene.children[1];
@@ -224,14 +225,13 @@ class App{
 
         //experiment canvas
         const config3 = {
-            //panelSize: { width: 1, height: 0.2 },
-            panelSize: {height:0.2},
-            height: window.innerWidth/5,
-            width: window.innerWidth,
-            info:{ type: "text", position:{ top: 10, left: 10 } , width: window.innerWidth-20 , height: (window.innerWidth/20), textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding: 15},
-            info1:{ type: "text", position:{ top: (window.innerWidth/10), left: 20} , width: (window.innerWidth-40)/4, height: (window.innerWidth/20)*2, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
-            info2:{ type: "text", position:{ top: (window.innerWidth/10), left: (window.innerWidth-40)/4+40 } , width: (window.innerWidth-40)/4, height: (window.innerWidth/20)*2, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
-            info3:{ type: "text", position:{ top: (window.innerWidth/10), left: (window.innerWidth-40)/2+60} , width: (window.innerWidth-40)/4, height: (window.innerWidth/20)*2, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
+            panelSize: {width: 0.6, height: 0.1},
+            height: 512/6,
+            info:{ type: "text", position:{ top: 5, left: 6 } , width: 500 , height: 35, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding: 15},
+            info1:{ type: "text", position:{ top: 45.33, left: 46} , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
+            info2:{ type: "text", position:{ top: 45.33, left: 156} , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
+            info3:{ type: "text", position:{ top: 45.33, left: 266 } , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
+            info4:{ type: "text", position:{ top: 45.33, left: 376 } , width: 80, height: 35, textAlign: 'center', backgroundColor: "#049", fontFamily: 'Verdana', fontSize: 50, padding: 15},
 
         }
 
@@ -240,29 +240,30 @@ class App{
             info1: "",
             info2: "",
             info3: "",
+            info4: "",
 
         }   
 
         //frequency canvas1
         const config4 = {
-            panelSize: { width: 0.3, height: 0.1 },
-            height: 512/3,
+            panelSize: { width: 0.1, height: 0.1 },
+            height: 512,
             body:{ type: "text", textAlign: 'center', fontFamily: 'Verdana', fontSize: 50}
         }
 
         const content4 = {
-            body: ""
+            body: "?"
         }
 
          //frequency canvas2
          const config5 = {
-            panelSize: { width: 0.3, height: 0.1 },
-            height: 512/3,
+            panelSize: { width: 0.1, height: 0.1 },
+            height: 512,
             body:{ type: "text", textAlign: 'center', fontFamily: 'Verdana', fontSize: 50}
         }
 
         const content5 = {
-            body: ""
+            body: "?"
         }
 
 
@@ -298,6 +299,20 @@ class App{
         material5.clearcoatRoughness = 1;
         material5.flatShading = true;
 
+        //material for experiment
+        material3.color = new THREE.Color(0x107451);
+        material3.roughness = 0;
+        material3.metalness = 0.555;
+        material3.reflectivity = 0.377;
+        material3.clearcoat = 0.15;
+        material3.clearcoatRoughness = 0.17;
+
+
+
+
+
+
+
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
         this.ui1.mesh.position.set(-0.2,0.4,-1);
@@ -313,9 +328,9 @@ class App{
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0,-0.4,-1);
+        this.ui3.mesh.position.set(0,-0.43,-0.6);
         this.ui3.mesh.material = material3;
-        self.ui3.mesh.material.color = new THREE.Color(0xf22602);
+        //self.ui3.mesh.material.color = new THREE.Color(0xf22602);
         this.ui3.mesh.material.map = this.ui3.texture;  
 
         const ui4 = new CanvasUI(content4, config4);
@@ -559,11 +574,6 @@ class App{
             self.text10.visible = false;
 
         } );
-
-        
-
-
-
 
     }
 
