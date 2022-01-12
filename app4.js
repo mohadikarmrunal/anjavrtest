@@ -434,12 +434,10 @@ class App{
                 padding:50,
                 fontSize:45,
             },
-            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40},
             image: { type: "img", position: { left: 0, top: 0 }},
         }
 
         const content6 = {
-            //info: "FREQUENCY DISTRIBUTION",
             image: "../../assets/theory1.png",
         }
 
@@ -453,11 +451,12 @@ class App{
                 padding:50,
                 fontSize:45,
             },
-            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40},
+            image: { type: "img", position: { left: 0, top: 0 }},
         }
 
         const content7 = {
-            info: "POISSON FREQUENCY DISTRIBUTION",
+            image: "../../assets/theory2.png",
+
         }
 
         const ui6 = new CanvasUI(content6, config6);
@@ -478,7 +477,7 @@ class App{
 
         const ui9 = new CanvasUI(content9, config9);
         this.ui9 = ui9;
-        this.ui9.mesh.position.set(0.14,0.165,-0.5);
+        this.ui9.mesh.position.set(0.17,0.145,-0.5);
         self.ui9.mesh.visible = false;
 
 
