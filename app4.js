@@ -435,11 +435,11 @@ class App{
                 fontSize:45,
             },
             info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40},
-            image: { type: "img", position: { left: 0, top: 150 }},
+            image: { type: "img", position: { left: 0, top: 0 }},
         }
 
         const content6 = {
-            info: "FREQUENCY DISTRIBUTION",
+            //info: "FREQUENCY DISTRIBUTION",
             image: "../../assets/theory1.png",
         }
 
@@ -473,7 +473,7 @@ class App{
 
         const ui8 = new CanvasUI(content8, config8);
         this.ui8 = ui8;
-        this.ui8.mesh.position.set(-0.15,0.165,-0.5);
+        this.ui8.mesh.position.set(-0.15,0.145,-0.5);
         self.ui8.mesh.visible = false;
 
         const ui9 = new CanvasUI(content9, config9);
