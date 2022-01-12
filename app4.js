@@ -435,10 +435,12 @@ class App{
                 fontSize:45,
             },
             info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40},
+            image: { type: "img", position: { left: 0, top: 150 }},
         }
 
         const content6 = {
             info: "FREQUENCY DISTRIBUTION",
+            image: "../../assets/theory1.png",
         }
 
         const config7 = {
