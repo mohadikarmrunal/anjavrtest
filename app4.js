@@ -302,7 +302,7 @@ class App{
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0.2,0,-0.65);
+        this.ui3.mesh.position.set(0.17,0,-0.65);
         this.ui3.mesh.material = material3;
         this.ui3.mesh.material.map = this.ui3.texture;  
 
@@ -323,7 +323,7 @@ class App{
         const geometry16 = new THREE.CylinderGeometry( 0.03, 0.03, 0.192, 32 );
         const geometry17 = new THREE.CylinderGeometry( 0.03, 0.03, 0.114, 32 );
 
-        const geometry8 = new THREE.BoxGeometry (0.8,0.02,0.6);
+        const geometry8 = new THREE.BoxGeometry (0.8,0.02,0.5);
 
         const cylinder1 = new THREE.Mesh(geometry1,material);
         const cylinder2 = new THREE.Mesh(geometry2,material);
@@ -361,22 +361,22 @@ class App{
 
         this.cube = cube;
 
-        this.cyl1.position.set(-0.3,-0.14,-1); 
-        this.cyl2.position.set(-0.2,-0.05,-1); 
-        this.cyl3.position.set(-0.1,0,-1); 
-        this.cyl4.position.set(0,-0.03,-1); 
-        this.cyl5.position.set(0.1,-0.07,-1); 
-        this.cyl6.position.set(0.2,-0.1,-1); 
-        this.cyl7.position.set(0.3,-0.15,-1); 
+        this.cyl1.position.set(-0.3,-0.14,-1.1); 
+        this.cyl2.position.set(-0.2,-0.05,-1.1); 
+        this.cyl3.position.set(-0.1,0,-1.1); 
+        this.cyl4.position.set(0,-0.03,-1.1); 
+        this.cyl5.position.set(0.1,-0.07,-1.1); 
+        this.cyl6.position.set(0.2,-0.1,-1.1); 
+        this.cyl7.position.set(0.3,-0.15,-1.1); 
 
 
-        this.cyl11.position.set(-0.3,-0.176,-1); 
-        this.cyl12.position.set(-0.2,-0.068,-1); 
-        this.cyl13.position.set(-0.1,-0.038,-1); 
-        this.cyl14.position.set(0,-0.045,-1); 
-        this.cyl15.position.set(0.1,-0.081,-1); 
-        this.cyl16.position.set(0.2,-0.124,-1); 
-        this.cyl17.position.set(0.3,-0.163,-1); 
+        this.cyl11.position.set(-0.3,-0.176,-1.1); 
+        this.cyl12.position.set(-0.2,-0.068,-1.1); 
+        this.cyl13.position.set(-0.1,-0.038,-1.1); 
+        this.cyl14.position.set(0,-0.045,-1.1); 
+        this.cyl15.position.set(0.1,-0.081,-1.1); 
+        this.cyl16.position.set(0.2,-0.124,-1.1); 
+        this.cyl17.position.set(0.3,-0.163,-1.1); 
 
         this.cyl11.visible = false;
         this.cyl12.visible = false;
@@ -387,7 +387,7 @@ class App{
         this.cyl17.visible = false;
 
 
-        this.cube.position.set(0,-0.23,-1);
+        this.cube.position.set(0,-0.23,-1.1);
         console.log(window.innerWidth);
 
         function back1(){
@@ -462,23 +462,23 @@ class App{
 
         const ui6 = new CanvasUI(content6, config6);
         this.ui6 = ui6;
-        this.ui6.mesh.position.set(0,0,-0.5);
+        this.ui6.mesh.position.set(0,0,-0.6);
         self.ui6.mesh.visible = false;
 
 
         const ui7 = new CanvasUI(content7, config7);
         this.ui7 = ui7;
-        this.ui7.mesh.position.set(0,0,-0.5);
+        this.ui7.mesh.position.set(0,0,-0.6);
         self.ui7.mesh.visible = false;
 
         const ui8 = new CanvasUI(content8, config8);
         this.ui8 = ui8;
-        this.ui8.mesh.position.set(-0.14,0.165,-0.4);
+        this.ui8.mesh.position.set(-0.13,0.165,-0.5);
         self.ui8.mesh.visible = false;
 
         const ui9 = new CanvasUI(content9, config9);
         this.ui9 = ui9;
-        this.ui9.mesh.position.set(0.14,0.165,-0.4);
+        this.ui9.mesh.position.set(0.14,0.165,-0.5);
         self.ui9.mesh.visible = false;
 
 
@@ -521,25 +521,21 @@ class App{
         }
 
         const content5 = {
-            //body: "?"
             buttonb2: "<path> M 260.4 117.3 L 260.4 117.3 M 260.4 117.3 L 259.5 117 L 139.5 115.5 C 139.5 115.5 139.5 115.5 139.5 115.5 L 115.5 114 C 124.5 117 139.5 120 139.5 132 L 139.5 132 L 138 369.3 L 260.4 369.3 L 291 370.5 C 276 364.5 264 361.5 264 340.5 Z Z M 168 37 A 1.5 1.5 90 0 0 205.5 79.5 A 1 1 0 0 0 169 36 </path>",
         }
 
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
-        this.ui4.mesh.position.set(0.27,0.22,-0.85);     
-        //this.ui4.context.canvas.fillStyle = "#effeff"; 
-        //this.ui4.context.fillStyle = "#effeff";  
+        this.ui4.mesh.position.set(0.27,0.22,-0.95);     
         this.ui4.context.fillStyle = "#effeff";  
         this.ui4.context.fillStyle = 'green';  
         this.ui4.needsUpdate = true;
         this.ui4.texture.needsUpdate = true;
-        //console.log(this.ui4.context.fillStyle);
   
 
         const ui5 = new CanvasUI(content5, config5);
         this.ui5 = ui5;
-        this.ui5.mesh.position.set(0.37,0.22,-0.85);
+        this.ui5.mesh.position.set(0.37,0.22,-0.95);
         this.ui5.mesh.visible = false;
         this.ui5.context.fillStyle = "#effeff";  
         this.ui5.context.fillStyle = 'green';  
@@ -677,15 +673,15 @@ class App{
             self.text10.scale.set(0.006,0.006,0.006);
 
 
-            self.text2.position.set(-0.35,-0.22,-0.85);     
-            self.text3.position.set(-0.25,-0.22,-0.85);
-            self.text4.position.set(-0.15,-0.22,-0.85);
-            self.text5.position.set(-0.05,-0.22,-0.85);
-            self.text6.position.set(0.05,-0.22,-0.85);
-            self.text7.position.set(0.15,-0.22,-0.85);
-            self.text8.position.set(0.25,-0.22,-0.85);
-            self.text9.position.set(-0.2,0.2,-0.85);
-            self.text10.position.set(-0.25,0.2,-0.85);
+            self.text2.position.set(-0.35,-0.22,-0.95);     
+            self.text3.position.set(-0.25,-0.22,-0.95);
+            self.text4.position.set(-0.15,-0.22,-0.95);
+            self.text5.position.set(-0.05,-0.22,-0.95);
+            self.text6.position.set(0.05,-0.22,-0.95);
+            self.text7.position.set(0.15,-0.22,-0.95);
+            self.text8.position.set(0.25,-0.22,-0.95);
+            self.text9.position.set(-0.2,0.2,-0.95);
+            self.text10.position.set(-0.25,0.2,-0.95);
 
             self.text10.visible = false;
 
