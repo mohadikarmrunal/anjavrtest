@@ -473,7 +473,7 @@ class App{
 
         const ui8 = new CanvasUI(content8, config8);
         this.ui8 = ui8;
-        this.ui8.mesh.position.set(-0.13,0.165,-0.5);
+        this.ui8.mesh.position.set(-0.15,0.165,-0.5);
         self.ui8.mesh.visible = false;
 
         const ui9 = new CanvasUI(content9, config9);
