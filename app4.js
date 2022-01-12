@@ -227,7 +227,7 @@ class App{
         const config3 = {
             panelSize: {width: 0.1, height: 0.6},
             width: 85.333,
-            info:{ type: "text", position:{ top: 10, left: 7.665 } , width: 70 , height: 92, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding:5},
+            info:{ type: "text", position:{ top: 12, left: 7.665 } , width: 70 , height: 115, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding:5},
             info1:{ type: "text", position:{ top: 127, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
             info2:{ type: "text", position:{ top: 222, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
             info3:{ type: "text", position:{ top: 317, left: 7.665 } , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
@@ -244,39 +244,7 @@ class App{
 
         }   
 
-        const config6 = {
-            panelSize: { width: 0.5, height: 0.5 },
-            //height: 256,
-            body:{
-                textAlign: 'center',
-                backgroundColor:'#ccc',
-                fontColor:'#000',
-                padding:50,
-                fontSize:45,
-            },
-            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40}
-        }
-
-        const content6 = {
-            info: "FREQUENCY DISTRIBUTION"
-        }
-
-        const config7 = {
-            panelSize: { width: 0.5, height: 0.5 },
-            //height: 256,
-            body:{
-                textAlign: 'center',
-                backgroundColor:'#ccc',
-                fontColor:'#000',
-                padding:50,
-                fontSize:45,
-            },
-            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40}
-        }
-
-        const content7 = {
-            info: "POISSON FREQUENCY DISTRIBUTION"
-        }
+  
 
         //creating materials for canvases
         const material1 = new THREE.MeshPhysicalMaterial ();
@@ -337,64 +305,6 @@ class App{
         this.ui3.mesh.position.set(0.2,0,-0.65);
         this.ui3.mesh.material = material3;
         this.ui3.mesh.material.map = this.ui3.texture;  
-
-        const ui6 = new CanvasUI(content6, config6);
-        this.ui6 = ui6;
-        this.ui6.mesh.position.set(0,0,-0.5);
-        self.ui6.mesh.visible = false;
-
-
-        const ui7 = new CanvasUI(content7, config7);
-        this.ui7 = ui7;
-        this.ui7.mesh.position.set(0,0,-0.5);
-        self.ui7.mesh.visible = false;
-
-
-        function button1(){
-            console.log('dugme radi');
-            self.ui6.mesh.visible = true;
-        }
-
-        function button2(){
-            console.log('dugme radi');
-            self.ui7.mesh.visible = true;
-        }
-
-        //frequency canvas1
-         const config4 = {
-            panelSize: { width: 0.06, height: 0.06 },
-            height: 512,
-            body: {backgroundColor: '#049'},
-            buttonb1: { type: "button", position:{ top: 60, left: 100 }, fontColor: "#fff", fontSize:100, hover: "#4c5ba6", onSelect: button1 },
-            renderer: this.renderer        }
-
-        const content4 = {
-            buttonb1: "<path>  M 230.4 108.3 L 230.4 108.3 M 230.4 108.3 L 229.5 108 L 109.5 106.5 C 109.5 106.5 109.5 106.5 109.5 106.5 L 85.5 105 C 94.5 108 109.5 111 109.5 123 L 109.5 123 L 108 360.3 L 230.4 360.3 L 261 361.5 C 246 355.5 234 352.5 234 331.5 Z Z M 138 28 A 1.5 1.5 90 0 0 175.5 70.5 A 1 1 0 0 0 139 27 </path>",
-        }
-       
-
-        //frequency canvas2
-         const config5 = {
-            panelSize: { width: 0.06, height: 0.06 },
-            height: 512,
-            body: {backgroundColor: '#049'},
-            buttonb2: { type: "button", position:{ top: 60, left: 100 }, fontColor: "#fff", fontSize:100, hover: "#4c5ba6", onSelect: button2 },
-            renderer: this.renderer
-        }
-
-        const content5 = {
-            //body: "?"
-            buttonb2: "<path>  M 230.4 108.3 L 230.4 108.3 M 230.4 108.3 L 229.5 108 L 109.5 106.5 C 109.5 106.5 109.5 106.5 109.5 106.5 L 85.5 105 C 94.5 108 109.5 111 109.5 123 L 109.5 123 L 108 360.3 L 230.4 360.3 L 261 361.5 C 246 355.5 234 352.5 234 331.5 Z Z M 138 28 A 1.5 1.5 90 0 0 175.5 70.5 A 1 1 0 0 0 139 27 </path>",
-        }
-    
-        const ui4 = new CanvasUI(content4, config4);
-        this.ui4 = ui4;
-        this.ui4.mesh.position.set(0.27,0.22,-0.85);        
-
-        const ui5 = new CanvasUI(content5, config5);
-        this.ui5 = ui5;
-        this.ui5.mesh.position.set(0.37,0.22,-0.85);
-        this.ui5.mesh.visible = false;
 
         //creating 3D cylinders for the frequency diagram |   theoretical frequency 
         const geometry1 = new THREE.CylinderGeometry( 0.03, 0.03, 0.16, 32 );
@@ -480,6 +390,159 @@ class App{
         this.cube.position.set(0,-0.23,-1);
         console.log(window.innerWidth);
 
+        function back1(){
+            self.ui6.mesh.visible = false;
+            self.swipeoption = true;
+            self.ui8.mesh.visible = false;
+        }
+
+        function back2(){
+            self.ui7.mesh.visible = false;
+            self.swipeoption = true;
+            self.ui9.mesh.visible = false;
+        }
+
+        const config8 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            //height: 256
+            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back1 },
+            renderer: this.renderer
+        }
+
+        const content8 = {
+            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
+        }
+
+        const config9 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            //height: 256
+            back2: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back2 },
+            renderer: this.renderer
+        }
+
+        const content9 = {
+            back2: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
+        }
+
+        const config6 = {
+            panelSize: { width: 0.5, height: 0.5 },
+            //height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:50,
+                fontSize:45,
+            },
+            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40},
+        }
+
+        const content6 = {
+            info: "FREQUENCY DISTRIBUTION",
+        }
+
+        const config7 = {
+            panelSize: { width: 0.5, height: 0.5 },
+            //height: 256,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:50,
+                fontSize:45,
+            },
+            info:{ type: "text", fontFamily: 'Verdana', width: 512, height: 300, padding: 40},
+        }
+
+        const content7 = {
+            info: "POISSON FREQUENCY DISTRIBUTION",
+        }
+
+        const ui6 = new CanvasUI(content6, config6);
+        this.ui6 = ui6;
+        this.ui6.mesh.position.set(0,0,-0.5);
+        self.ui6.mesh.visible = false;
+
+
+        const ui7 = new CanvasUI(content7, config7);
+        this.ui7 = ui7;
+        this.ui7.mesh.position.set(0,0,-0.5);
+        self.ui7.mesh.visible = false;
+
+        const ui8 = new CanvasUI(content8, config8);
+        this.ui8 = ui8;
+        this.ui8.mesh.position.set(-0.14,0.165,-0.4);
+        self.ui8.mesh.visible = false;
+
+        const ui9 = new CanvasUI(content9, config9);
+        this.ui9 = ui9;
+        this.ui9.mesh.position.set(0.14,0.165,-0.4);
+        self.ui9.mesh.visible = false;
+
+
+        function button1(){
+            console.log('dugme radi');
+            self.swipeoption = false;
+            self.ui6.mesh.visible = true;
+            self.ui8.mesh.visible = true;
+        }
+
+        function button2(){
+            console.log('dugme radi');
+            self.ui7.mesh.visible = true;
+            self.swipeoption = false;
+            self.ui9.mesh.visible = true;
+        }
+
+        //frequency canvas1
+         const config4 = {
+            panelSize: { width: 0.05, height: 0.05 },
+            height: 512,
+            backgroundColor: '#eff',
+            body: {backgroundColor: '#eff', position: {top:0, left:0 }},
+            buttonb1: { type: "button", position:{ top: 0, left: 0 }, fontColor: "#fff", padding:100, backgroundColor: '#021', fontSize:100, hover: "#4c5ba6", onSelect: button1 },
+            renderer: this.renderer        }
+
+        const content4 = {
+            buttonb1: "<path> M 260.4 117.3 L 260.4 117.3 M 260.4 117.3 L 259.5 117 L 139.5 115.5 C 139.5 115.5 139.5 115.5 139.5 115.5 L 115.5 114 C 124.5 117 139.5 120 139.5 132 L 139.5 132 L 138 369.3 L 260.4 369.3 L 291 370.5 C 276 364.5 264 361.5 264 340.5 Z Z M 168 37 A 1.5 1.5 90 0 0 205.5 79.5 A 1 1 0 0 0 169 36 </path>",
+        }
+       
+
+        //frequency canvas2
+         const config5 = {
+            panelSize: { width: 0.06, height: 0.06 },
+            height: 512,
+            backgroundColor: '#eff',
+            body: {backgroundColor: '#eff', position: {top:0, left:0 }},
+            buttonb2: { type: "button", position:{ top: 0, left: 0 }, padding:100, fontColor: "#fff", backgroundColor: '#021', fontSize:100, hover: "#4c5ba6", onSelect: button2 },
+            renderer: this.renderer
+        }
+
+        const content5 = {
+            //body: "?"
+            buttonb2: "<path> M 260.4 117.3 L 260.4 117.3 M 260.4 117.3 L 259.5 117 L 139.5 115.5 C 139.5 115.5 139.5 115.5 139.5 115.5 L 115.5 114 C 124.5 117 139.5 120 139.5 132 L 139.5 132 L 138 369.3 L 260.4 369.3 L 291 370.5 C 276 364.5 264 361.5 264 340.5 Z Z M 168 37 A 1.5 1.5 90 0 0 205.5 79.5 A 1 1 0 0 0 169 36 </path>",
+        }
+
+        const ui4 = new CanvasUI(content4, config4);
+        this.ui4 = ui4;
+        this.ui4.mesh.position.set(0.27,0.22,-0.85);     
+        //this.ui4.context.canvas.fillStyle = "#effeff"; 
+        //this.ui4.context.fillStyle = "#effeff";  
+        this.ui4.context.fillStyle = "#effeff";  
+        this.ui4.context.fillStyle = 'green';  
+        this.ui4.needsUpdate = true;
+        this.ui4.texture.needsUpdate = true;
+        //console.log(this.ui4.context.fillStyle);
+  
+
+        const ui5 = new CanvasUI(content5, config5);
+        this.ui5 = ui5;
+        this.ui5.mesh.position.set(0.37,0.22,-0.85);
+        this.ui5.mesh.visible = false;
+        this.ui5.context.fillStyle = "#effeff";  
+        this.ui5.context.fillStyle = 'green';  
+        this.ui5.needsUpdate = true;
+        this.ui5.texture.needsUpdate = true;
 
         //text for the histograph 
         const loaderf = new FontLoader();
@@ -764,6 +827,9 @@ class App{
             self.scene.add(self.text8);
         
             //adding button-canvases and text
+            self.ui4.context.fillStyle = "#effeff";   
+            self.ui4.needsUpdate = true;
+            self.ui4.texture.needsUpdate = true;
             self.scene.add(self.ui4.mesh);
             self.scene.add(self.ui5.mesh);
             self.scene.add(self.text9);
@@ -774,10 +840,17 @@ class App{
             //console.log(self.ui5.config.buttonb2);
 
             //adding canvases with theory
+
             self.scene.add(self.ui6.mesh);
             self.camera.add(self.ui6.mesh);
             self.scene.add(self.ui7.mesh);
             self.camera.add(self.ui7.mesh);
+
+            self.scene.add(self.ui8.mesh);
+            self.camera.add(self.ui8.mesh);
+            self.scene.add(self.ui9.mesh);
+            self.camera.add(self.ui9.mesh);
+
         }
 
 
@@ -907,7 +980,13 @@ class App{
             self.ui7.mesh.visible = false;
             self.scene.remove(self.ui7.mesh);
             self.camera.remove(self.ui7.mesh);
-            
+
+            self.ui8.mesh.visible = false;
+            self.ui9.mesh.visible = false;
+            self.scene.remove(self.ui8.mesh);
+            self.camera.remove(self.ui8.mesh);
+            self.scene.remove(self.ui9.mesh);      
+            self.camera.remove(self.ui9.mesh);      
             //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
 
@@ -1035,6 +1114,10 @@ class App{
            this.ui3.update();
            this.ui4.update();
            this.ui5.update();
+           this.ui6.update();
+           this.ui7.update();
+           this.ui8.update();
+           this.ui9.update();
            this.gestures.update();
         }
 
