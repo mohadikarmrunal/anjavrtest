@@ -438,7 +438,7 @@ class App{
         }
 
         const content6 = {
-            image: "../../assets/theory1.png",
+            image: "../../assets/theory12.png",
         }
 
         const config7 = {
@@ -455,7 +455,7 @@ class App{
         }
 
         const content7 = {
-            image: "../../assets/theory2.png",
+            image: "../../assets/theory22.png",
 
         }
 
@@ -477,7 +477,7 @@ class App{
 
         const ui9 = new CanvasUI(content9, config9);
         this.ui9 = ui9;
-        this.ui9.mesh.position.set(0.17,0.145,-0.5);
+        this.ui9.mesh.position.set(0.16,0.145,-0.5);
         self.ui9.mesh.visible = false;
 
 
