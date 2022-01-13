@@ -196,6 +196,8 @@ class App{
             sound.setVolume( 1.0 );
             sound.play();
         });
+        if (sndname == 'sound1')  self.sound1 = sound;
+        if (sndname == 'sound2')  self.sound2 = sound;
     }
 
     createUI() {
@@ -741,6 +743,12 @@ class App{
                     self.counter = 0;
                 }
 
+                if (self.case == 4) {
+                    clearInterval(self.interval4);
+                    self.ui3.updateElement('info4', self.counter.toString());
+                    self.counter = 0;
+                }
+
             }
 
             else {
@@ -761,6 +769,7 @@ class App{
         }
 
         function next2() {
+            self.playSound('sound1');
             //second experiment
             const num2 = (Math.floor((Math.random() * 5)+3));
             const number2 = Math.floor(30/num2);            
@@ -778,8 +787,18 @@ class App{
             self.interval3 = setInterval(count,1000,number3);
         }
 
-        function next4(){
+        function next4() {
+            //forth experiment
+            const num4 = (Math.floor((Math.random() * 5)+3));
+            const number4 = Math.floor(30/num4);
+            self.case = 4;
+            console.log("forth experiment with "+num4.toString()+" phonecalls");
+            self.interval4 = setInterval(count,1000,number4);
+        }
 
+        function next5(){
+
+            self.playSound('sound2');
             self.swipeoption = true;
             self.scene.remove(self.ui1.mesh);
             self.camera.remove(self.ui1.mesh);
@@ -850,12 +869,10 @@ class App{
 
         }
 
-
-        function next5(){
-
-        }
         
         function onSessionStart(){
+
+            self.sound.play();
 
             self.scene.add(self.worker);
             self.scene.add(self.tel);
@@ -872,24 +889,27 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.camera.add(self.ui3.mesh);
 
-            //self.sound.play();
+            //40 000 razlike izmedju njih mi treba 10 sec navodno!
             var timeout1, timeout2, timeout3, timeout4, timeout5;
-            timeout1 = setTimeout(next1, 1000);
-            //timeout2 = setTimeout(next2, 41000);
-            //timeout3 = setTimeout(next3, 81000);
-            //timeout4 = setTimeout(next4, 121000);
-            //just a version for testing so that I dont have to wait 
-            timeout4 = setTimeout(next4, 41000);
-            //timeout5 = setTimeout(next5, 44000);
+            timeout1 = setTimeout(next1, 43000);
+            timeout2 = setTimeout(next2, 78000);
+            timeout3 = setTimeout(next3, 113000);
+            timeout4 = setTimeout(next4, 148000);
+            timeout5 = setTimeout(next5, 183000);
 
             self.timeout1 = timeout1;
             self.timeout2 = timeout2;
             self.timeout3 = timeout3;
             self.timeout4 = timeout4;
+            self.timeout5 = timeout5;
             
         }
 
         function onSessionEnd(){
+
+            if (self.sound && self.sound.isPlaying) self.sound.stop();
+            if (self.sound1 && self.sound1.isPlaying) self.sound1.stop();
+            if (self.sound2 && self.sound2.isPlaying) self.sound2.stop();
 
             self.scene.remove(self.worker);
             self.scene.remove(self.tel);
@@ -909,6 +929,7 @@ class App{
             self.ui3.updateElement('info1', "");
             self.ui3.updateElement('info2', "");
             self.ui3.updateElement('info3', "");
+            self.ui3.updateElement('info4', "");
             self.scene.remove(self.ui3.mesh);
             self.camera.remove(self.ui3.mesh);
 
@@ -916,9 +937,12 @@ class App{
             clearTimeout(self.timeout2);
             clearTimeout(self.timeout3);
             clearTimeout(self.timeout4);
+            clearTimeout(self.timeout5);
             clearInterval(self.interval1);
             clearInterval(self.interval2);
             clearInterval(self.interval3);
+            clearInterval(self.interval4);
+
             self.case = 0;
             self.seconds = 30;
             self.counter = 0;
@@ -991,7 +1015,7 @@ class App{
             console.log('promise');
             const sound = new THREE.Audio( self.listener );
             const audioLoader = new THREE.AudioLoader();
-             audioLoader.load( 'audio/intoapp3.mp3', ( buffer ) => {
+             audioLoader.load( 'audio/app4-1.mp3', ( buffer ) => {
               sound.setBuffer( buffer );
               sound.setLoop( false );
               sound.setVolume( 1.0 );
