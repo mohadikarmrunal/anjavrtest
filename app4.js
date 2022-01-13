@@ -148,7 +148,7 @@ class App{
                 self.tel = gltf.scene;
                 const scale = 2;
                 self.tel.scale.set(scale, scale, scale);
-                self.tel.position.set(-0.6,-2,-3);
+                self.tel.position.set(-0.7,-2,-2.6);
                 self.tel.rotateX(-Math.PI/8);
 
                 if (gltf.scene.children[1].name == 'phone') {
@@ -227,7 +227,7 @@ class App{
         const config3 = {
             panelSize: {width: 0.1, height: 0.6},
             width: 85.333,
-            info:{ type: "text", position:{ top: 12, left: 7.665 } , width: 70 , height: 115, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding:5},
+            info:{ type: "text", position:{ top: 12, left: 7.665 } , width: 70 , height: 115, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding:7},
             info1:{ type: "text", position:{ top: 127, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
             info2:{ type: "text", position:{ top: 222, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
             info3:{ type: "text", position:{ top: 317, left: 7.665 } , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
@@ -477,7 +477,7 @@ class App{
 
         const ui9 = new CanvasUI(content9, config9);
         this.ui9 = ui9;
-        this.ui9.mesh.position.set(0.16,0.145,-0.5);
+        this.ui9.mesh.position.set(0.155,0.145,-0.5);
         self.ui9.mesh.visible = false;
 
 
