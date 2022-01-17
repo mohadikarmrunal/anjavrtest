@@ -49,7 +49,6 @@ class App{
 	}	
     
     initScene(){
-        console.log('initScene');
         this.loadingBar = new LoadingBar();
         
         this.assetsPath = '../../assets/';
@@ -74,26 +73,18 @@ class App{
                     self.head.children[0].children[1].visible = false;
                 }
                 
-                //gltf.scene.children[0].children[0] je coin
-                //gltf.scene.children[0].children[1] je plane
                 self.animations['TossHead'] = gltf.animations[0];
-                //self.scene.add( self.apple ); 
-                //console.log(gltf.animations);
                 self.mixer = new THREE.AnimationMixer( self.coinH );
                 const clip = self.animations['TossHead'];
                 const action = self.mixer.clipAction (clip);
-                //action.loop = THREE.LoopOnce;
                 action.enabled = true;
                 self.action = action;
-                //action.play();
-                //console.log (action);
                 self.head.visible=false;
 				const scale = 0.05;
 				self.head.scale.set(scale, scale, scale); 
                 self.head.position.set( 0, -0.5, -1 ); 
-                console.log('TossHead');
 
-                if (self.coin!=undefined && self.coin!=undefined)  self.loadingBar.visible = false;
+                if (self.coin!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar.visible = false;
 
 			},
 			// called while loading is progressing
@@ -103,7 +94,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with coin tossed to head' );
+				console.log( 'An error happened with loading a 3D Object!' );
                 alert('An error happened when loading 3D Objects. Refresh the page!');
 			}
         );
@@ -128,23 +119,18 @@ class App{
                 }
 
                 self.animations['TossTail'] = gltf.animations[0];
-                //self.scene.add( self.apple ); 
-                //console.log(gltf.animations);
                 self.mixerT = new THREE.AnimationMixer( self.coinT );
                 const clipT = self.animations['TossTail'];
                 const actionT = self.mixerT.clipAction (clipT);
                 //action.loop = THREE.LoopOnce;
                 actionT.enabled = true;
                 self.actionT = actionT;
-                //action.play();
-                //console.log (action);
                 self.tail.visible = false;
 				const scale = 0.05;
 				self.tail.scale.set(scale, scale, scale); 
                 self.tail.position.set( 0, -0.5, -1 ); 
-                console.log('TossTail');
 
-                if (self.head!=undefined && self.coin!=undefined)  self.loadingBar.visible = false;
+                if (self.head!=undefined && self.coin!=undefined && self.cursor!=undefined)  self.loadingBar.visible = false;
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -153,7 +139,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with coin tossed to tail' );
+				console.log( 'An error happened with loading a 3D Object!' );
                 alert('An error happened when loading 3D Objects. Refresh the page!');
 
 			}
@@ -169,7 +155,6 @@ class App{
                 self.coin.visible = false;
 				const scale = 0.05;
 				self.coin.scale.set(scale, scale, scale); 
-                //console.log(self.coin.children[0]);
                 self.coin.children[0].rotateX(Math.PI/2);
                 self.coin1 = self.coin.clone();
                 self.coin1.children[0].rotateX(Math.PI);
@@ -182,9 +167,8 @@ class App{
                 self.coin6 = self.coin.clone();
                 self.coin7 = self.coin.clone();
                 self.coin.children[0].rotateX(Math.PI);
-                console.log('Coin');
 
-                if (self.head!=undefined && self.tail!=undefined)  self.loadingBar.visible = false;
+                if (self.head!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar.visible = false;
 
 
 			},
@@ -195,7 +179,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with the coin' );
+				console.log( 'An error happened with loading a 3D Object!' );
                 alert('An error happened when loading 3D Objects. Refresh the page!');
 
 			}
@@ -211,7 +195,6 @@ class App{
 				const scale = 0.1;
                 self.T3.scale.set(scale, scale, scale); 
                 
-                //console.log(self.coin.children[0]);
                 
                 self.T4 = self.T3.clone();
                 self.T6 = self.T3.clone();
@@ -228,7 +211,6 @@ class App{
                 self.T4.visible = false;
                 self.T6.visible = false;
                 self.T7.visible = false;
-                console.log('T');
 
                 
 				
@@ -240,7 +222,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with the T for tail' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -269,7 +251,6 @@ class App{
                 self.H1.visible = false;
                 self.H2.visible = false;
                 self.H5.visible = false;
-                console.log('H');
 
                
 				
@@ -280,7 +261,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with the H for heads' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -297,7 +278,6 @@ class App{
                 //positions
                 self.text0.position.set(-0.35,-0.1,-5.4);
                 self.text0.visible = false;	
-                console.log('0');
 
 			},
 			// called while loading is progressing
@@ -306,7 +286,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading X=0 text' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -323,7 +303,6 @@ class App{
                 //positions
                 self.text1.position.set(-0.1,0.1,-5.4);
                 self.text1.visible = false;	
-                console.log('1');
 
 			},
 			// called while loading is progressing
@@ -332,7 +311,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading X=1 text' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -349,7 +328,6 @@ class App{
                 //positions
                 self.text2.position.set(0.15,-0.1,-5.4);
                 self.text2.visible = false;	
-                console.log('2');
 
 			},
 			// called while loading is progressing
@@ -358,7 +336,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading X=2 text' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -375,7 +353,6 @@ class App{
                 //positions
                 self.num0.position.set(0.45,0.17,-3.8);
                 self.num0.visible = false;
-                console.log('num0');
 
 			},
 			// called while loading is progressing
@@ -384,7 +361,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading X=0 text' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -401,7 +378,6 @@ class App{
                 //positions
                 self.num1.position.set(0.45,-0.13,-3.8);
                 self.num1.visible = false;	
-                console.log('num1');
 
 			},
 			// called while loading is progressing
@@ -410,7 +386,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading X=0 text' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -427,7 +403,6 @@ class App{
                 //positions
                 self.num2.position.set(0.45,-0.43,-3.8);
                 self.num2.visible = false;	
-                console.log('num2');
 
 			},
 			// called while loading is progressing
@@ -436,7 +411,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading X=0 text' );
+				console.log( 'An error happened with loading a 3D Object!' );
 			}
         );
 
@@ -455,8 +430,8 @@ class App{
                 self.cursor1 = self.cursor.clone();
                 self.cursor2 = self.cursor.clone();
                 self.cursor3 = self.cursor.clone();
-                console.log('cursor');
 
+                if(self.coin!=undefined && self.head!=undefined && self.tail!=undefined) self.LoadingBar.visible = false;
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -465,7 +440,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading a cursor' );
+				console.log( 'An error happened with loading a 3D Object!' );
                 alert('An error happened when loading 3D Objects. Refresh the page!');
 
 			}
@@ -494,7 +469,6 @@ class App{
     }
 
     createUI() {
-        console.log('createUI');
         const self = this;
 
         //setting up button canvasUI
@@ -653,7 +627,7 @@ class App{
 
         //button for the sound #3 connected to canvas #4
         function button3next(){
-            console.log('It is time for the third question on the forth canvas!');
+            console.log('It is time for the third question!');
             const self = this.app;
 
             //add the mesh for the third question
@@ -661,7 +635,7 @@ class App{
             self.scene.add(self.uiq3.mesh); 
         }
         function button3(){        
-            console.log('Button for the third sound on the forth canvas was pressed');
+            console.log('Sound button for the canvas number four was pressed!');
 
             //stop the previous sound and play the sound for canvas 4
             if (self.canvas3.isPlaying) {
@@ -804,7 +778,7 @@ class App{
        //button for the sound #2 for the canvas #3
         function button2next(){
 
-            console.log('It is time for the second question on the third canvas!');
+            console.log('It is time for the second question!');
             const self = this.app;
 
             self.counting(0,1);
@@ -845,7 +819,7 @@ class App{
             }
             self.playSound('canvas3');
 
-            console.log('Button for the second sound on the third canvas was pressed!');
+            console.log('Sound button for the canvas number three was pressed!');
 
             // hide the pressed button for the sound
             self.uib2.mesh.visible = false;
@@ -995,7 +969,7 @@ class App{
         }
         function button1(){
             
-            console.log('Button for the first sound on the second canvas was pressed');
+            console.log('Sound button for the canvas number two was pressed!');
 
             //stop the previous sound and play the sound for the second canvas
             if (self.canvas1.isPlaying) {
@@ -1031,7 +1005,6 @@ class App{
 
     createBoxes(){
 
-        console.log('createBoxes');
         const self = this;
         const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
         const geometry3 = new THREE.BoxGeometry( 0.2, 0.4, 0.2 );
@@ -1159,7 +1132,6 @@ class App{
     
 
     setupVR(){
-        console.log('setupVR');        
         this.renderer.xr.enabled = true;   
         const self = this;
         
@@ -1329,7 +1301,6 @@ class App{
         }
 
         var promise = new Promise(function(resolve, reject) {
-            console.log('promise');
             const sound = new THREE.Audio( self.listener );
             const audioLoader = new THREE.AudioLoader();
              audioLoader.load( 'audio/intoapp3.mp3', ( buffer ) => {
@@ -1352,8 +1323,6 @@ class App{
 
 
        promise.then(function(result) {
-               console.log('adding ar button');
-               console.log(result);
               const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
               console.log(result)}, function (error){    
                   console.log(error);

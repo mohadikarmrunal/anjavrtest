@@ -47,34 +47,10 @@ class App{
         this.initScene();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
-        
-        var teltest, worktest
-        this.teltest = teltest;
-        this.worktest = worktest;
-        this.teltest = false;
-        this.worktest = false;
 	}	
 
-   /* set action(name){
-		if (this.actionName == name) return;
-		
-		const clip = this.animations[name];
-		
-        if (clip!==undefined){
-			const action = this.mixer.clipAction( clip );
-              
-			this.actionName = name;
-			if (this.curAction) this.curAction.crossFadeTo(action, 0.5);
-            
-            action.enabled = true;
-			action.play();
-            
-            this.curAction = action;
-		}
-	}*/
     
     initScene(){
-        console.log('initScene');
         this.loadingBar = new LoadingBar();
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
@@ -94,12 +70,7 @@ class App{
                 gltf.animations.forEach( (anim)=>{
                     self.animations[anim.name] = anim;
                 })
-                /////
-                console.log(gltf.scene);
-
                 self.worker = gltf.scene.children[0];
-                //self.worker.rotateZ(-Math.PI/2);
-                //self.worker.rotateX(-Math.PI/10);
                 const scale = 0.015;
 				self.worker.scale.set(scale, scale, scale); 
                 self.worker.rotateZ(Math.PI/4);
@@ -118,10 +89,8 @@ class App{
                 self.actionA.loop = THREE.LoopOnce;
 
                 self.actionI.play();              
-                self.loadingBar.visible = false;
-
+                if (self.tel!= undefined) self.loadingBar.visible = false;
   
-                self.worktest = true;         
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -130,9 +99,8 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with coin tossed to head' );
+				console.log( 'An error happened while loading 3D object!' );
                 alert ('Objects did not load properly. Please refresh the page!');
-                self.worktest = false;         
 
 			}
         );
@@ -144,7 +112,6 @@ class App{
 			function ( gltf ) {
 
                 self.animationsT = {};
-                console.log(gltf.scene);
                 self.tel = gltf.scene;
                 const scale = 2;
                 self.tel.scale.set(scale, scale, scale);
@@ -164,7 +131,9 @@ class App{
                 actionT.enabled = true;
                 self.actionT = actionT;
                 self.actionT.loop = THREE.LoopOnce;
-                self.teltest = true;
+                
+                if (self.worker!= undefined) self.loadingBar.visible = false;
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -173,9 +142,8 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with coin tossed to head' );
+				console.log( 'An error happened with loading 3D Objects!' );
                 alert ('Objects did not load properly. Please refresh the page!');
-                self.teltest = false;
 
 			}
         );
@@ -190,7 +158,7 @@ class App{
         const self = this;
         const audioLoader = new THREE.AudioLoader();
         audioLoader.load( `audio/${sndname}.mp3`, ( buffer ) => {
-            if (sound.isPlaying) sound.stop();
+            if (sndname != 'ring') {if (sound.isPlaying) sound.stop();}
             sound.setBuffer( buffer );
             sound.setLoop( false );
             sound.setVolume( 1.0 );
@@ -198,6 +166,10 @@ class App{
         });
         if (sndname == 'sound1')  self.sound1 = sound;
         if (sndname == 'sound2')  self.sound2 = sound;
+        if (sndname == 'ring')  self.ring = sound;
+        self.ring.setVolume(0.3);
+
+
     }
 
     createUI() {
@@ -211,7 +183,7 @@ class App{
         }
 
         const content1 = {
-            info: ""
+            info: "00:00:00"
         }
 
         //counter canvas 
@@ -271,7 +243,7 @@ class App{
         material4.clearcoat = 0.7;
         material4.clearcoatRoughness = 1;
 
-        //material for the cylinders when displaying both |   material for the theoretical frequencies
+        //material for the cylinders | material for the theoretical frequencies
         const material5 = new THREE.MeshPhysicalMaterial ();
         material5.color = new THREE.Color(0x008a49);
         material5.roughness = 0.08;
@@ -390,7 +362,6 @@ class App{
 
 
         this.cube.position.set(0,-0.23,-1.1);
-        console.log(window.innerWidth);
 
         function back1(){
             self.ui6.mesh.visible = false;
@@ -404,31 +375,9 @@ class App{
             self.ui9.mesh.visible = false;
         }
 
-        const config8 = {
-            panelSize: { width: 0.035, height: 0.035 },
-            //height: 256
-            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back1 },
-            renderer: this.renderer
-        }
-
-        const content8 = {
-            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
-        }
-
-        const config9 = {
-            panelSize: { width: 0.035, height: 0.035 },
-            //height: 256
-            back2: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back2 },
-            renderer: this.renderer
-        }
-
-        const content9 = {
-            back2: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
-        }
-
+        //canvas with theory1
         const config6 = {
             panelSize: { width: 0.5, height: 0.5 },
-            //height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
@@ -442,10 +391,10 @@ class App{
         const content6 = {
             image: "../../assets/theory12.png",
         }
-
+        
+        //canvas with theory2
         const config7 = {
             panelSize: { width: 0.5, height: 0.5 },
-            //height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
@@ -460,6 +409,30 @@ class App{
             image: "../../assets/theory22.png",
 
         }
+
+        //goback button1
+        const config8 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back1 },
+            renderer: this.renderer
+        }
+
+        const content8 = {
+            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
+        }
+
+        //goback button2
+        const config9 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            back2: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back2 },
+            renderer: this.renderer
+        }
+
+        const content9 = {
+            back2: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
+        }
+
+        
 
         const ui6 = new CanvasUI(content6, config6);
         this.ui6 = ui6;
@@ -484,20 +457,18 @@ class App{
 
 
         function button1(){
-            console.log('dugme radi');
             self.swipeoption = false;
             self.ui6.mesh.visible = true;
             self.ui8.mesh.visible = true;
         }
 
         function button2(){
-            console.log('dugme radi');
             self.ui7.mesh.visible = true;
             self.swipeoption = false;
             self.ui9.mesh.visible = true;
         }
 
-        //frequency canvas1
+        //info button1
          const config4 = {
             panelSize: { width: 0.05, height: 0.05 },
             height: 512,
@@ -511,7 +482,7 @@ class App{
         }
        
 
-        //frequency canvas2
+        //info button2
          const config5 = {
             panelSize: { width: 0.06, height: 0.06 },
             height: 512,
@@ -543,7 +514,7 @@ class App{
         this.ui5.needsUpdate = true;
         this.ui5.texture.needsUpdate = true;
 
-        //text for the histograph 
+        //text for the title of the histographs
         const loaderf = new FontLoader();
 
         loaderf.load( 'assets/helvetiker_regular.typeface.json', function ( font ) {
@@ -639,7 +610,7 @@ class App{
             bevelSegments: 1
        } );
 
-
+            //labels for the values of the discrete variable X=x
             const text2 = new THREE.Mesh (geometryT2, material5);
             const text3 = new THREE.Mesh (geometryT3, material5);
             const text4 = new THREE.Mesh (geometryT4, material5);
@@ -647,6 +618,7 @@ class App{
             const text6 = new THREE.Mesh (geometryT6, material5);
             const text7 = new THREE.Mesh (geometryT7, material5);
             const text8 = new THREE.Mesh (geometryT8, material5);
+
             //labels for frequency distributions
             const text9 = new THREE.Mesh (geometryF1, material);
             const text10 = new THREE.Mesh (geometryF2, material5);
@@ -696,9 +668,9 @@ class App{
         const self = this;
         //used to enable the swipe option
         self.swipeoption = false;
-        //case tells us which experiment is ongoing
+        //case = tells us which experiment is ongoing
         self.case = 0;
-        //counts the calls
+        //counts the phone calls
         self.counter = 0;
         //keeps track of what is displayed
         self.display = 1;
@@ -711,6 +683,7 @@ class App{
                 self.actionA.reset();
                 self.actionT.play();
                 self.actionA.play();
+                self.playSound('ring');
                 self.ui2.updateElement('info', "COUNTER: "+self.counter.toString());
             }
 
@@ -851,12 +824,8 @@ class App{
             self.scene.add(self.text9);
             self.scene.add(self.text10);
 
-            //disable the button2
-            //self.ui5.config.buttonb1.disable = true;
-            //console.log(self.ui5.config.buttonb2);
 
             //adding canvases with theory
-
             self.scene.add(self.ui6.mesh);
             self.camera.add(self.ui6.mesh);
             self.scene.add(self.ui7.mesh);
@@ -889,7 +858,7 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.camera.add(self.ui3.mesh);
 
-            //40 000 razlike izmedju njih mi treba 10 sec navodno!
+           
             var timeout1, timeout2, timeout3, timeout4, timeout5;
             timeout1 = setTimeout(next1, 43000);
             timeout2 = setTimeout(next2, 78000);
@@ -910,6 +879,7 @@ class App{
             if (self.sound && self.sound.isPlaying) self.sound.stop();
             if (self.sound1 && self.sound1.isPlaying) self.sound1.stop();
             if (self.sound2 && self.sound2.isPlaying) self.sound2.stop();
+            if (self.ring && self.ring.isPlaying) self.ring.stop();
 
             self.scene.remove(self.worker);
             self.scene.remove(self.tel);
@@ -1008,11 +978,9 @@ class App{
             self.camera.remove(self.ui8.mesh);
             self.scene.remove(self.ui9.mesh);      
             self.camera.remove(self.ui9.mesh);      
-            //if (self.sound && self.sound.isPlaying) self.sound.stop();
         }
 
         var promise = new Promise(function(resolve, reject) {
-            console.log('promise');
             const sound = new THREE.Audio( self.listener );
             const audioLoader = new THREE.AudioLoader();
              audioLoader.load( 'audio/app4-1.mp3', ( buffer ) => {
@@ -1035,8 +1003,6 @@ class App{
 
 
        promise.then(function(result) {
-               console.log('adding ar button');
-               console.log(result);
               const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
               console.log(result)}, function (error){    
                   console.log(error);

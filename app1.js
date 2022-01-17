@@ -6,7 +6,7 @@ import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
-//demand curve 
+
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
@@ -60,11 +60,12 @@ class App{
 			function ( gltf ) {
 
                 self.apple = gltf.scene;
-                self.loadingBar.visible = false;
                 self.apple.visible=false;
 				const scale = 0.06;
 				self.apple.scale.set(scale, scale, scale); 
-                console.log("apple");
+
+                if (self.cart!=undefined && self.cursor!=undefined) self.loadingBar.visible = false;
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -73,7 +74,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading an apple!' );
+				console.log( 'An error happened with loading a 3D Object!' );
                 alert('An error happened when loading 3D Objects. Refresh the page!');
 
 			}
@@ -96,7 +97,9 @@ class App{
                 self.action = action;
                 self.action.loop = THREE.LoopRepeat;
                 self.cart.visible=false; 
-                console.log("car");
+
+                if (self.apple!=undefined && self.cursor!=undefined) self.loadingBar.visible = false;
+
 
 			},
 			// called while loading is progressing
@@ -106,7 +109,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading a cart!' );
+				console.log( 'An error happened with loading a 3D Object!' );
                 alert('An error happened when loading 3D Objects. Refresh the page!');
 
 			}
@@ -125,7 +128,8 @@ class App{
                 self.cursor.rotateX(Math.PI/2);
                 self.cursor1 = self.cursor.clone();
                 self.cursor2 = self.cursor.clone();
-                console.log("cursor");
+                if (self.cart!=undefined && self.apple!=undefined) self.loadingBar.visible = false;
+
 
 			},
 			// called while loading is progressing
@@ -135,7 +139,7 @@ class App{
 			},
 			// called when loading has errors
 			function ( error ) {
-				console.log( 'An error happened with loading a cursor!' );
+				console.log( 'An error happened with loading a 3D Object!' );
                 alert('An error happened when loading 3D Objects. Refresh the page!');
 
 			}
@@ -437,7 +441,6 @@ class App{
             this.app.clearCanvas(0,this.app.ui);
 
             //update of the price and quantity in a ui1 and ui2
-            console.log('setTimeout2');
             this.app.ui1.updateElement('info', 'Price: 1.9 \u20AC /kg');
             this.app.ui2.updateElement('info', 'Sold: 90 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#114" );
@@ -684,8 +687,6 @@ class App{
             self.scene.remove(self.apple);
             self.scene.remove(self.cursor);
             self.scene.remove(self.cart);
-
-            
 
             self.ui1a.mesh.visible = false;
             self.ui2a.mesh.visible = false;

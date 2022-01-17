@@ -1,12 +1,8 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
-//import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
-//import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
-//import { LoadingBar } from '../../libs/LoadingBar.js';
-//KOPIJA APP2 samo da ne zajebem
 
 class App{
 	constructor(){
@@ -123,13 +119,11 @@ class App{
             panelSize: { height: 0.2 },
             height: 102.4,
             info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
             button1: { type: "button", position:{ top: 54.4, left: 6.15 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button1 },
             button2: { type: "button", position:{ top: 54.4, left: 107.3 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button2 },
             button3: { type: "button", position:{ top: 54.4, left: 208.45}, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button3 },
             button4: { type: "button", position:{ top: 54.4, left: 309.6 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button4 },
             button5: { type: "button", position:{ top: 54.4, left: 410.75 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#02f", hover: "#3df", onSelect: button5 },
-            //continue: { type: "button", position:{ top: 70, right: 10 }, width: 200, height: 52, fontColor: "#fff", backgroundColor: "#1bf", hover: "#3df", onSelect: button4 },
             renderer: this.renderer
         }
         const content2 = {
@@ -208,7 +202,6 @@ class App{
     
     rectangles(n, canv){
         this.ui = canv;
-        //console.log(this);
         this.clearCanvas(this.ui);
         this.RenderFunction(this.ui);
         this.ui.context.save();
@@ -238,8 +231,6 @@ class App{
                 this.ui.context.save();
                 this.ui.context.fillStyle = 'black';
                 this.ui.context.fillText(x-60, x, b-2*c/3);
-                //this.app.ui.context.fillText(y, c/3, y);
-                //this.app.ui.context.fillRect(x,y,7,7);
                 this.ui.context.restore();
                 this.ui.context.fill();
             }
@@ -263,8 +254,6 @@ class App{
                     this.ui.context.fillText(x-60, x, b-2*c/3);
                     }
                 }
-                //this.app.ui.context.fillText(y, c/3, y);
-                //this.app.ui.context.fillRect(x,y,7,7);
                 this.ui.context.restore();
                 this.ui.context.fill();
                 area=p+n*(((i*n)-452)*((i*n)-452)/452);
@@ -282,7 +271,6 @@ class App{
         this.ui.context.restore();
         this.ui.needsUpdate = true;
         this.ui.texture.needsUpdate = true;
-        //console.log(area);
         this.ui.context.restore();
     }
     
@@ -297,23 +285,17 @@ class App{
         this.ui.context.fillRect(0,0,this.a,this.b);
         this.ui.needsUpdate = true;
         this.ui.texture.needsUpdate = true;
-        //console.log("clearCanvas");
         this.ui.context.restore();
     }
 
     // RenderFunction() renders the input funtion f on the canvas.
     RenderFunction(canv) {
         this.ui = canv;
-        //console.log(canv);
-        //console.log(this.ui);
         var XSTEP= 5;
         var first = true;
         const a = this.a;
         const b = this.b;
         const c = this.c;
-        //this.ui.context.fillStyle = '#fff';
-        //this.ui.context.clearRect(0, 0, a, b);
-        //this.ui.context.clear();
 
         //x and y axis with labels
         this.ui.context.beginPath();
@@ -350,7 +332,6 @@ class App{
         }
         }
         
-        //console.log('renderFunction');
         this.ui.context.restore();
         
     }
@@ -480,7 +461,6 @@ class App{
 
 
         const controller = this.renderer.xr.getController( 0 );
-        //controller.addEventListener( 'connected', onConnected );
         
         this.scene.add( controller );
         this.controller = controller;
