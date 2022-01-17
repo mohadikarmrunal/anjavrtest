@@ -69,7 +69,7 @@ class App{
     	this.renderer.setSize( window.innerWidth, window.innerHeight );  
     }
     
-    loadKnight(){
+    /*loadKnight(){
 	    const loader = new GLTFLoader().setPath(this.assetsPath);
 		const self = this;
 		
@@ -116,7 +116,7 @@ class App{
 
 			}
 		);
-	}		
+	}		*/
     
     initScene(){
         this.reticle = new THREE.Mesh(
@@ -128,7 +128,18 @@ class App{
         this.reticle.visible = false;
         this.scene.add( this.reticle );
         
-        this.loadKnight();
+
+        const geometry = new THREE.SphereGeometry( 15, 32, 16 );
+        const color = new THREE.Color ("rgb(235, 168, 52) ");
+		const material = new THREE.MeshStandardMaterial( { color: color});
+
+		this.mesh = new THREE.Mesh( geometry, material );
+        this.mesh.visible = false;
+        this.scene.add(this.mesh);
+        
+
+        //this.loadKnight();
+
     }
     
     setupXR(){
@@ -142,7 +153,7 @@ class App{
         this.hitTestSource = null;
         
         function onSelect() {
-            if (self.knight===undefined) return;
+            /*if (self.knight===undefined) return;
             
             if (self.reticle.visible){
                 if (self.knight.object.visible){
@@ -152,6 +163,11 @@ class App{
                     self.knight.object.position.setFromMatrixPosition( self.reticle.matrix );
                     self.knight.object.visible = true;
                 }
+            }*/
+            if (self.reticle.visible){
+                //self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
+                self.mesh.position.setFromMatrixPosition( self.reticle.matrix );
+                self.mesh.visible = true;
             }
         }
 
@@ -210,7 +226,7 @@ class App{
 
     render( timestamp, frame ) {
         const dt = this.clock.getDelta();
-        if (this.knight) this.knight.update(dt);
+        //) this.knight.update(dt);
 
         const self = this;
         
