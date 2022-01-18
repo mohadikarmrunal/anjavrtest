@@ -132,12 +132,12 @@ class App{
         this.reticle = this.initReticle();
         this.scene.add( this.reticle );
 
-        const boxgeometry = new THREE.BoxGeometry (2,0.01,2);
+        const boxgeometry = new THREE.BoxGeometry (1,0.01,1);
         const color = new THREE.Color ("rgb(235, 168, 52) ");
 		const material = new THREE.MeshStandardMaterial( { color: color});
         const boxmaterial = material.clone();
         boxmaterial.tranparent = true;
-        boxmaterial.opacity = 0.2;
+        boxmaterial.opacity = 0.1;
 
         this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
         this.floor.visible = false;
@@ -157,7 +157,7 @@ class App{
         
         function onSelect() {
             if (self.reticle.visible){
-                if (self.floor.visible){
+                if (true){
                     const pt = new THREE.Vector3();
                     pt.setFromMatrixPosition(self.reticle.matrix);
                     self.measurements.push(pt);
