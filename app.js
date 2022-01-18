@@ -133,7 +133,7 @@ class App{
         this.scene.add( this.reticle );
 
         const boxgeometry = new THREE.BoxGeometry (1,0.01,1);
-        const color = new THREE.Color ("rgb(235, 168, 52) ");
+        const color = new THREE.Color ("rgb(11, 9, 36) ");
 		const material = new THREE.MeshStandardMaterial( { color: color});
         const boxmaterial = material.clone();
         boxmaterial.tranparent = true;
@@ -157,7 +157,7 @@ class App{
         
         function onSelect() {
             if (self.reticle.visible){
-                if (true){
+                if (self.floor.visible){
                     const pt = new THREE.Vector3();
                     pt.setFromMatrixPosition(self.reticle.matrix);
                     self.measurements.push(pt);
