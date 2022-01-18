@@ -140,7 +140,7 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with loading a 3D Object!' );
-                alert('An error happened when loading 3D Objects. Refresh the page!');
+                alert('An error happened when loading 3D Objects. Refresh the page!!');
 
 			}
         );   
@@ -180,7 +180,7 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with loading a 3D Object!' );
-                alert('An error happened when loading 3D Objects. Refresh the page!');
+                alert('An error happened when loading 3D Objects. Refresh the page!!!');
 
 			}
         );
@@ -441,7 +441,7 @@ class App{
 			// called when loading has errors
 			function ( error ) {
 				console.log( 'An error happened with loading a 3D Object!' );
-                alert('An error happened when loading 3D Objects. Refresh the page!');
+                alert('An error happened when loading 3D Objects. Refresh the page!!!!');
 
 			}
         );
