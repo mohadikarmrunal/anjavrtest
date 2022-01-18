@@ -2,7 +2,6 @@ import * as THREE from '../../libs/three/three.module.js';
 import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { RGBELoader } from '../../libs/three/jsm/RGBELoader.js';
 import { ARButton } from '../../libs/ARButton.js';
-import { BufferGeometryUtils } from '../../libs/three/jsm/BufferGeometryUtils.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 import { Player } from '../../libs/Player.js';
 
@@ -36,18 +35,8 @@ class App{
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
 		container.appendChild( this.renderer.domElement );
         this.setEnvironment();
-
-        const labelContainer = document.createElement('div');
-        labelContainer.style.position = 'absolute';
-        labelContainer.style.top = '0px';
-        labelContainer.style.pointerEvents = 'none';
-        labelContainer.setAttribute('id', 'container');
-        container.appendChild(labelContainer);
-        this.labelContainer = labelContainer;
         
         this.workingVec3 = new THREE.Vector3();
-        this.labels = [];
-        this.measurements = [];
         
         this.initScene();
         this.setupXR();
@@ -128,45 +117,13 @@ class App{
 			}
 		);
 	}		*/
-    getCenterPoint(points) {
-        let line = new THREE.Line3(...points)
-        return line.getCenter( new THREE.Vector3() );
-    }
-
-    initLine(point) {
-        const lineMaterial = new THREE.LineBasicMaterial({
-            color: 0xffffff,
-            linewidth: 5,
-            linecap: 'round'
-        });
-
-        const lineGeometry = new THREE.BufferGeometry().setFromPoints([point, point]);
-        return new THREE.Line(lineGeometry, lineMaterial);
-    }
-
-    updateLine(matrix, line) {
-        const positions = line.geometry.attributes.position.array;
-        positions[3] = matrix.elements[12]
-        positions[4] = matrix.elements[13]
-        positions[5] = matrix.elements[14]
-        line.geometry.attributes.position.needsUpdate = true;
-        line.geometry.computeBoundingSphere();
-    }
-
+    
     initScene(){
-        /*this.reticle = new THREE.Mesh(
+        this.reticle = new THREE.Mesh(
             new THREE.RingBufferGeometry( 0.15, 0.2, 32 ).rotateX( - Math.PI / 2 ),
-            new THREE.MeshBasicMaterial()
-        );*/
-
-        let ring = new THREE.RingBufferGeometry(0.045, 0.05, 32).rotateX(- Math.PI / 2);
-        let dot = new THREE.CircleBufferGeometry(0.005, 32).rotateX(- Math.PI / 2);
-        const reticle = new THREE.Mesh(
-            BufferGeometryUtils.mergeBufferGeometries([ring, dot]),
             new THREE.MeshBasicMaterial()
         );
         
-        this.reticle = reticle;
         this.reticle.matrixAutoUpdate = false;
         this.reticle.visible = false;
         this.scene.add( this.reticle );
@@ -180,22 +137,10 @@ class App{
         this.mesh.visible = false;
         this.scene.add(this.mesh);
         this.mesh.scale.set(2,2,2);
-
-        const boxgeometry = new THREE.BoxGeometry (2,0.01,2);
-        const boxmaterial = material.clone();
-        boxmaterial.tranparent = true;
-        boxmaterial.opacity = 0.2;
-
-        this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
-        this.floor.visible = false;
-        this.scene.add(this.floor);
+        
 
         //this.loadKnight();
 
-    }
-
-    getDistance(points) {
-        if (points.length == 2) return points[0].distanceTo(points[1]);
     }
     
     setupXR(){
@@ -221,36 +166,11 @@ class App{
                 }
             }*/
             if (self.reticle.visible){
-
-                if (self.floor.visible)
-                {
-                    const pt = new THREE.Vector3();
-                    pt.setFromMatrixPosition(self.reticle.matrix);
-                    self.measurements.push(pt);
-                    if (self.measurements.length == 2) {
-                        const distance = Math.round(self.getDistance(self.measurements) * 100);
-      
-                        const text = document.createElement('div');
-                        text.className = 'label';
-                        text.style.color = 'rgb(255,255,255)';
-                        text.textContent = distance + ' cm';
-                        document.querySelector('#container').appendChild(text);
-      
-                        self.labels.push({div: text, point: self.getCenterPoint(self.measurements)});
-      
-                        self.measurements = [];
-                        self.currentLine = null;
-                      } else {
-                        self.currentLine = self.initLine(self.measurements[0]);
-                        self.scene.add(self.currentLine);
-                      }
-                }
-                else  {
-                    self.floor.visible = true;
-                    self.floor.position.setFromMatrixPosition( self.reticle.matrix );
-                }
-
+                self.mesh.visible = true;
                 //self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
+                self.mesh.position.setFromMatrixPosition( self.reticle.matrix );
+                console.log(self.reticle.matrix);
+                console.log(self.mesh.position);
                 console.log('reticle visible lol');
                
             }
@@ -258,7 +178,6 @@ class App{
 
         this.controller = this.renderer.xr.getController( 0 );
         this.controller.addEventListener( 'select', onSelect );
-
         
         this.scene.add( this.controller );  
         this.renderer.setAnimationLoop( this.render.bind(this) );  
@@ -284,7 +203,6 @@ class App{
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;
             self.referenceSpace = null;
-            self.mesh.visible = false;
 
         } );
 
