@@ -1,6 +1,8 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { BufferGeometryUtils } from '../../libs/three/jsm/BufferGeometryUtils.js';
 import { ARButton } from '../../libs/ARButton.js';
+import { CanvasUI } from '../../libs/CanvasUI.js'
+
 
 class App{
 	constructor(){
@@ -37,6 +39,8 @@ class App{
         this.workingVec3 = new THREE.Vector3();
         this.labels = [];
         this.measurements = [];
+        this.coordinates = [];
+        this.lines = [];
         
         this.initScene();
         this.setupXR();
@@ -127,8 +131,22 @@ class App{
         return vec
 
     }
+
+    area (coordinates){
+        const self = this;
+        var length = coordinates.length;
+        var a = coordinates[0].x*(coordinates[1].z-coordinates[length-1].z)+coordinates[length-1].x*(coordinates[0].z-coordinates[length-2].z);
+
+        for (let i=1;i<l-1;i++){
+            a = a + coordinates[i].x*(coordinates[i+1].z-coordinates[i-1].z);
+        }
+        if (a>=0) return a/2;
+        else return -a/2;
+    }
     
     initScene(){
+        const self = this;
+        
         this.reticle = this.initReticle();
         this.scene.add( this.reticle );
 
@@ -142,8 +160,79 @@ class App{
         this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
         this.floor.visible = false;
         this.scene.add(this.floor);
+
+        function back(){
+            self.ui2.mesh.visible = false;
+            self.ui1.mesh.visible = false;
+
+            self.hitTestSourceRequested = false;
+            self.hitTestSource = null;
+            self.referenceSpace = null;
+            self.floor.visible = false;
+
+            self.lines.forEach (element => self.scene.remove(self.element));
+        }
+
+        const config2 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back },
+            renderer: this.renderer
+        }
+
+        const content2 = {
+            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
+        }
+
+        const config1 = {
+            panelSize: { width: 0.5, height: 0.5 },
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:50,
+                fontSize:45,
+            },
+        }
+
+        const content1 = {
+            body: "",
+        }
+
+        const ui1 = new CanvasUI(content1, config1);
+        this.ui1 = ui1;
+        this.ui1.mesh.position.set(0,0,-0.6);
+        this.ui1.mesh.visible = false;
+
+        const ui2 = new CanvasUI(content2, config2);
+        this.ui2 = ui2;
+        this.ui2.mesh.position.set(-0.15,0.145,-0.5);
+        this.ui2.mesh.visible = false;
+        
+
+        function calculate (){
+            self.ui1.mesh.visible = true;
+            self.ui2.mesh.visible = true;
+            self.ui1.updateElement('body', "AREA IS" + self.area(self.coordinates).toString());
+        }
+        //goback button1
+        const config = {
+            panelSize: { width: 0.035, height: 0.035 },
+            button: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: calculate },
+            renderer: this.renderer
+        }
+
+        const content = {
+            button: "CALCULATE!",
+        }
+
+        const ui = new CanvasUI(content, config);
+        this.ui = ui;
+        this.ui.mesh.position.set(-0.15,0.145,-0.5);
+        this.ui.mesh.visible = false;
+    }   
+
   
-    }
+
     
     setupXR(){
         this.renderer.xr.enabled = true;
@@ -156,11 +245,22 @@ class App{
         this.hitTestSource = null;
         
         function onSelect() {
+
+            self.ui.mesh.visible = true;
+
+            self.scene.add(self.ui1.mesh);
+            self.camera.add(self.ui1.mesh);
+            self.scene.add(self.ui2.mesh);
+            self.camera.add(self.ui2.mesh);
+            self.scene.add(self.ui.mesh);
+            self.camera.add(self.ui.mesh);
+
             if (self.reticle.visible){
                 if (self.floor.visible){
                     const pt = new THREE.Vector3();
                     pt.setFromMatrixPosition(self.reticle.matrix);
                     self.measurements.push(pt);
+                    self.coordinates.push(pt);
                     if (self.measurements.length == 2) {
                         const distance = Math.round(self.getDistance(self.measurements) * 100);
 
@@ -172,10 +272,11 @@ class App{
 
                         self.labels.push({div: text, point: self.getCenterPoint(self.measurements)});
 
-                         self.measurements = [];
-                         self.currentLine = null;
+                        self.measurements = [];
+                        self.currentLine = null;
                     } else {
                         self.currentLine = self.initLine(self.measurements[0]);
+                        self.lines.push(self.currentLine);
                         self.scene.add(self.currentLine);
                     }
                 }
@@ -215,6 +316,12 @@ class App{
             self.hitTestSource = null;
             self.referenceSpace = null;
             self.floor.visible = false;
+
+            self.ui1.mesh.visible = false;
+            self.scene.remove(self.ui1.mesh);
+            self.camera.remove(self.ui1.mesh);
+
+            self.lines.forEach (element => self.scene.remove(self.element));
 
         } );
 
@@ -260,7 +367,11 @@ class App{
             const pos = self.toScreenPosition(label.point, self.renderer.xr.getCamera(self.camera));
             label.div.style.transform = `translate(-50%, -50%) translate(${pos.x}px,${pos.y}px)`;
         })
-
+        if ( this.renderer.xr.isPresenting ) {
+            this.ui.update();
+            this.ui1.update();
+            this.ui2.update();
+        }
         this.renderer.render( this.scene, this.camera );
     }
 }
