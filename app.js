@@ -137,8 +137,8 @@ class App{
             for (let i=1;i<length-1;i++){
              a = a + coordinates[i].x*(coordinates[i+1].z-coordinates[i-1].z);
             }
-            if (a>=0) return a/2;
-            else return -a/2;
+            if (a>=0) return Math.round(a/2);
+            else return -Math.round(a/2);
         }
         else return 0;
 
@@ -216,7 +216,7 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
 
-            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString());
+            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString()+", first point is ("+self.coordinates[0].x.toString()+","+self.coordinates[0].y.toString()+","+self.coordinates[0].z.toString()+"); "+"second point is ("+self.coordinates[1].x.toString()+","+self.coordinates[1].y.toString()+","+self.coordinates[1].z.toString()+");"+"third point is ("+self.coordinates[2].x.toString()+","+self.coordinates[2].y.toString()+","+self.coordinates[2].z.toString()+");");
             console.log(self.coordinates);
             console.log(self.area(self.coordinates));
         }
