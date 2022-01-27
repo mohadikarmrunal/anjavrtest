@@ -216,7 +216,7 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
 
-            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString()+", first point is ("+self.coordinates[0].x.toString()+","+self.coordinates[0].y.toString()+","+self.coordinates[0].z.toString()+"); "+"second point is ("+self.coordinates[1].x.toString()+","+self.coordinates[1].y.toString()+","+self.coordinates[1].z.toString()+");"+"third point is ("+self.coordinates[2].x.toString()+","+self.coordinates[2].y.toString()+","+self.coordinates[2].z.toString()+");");
+            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString()+", first point is ("+ (Math.round(self.coordinates[0].x)).toString()+","+(Math.round(self.coordinates[0].y)).toString()+","+(Math.round(self.coordinates[0].z)).toString()+"); "+"second point is ("+(Math.round(self.coordinates[1].x)).toString()+","+(Math.round(self.coordinates[1].y)).toString()+","+(Math.round(self.coordinates[1].z)).toString()+");"+"third point is ("+(Math.round(self.coordinates[2].x)).toString()+","+(Math.round(self.coordinates[2].y)).toString()+","+(Math.round(self.coordinates[2].z)).toString()+");");
             console.log(self.coordinates);
             console.log(self.area(self.coordinates));
         }
