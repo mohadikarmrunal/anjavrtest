@@ -41,7 +41,22 @@ class App{
         this.measurements = [];
         this.coordinates = [];
         this.lines = [];
-        
+        /*var vekt1 = new THREE.Vector3(0,2,9);
+        var vekt2 = new THREE.Vector3(13,2,7);
+        var vekt3 = new THREE.Vector3(15,2,-9);
+        var vekt4 = new THREE.Vector3(11,2,-6);
+        var vekt5 = new THREE.Vector3(-2,2,-10);
+        var vekt6 = new THREE.Vector3(-4,2,-3);
+        var vekt7 = new THREE.Vector3(-7,2,4);
+
+        this.coordinates.push(vekt1);
+        this.coordinates.push(vekt2);
+        this.coordinates.push(vekt3);
+        this.coordinates.push(vekt4);
+        this.coordinates.push(vekt5);
+        this.coordinates.push(vekt6);
+        this.coordinates.push(vekt7);*/
+
         this.initScene();
         this.setupXR();
         
@@ -115,10 +130,11 @@ class App{
         const self = this;
         var length = coordinates.length;
 
-        if (length>3){
+        if (length>2){
+            console.log(length);
             var a = coordinates[0].x*(coordinates[1].z-coordinates[length-1].z)+coordinates[length-1].x*(coordinates[0].z-coordinates[length-2].z);
 
-            for (let i=1;i<l-1;i++){
+            for (let i=1;i<length-1;i++){
              a = a + coordinates[i].x*(coordinates[i+1].z-coordinates[i-1].z);
             }
             if (a>=0) return a/2;
@@ -200,7 +216,9 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
 
-            self.ui.updateElement('body', "AREA IS" + self.area(self.coordinates).toString());
+            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString());
+            console.log(self.coordinates);
+            console.log(self.area(self.coordinates));
         }
        
         const config2 = {
@@ -216,13 +234,16 @@ class App{
        
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0,0.1,-1);
+        this.ui1.mesh.position.set(0,0.1,-0.7);
+        this.ui1.mesh.scale.set(2,2,2);
         this.ui1.mesh.visible = false;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.15,0.1,-1);
+        this.ui2.mesh.position.set(-0.15,0.1,-0.7);
+        this.ui2.mesh.scale.set(2,2,2);
         this.ui2.mesh.visible = false;
+
 
         //ui3 is the canvas for going back 
         function back(){
@@ -351,6 +372,8 @@ class App{
             self.ui3.mesh.visible = false;
             self.ui1.mesh.visible = false;
             self.ui2.mesh.visible = false;
+            self.ui.mesh.visible = false;
+
 
             self.scene.remove(self.ui1.mesh);
             
