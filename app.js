@@ -10,7 +10,7 @@ class App{
 		document.body.appendChild( container );
         
         this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
-		this.camera.position.set( 0, 1.6, 3 );
+		//this.camera.position.set( 0, 1.6, 3 );
         
 		this.scene = new THREE.Scene();
 
@@ -51,29 +51,8 @@ class App{
         
 	}
 
-    setEnvironment(){
-        const loader = new RGBELoader().setDataType( THREE.UnsignedByteType );
-        const pmremGenerator = new THREE.PMREMGenerator( this.renderer );
-        pmremGenerator.compileEquirectangularShader();
-        
-        const self = this;
-        
-        loader.load( '../../assets/venice_sunset_1k.hdr', ( texture ) => {
-          const envMap = pmremGenerator.fromEquirectangular( texture ).texture;
-          pmremGenerator.dispose();
-
-          self.scene.environment = envMap;
-
-        }, undefined, (err)=>{
-            console.error( 'An error occurred setting the environment');
-        } );
-    }
 	
-    resize(){ 
-        this.camera.aspect = window.innerWidth / window.innerHeight;
-    	this.camera.updateProjectionMatrix();
-    	this.renderer.setSize( window.innerWidth, window.innerHeight );  
-    }	
+   
     
     getCenterPoint(points) {
         let line = new THREE.Line3(...points)
@@ -135,13 +114,18 @@ class App{
     area (coordinates){
         const self = this;
         var length = coordinates.length;
-        var a = coordinates[0].x*(coordinates[1].z-coordinates[length-1].z)+coordinates[length-1].x*(coordinates[0].z-coordinates[length-2].z);
 
-        for (let i=1;i<l-1;i++){
-            a = a + coordinates[i].x*(coordinates[i+1].z-coordinates[i-1].z);
+        if (length>3){
+            var a = coordinates[0].x*(coordinates[1].z-coordinates[length-1].z)+coordinates[length-1].x*(coordinates[0].z-coordinates[length-2].z);
+
+            for (let i=1;i<l-1;i++){
+             a = a + coordinates[i].x*(coordinates[i+1].z-coordinates[i-1].z);
+            }
+            if (a>=0) return a/2;
+            else return -a/2;
         }
-        if (a>=0) return a/2;
-        else return -a/2;
+        else return 0;
+
     }
     
     initScene(){
@@ -161,74 +145,115 @@ class App{
         this.floor.visible = false;
         this.scene.add(this.floor);
 
-        function back(){
-            self.ui2.mesh.visible = false;
-            self.ui1.mesh.visible = false;
-
-            self.hitTestSourceRequested = false;
-            self.hitTestSource = null;
-            self.referenceSpace = null;
-            self.floor.visible = false;
-
-            self.lines.forEach (element => self.scene.remove(self.element));
-        }
-
-        const config2 = {
-            panelSize: { width: 0.035, height: 0.035 },
-            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back },
-            renderer: this.renderer
-        }
-
-        const content2 = {
-            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
-        }
-
-        const config1 = {
+      
+        //ui is the main canvas that appears
+        const config = {
             panelSize: { width: 0.5, height: 0.5 },
             body:{
+                type:"text",
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
                 padding:50,
                 fontSize:45,
             },
+            //image: { type: "img", position: { left: 0, top: 0 }},
+        }
+
+        const content = {
+            //image: "../../assets/theory12.png",
+            body:""
+        }
+
+        const ui = new CanvasUI(content, config);
+        this.ui = ui;
+        this.ui.mesh.position.set(0,0,-0.6);
+        self.ui.mesh.visible = false;
+
+
+        //ui1 is the reset button
+        function reset(){
+            console.log('Button for reseting is pressed!');
+            self.hitTestSourceRequested = false;
+            self.hitTestSource = null;
+            self.referenceSpace = null;
+            self.floor.visible = false;
+            self.lines.forEach (element => self.scene.remove(self.element));
+            //DODATI DA SE OBRISU CM BROJEVI
+        }
+
+        const config1 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            reset: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: reset },
+            renderer: this.renderer
         }
 
         const content1 = {
-            body: "",
+            reset: "RESET!",
         }
 
-        const ui1 = new CanvasUI(content1, config1);
-        this.ui1 = ui1;
-        this.ui1.mesh.position.set(0,0,-0.6);
-        this.ui1.mesh.visible = false;
-
-        const ui2 = new CanvasUI(content2, config2);
-        this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.15,0.145,-0.5);
-        this.ui2.mesh.visible = false;
-        
-
+        //ui2 is the button for calcuating the area!
         function calculate (){
-            self.ui1.mesh.visible = true;
-            self.ui2.mesh.visible = true;
-            self.ui1.updateElement('body', "AREA IS" + self.area(self.coordinates).toString());
+            self.scene.add(self.ui.mesh);
+            self.ui.mesh.visible = true;
+
+            self.scene.add(self.ui3.mesh);
+            self.ui3.mesh.visible = true;
+
+            self.ui.updateElement('body', "AREA IS" + self.area(self.coordinates).toString());
         }
-        //goback button1
-        const config = {
+       
+        const config2 = {
             panelSize: { width: 0.035, height: 0.035 },
             button: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: calculate },
             renderer: this.renderer
         }
 
-        const content = {
-            button: "CALCULATE!",
+        const content2 = {
+            button: "CALC!",
         }
 
-        const ui = new CanvasUI(content, config);
-        this.ui = ui;
-        this.ui.mesh.position.set(-0.15,0.145,-0.5);
-        this.ui.mesh.visible = false;
+       
+        const ui1 = new CanvasUI(content1, config1);
+        this.ui1 = ui1;
+        this.ui1.mesh.position.set(0,0.1,-1);
+        this.ui1.mesh.visible = false;
+
+        const ui2 = new CanvasUI(content2, config2);
+        this.ui2 = ui2;
+        this.ui2.mesh.position.set(-0.15,0.1,-1);
+        this.ui2.mesh.visible = false;
+
+        //ui3 is the canvas for going back 
+        function back(){
+            self.ui.mesh.visible = false;
+            self.ui3.mesh.visible = false;
+
+            self.scene.remove(self.ui.mesh);
+            self.scene.remove(self.ui3.mesh);
+            self.ui.updateElement('body', "AREA IS");
+
+            self.hitTestSourceRequested = false;
+            self.hitTestSource = null;
+            self.referenceSpace = null;
+            self.floor.visible = false;
+            self.lines.forEach (element => self.scene.remove(self.element));
+        }
+
+        const config3 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back },
+            renderer: this.renderer
+        }
+
+        const content3 = {
+            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
+        }
+
+        const ui3 = new CanvasUI(content3, config3);
+        this.ui3 = ui3;
+        this.ui3.mesh.position.set(0.15,0.15,-0.5);
+        this.ui3.mesh.visible = false;
     }   
 
   
@@ -236,24 +261,30 @@ class App{
     
     setupXR(){
         this.renderer.xr.enabled = true;
-        
-        const btn = new ARButton( this.renderer, { sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
-        
         const self = this;
+        
+        const btn = new ARButton( this.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
+        
+       
 
         this.hitTestSourceRequested = false;
         this.hitTestSource = null;
+
+        function onSessionStart(){
+            console.log("on sessionstart happened");
+
+            self.ui1.mesh.visible = true;
+            self.ui2.mesh.visible = true;
+            
+            self.scene.add(self.ui1.mesh);
+            self.scene.add(self.ui2.mesh);
+           
+        }
         
         function onSelect() {
+            console.log("on select happened");
 
-            self.ui.mesh.visible = true;
 
-            self.scene.add(self.ui1.mesh);
-            self.camera.add(self.ui1.mesh);
-            self.scene.add(self.ui2.mesh);
-            self.camera.add(self.ui2.mesh);
-            self.scene.add(self.ui.mesh);
-            self.camera.add(self.ui.mesh);
 
             if (self.reticle.visible){
                 if (self.floor.visible){
@@ -316,10 +347,13 @@ class App{
             self.hitTestSource = null;
             self.referenceSpace = null;
             self.floor.visible = false;
-
+            
+            self.ui3.mesh.visible = false;
             self.ui1.mesh.visible = false;
+            self.ui2.mesh.visible = false;
+
             self.scene.remove(self.ui1.mesh);
-            self.camera.remove(self.ui1.mesh);
+            
 
             self.lines.forEach (element => self.scene.remove(self.element));
 
@@ -351,6 +385,12 @@ class App{
 
     }            
 
+    resize(){ 
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+    	this.camera.updateProjectionMatrix();
+    	this.renderer.setSize( window.innerWidth, window.innerHeight );  
+    }	
+
     render( timestamp, frame ) {
 
         const self = this;
@@ -367,11 +407,14 @@ class App{
             const pos = self.toScreenPosition(label.point, self.renderer.xr.getCamera(self.camera));
             label.div.style.transform = `translate(-50%, -50%) translate(${pos.x}px,${pos.y}px)`;
         })
+
         if ( this.renderer.xr.isPresenting ) {
             this.ui.update();
+            this.ui3.update();
             this.ui1.update();
             this.ui2.update();
         }
+
         this.renderer.render( this.scene, this.camera );
     }
 }
