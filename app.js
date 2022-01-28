@@ -137,8 +137,8 @@ class App{
             for (let i=1;i<length-1;i++){
              a = a + coordinates[i].x*(coordinates[i+1].z-coordinates[i-1].z);
             }
-            if (a>=0) return Math.round(a/2);
-            else return -Math.round(a/2);
+            if (a>=0) return Math.floor(a*50);
+            else return -Math.floor(a*50);
         }
         else return 0;
 
@@ -216,7 +216,7 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
 
-            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString()+", first point is ("+ (Math.round(self.coordinates[0].x)).toString()+","+(Math.round(self.coordinates[0].y)).toString()+","+(Math.round(self.coordinates[0].z)).toString()+"); "+"second point is ("+(Math.round(self.coordinates[1].x)).toString()+","+(Math.round(self.coordinates[1].y)).toString()+","+(Math.round(self.coordinates[1].z)).toString()+");"+"third point is ("+(Math.round(self.coordinates[2].x)).toString()+","+(Math.round(self.coordinates[2].y)).toString()+","+(Math.round(self.coordinates[2].z)).toString()+");");
+            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString()+", first point is ("+ (Math.floor(self.coordinates[0].x*100)).toString()+","+(Math.floor(self.coordinates[0].y*100)).toString()+","+(Math.floor(self.coordinates[0].z*100)).toString()+"); "+"second point is ("+(Math.floor(self.coordinates[1].x*100)).toString()+","+(Math.floor(self.coordinates[1].y*100)).toString()+","+(Math.floor(self.coordinates[1].z*100)).toString()+");"+"third point is ("+(Math.floor(self.coordinates[2].x*100)).toString()+","+(Math.floor(self.coordinates[2].y*100)).toString()+","+(Math.floor(self.coordinates[2].z*100)).toString()+");");
             console.log(self.coordinates);
             console.log(self.area(self.coordinates));
         }
@@ -314,7 +314,7 @@ class App{
                     self.measurements.push(pt);
                     self.coordinates.push(pt);
                     if (self.measurements.length == 2) {
-                        const distance = Math.round(self.getDistance(self.measurements) * 100);
+                        const distance = Math.floor(self.getDistance(self.measurements) * 100);
 
                         const text = document.createElement('div');
                         text.className = 'label';
