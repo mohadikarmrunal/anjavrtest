@@ -41,21 +41,45 @@ class App{
         this.measurements = [];
         this.coordinates = [];
         this.lines = [];
-        /*var vekt1 = new THREE.Vector3(0,2,9);
+        this.newcoord = [];
+
+        var vekt1 = new THREE.Vector3(0,2,9);
         var vekt2 = new THREE.Vector3(13,2,7);
         var vekt3 = new THREE.Vector3(15,2,-9);
         var vekt4 = new THREE.Vector3(11,2,-6);
         var vekt5 = new THREE.Vector3(-2,2,-10);
         var vekt6 = new THREE.Vector3(-4,2,-3);
         var vekt7 = new THREE.Vector3(-7,2,4);
-
+        var vekt12 = vekt1.clone();
+        var vekt22 = vekt2.clone();
+        var vekt32 = vekt3.clone();
+        var vekt42 = vekt4.clone();
+        var vekt52 = vekt5.clone();
+        var vekt62 = vekt6.clone();
+        var vekt72 = vekt7.clone();
+    
         this.coordinates.push(vekt1);
         this.coordinates.push(vekt2);
+        this.coordinates.push(vekt22);
         this.coordinates.push(vekt3);
+        this.coordinates.push(vekt32);
         this.coordinates.push(vekt4);
-        this.coordinates.push(vekt5);
+        this.coordinates.push(vekt42);
+        this.coordinates.push(vekt5);        
+        this.coordinates.push(vekt52);
         this.coordinates.push(vekt6);
-        this.coordinates.push(vekt7);*/
+        this.coordinates.push(vekt62);
+        this.coordinates.push(vekt7);
+        this.coordinates.push(vekt72);
+        this.coordinates.push(vekt12);
+        //this.coordinates.push(new THREE.Vector3(-7,2,4));
+
+        /*const self = this;
+        console.log(this.coordinates);
+        if (this.coordcheck(this.coordinates) == 1){
+            console.log(self.newcoord);
+        }
+        else console.log("Polygon is bad!");*/
 
         this.initScene();
         this.setupXR();
@@ -76,7 +100,7 @@ class App{
 
     initLine(point) {
         const lineMaterial = new THREE.LineBasicMaterial({
-            color: 0xffffff,
+            color: 0x000000,
             linewidth: 5,
             linecap: 'round'
         });
@@ -127,16 +151,41 @@ class App{
 
     }
 
+    coordcheck(coordinates){
+        const self = this;
+        var newcoord1 = [];
+        var length = coordinates.length;
+        //multiply each axis-component with 100 to get the positions
+        for (let i=0;i<length;i++){
+            newcoord1[i]= new THREE.Vector2(coordinates[i].x*100,coordinates[i].z*100);
+        }
+
+        //check if they form a polygone
+        if (newcoord1[0].distanceTo(newcoord1[length-1]) > 4) return 0;
+        for (let j=1;j<(length-1);j=j+2){
+            
+            if (newcoord1[j].distanceTo(newcoord1[j+1]) > 4) {
+                return 0;
+            }
+        }
+        
+        //fill the newcoord without double point
+        for (let k=0;k<(length-1);k=k+2) {
+            self.newcoord.push(newcoord1[k]);
+        }
+        return 1;
+    }
+
     area (coordinates){
         const self = this;
         var length = coordinates.length;
 
         if (length>2){
             console.log(length);
-            var a = 100*coordinates[0].x*((100*coordinates[1].z)-(100*coordinates[length-1].z))+100*coordinates[length-1].x*((100*coordinates[0].z)-(100*coordinates[length-2].z));
+            var a = coordinates[0].x*(coordinates[1].y-coordinates[length-1].y)+coordinates[length-1].x*(coordinates[0].y-coordinates[length-2].y);
 
             for (let i=1;i<length-1;i++){
-             a = a + 100*coordinates[i].x*((100*coordinates[i+1].z)-(100*coordinates[i-1].z));
+             a = a + coordinates[i].x*(coordinates[i+1].y-coordinates[i-1].y);
             }
             if (a>=0) return Math.floor(a/2);
             else return -Math.floor(a/2);
@@ -217,9 +266,16 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
 
-            self.ui.updateElement('body', "AREA IS " + self.area(self.coordinates).toString()+", first point is ("+ (Math.floor(self.coordinates[0].x*100)).toString()+","+(Math.floor(self.coordinates[0].y*100)).toString()+","+(Math.floor(self.coordinates[0].z*100)).toString()+"); "+"second point is ("+(Math.floor(self.coordinates[1].x*100)).toString()+","+(Math.floor(self.coordinates[1].y*100)).toString()+","+(Math.floor(self.coordinates[1].z*100)).toString()+");"+"third point is ("+(Math.floor(self.coordinates[2].x*100)).toString()+","+(Math.floor(self.coordinates[2].y*100)).toString()+","+(Math.floor(self.coordinates[2].z*100)).toString()+");");
+            ;
+            
+            if (self.coordcheck(self.coordinates) == 0){
+                self.ui.updateElement('body',"An error apeared with the polygon! Reset the app and try again!");
+            }
+            else  self.ui.updateElement('body', "AREA IS " + self.area(self.newcoord).toString()+", length ="+(self.newcoord.length).toString()+", first point is ("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"second point is ("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"third point is ("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
+
             console.log(self.coordinates);
-            console.log(self.area(self.coordinates));
+            console.log (self.newcoord);
+            console.log(self.area(self.newcoord));
         }
        
         const config2 = {
@@ -304,16 +360,12 @@ class App{
         }
         
         function onSelect() {
-            console.log("on select happened");
-
-
-
             if (self.reticle.visible){
                 if (self.floor.visible){
                     const pt = new THREE.Vector3();
                     pt.setFromMatrixPosition(self.reticle.matrix);
                     self.measurements.push(pt);
-                    self.coordinates.push(pt);
+                    //self.coordinates.push(pt);
                     if (self.measurements.length == 2) {
                         const distance = Math.floor(self.getDistance(self.measurements) * 100);
 
