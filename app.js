@@ -44,7 +44,7 @@ class App{
         this.lines = [];
         this.newcoord = [];
 
-        /*var vekt1 = new THREE.Vector3(0,2,9);
+       /* var vekt1 = new THREE.Vector3(0,2,9);
         var vekt2 = new THREE.Vector3(13,2,7);
         var vekt3 = new THREE.Vector3(15,2,-9);
         var vekt4 = new THREE.Vector3(11,2,-6);
@@ -74,6 +74,7 @@ class App{
         this.coordinates.push(vekt72);
         this.coordinates.push(vekt12);
         //this.coordinates.push(new THREE.Vector3(-7,2,4));*/
+    
 
         /*const self = this;
         console.log(this.coordinates);
@@ -246,6 +247,12 @@ class App{
             self.referenceSpace = null;
             self.floor.visible = false;
             self.lines.forEach (element => self.scene.remove(self.element));
+            self.labels.splice(0,self.labels.length);
+            self.coordinates.splice(0,self.coordinates.length);
+            self.newcoord.splice(0,self.newcoord.length);
+            console.log(self.coordinates);
+            console.log(self.newcoord);
+            console.log(self.label);
             //DODATI DA SE OBRISU CM BROJEVI
         }
 
@@ -269,14 +276,13 @@ class App{
             self.camera.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
 
-            
-           if (self.newcoord.length==0){
+            if (self.coordinates.length==0){
                 self.ui.updateElement('body',"An error apeared with the polygon! Reset the app and try again! Coordinates haven't even loaded");
             }
             else if (self.coordcheck(self.coordinates) == 0) {
                 self.ui.updateElement('body',"An error apeared with the polygon! Polygon wasn't properly drawn! Reset the app and try again! ");
-
             }
+            
             else self.ui.updateElement('body', "AREA IS " + self.area(self.newcoord).toString()+", length ="+(self.newcoord.length).toString()+", first point is ("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"second point is ("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"third point is ("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
 
             console.log(self.coordinates);
@@ -358,8 +364,6 @@ class App{
         this.hitTestSource = null;
 
         function onSessionStart(){
-            console.log("on sessionstart happened");
-
             self.ui1.mesh.visible = true;
             self.ui2.mesh.visible = true;
             
