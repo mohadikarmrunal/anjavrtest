@@ -101,6 +101,7 @@ class App{
             BufferGeometryUtils.mergeBufferGeometries([ring, dot]),
             new THREE.MeshBasicMaterial()
         );
+        reticle.material.color = new THREE.Color(0x000000);
         reticle.matrixAutoUpdate = false;
         reticle.visible = false;
         return reticle;
@@ -132,13 +133,13 @@ class App{
 
         if (length>2){
             console.log(length);
-            var a = coordinates[0].x*(coordinates[1].z-coordinates[length-1].z)+coordinates[length-1].x*(coordinates[0].z-coordinates[length-2].z);
+            var a = 100*coordinates[0].x*((100*coordinates[1].z)-(100*coordinates[length-1].z))+100*coordinates[length-1].x*((100*coordinates[0].z)-(100*coordinates[length-2].z));
 
             for (let i=1;i<length-1;i++){
-             a = a + coordinates[i].x*(coordinates[i+1].z-coordinates[i-1].z);
+             a = a + 100*coordinates[i].x*((100*coordinates[i+1].z)-(100*coordinates[i-1].z));
             }
-            if (a>=0) return Math.floor(a*50);
-            else return -Math.floor(a*50);
+            if (a>=0) return Math.floor(a/2);
+            else return -Math.floor(a/2);
         }
         else return 0;
 
