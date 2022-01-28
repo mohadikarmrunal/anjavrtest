@@ -13,6 +13,7 @@ class App{
 		//this.camera.position.set( 0, 1.6, 3 );
         
 		this.scene = new THREE.Scene();
+        this.scene.add(this.camera);
 
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 2);
         ambient.position.set( 0.5, 1, 0.25 );
@@ -250,7 +251,7 @@ class App{
 
         const config1 = {
             panelSize: { width: 0.035, height: 0.035 },
-            reset: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: reset },
+            reset: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:60, hover: "#4c5ba6", onSelect: reset },
             renderer: this.renderer
         }
 
@@ -261,14 +262,15 @@ class App{
         //ui2 is the button for calcuating the area!
         function calculate (){
             self.scene.add(self.ui.mesh);
+            self.camera.add(self.ui.mesh);
             self.ui.mesh.visible = true;
 
             self.scene.add(self.ui3.mesh);
+            self.camera.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
 
-            ;
             
-            if (self.coordcheck(self.coordinates) == 0){
+           if (self.newcoord.length==0 || self.coordcheck(self.coordinates) == 0){
                 self.ui.updateElement('body',"An error apeared with the polygon! Reset the app and try again!");
             }
             else  self.ui.updateElement('body', "AREA IS " + self.area(self.newcoord).toString()+", length ="+(self.newcoord.length).toString()+", first point is ("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"second point is ("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"third point is ("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
@@ -280,7 +282,7 @@ class App{
        
         const config2 = {
             panelSize: { width: 0.035, height: 0.035 },
-            button: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: calculate },
+            button: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:60, hover: "#4c5ba6", onSelect: calculate },
             renderer: this.renderer
         }
 
@@ -309,6 +311,9 @@ class App{
 
             self.scene.remove(self.ui.mesh);
             self.scene.remove(self.ui3.mesh);
+            self.camera.remove(self.ui.mesh);
+            self.camera.remove(self.ui3.mesh);
+
             self.ui.updateElement('body', "AREA IS");
 
             self.hitTestSourceRequested = false;
@@ -356,6 +361,8 @@ class App{
             
             self.scene.add(self.ui1.mesh);
             self.scene.add(self.ui2.mesh);
+            self.camera.add(self.ui1.mesh);
+            self.camera.add(self.ui2.mesh);
            
         }
         
@@ -429,7 +436,7 @@ class App{
 
 
             self.scene.remove(self.ui1.mesh);
-            
+            self.camera.remove(self.ui1.mesh);
 
             self.lines.forEach (element => self.scene.remove(self.element));
 
