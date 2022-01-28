@@ -43,7 +43,7 @@ class App{
         this.lines = [];
         this.newcoord = [];
 
-        var vekt1 = new THREE.Vector3(0,2,9);
+        /*var vekt1 = new THREE.Vector3(0,2,9);
         var vekt2 = new THREE.Vector3(13,2,7);
         var vekt3 = new THREE.Vector3(15,2,-9);
         var vekt4 = new THREE.Vector3(11,2,-6);
@@ -72,7 +72,7 @@ class App{
         this.coordinates.push(vekt7);
         this.coordinates.push(vekt72);
         this.coordinates.push(vekt12);
-        //this.coordinates.push(new THREE.Vector3(-7,2,4));
+        //this.coordinates.push(new THREE.Vector3(-7,2,4));*/
 
         /*const self = this;
         console.log(this.coordinates);
@@ -365,7 +365,7 @@ class App{
                     const pt = new THREE.Vector3();
                     pt.setFromMatrixPosition(self.reticle.matrix);
                     self.measurements.push(pt);
-                    //self.coordinates.push(pt);
+                    self.coordinates.push(pt);
                     if (self.measurements.length == 2) {
                         const distance = Math.floor(self.getDistance(self.measurements) * 100);
 
