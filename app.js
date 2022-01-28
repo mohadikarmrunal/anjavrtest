@@ -43,35 +43,36 @@ class App{
         this.coordinates = [];
         this.lines = [];
         this.newcoord = [];
+        this.sidelength = [];
 
-       /* var vekt1 = new THREE.Vector3(0,2,9);
+        var vekt1 = new THREE.Vector3(0,2,9);
         var vekt2 = new THREE.Vector3(13,2,7);
         var vekt3 = new THREE.Vector3(15,2,-9);
-        var vekt4 = new THREE.Vector3(11,2,-6);
+        /*var vekt4 = new THREE.Vector3(11,2,-6);
         var vekt5 = new THREE.Vector3(-2,2,-10);
         var vekt6 = new THREE.Vector3(-4,2,-3);
-        var vekt7 = new THREE.Vector3(-7,2,4);
+        var vekt7 = new THREE.Vector3(-7,2,4);*/
         var vekt12 = vekt1.clone();
         var vekt22 = vekt2.clone();
         var vekt32 = vekt3.clone();
-        var vekt42 = vekt4.clone();
+        /*var vekt42 = vekt4.clone();
         var vekt52 = vekt5.clone();
         var vekt62 = vekt6.clone();
-        var vekt72 = vekt7.clone();
+        var vekt72 = vekt7.clone();*/
     
         this.coordinates.push(vekt1);
         this.coordinates.push(vekt2);
         this.coordinates.push(vekt22);
         this.coordinates.push(vekt3);
         this.coordinates.push(vekt32);
-        this.coordinates.push(vekt4);
+        /*this.coordinates.push(vekt4);
         this.coordinates.push(vekt42);
         this.coordinates.push(vekt5);        
         this.coordinates.push(vekt52);
         this.coordinates.push(vekt6);
         this.coordinates.push(vekt62);
         this.coordinates.push(vekt7);
-        this.coordinates.push(vekt72);
+        this.coordinates.push(vekt72);*/
         this.coordinates.push(vekt12);
         //this.coordinates.push(new THREE.Vector3(-7,2,4));*/
     
@@ -181,8 +182,13 @@ class App{
     area (coordinates){
         const self = this;
         var length = coordinates.length;
+        
+        if (length==3){
+            var s = (self.sidelength[0]+self.sidelength[1]+self.sidelength[2])/2;
+            return Math.floor(Math.sqrt(s*(s-self.sidelength[0])*(s-self.sidelength[1])*(s-self.sidelength[2])));
 
-        if (length>2){
+        }
+        else if (length>3){
             console.log(length);
             var a = coordinates[0].x*(coordinates[1].y-coordinates[length-1].y)+coordinates[length-1].x*(coordinates[0].y-coordinates[length-2].y);
 
@@ -282,7 +288,9 @@ class App{
             else if (self.coordcheck(self.coordinates) == 0) {
                 self.ui.updateElement('body',"An error apeared with the polygon! Polygon wasn't properly drawn! Reset the app and try again! ");
             }
-            
+            else if (self.newcoord.length == 2) {
+                self.ui.updateElement('body',"An error apeared with the polygon! Polygon has only two points! Reset the app and try again! ");
+            }
             else self.ui.updateElement('body', "AREA IS " + self.area(self.newcoord).toString()+", length ="+(self.newcoord.length).toString()+", first point is ("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"second point is ("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"third point is ("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
 
             console.log(self.coordinates);
@@ -389,7 +397,7 @@ class App{
                         text.style.color = 'rgb(255,255,255)';
                         text.textContent = distance + ' cm';
                         document.querySelector('#container').appendChild(text);
-
+                        self.sidelength.push(distance);
                         self.labels.push({div: text, point: self.getCenterPoint(self.measurements)});
 
                         self.measurements = [];
