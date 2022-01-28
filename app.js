@@ -270,10 +270,14 @@ class App{
             self.ui3.mesh.visible = true;
 
             
-           if (self.newcoord.length==0 || self.coordcheck(self.coordinates) == 0){
-                self.ui.updateElement('body',"An error apeared with the polygon! Reset the app and try again!");
+           if (self.newcoord.length==0){
+                self.ui.updateElement('body',"An error apeared with the polygon! Reset the app and try again! Coordinates haven't even loaded");
             }
-            else  self.ui.updateElement('body', "AREA IS " + self.area(self.newcoord).toString()+", length ="+(self.newcoord.length).toString()+", first point is ("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"second point is ("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"third point is ("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
+            else if (self.coordcheck(self.coordinates) == 0) {
+                self.ui.updateElement('body',"An error apeared with the polygon! Polygon wasn't properly drawn! Reset the app and try again! ");
+
+            }
+            else self.ui.updateElement('body', "AREA IS " + self.area(self.newcoord).toString()+", length ="+(self.newcoord.length).toString()+", first point is ("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"second point is ("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"third point is ("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
 
             console.log(self.coordinates);
             console.log (self.newcoord);
@@ -293,13 +297,13 @@ class App{
        
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0,0.1,-0.7);
+        this.ui1.mesh.position.set(0.1,0.17,-0.7);
         this.ui1.mesh.scale.set(2,2,2);
         this.ui1.mesh.visible = false;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.15,0.1,-0.7);
+        this.ui2.mesh.position.set(-0.1,0.17,-0.7);
         this.ui2.mesh.scale.set(2,2,2);
         this.ui2.mesh.visible = false;
 
