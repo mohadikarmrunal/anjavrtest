@@ -231,12 +231,27 @@ class App{
                 padding:50,
                 fontSize:45,
             },
-            //image: { type: "img", position: { left: 0, top: 0 }},
+            result: {
+                type:"text",
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                position: {top: 60},
+                fontSize:35,
+            },
+            kordinate: { 
+                type: "text", position: {  top: 150 },
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                fontSize:30,},
         }
 
         const content = {
             //image: "../../assets/theory12.png",
-            body:""
+            body:"",
+            result: "",
+            kordinate: "",
         }
 
         const ui = new CanvasUI(content, config);
@@ -267,6 +282,11 @@ class App{
             for (let i=0;i<l;i++){
                 collection[l-1-i].parentElement.removeChild(collection[l-i-1]);
             }
+
+            //update the main ui canvas
+            self.ui.updateElement('body',"");            
+            self.ui.updateElement('result',"");
+            self.ui.updateElement('kordinate',"");
         }
 
         const config1 = {
@@ -291,18 +311,20 @@ class App{
             self.scene.add(self.ui3.mesh);
             self.camera.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
+            const x = self.coordcheck(self.coordinates);
 
             if (self.coordinates.length==0){
-                self.ui.updateElement('body',"An error apeared with the polygon! Reset the app and try again! Coordinates haven't even loaded");
+                self.ui.updateElement('result',"An error happened! Reset the app and try again!");
             }
-            else if (self.coordcheck(self.coordinates) == 0) {
-                self.ui.updateElement('body',"An error apeared with the polygon! Polygon wasn't properly drawn! Reset the app and try again! ");
+            else if (x == 0) {
+                self.ui.updateElement('result',"An error happened! Polygon wasn't properly drawn! Reset the app and try again! ");
             }
-            else if (self.newcoord.length == 2) {
-                self.ui.updateElement('body',"An error apeared with the polygon! Polygon has only two points! Reset the app and try again! ");
+            else if (self.newcoord.length <= 2) {
+                self.ui.updateElement('result',"An error happened! Polygon wasn't properly drawn! Reset the app and try again! ");
             }
-            else self.ui.updateElement('body', "AREA IS " + self.area(self.newcoord).toString()+", length ="+(self.newcoord.length).toString()+", first point is ("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"second point is ("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"third point is ("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
-
+            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is:  " + (self.area(self.newcoord)/1000).toString()+"%");
+            self.ui.updateElement('kordinate', " Length ="+(self.newcoord.length).toString()+", 1st("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"2nd("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"3rd("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");}
+            
             console.log(self.coordinates);
             console.log (self.newcoord);
             console.log(self.area(self.newcoord));
