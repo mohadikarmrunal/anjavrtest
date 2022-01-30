@@ -2,6 +2,9 @@ import * as THREE from '../../libs/three/three.module.js';
 import { BufferGeometryUtils } from '../../libs/three/jsm/BufferGeometryUtils.js';
 import { ARButton } from '../../libs/ARButton.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
+import { LoadingBar } from '../../libs/LoadingBar.js';
+import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
+
 
 
 class App{
@@ -14,6 +17,9 @@ class App{
         
 		this.scene = new THREE.Scene();
         this.scene.add(this.camera);
+
+        this.clock = new THREE.Clock();
+
 
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 2);
         ambient.position.set( 0.5, 1, 0.25 );
@@ -44,6 +50,8 @@ class App{
         this.lines = [];
         this.newcoord = [];
         this.sidelength = [];
+
+        this.control = true;
 
         /*var vekt1 = new THREE.Vector3(0,2,9);
         var vekt2 = new THREE.Vector3(13,2,7);
@@ -158,24 +166,29 @@ class App{
         const self = this;
         var newcoord1 = [];
         var length = coordinates.length;
-        //multiply each axis-component with 100 to get the positions
-        for (let i=0;i<length;i++){
-            newcoord1[i]= new THREE.Vector2(coordinates[i].x*100,coordinates[i].z*100);
-        }
 
-        //check if they form a polygone
-        if (newcoord1[0].distanceTo(newcoord1[length-1]) > 4) return 0;
-        for (let j=1;j<(length-1);j=j+2){
+        if (length>0){
+            //multiply each axis-component with 100 to get the positions
+            for (let i=0;i<length;i++){
+                newcoord1[i]= new THREE.Vector2(coordinates[i].x*100,coordinates[i].z*100);
+            }
+
+            //check if they form a polygone
+            if (newcoord1[0].distanceTo(newcoord1[length-1]) > 4) return 0;
+            for (let j=1;j<(length-1);j=j+2){
+                
+                if (newcoord1[j].distanceTo(newcoord1[j+1]) > 4) {
+                    return 0;
+                }
+            }
             
-            if (newcoord1[j].distanceTo(newcoord1[j+1]) > 4) {
-                return 0;
+            //fill the newcoord without double point
+            for (let k=0;k<(length-1);k=k+2) {
+                self.newcoord.push(newcoord1[k]);
             }
         }
-        
-        //fill the newcoord without double point
-        for (let k=0;k<(length-1);k=k+2) {
-            self.newcoord.push(newcoord1[k]);
-        }
+        else if (length=0) return 0;
+
         return 1;
     }
 
@@ -203,8 +216,58 @@ class App{
     }
     
     initScene(){
-        const self = this;
+        this.loadingBar = new LoadingBar();
         
+        this.assetsPath = '../../assets/';
+        const loader = new GLTFLoader().setPath(this.assetsPath);
+        const self = this;
+
+        loader.load(
+			// resource URL
+			'TossHead.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.animations = {};
+                self.head = gltf.scene;
+
+                if (gltf.scene.children[0].children[1].name == 'Coin'){
+                    self.coinH = gltf.scene.children[0].children[1];
+                    self.head.children[0].children[0].visible = false;
+                }
+                else {
+                    self.coinH = gltf.scene.children[0].children[0];
+                    self.head.children[0].children[1].visible = false;
+                }
+                
+                self.animations['TossHead'] = gltf.animations[0];
+                self.mixer = new THREE.AnimationMixer( self.coinH );
+                const clip = self.animations['TossHead'];
+                const action = self.mixer.clipAction (clip);
+                action.enabled = true;
+                self.action = action;
+                self.head.visible=false;
+				const scale = 0.05;
+				self.head.scale.set(scale, scale, scale); 
+                self.action.loop = THREE.LoopOnce;
+                self.action.clampWhenFinished = true;
+
+
+                self.loadingBar.visible = false;
+
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading a 3D Object!' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+			}
+        );
+
         this.reticle = this.initReticle();
         this.scene.add( this.reticle );
 
@@ -224,23 +287,25 @@ class App{
         const config = {
             panelSize: { width: 0.5, height: 0.5 },
             body:{
+                posiiton: {top:0},
                 type:"text",
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
                 padding:50,
-                fontSize:45,
+                fontSize:35,
             },
             result: {
                 type:"text",
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
-                position: {top: 60},
+                position: {top: 150},
                 fontSize:35,
             },
             kordinate: { 
-                type: "text", position: {  top: 150 },
+                type: "text", 
+                position: {  top: 300 },
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
@@ -262,6 +327,7 @@ class App{
 
         //ui1 is the reset button
         function reset(){
+            self.control = false;
             console.log('Button for reseting is pressed!');
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;
@@ -287,6 +353,9 @@ class App{
             self.ui.updateElement('body',"");            
             self.ui.updateElement('result',"");
             self.ui.updateElement('kordinate',"");
+
+            //reset and remove animation
+            self.scene.remove(self.head);
         }
 
         const config1 = {
@@ -304,6 +373,7 @@ class App{
 
         //ui2 is the button for calcuating the area!
         function calculate (){
+            self.control = false;
             self.scene.add(self.ui.mesh);
             self.camera.add(self.ui.mesh);
             self.ui.mesh.visible = true;
@@ -314,13 +384,23 @@ class App{
             const x = self.coordcheck(self.coordinates);
 
             if (self.coordinates.length==0){
-                self.ui.updateElement('result',"An error happened! Reset the app and try again!");
+                self.ui.updateElement('body',"An error happened!");
+                self.ui.updateElement('result',"Reset the app and try again!");
+
             }
             else if (x == 0) {
-                self.ui.updateElement('result',"An error happened! Polygon wasn't properly drawn! Reset the app and try again! ");
+                self.ui.updateElement('body',"An error happened!");
+                self.ui.updateElement('result',"Reset the app and try again!");
+                self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! ");
+
+
             }
             else if (self.newcoord.length <= 2) {
-                self.ui.updateElement('result',"An error happened! Polygon wasn't properly drawn! Reset the app and try again! ");
+                self.ui.updateElement('body',"An error happened!Reset the app and try again! ");
+                self.ui.updateElement('result',"Reset the app and try again!");
+                self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! It has only two lines ");
+
+
             }
             else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is:  " + (self.area(self.newcoord)/1000).toString()+"%");
             self.ui.updateElement('kordinate', " Length ="+(self.newcoord.length).toString()+", 1st("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"2nd("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"3rd("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");}
@@ -356,6 +436,7 @@ class App{
 
         //ui3 is the canvas for going back 
         function back(){
+            self.control = false;
             self.ui.mesh.visible = false;
             self.ui3.mesh.visible = false;
 
@@ -423,39 +504,54 @@ class App{
         }
         
         function onSelect() {
-            console.log("on select");
-            if (self.reticle.visible){
-                if (self.floor.visible){
-                    const pt = new THREE.Vector3();
-                    pt.setFromMatrixPosition(self.reticle.matrix);
-                    self.measurements.push(pt);
-                    self.coordinates.push(pt);
-                    if (self.measurements.length == 2) {
-                        const distance = Math.floor(self.getDistance(self.measurements) * 100);
 
-                        const text = document.createElement('div');
-                        text.className = 'label';
-                        text.style.color = 'rgb(255,255,255)';
-                        text.textContent = distance + ' cm';
-                        document.querySelector('#container').appendChild(text);
-                        self.sidelength.push(distance);
-                        self.labels.push({div: text, point: self.getCenterPoint(self.measurements)});
+            if (self.control){
 
-                        self.measurements = [];
-                        self.currentLine = null;
-                    } else {
-                        self.currentLine = self.initLine(self.measurements[0]);
-                        self.lines.push(self.currentLine);
-                        self.scene.add(self.currentLine);
+                console.log("on select");
+
+                if (self.reticle.visible){
+
+                    if (self.floor.visible){
+                        const pt = new THREE.Vector3();
+                        pt.setFromMatrixPosition(self.reticle.matrix);
+                        self.measurements.push(pt);
+                        self.coordinates.push(pt);
+
+                        if (self.measurements.length == 2) {
+                            const distance = Math.floor(self.getDistance(self.measurements) * 100);
+
+                            const text = document.createElement('div');
+                            text.className = 'label';
+                            text.style.color = 'rgb(255,255,255)';
+                            text.textContent = distance + ' cm';
+                            document.querySelector('#container').appendChild(text);
+                            self.sidelength.push(distance);
+                            self.labels.push({div: text, point: self.getCenterPoint(self.measurements)});
+
+                            self.measurements = [];
+                            self.currentLine = null;
+                        } else {
+                            self.currentLine = self.initLine(self.measurements[0]);
+                            self.lines.push(self.currentLine);
+                            self.scene.add(self.currentLine);
+                        }
+                    }
+                    else {
+                        //show and set the floor
+                        self.floor.visible = true;
+                        //self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
+                        self.floor.position.setFromMatrixPosition( self.reticle.matrix );
+
+                        //play the animation
+                        self.head.position.setFromMatrixPosition( self.reticle.matrix );
+                        self.head.visible = true;
+                        self.action.reset();
+                        self.scene.add(self.head);
+                        self.action.play();
                     }
                 }
-                else {
-                    self.floor.visible = true;
-                     //self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
-                    self.floor.position.setFromMatrixPosition( self.reticle.matrix );
-                }
             }
-
+            self.control = true;
         }
 
         this.controller = this.renderer.xr.getController( 0 );
@@ -485,17 +581,37 @@ class App{
             self.hitTestSource = null;
             self.referenceSpace = null;
             self.floor.visible = false;
-            
+            self.control = true;
+
+            //clear the arrays
+            self.lines.forEach (element => self.scene.remove(element));
+            self.labels.splice(0,self.labels.length);
+            self.coordinates.splice(0,self.coordinates.length);
+            self.newcoord.splice(0,self.newcoord.length);
+            self.sidelength.splice(0,self.sidelength.length);
+
+            //remove length labels
+            const collection = document.getElementsByClassName("label");
+            const l = collection.length;
+            console.log(collection);
+            for (let i=0;i<l;i++){
+                collection[l-1-i].parentElement.removeChild(collection[l-i-1]);
+            }
+
+            //update the main ui canvas
+            self.ui.updateElement('body',"");            
+            self.ui.updateElement('result',"");
+            self.ui.updateElement('kordinate',"");
+
             self.ui3.mesh.visible = false;
             self.ui1.mesh.visible = false;
             self.ui2.mesh.visible = false;
             self.ui.mesh.visible = false;
 
-
             self.scene.remove(self.ui1.mesh);
             self.camera.remove(self.ui1.mesh);
 
-            self.lines.forEach (element => self.scene.remove(self.element));
+            self.scene.remove(self.head);
 
         } );
 
@@ -532,7 +648,7 @@ class App{
     }	
 
     render( timestamp, frame ) {
-
+        const dt = this.clock.getDelta();
         const self = this;
         
         if ( frame ) {
@@ -553,6 +669,8 @@ class App{
             this.ui3.update();
             this.ui1.update();
             this.ui2.update();
+            this.mixer.update( dt ) 
+
         }
 
         this.renderer.render( this.scene, this.camera );
