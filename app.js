@@ -423,13 +423,13 @@ class App{
        
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0.2,0.5,-0.7);
+        this.ui1.mesh.position.set(0.2,0.15,-0.7);
         this.ui1.mesh.scale.set(0.17,0.17,0.17);
         this.ui1.mesh.visible = false;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.2,0.5,-0.7);
+        this.ui2.mesh.position.set(-0.2,0.15,-0.7);
         this.ui2.mesh.scale.set(0.17,0.17,0.17);
         this.ui2.mesh.visible = false;
 
