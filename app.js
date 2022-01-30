@@ -209,7 +209,7 @@ class App{
         this.scene.add( this.reticle );
 
         const boxgeometry = new THREE.BoxGeometry (1,0.01,1);
-        const color = new THREE.Color ("rgb(11, 9, 36) ");
+        const color = new THREE.Color (0x929292);
 		const material = new THREE.MeshStandardMaterial( { color: color});
         const boxmaterial = material.clone();
         boxmaterial.tranparent = true;
@@ -254,33 +254,32 @@ class App{
             self.floor.visible = false;
 
             //clear the arrays
-            self.lines.forEach (element => self.scene.remove(self.element));
+            self.lines.forEach (element => self.scene.remove(element));
             self.labels.splice(0,self.labels.length);
             self.coordinates.splice(0,self.coordinates.length);
             self.newcoord.splice(0,self.newcoord.length);
             self.sidelength.splice(0,self.sidelength.length);
 
+            //remove length labels
             const collection = document.getElementsByClassName("label");
             const l = collection.length;
+            console.log(collection);
             for (let i=0;i<l;i++){
-                collection[i].parentElement.removeChild(collection[i]);
+                collection[l-1-i].parentElement.removeChild(collection[l-i-1]);
             }
-
-            console.log(self.coordinates);
-            console.log(self.newcoord);
-            console.log(self.label);
-
-            //DODATI DA SE OBRISU CM BROJEVI
         }
 
         const config1 = {
-            panelSize: { width: 0.035, height: 0.035 },
-            reset: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:60, hover: "#4c5ba6", onSelect: reset },
+            //panelSize: { width: 0.035, height: 0.025 },
+            //height: 512/1.4,
+            body: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", textAlign: "center" },
+            //body:{clipPath: "M 174.3375 269.175 A 0.35 0.35 90 0 0 217.65 269.35 A 0.35 0.35 90 0 0 174.25 269.35 Z", backgroundColor: '#021'},
+            reset: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z" , type: "button", position:{ top: 0, left: 0 }, textAlign: "center", padding:120, fontColor: "#fff", backgroundColor: '#021', fontSize:80, hover: "#4c5ba6", onSelect: reset },
             renderer: this.renderer
         }
 
         const content1 = {
-            reset: "RESET!",
+            reset: "     RESET",
         }
 
         //ui2 is the button for calcuating the area!
@@ -310,26 +309,26 @@ class App{
         }
        
         const config2 = {
-            panelSize: { width: 0.035, height: 0.035 },
-            button: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:60, hover: "#4c5ba6", onSelect: calculate },
+            body: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", textAlign: "center" },
+            //panelSize: { width: 0.035, height: 0.035 },
+            button: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", type: "button", position:{ top: 0, left: 0 }, padding:160, textAlign: "center", fontColor: "#fff", backgroundColor: '#021', fontSize:60, hover: "#4c5ba6", onSelect: calculate },
             renderer: this.renderer
         }
 
         const content2 = {
             button: "CALC!",
         }
-
        
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0.1,0.17,-0.7);
-        this.ui1.mesh.scale.set(2,2,2);
+        this.ui1.mesh.position.set(0.2,0.5,-0.7);
+        this.ui1.mesh.scale.set(0.17,0.17,0.17);
         this.ui1.mesh.visible = false;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.1,0.17,-0.7);
-        this.ui2.mesh.scale.set(2,2,2);
+        this.ui2.mesh.position.set(-0.2,0.5,-0.7);
+        this.ui2.mesh.scale.set(0.17,0.17,0.17);
         this.ui2.mesh.visible = false;
 
 
@@ -402,6 +401,7 @@ class App{
         }
         
         function onSelect() {
+            console.log("on select");
             if (self.reticle.visible){
                 if (self.floor.visible){
                     const pt = new THREE.Vector3();
