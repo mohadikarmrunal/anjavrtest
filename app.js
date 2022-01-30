@@ -276,7 +276,8 @@ class App{
 		const material = new THREE.MeshStandardMaterial( { color: color});
         const boxmaterial = material.clone();
         boxmaterial.tranparent = true;
-        boxmaterial.opacity = 0.1;
+        boxmaterial.opacity = 0;
+        boxmaterial.wireframe = true;
 
         this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
         this.floor.visible = false;
@@ -411,26 +412,26 @@ class App{
         }
        
         const config2 = {
-            body: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", textAlign: "center" },
+            body: { clipPath: "M 357.87 252 A 1.008 1.008 90 0 0 345 68 L 162.57 69.93 M 161.94 69.93 A 1.008 1.008 90 0 0 155.01 250.74 L 357.87 252 Z", textAlign: "center" },
             //panelSize: { width: 0.035, height: 0.035 },
-            button: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", type: "button", position:{ top: 0, left: 0 }, padding:160, textAlign: "center", fontColor: "#fff", backgroundColor: '#021', fontSize:60, hover: "#4c5ba6", onSelect: calculate },
+            button: { clipPath: "M 357.87 252 A 1.008 1.008 90 0 0 345 68 L 162.57 69.93 M 161.94 69.93 A 1.008 1.008 90 0 0 155.01 250.74 L 357.87 252 Z", type: "button", position:{ top: 0, left: 0 }, padding:150, textAlign: "center", fontColor: "#fff", backgroundColor: '#021', fontSize:33, hover: "#4c5ba6", onSelect: calculate },
             renderer: this.renderer
         }
 
         const content2 = {
-            button: "CALC!",
+            button: "CALCULATE",
         }
        
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0.2,0.15,-0.7);
+        this.ui1.mesh.position.set(0.2,0.18,-0.7);
         this.ui1.mesh.scale.set(0.17,0.17,0.17);
         this.ui1.mesh.visible = false;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.2,0.15,-0.7);
-        this.ui2.mesh.scale.set(0.17,0.17,0.17);
+        this.ui2.mesh.position.set(-0.15,0.16,-0.7);
+        this.ui2.mesh.scale.set(0.28,0.28,0.28);
         this.ui2.mesh.visible = false;
 
 
