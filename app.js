@@ -272,11 +272,16 @@ class App{
         this.scene.add( this.reticle );
 
         const boxgeometry = new THREE.BoxGeometry (1,0.01,1);
-        const color = new THREE.Color (0x929292);
+        //const color = new THREE.Color (0x929292);
+        const color = new THREE.Color(0x008a49);
 		const material = new THREE.MeshStandardMaterial( { color: color});
         const boxmaterial = material.clone();
         boxmaterial.tranparent = true;
+        boxmaterial.roughness = 0.08;
+        boxmaterial.metalness = 0.8;
         boxmaterial.opacity = 0;
+        boxmaterial.reflectivity = 0.5;
+        boxmaterial.clearcoatRoughness = 1;
         boxmaterial.wireframe = true;
 
         this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
@@ -403,8 +408,9 @@ class App{
 
 
             }
-            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is:  " + (self.area(self.newcoord)/1000).toString()+"%");
-            self.ui.updateElement('kordinate', " Length ="+(self.newcoord.length).toString()+", 1st("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"2nd("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"3rd("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");}
+            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is:  " + (self.area(self.newcoord)/10000).toString()+"%");
+            //self.ui.updateElement('kordinate', " Length ="+(self.newcoord.length).toString()+", 1st("+ (Math.floor(self.newcoord[0].x)).toString()+","+(Math.floor(self.newcoord[0].y)).toString()+"); "+"2nd("+(Math.floor(self.newcoord[1].x)).toString()+","+(Math.floor(self.newcoord[1].y)).toString()+");"+"3rd("+(Math.floor(self.newcoord[2].x)).toString()+","+(Math.floor(self.newcoord[2].y)).toString()+");");
+            }
             
             console.log(self.coordinates);
             console.log (self.newcoord);
