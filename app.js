@@ -45,13 +45,13 @@ class App{
         this.newcoord = [];
         this.sidelength = [];
 
-        var vekt1 = new THREE.Vector3(0,2,9);
+        /*var vekt1 = new THREE.Vector3(0,2,9);
         var vekt2 = new THREE.Vector3(13,2,7);
         var vekt3 = new THREE.Vector3(15,2,-9);
         /*var vekt4 = new THREE.Vector3(11,2,-6);
         var vekt5 = new THREE.Vector3(-2,2,-10);
         var vekt6 = new THREE.Vector3(-4,2,-3);
-        var vekt7 = new THREE.Vector3(-7,2,4);*/
+        var vekt7 = new THREE.Vector3(-7,2,4);
         var vekt12 = vekt1.clone();
         var vekt22 = vekt2.clone();
         var vekt32 = vekt3.clone();
@@ -60,7 +60,7 @@ class App{
         var vekt62 = vekt6.clone();
         var vekt72 = vekt7.clone();*/
     
-        this.coordinates.push(vekt1);
+        /*this.coordinates.push(vekt1);
         this.coordinates.push(vekt2);
         this.coordinates.push(vekt22);
         this.coordinates.push(vekt3);
@@ -72,7 +72,7 @@ class App{
         this.coordinates.push(vekt6);
         this.coordinates.push(vekt62);
         this.coordinates.push(vekt7);
-        this.coordinates.push(vekt72);*/
+        this.coordinates.push(vekt72);
         this.coordinates.push(vekt12);
         //this.coordinates.push(new THREE.Vector3(-7,2,4));*/
     
@@ -242,7 +242,7 @@ class App{
         const ui = new CanvasUI(content, config);
         this.ui = ui;
         this.ui.mesh.position.set(0,0,-0.6);
-        self.ui.mesh.visible = false;
+        this.ui.mesh.visible = false;
 
 
         //ui1 is the reset button
@@ -252,13 +252,24 @@ class App{
             self.hitTestSource = null;
             self.referenceSpace = null;
             self.floor.visible = false;
+
+            //clear the arrays
             self.lines.forEach (element => self.scene.remove(self.element));
             self.labels.splice(0,self.labels.length);
             self.coordinates.splice(0,self.coordinates.length);
             self.newcoord.splice(0,self.newcoord.length);
+            self.sidelength.splice(0,self.sidelength.length);
+
+            const collection = document.getElementsByClassName("label");
+            const l = collection.length;
+            for (let i=0;i<l;i++){
+                collection[i].parentElement.removeChild(collection[i]);
+            }
+
             console.log(self.coordinates);
             console.log(self.newcoord);
             console.log(self.label);
+
             //DODATI DA SE OBRISU CM BROJEVI
         }
 
@@ -337,8 +348,8 @@ class App{
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;
             self.referenceSpace = null;
-            self.floor.visible = false;
-            self.lines.forEach (element => self.scene.remove(self.element));
+            //self.floor.visible = false;
+            //self.lines.forEach (element => self.scene.remove(self.element));
         }
 
         const config3 = {
@@ -372,6 +383,14 @@ class App{
         this.hitTestSource = null;
 
         function onSessionStart(){
+            //testing for the reset button
+            /*const text = document.createElement('div');
+            text.className = 'label';
+            text.style.color = 'rgb(255,255,255)';
+            text.textContent = ' PROBA cm';
+            document.querySelector('#container').appendChild(text);
+            self.labels.push({div: text, point: new THREE.Vector3(0,0,0)});*/
+
             self.ui1.mesh.visible = true;
             self.ui2.mesh.visible = true;
             
