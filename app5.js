@@ -326,7 +326,7 @@ class App{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
-                position: {top: 100},
+                position: {top: 80},
                 fontSize:35,
             },
             kordinate: { 
