@@ -1,26 +1,25 @@
 import * as THREE from '../../libs/three/three.module.js';
-import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
-import { RGBELoader } from '../../libs/three/jsm/RGBELoader.js';
-import { ARButton } from '../../libs/ARButton.js';
 import { BufferGeometryUtils } from '../../libs/three/jsm/BufferGeometryUtils.js';
+import { ARButton } from '../../libs/ARButton.js';
+import { CanvasUI } from '../../libs/CanvasUI.js'
 import { LoadingBar } from '../../libs/LoadingBar.js';
-import { Player } from '../../libs/Player.js';
+import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
+
+
 
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
         
-        this.clock = new THREE.Clock();
-        
-       // this.loadingBar = new LoadingBar();
-
-		this.assetsPath = '../../assets/';
-        
-		this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
-		this.camera.position.set( 0, 1.6, 3 );
+        this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+		//this.camera.position.set( 0, 1.6, 3 );
         
 		this.scene = new THREE.Scene();
+        this.scene.add(this.camera);
+
+        this.clock = new THREE.Clock();
+
 
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 2);
         ambient.position.set( 0.5, 1, 0.25 );
@@ -35,8 +34,7 @@ class App{
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
 		container.appendChild( this.renderer.domElement );
-        this.setEnvironment();
-
+        
         const labelContainer = document.createElement('div');
         labelContainer.style.position = 'absolute';
         labelContainer.style.top = '0px';
@@ -44,90 +42,71 @@ class App{
         labelContainer.setAttribute('id', 'container');
         container.appendChild(labelContainer);
         this.labelContainer = labelContainer;
+
+        this.listener = new THREE.AudioListener();
+
         
         this.workingVec3 = new THREE.Vector3();
         this.labels = [];
         this.measurements = [];
-        
+        this.coordinates = [];
+        this.lines = [];
+        this.newcoord = [];
+        this.sidelength = [];
+
+        this.control = true;
+
+        /*var vekt1 = new THREE.Vector3(0,2,9);
+        var vekt2 = new THREE.Vector3(13,2,7);
+        var vekt3 = new THREE.Vector3(15,2,-9);
+        /*var vekt4 = new THREE.Vector3(11,2,-6);
+        var vekt5 = new THREE.Vector3(-2,2,-10);
+        var vekt6 = new THREE.Vector3(-4,2,-3);
+        var vekt7 = new THREE.Vector3(-7,2,4);
+        var vekt12 = vekt1.clone();
+        var vekt22 = vekt2.clone();
+        var vekt32 = vekt3.clone();
+        /*var vekt42 = vekt4.clone();
+        var vekt52 = vekt5.clone();
+        var vekt62 = vekt6.clone();
+        var vekt72 = vekt7.clone();*/
+    
+        /*this.coordinates.push(vekt1);
+        this.coordinates.push(vekt2);
+        this.coordinates.push(vekt22);
+        this.coordinates.push(vekt3);
+        this.coordinates.push(vekt32);
+        /*this.coordinates.push(vekt4);
+        this.coordinates.push(vekt42);
+        this.coordinates.push(vekt5);        
+        this.coordinates.push(vekt52);
+        this.coordinates.push(vekt6);
+        this.coordinates.push(vekt62);
+        this.coordinates.push(vekt7);
+        this.coordinates.push(vekt72);
+        this.coordinates.push(vekt12);
+        //this.coordinates.push(new THREE.Vector3(-7,2,4));*/
+    
+
+        /*const self = this;
+        console.log(this.coordinates);
+        if (this.coordcheck(this.coordinates) == 1){
+            console.log(self.newcoord);
+        }
+        else console.log("Polygon is bad!");*/
+
         this.initScene();
         this.setupXR();
+        
+        this.renderer.setAnimationLoop( this.render.bind(this) );
 		
 		window.addEventListener('resize', this.resize.bind(this));
         
 	}
-    
-    setEnvironment(){
-        const loader = new RGBELoader().setDataType( THREE.UnsignedByteType );
-        const pmremGenerator = new THREE.PMREMGenerator( this.renderer );
-        pmremGenerator.compileEquirectangularShader();
-        
-        const self = this;
-        
-        loader.load( '../../assets/venice_sunset_1k.hdr', ( texture ) => {
-          const envMap = pmremGenerator.fromEquirectangular( texture ).texture;
-          pmremGenerator.dispose();
 
-          self.scene.environment = envMap;
-
-        }, undefined, (err)=>{
-            console.error( 'An error occurred setting the environment');
-        } );
-    }
 	
-    resize(){ 
-        this.camera.aspect = window.innerWidth / window.innerHeight;
-    	this.camera.updateProjectionMatrix();
-    	this.renderer.setSize( window.innerWidth, window.innerHeight );  
-    }
+   
     
-    /*loadKnight(){
-	    const loader = new GLTFLoader().setPath(this.assetsPath);
-		const self = this;
-		
-		// Load a GLTF resource
-		loader.load(
-			// resource URL
-			`knight2.glb`,
-			// called when the resource is loaded
-			function ( gltf ) {
-				const object = gltf.scene.children[5];
-				
-				const options = {
-					object: object,
-					speed: 0.5,
-					assetsPath: self.assetsPath,
-					loader: loader,
-                    animations: gltf.animations,
-					clip: gltf.animations[0],
-					app: self,
-					name: 'knight',
-					npc: false
-				};
-				
-				self.knight = new Player(options);
-                self.knight.object.visible = false;
-				
-				self.knight.action = 'Dance';
-				const scale = 0.005;
-				self.knight.object.scale.set(scale, scale, scale); 
-				
-                self.loadingBar.visible = false;
-                self.renderer.setAnimationLoop( self.render.bind(self) );//(timestamp, frame) => { self.render(timestamp, frame); } );
-			},
-			// called while loading is progressing
-			function ( xhr ) {
-
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
-
-			},
-			// called when loading has errors
-			function ( error ) {
-
-				console.log( 'An error happened' );
-
-			}
-		);
-	}		*/
     getCenterPoint(points) {
         let line = new THREE.Line3(...points)
         return line.getCenter( new THREE.Vector3() );
@@ -135,7 +114,7 @@ class App{
 
     initLine(point) {
         const lineMaterial = new THREE.LineBasicMaterial({
-            color: 0xffffff,
+            color: 0x000000,
             linewidth: 5,
             linecap: 'round'
         });
@@ -153,115 +132,501 @@ class App{
         line.geometry.computeBoundingSphere();
     }
 
-    initScene(){
-        /*this.reticle = new THREE.Mesh(
-            new THREE.RingBufferGeometry( 0.15, 0.2, 32 ).rotateX( - Math.PI / 2 ),
-            new THREE.MeshBasicMaterial()
-        );*/
-
+    initReticle() {
         let ring = new THREE.RingBufferGeometry(0.045, 0.05, 32).rotateX(- Math.PI / 2);
         let dot = new THREE.CircleBufferGeometry(0.005, 32).rotateX(- Math.PI / 2);
         const reticle = new THREE.Mesh(
             BufferGeometryUtils.mergeBufferGeometries([ring, dot]),
             new THREE.MeshBasicMaterial()
         );
-        
-        this.reticle = reticle;
-        this.reticle.matrixAutoUpdate = false;
-        this.reticle.visible = false;
-        this.scene.add( this.reticle );
-        
-
-        const geometry = new THREE.SphereGeometry( 0.3, 32, 16 );
-        const color = new THREE.Color ("rgb(235, 168, 52) ");
-		const material = new THREE.MeshStandardMaterial( { color: color});
-
-		this.mesh = new THREE.Mesh( geometry, material );
-        this.mesh.visible = false;
-        this.scene.add(this.mesh);
-        this.mesh.scale.set(2,2,2);
-
-        const boxgeometry = new THREE.BoxGeometry (2,0.01,2);
-        const boxmaterial = material.clone();
-        boxmaterial.tranparent = true;
-        boxmaterial.opacity = 0.2;
-
-        this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
-        this.floor.visible = false;
-        this.scene.add(this.floor);
-
-        //this.loadKnight();
-
+        reticle.material.color = new THREE.Color(0x000000);
+        reticle.matrixAutoUpdate = false;
+        reticle.visible = false;
+        return reticle;
     }
 
     getDistance(points) {
         if (points.length == 2) return points[0].distanceTo(points[1]);
     }
     
+    toScreenPosition(point, camera){
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const vec = this.workingVec3;
+        
+        vec.copy(point);
+        vec.project(camera);
+
+        vec.x = (vec.x + 1) * width /2;
+        vec.y = (-vec.y + 1) * height/2;
+        vec.z = 0;
+
+        return vec
+
+    }
+
+    coordcheck(coordinates){
+        const self = this;
+        var newcoord1 = [];
+        var length = coordinates.length;
+
+        if (length>0){
+            //multiply each axis-component with 100 to get the positions
+            for (let i=0;i<length;i++){
+                newcoord1[i]= new THREE.Vector2(coordinates[i].x*100,coordinates[i].z*100);
+            }
+
+            //check if they form a polygon
+            if (newcoord1[0].distanceTo(newcoord1[length-1]) > 4) return 0;
+            for (let j=1;j<(length-1);j=j+2){
+                
+                if (newcoord1[j].distanceTo(newcoord1[j+1]) > 4) {
+                    return 0;
+                }
+            }
+            
+            //fill the newcoord without double points
+            for (let k=0;k<(length-1);k=k+2) {
+                self.newcoord.push(newcoord1[k]);
+            }
+        }
+        else if (length=0) return 0;
+
+        return 1;
+    }
+
+    area (coordinates){
+        const self = this;
+        var length = coordinates.length;
+        
+        if (length==3){
+            var s = (self.sidelength[0]+self.sidelength[1]+self.sidelength[2])/2;
+            return Math.floor(Math.sqrt(s*(s-self.sidelength[0])*(s-self.sidelength[1])*(s-self.sidelength[2])));
+
+        }
+        else if (length>3){
+            console.log(length);
+            var a = coordinates[0].x*(coordinates[1].y-coordinates[length-1].y)+coordinates[length-1].x*(coordinates[0].y-coordinates[length-2].y);
+
+            for (let i=1;i<length-1;i++){
+             a = a + coordinates[i].x*(coordinates[i+1].y-coordinates[i-1].y);
+            }
+            if (a>=0) return Math.floor(a/2);
+            else return -Math.floor(a/2);
+        }
+        else return 0;
+
+    }
+
+
+    playSound( sndname ){
+        // load a sound and set it as the Audio object's buffer
+        const sound = this.speech;
+        const self = this;
+        const audioLoader = new THREE.AudioLoader();
+        audioLoader.load( `audio/${sndname}.mp3`, ( buffer ) => {
+            if (sound.isPlaying) sound.stop();
+            sound.setBuffer( buffer );
+            sound.setLoop( false );
+            sound.setVolume( 1.0 );
+            sound.play();
+        });
+        //if (sndname == 'app5')  self.sound = sound;
+        if (sndname == '5theory')  self.sound1 = sound;
+    }
+
+    
+    initScene(){
+        this.loadingBar = new LoadingBar();
+        
+        this.assetsPath = '../../assets/';
+        const loader = new GLTFLoader().setPath(this.assetsPath);
+        const self = this;
+
+        loader.load(
+			// resource URL
+			'TossHead.gltf',
+			// called when the resource is loaded
+			function ( gltf ) {
+
+                self.animations = {};
+                self.head = gltf.scene;
+
+                if (gltf.scene.children[0].children[1].name == 'Coin'){
+                    self.coinH = gltf.scene.children[0].children[1];
+                    self.head.children[0].children[0].visible = false;
+                }
+                else {
+                    self.coinH = gltf.scene.children[0].children[0];
+                    self.head.children[0].children[1].visible = false;
+                }
+                
+                self.animations['TossHead'] = gltf.animations[0];
+                self.mixer = new THREE.AnimationMixer( self.coinH );
+                const clip = self.animations['TossHead'];
+                const action = self.mixer.clipAction (clip);
+                action.enabled = true;
+                self.action = action;
+                self.head.visible=false;
+				const scale = 0.05;
+				self.head.scale.set(scale, scale, scale); 
+                self.action.loop = THREE.LoopOnce;
+                self.action.clampWhenFinished = true;
+
+
+                self.loadingBar.visible = false;
+
+			},
+			// called while loading is progressing
+			function ( xhr ) {
+
+				self.loadingBar.progress = (xhr.loaded / xhr.total);
+			},
+			// called when loading has errors
+			function ( error ) {
+				console.log( 'An error happened with loading a 3D Object!' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+			}
+        );
+
+        this.reticle = this.initReticle();
+        this.scene.add( this.reticle );
+
+        const boxgeometry = new THREE.BoxGeometry (1,0.01,1);
+        const color = new THREE.Color(0x008a49);
+		const material = new THREE.MeshStandardMaterial( { color: color});
+        const boxmaterial = material.clone();
+        boxmaterial.tranparent = true;
+        boxmaterial.roughness = 0.08;
+        boxmaterial.metalness = 0.8;
+        boxmaterial.opacity = 0;
+        boxmaterial.reflectivity = 0.5;
+        boxmaterial.clearcoatRoughness = 1;
+        boxmaterial.wireframe = true;
+
+        this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
+        this.floor.visible = false;
+        this.scene.add(this.floor);
+
+      
+        //ui is the main canvas that appears
+        const config = {
+            panelSize: { width: 0.5, height: 0.5 },
+            body:{
+                posiiton: {top:0},
+                type:"text",
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding:50,
+                fontSize:35,
+            },
+            result: {
+                type:"text",
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                position: {top: 100},
+                fontSize:35,
+            },
+            kordinate: { 
+                type: "text", 
+                position: {  top: 300 },
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                fontSize:30,},
+        }
+
+        const content = {
+            //image: "../../assets/theory12.png",
+            body:"",
+            result: "",
+            kordinate: "",
+        }
+
+        const ui = new CanvasUI(content, config);
+        this.ui = ui;
+        this.ui.mesh.position.set(0,0,-0.6);
+        this.ui.mesh.visible = false;
+
+
+        //ui1 is the reset button
+        function reset(){
+            self.control = false;
+            console.log('Button for reseting is pressed!');
+            self.hitTestSourceRequested = false;
+            self.hitTestSource = null;
+            self.referenceSpace = null;
+            self.floor.visible = false;
+
+            //clear the arrays
+            self.lines.forEach (element => self.scene.remove(element));
+            self.labels.splice(0,self.labels.length);
+            self.coordinates.splice(0,self.coordinates.length);
+            self.newcoord.splice(0,self.newcoord.length);
+            self.sidelength.splice(0,self.sidelength.length);
+
+            //remove length labels
+            const collection = document.getElementsByClassName("label");
+            const l = collection.length;
+            console.log(collection);
+            for (let i=0;i<l;i++){
+                collection[l-1-i].parentElement.removeChild(collection[l-i-1]);
+            }
+
+            //update the main ui canvas
+            self.ui.updateElement('body',"");            
+            self.ui.updateElement('result',"");
+            self.ui.updateElement('kordinate',"");
+
+            //reset and remove animation
+            self.scene.remove(self.head);
+        }
+
+        const config1 = {
+            body: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", textAlign: "center" },
+            reset: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z" , type: "button", position:{ top: 0, left: 0 }, textAlign: "center", padding:120, fontColor: "#fff", backgroundColor: '#021', fontSize:80, hover: "#4c5ba6", onSelect: reset },
+            renderer: this.renderer
+        }
+
+        const content1 = {
+            reset: "     RESET",
+        }
+
+        //ui2 is the button for calcuating the area!
+        function calculate (){
+            self.control = false;
+            self.scene.add(self.ui.mesh);
+            self.camera.add(self.ui.mesh);
+            self.ui.mesh.visible = true;
+
+            self.scene.add(self.ui3.mesh);
+            self.camera.add(self.ui3.mesh);
+            self.ui3.mesh.visible = true;
+            const x = self.coordcheck(self.coordinates);
+
+            if (self.coordinates.length==0){
+                self.ui.updateElement('body',"An error happened!");
+                self.ui.updateElement('result',"Reset the app and try again!");
+
+            }
+            else if (x == 0) {
+                self.ui.updateElement('body',"An error happened!");
+                self.ui.updateElement('result',"Reset the app and try again!");
+                self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! ");
+
+
+            }
+            else if (self.newcoord.length <= 2) {
+                self.ui.updateElement('body',"An error happened!Reset the app and try again! ");
+                self.ui.updateElement('result',"Reset the app and try again!");
+                self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! It has only two lines ");
+
+
+            }
+            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is:  " + (self.area(self.newcoord)/10000).toString()+"%");
+            }
+            
+            console.log(self.coordinates);
+            console.log (self.newcoord);
+            console.log(self.area(self.newcoord));
+        }
+       
+        const config2 = {
+            body: { clipPath: "M 357.87 252 A 1.008 1.008 90 0 0 345 68 L 162.57 69.93 M 161.94 69.93 A 1.008 1.008 90 0 0 155.01 250.74 L 357.87 252 Z", textAlign: "center" },
+            button: { clipPath: "M 357.87 252 A 1.008 1.008 90 0 0 345 68 L 162.57 69.93 M 161.94 69.93 A 1.008 1.008 90 0 0 155.01 250.74 L 357.87 252 Z", type: "button", position:{ top: 0, left: 0 }, padding:150, textAlign: "center", fontColor: "#fff", backgroundColor: '#021', fontSize:33, hover: "#4c5ba6", onSelect: calculate },
+            renderer: this.renderer
+        }
+
+        const content2 = {
+            button: "CALCULATE",
+        }
+
+        //ui4 is the info button
+        function infobutton(){
+            self.control = false;
+            if (self.sound && self.sound.isPlaying) self.sound.stop();
+            self.playSound('5theory');
+        }
+
+        const config4 = { 
+            body: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", textAlign: "center" },
+            info: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z" , type: "button", position:{ top: 0, left: 0 }, textAlign: "center", padding:120, fontColor: "#fff", backgroundColor: '#021', fontSize:80, hover: "#4c5ba6", onSelect: infobutton },
+            renderer: this.renderer
+        }
+
+        const content4 = {
+            info: "   INFO",
+        }
+
+       
+        const ui1 = new CanvasUI(content1, config1);
+        this.ui1 = ui1;
+        this.ui1.mesh.position.set(0.15,0.19,-0.7);
+        this.ui1.mesh.scale.set(0.14,0.14,0.14);
+        this.ui1.mesh.visible = false;
+
+        const ui2 = new CanvasUI(content2, config2);
+        this.ui2 = ui2;
+        this.ui2.mesh.position.set(-0.14,0.15,-0.7);
+        this.ui2.mesh.scale.set(0.25,0.25,0.25);
+        this.ui2.mesh.visible = false;
+
+        const ui4 = new CanvasUI(content4, config4);
+        this.ui4 = ui4;
+        this.ui4.mesh.position.set(0.02,0.19,-0.7);
+        this.ui4.mesh.scale.set(0.14,0.14,0.14);
+        this.ui4.mesh.visible = false;
+
+
+        //ui3 is the canvas for going back 
+        function back(){
+            self.control = false;
+            self.ui.mesh.visible = false;
+            self.ui3.mesh.visible = false;
+
+            self.scene.remove(self.ui.mesh);
+            self.scene.remove(self.ui3.mesh);
+            self.camera.remove(self.ui.mesh);
+            self.camera.remove(self.ui3.mesh);
+
+            self.ui.updateElement('body', "AREA IS");
+
+            self.hitTestSourceRequested = false;
+            self.hitTestSource = null;
+            self.referenceSpace = null;
+         
+        }
+
+        const config3 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back },
+            renderer: this.renderer
+        }
+
+        const content3 = {
+            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
+        }
+
+        const ui3 = new CanvasUI(content3, config3);
+        this.ui3 = ui3;
+        this.ui3.mesh.position.set(0.15,0.15,-0.5);
+        this.ui3.mesh.visible = false;
+    }   
+
+  
+
+    
     setupXR(){
         this.renderer.xr.enabled = true;
-        
-        const btn = new ARButton( this.renderer, { sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
-        
         const self = this;
+
+        var promise = new Promise(function(resolve, reject) {
+            const sound = new THREE.Audio( self.listener );
+            const audioLoader = new THREE.AudioLoader();
+             audioLoader.load( 'audio/app5.mp3', ( buffer ) => {
+              sound.setBuffer( buffer );
+              sound.setLoop( false );
+              sound.setVolume( 1.0 );
+          });
+           self.sound = sound;
+           self.speech = new THREE.Audio( self.listener );
+           const controlspeech = true;
+           self.controlspeech = controlspeech;
+      
+            if (self.controlspeech) {
+            resolve("Sound loaded!");
+            }
+             else {
+            reject(Error("Sound did not load."));
+            }
+         });
+
+
+       promise.then(function(result) {
+        const btn = new ARButton( self.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
+              console.log(result)}, function (error){    
+                  console.log(error);
+        });
+        
+       
 
         this.hitTestSourceRequested = false;
         this.hitTestSource = null;
+
+        function onSessionStart(){
+            self.sound.play();
+            self.ui1.mesh.visible = true;
+            self.ui2.mesh.visible = true;
+            self.ui4.mesh.visible = true;
+
+            
+            self.scene.add(self.ui1.mesh);
+            self.scene.add(self.ui2.mesh);
+            self.scene.add(self.ui4.mesh);
+            self.camera.add(self.ui1.mesh);
+            self.camera.add(self.ui2.mesh);
+            self.camera.add(self.ui4.mesh);
+
+           
+        }
         
         function onSelect() {
-            /*if (self.knight===undefined) return;
-            
-            if (self.reticle.visible){
-                if (self.knight.object.visible){
-                    self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
-                    self.knight.newPath(self.workingVec3);
-                }else{
-                    self.knight.object.position.setFromMatrixPosition( self.reticle.matrix );
-                    self.knight.object.visible = true;
-                }
-            }*/
-            if (self.reticle.visible){
 
-                if (self.floor.visible)
-                {
-                    const pt = new THREE.Vector3();
-                    pt.setFromMatrixPosition(self.reticle.matrix);
-                    self.measurements.push(pt);
-                    if (self.measurements.length == 2) {
-                        const distance = Math.round(self.getDistance(self.measurements) * 100);
-      
-                        const text = document.createElement('div');
-                        text.className = 'label';
-                        text.style.color = 'rgb(255,255,255)';
-                        text.textContent = distance + ' cm';
-                        document.querySelector('#container').appendChild(text);
-      
-                        self.labels.push({div: text, point: self.getCenterPoint(self.measurements)});
-      
-                        self.measurements = [];
-                        self.currentLine = null;
-                      } else {
-                        self.currentLine = self.initLine(self.measurements[0]);
-                        self.scene.add(self.currentLine);
-                      }
-                }
-                else  {
-                    self.floor.visible = true;
-                    self.floor.position.setFromMatrixPosition( self.reticle.matrix );
-                }
+            if (self.control){
 
-                //self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
-                console.log('reticle visible lol');
-               
+                console.log("on select");
+
+                if (self.reticle.visible){
+
+                    if (self.floor.visible){
+                        const pt = new THREE.Vector3();
+                        pt.setFromMatrixPosition(self.reticle.matrix);
+                        self.measurements.push(pt);
+                        self.coordinates.push(pt);
+
+                        if (self.measurements.length == 2) {
+                            const distance = Math.floor(self.getDistance(self.measurements) * 100);
+
+                            const text = document.createElement('div');
+                            text.className = 'label';
+                            text.style.color = 'rgb(255,255,255)';
+                            text.textContent = distance + ' cm';
+                            document.querySelector('#container').appendChild(text);
+                            self.sidelength.push(distance);
+                            self.labels.push({div: text, point: self.getCenterPoint(self.measurements)});
+
+                            self.measurements = [];
+                            self.currentLine = null;
+                        } else {
+                            self.currentLine = self.initLine(self.measurements[0]);
+                            self.lines.push(self.currentLine);
+                            self.scene.add(self.currentLine);
+                        }
+                    }
+                    else {
+                        //show and set the floor
+                        self.floor.visible = true;
+                        //self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
+                        self.floor.position.setFromMatrixPosition( self.reticle.matrix );
+
+                        //play the animation
+                        self.head.position.setFromMatrixPosition( self.reticle.matrix );
+                        self.head.visible = true;
+                        self.action.reset();
+                        self.scene.add(self.head);
+                        self.action.play();
+                    }
+                }
             }
+            self.control = true;
         }
 
         this.controller = this.renderer.xr.getController( 0 );
         this.controller.addEventListener( 'select', onSelect );
-
         
-        this.scene.add( this.controller );  
-        this.renderer.setAnimationLoop( this.render.bind(this) );  
+        this.scene.add( this.controller );    
     }
     
     requestHitTestSource(){
@@ -280,11 +645,48 @@ class App{
         } );
 
         session.addEventListener( 'end', function () {
-
+            console.log('end');
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;
             self.referenceSpace = null;
-            self.mesh.visible = false;
+            self.floor.visible = false;
+            self.control = true;
+
+            //clear the arrays
+            self.lines.forEach (element => self.scene.remove(element));
+            self.labels.splice(0,self.labels.length);
+            self.coordinates.splice(0,self.coordinates.length);
+            self.newcoord.splice(0,self.newcoord.length);
+            self.sidelength.splice(0,self.sidelength.length);
+
+            //remove length labels
+            const collection = document.getElementsByClassName("label");
+            const l = collection.length;
+            console.log(collection);
+            for (let i=0;i<l;i++){
+                collection[l-1-i].parentElement.removeChild(collection[l-i-1]);
+            }
+
+            //update the main ui canvas
+            self.ui.updateElement('body',"");            
+            self.ui.updateElement('result',"");
+            self.ui.updateElement('kordinate',"");
+
+            self.ui3.mesh.visible = false;
+            self.ui1.mesh.visible = false;
+            self.ui4.mesh.visible = false;
+            self.ui2.mesh.visible = false;
+            self.ui.mesh.visible = false;
+
+            self.scene.remove(self.ui1.mesh);
+            self.scene.remove(self.ui4.mesh);
+            self.camera.remove(self.ui1.mesh);
+            self.camera.remove(self.ui4.mesh);
+
+            self.scene.remove(self.head);
+            
+            if (self.sound && self.sound.isPlaying) self.sound.stop();
+            if (self.sound1 && self.sound1.isPlaying) self.sound1.stop();
 
         } );
 
@@ -300,23 +702,28 @@ class App{
             const referenceSpace = this.renderer.xr.getReferenceSpace();
             const hit = hitTestResults[ 0 ];
             const pose = hit.getPose( referenceSpace );
-            
 
             this.reticle.visible = true;
             this.reticle.matrix.fromArray( pose.transform.matrix );
-
+            
+            if (this.currentLine) this.updateLine(this.reticle.matrix, this.currentLine);
+                
         } else {
 
             this.reticle.visible = false;
 
         }
 
-    }
+    }            
+
+    resize(){ 
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+    	this.camera.updateProjectionMatrix();
+    	this.renderer.setSize( window.innerWidth, window.innerHeight );  
+    }	
 
     render( timestamp, frame ) {
         const dt = this.clock.getDelta();
-        //) this.knight.update(dt);
-
         const self = this;
         
         if ( frame ) {
@@ -326,12 +733,23 @@ class App{
             if ( this.hitTestSource ) this.getHitTestResults( frame );
 
         }
+        
+        this.labels.forEach( label => {
+            const pos = self.toScreenPosition(label.point, self.renderer.xr.getCamera(self.camera));
+            label.div.style.transform = `translate(-50%, -50%) translate(${pos.x}px,${pos.y}px)`;
+        })
+
+        if ( this.renderer.xr.isPresenting ) {
+            this.ui.update();
+            this.ui3.update();
+            this.ui1.update();
+            this.ui2.update();
+            this.ui4.update();
+            this.mixer.update( dt ) 
+
+        }
 
         this.renderer.render( this.scene, this.camera );
-        
-        /*if (this.knight.calculatedPath && this.knight.calculatedPath.length>0){
-            console.log( `path:${this.knight.calculatedPath[0].x.toFixed(2)}, ${this.knight.calculatedPath[0].y.toFixed(2)}, ${this.knight.calculatedPath[0].z.toFixed(2)} position: ${this.knight.object.position.x.toFixed(2)}, ${this.knight.object.position.y.toFixed(2)}, ${this.knight.object.position.z.toFixed(2)}`);
-        }*/
     }
 }
 
