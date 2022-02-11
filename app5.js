@@ -331,7 +331,7 @@ class App{
             },
             kordinate: { 
                 type: "text", 
-                position: {  top: 300 },
+                position: {  top: 250 },
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
@@ -408,24 +408,24 @@ class App{
 
             if (self.coordinates.length==0){
                 self.ui.updateElement('body',"An error happened!");
-                self.ui.updateElement('result',"Reset the app and try again!");
+                self.ui.updateElement('result',"Click the reset button and try again!");
 
             }
             else if (x == 0) {
                 self.ui.updateElement('body',"An error happened!");
-                self.ui.updateElement('result',"Reset the app and try again!");
+                self.ui.updateElement('result',"Click the reset button and try again!");
                 self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! ");
 
 
             }
             else if (self.newcoord.length <= 2) {
-                self.ui.updateElement('body',"An error happened!Reset the app and try again! ");
-                self.ui.updateElement('result',"Reset the app and try again!");
-                self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! It has only two lines ");
+                self.ui.updateElement('body',"An error happened!");
+                self.ui.updateElement('result',"Click the reset button and try again!");
+                self.ui.updateElement('kordinate',"Polygon wasn't properly drawn!");
 
 
             }
-            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is:  " + (self.area(self.newcoord)/10000).toString()+"%");
+            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is " + (self.area(self.newcoord)/100).toString()+"%");
             }
             
             console.log(self.coordinates);
@@ -463,19 +463,19 @@ class App{
        
         const ui1 = new CanvasUI(content1, config1);
         this.ui1 = ui1;
-        this.ui1.mesh.position.set(0.15,0.19,-0.7);
+        this.ui1.mesh.position.set(0.15,0.22,-0.7);
         this.ui1.mesh.scale.set(0.14,0.14,0.14);
         this.ui1.mesh.visible = false;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.14,0.15,-0.7);
+        this.ui2.mesh.position.set(-0.14,0.18,-0.7);
         this.ui2.mesh.scale.set(0.25,0.25,0.25);
         this.ui2.mesh.visible = false;
 
         const ui4 = new CanvasUI(content4, config4);
         this.ui4 = ui4;
-        this.ui4.mesh.position.set(0.02,0.19,-0.7);
+        this.ui4.mesh.position.set(0.02,0.22,-0.7);
         this.ui4.mesh.scale.set(0.14,0.14,0.14);
         this.ui4.mesh.visible = false;
 
