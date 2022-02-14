@@ -598,9 +598,15 @@ class App{
                             self.labels.push({div: text, point: self.getCenterPoint([self.measurements[self.measurements.length-2],self.measurements[self.measurements.length-1]])});
 
                             //self.measurements = [];
-                            self.currentLine = self.initLine(self.measurements[self.measurements.length-1]);
-                            self.lines.push(self.currentLine);
-                            self.scene.add(self.currentLine);
+                            if (distance<2){
+                                self.currentLine = null;
+                            }
+                            else {
+                                self.currentLine = self.initLine(self.measurements[self.measurements.length-1]);
+                                self.lines.push(self.currentLine);
+                                self.scene.add(self.currentLine);
+                            }
+                            
                         } else if(self.measurements.length=1) {
                             self.currentLine = self.initLine(self.measurements[0]);
                             self.lines.push(self.currentLine);
