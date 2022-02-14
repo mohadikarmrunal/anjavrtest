@@ -676,6 +676,8 @@ class App{
             self.camera.remove(self.ui4.mesh);
 
             self.scene.remove(self.head);
+            self.reticle.visible = false;
+
             
             if (self.sound && self.sound.isPlaying) self.sound.stop();
             if (self.sound1 && self.sound1.isPlaying) self.sound1.stop();
