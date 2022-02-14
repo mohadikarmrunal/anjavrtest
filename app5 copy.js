@@ -178,17 +178,17 @@ class App{
 
             //check if they form a polygon
             if (newcoord1[0].distanceTo(newcoord1[length-1]) > 4) return 0;
-            for (let j=1;j<(length-1);j=j+2){
+            /*for (let j=1;j<(length-1);j=j+2){
                 
                 if (newcoord1[j].distanceTo(newcoord1[j+1]) > 4) {
                     return 0;
                 }
-            }
-            
-            //fill the newcoord without double points
-            /*for (let k=0;k<(length-1);k=k+2) {
-                self.newcoord.push(newcoord1[k]);
             }*/
+           
+            //fill the newcoord without double points
+            for (let k=0;k<(length-1);k++) {
+                self.newcoord.push(newcoord1[k]);
+            }
         }
         else if (length=0) return 0;
 
@@ -598,7 +598,7 @@ class App{
                             self.labels.push({div: text, point: self.getCenterPoint([self.measurements[self.measurements.length-2],self.measurements[self.measurements.length-1]])});
 
                             //self.measurements = [];
-                            if (distance<2){
+                            if (distance<3){
                                 self.currentLine = null;
                             }
                             else {
