@@ -13,7 +13,6 @@ class App{
 		document.body.appendChild( container );
         
         this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
-		//this.camera.position.set( 0, 1.6, 3 );
         
 		this.scene = new THREE.Scene();
         this.scene.add(this.camera);
@@ -87,14 +86,6 @@ class App{
         this.coordinates.push(vekt12);
         //this.coordinates.push(new THREE.Vector3(-7,2,4));*/
     
-
-        /*const self = this;
-        console.log(this.coordinates);
-        if (this.coordcheck(this.coordinates) == 1){
-            console.log(self.newcoord);
-        }
-        else console.log("Polygon is bad!");*/
-
         this.initScene();
         this.setupXR();
         
@@ -104,8 +95,6 @@ class App{
         
 	}
 
-	
-   
     
     getCenterPoint(points) {
         let line = new THREE.Line3(...points)
@@ -178,12 +167,6 @@ class App{
 
             //check if they form a polygon
             if (newcoord1[0].distanceTo(newcoord1[length-1]) > 4) return 0;
-            /*for (let j=1;j<(length-1);j=j+2){
-                
-                if (newcoord1[j].distanceTo(newcoord1[j+1]) > 4) {
-                    return 0;
-                }
-            }*/
            
             //fill the newcoord without double points
             for (let k=0;k<(length-1);k++) {
@@ -231,7 +214,6 @@ class App{
             sound.setVolume( 1.0 );
             sound.play();
         });
-        //if (sndname == 'app5')  self.sound = sound;
         if (sndname == '5theory')  self.sound1 = sound;
     }
 
@@ -339,7 +321,6 @@ class App{
         }
 
         const content = {
-            //image: "../../assets/theory12.png",
             body:"",
             result: "",
             kordinate: "",
@@ -586,8 +567,8 @@ class App{
                         self.measurements.push(pt);
                         self.coordinates.push(pt);
 
-                        if (self.measurements.length=1) {
-
+                        if (self.measurements.length == 1) {
+                            console.log('prva tacka samo!');
                             self.currentLine = self.initLine(self.measurements[0]);
                             self.lines.push(self.currentLine);
                             self.scene.add(self.currentLine);
