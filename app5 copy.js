@@ -569,7 +569,6 @@ class App{
                         self.coordinates.push(pt);
 
                         if (self.measurements.length == 1) {
-                            console.log('prva tacka samo!');
                             self.currentLine = self.initLine(self.measurements[0]);
                             self.lines.push(self.currentLine);
                             self.scene.add(self.currentLine);
@@ -577,19 +576,16 @@ class App{
                         } else if (self.measurements.length >= 2){
 
                             const distance1 = Math.floor((self.measurements[self.measurements.length-1]).distanceTo(self.measurements[0]) * 100);
+                            const distance = Math.floor((self.measurements[self.measurements.length-1]).distanceTo(self.measurements[self.measurements.length-2]) * 100);
+                            const text = document.createElement('div');
+                            text.className = 'label';
+                            text.style.color = 'rgb(255,255,255)';
+                            text.textContent = distance + ' cm';
+                            document.querySelector('#container').appendChild(text);
+                            self.sidelength.push(distance);
+                            self.labels.push({div: text, point: self.getCenterPoint([self.measurements[self.measurements.length-2],self.measurements[self.measurements.length-1]])});
                             
                             if (distance1>3){
-                                
-                                const distance = Math.floor((self.measurements[self.measurements.length-1]).distanceTo(self.measurements[self.measurements.length-2]) * 100);
-                                const text = document.createElement('div');
-                                text.className = 'label';
-                                text.style.color = 'rgb(255,255,255)';
-                                text.textContent = distance + ' cm';
-                                document.querySelector('#container').appendChild(text);
-                                
-                                self.sidelength.push(distance);
-                                self.labels.push({div: text, point: self.getCenterPoint([self.measurements[self.measurements.length-2],self.measurements[self.measurements.length-1]])});
-                               
                                 self.currentLine = self.initLine(self.measurements[self.measurements.length-1]);
                                 self.lines.push(self.currentLine);
                                 self.scene.add(self.currentLine);
