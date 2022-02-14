@@ -347,6 +347,7 @@ class App{
             self.coordinates.splice(0,self.coordinates.length);
             self.newcoord.splice(0,self.newcoord.length);
             self.sidelength.splice(0,self.sidelength.length);
+            self.measurements.splice(0,self.measurements.length);
 
             //remove length labels
             const collection = document.getElementsByClassName("label");
@@ -651,6 +652,8 @@ class App{
             self.coordinates.splice(0,self.coordinates.length);
             self.newcoord.splice(0,self.newcoord.length);
             self.sidelength.splice(0,self.sidelength.length);
+            self.measurements.splice(0,self.measurements.length);
+
 
             //remove length labels
             const collection = document.getElementsByClassName("label");
