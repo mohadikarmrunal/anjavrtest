@@ -387,6 +387,7 @@ class App{
             self.camera.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
             const x = self.coordcheck(self.coordinates);
+            const n = self.area(self.newcoord);
 
             if (self.coordinates.length==0){
                 self.ui.updateElement('body',"An error happened!");
@@ -407,7 +408,12 @@ class App{
 
 
             }
-            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is " + (self.area(self.newcoord)/100).toString()+"%");
+            else if (n>100) {
+                self.ui.updateElement('body',"An error happened!");
+                self.ui.updateElement('result',"Click the reset button and try again!");
+                self.ui.updateElement('kordinate',"Polygon was drawn outside the boundary!");
+            }
+            else {self.ui.updateElement('result', "Probability of the coin falling in the selected area is " + n.toString()+"%");
             }
             
             console.log(self.coordinates);
