@@ -387,7 +387,7 @@ class App{
             self.camera.add(self.ui3.mesh);
             self.ui3.mesh.visible = true;
             const x = self.coordcheck(self.coordinates);
-            const n = self.area(self.newcoord);
+            const n = self.area(self.newcoord)/100;
 
             if (self.coordinates.length==0){
                 self.ui.updateElement('body',"An error happened!");
