@@ -43,6 +43,16 @@ class App{
 
         this.listener = new THREE.AudioListener();
 
+        const sound = new THREE.Audio( this.listener );
+        const audioLoader = new THREE.AudioLoader();
+         audioLoader.load( 'audio/app4-1.mp3', ( buffer ) => {
+          sound.setBuffer( buffer );
+          sound.setLoop( false );
+          sound.setVolume( 1.0 );
+         });
+       this.sound = sound;
+       this.speech = new THREE.Audio( this.listener );
+
         this.stats = new Stats();
         this.initScene();
         this.setupVR();
@@ -89,7 +99,7 @@ class App{
                 self.actionA.loop = THREE.LoopOnce;
 
                 self.actionI.play();              
-                if (self.tel!= undefined) self.loadingBar.visible = false;
+                if (self.tel!= undefined && self.sound!=undefined) self.loadingBar.visible = false;
   
 			},
 			// called while loading is progressing
@@ -132,7 +142,7 @@ class App{
                 self.actionT = actionT;
                 self.actionT.loop = THREE.LoopOnce;
                 
-                if (self.worker!= undefined) self.loadingBar.visible = false;
+                if (self.worker!= undefined && self.sound!=undefined) self.loadingBar.visible = false;
 
 			},
 			// called while loading is progressing
@@ -980,7 +990,7 @@ class App{
             self.camera.remove(self.ui9.mesh);      
         }
 
-        var promise = new Promise(function(resolve, reject) {
+        /*var promise = new Promise(function(resolve, reject) {
             const sound = new THREE.Audio( self.listener );
             const audioLoader = new THREE.AudioLoader();
              audioLoader.load( 'audio/app4-1.mp3', ( buffer ) => {
@@ -1006,9 +1016,9 @@ class App{
               const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
               console.log(result)}, function (error){    
                   console.log(error);
-        });
+        });*/
         
-
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
 
         const controller = this.renderer.xr.getController( 0 );
 

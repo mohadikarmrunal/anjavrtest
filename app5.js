@@ -44,6 +44,16 @@ class App{
 
         this.listener = new THREE.AudioListener();
 
+        const sound = new THREE.Audio( this.listener );
+        const audioLoader = new THREE.AudioLoader();
+         audioLoader.load( 'audio/app5.mp3', ( buffer ) => {
+          sound.setBuffer( buffer );
+          sound.setLoop( false );
+          sound.setVolume( 1.0 );
+        });
+       this.sound = sound;
+       this.speech = new THREE.Audio( this.listener );
+
         
         this.workingVec3 = new THREE.Vector3();
         this.labels = [];
@@ -256,7 +266,8 @@ class App{
                 self.action.clampWhenFinished = true;
 
 
-                self.loadingBar.visible = false;
+               if (self.sound!=undefined) self.loadingBar.visible = false;
+               else {alert ('Error Happened! Refresh the page!')};
 
 			},
 			// called while loading is progressing
@@ -510,7 +521,7 @@ class App{
         this.renderer.xr.enabled = true;
         const self = this;
 
-        var promise = new Promise(function(resolve, reject) {
+        /*var promise = new Promise(function(resolve, reject) {
             const sound = new THREE.Audio( self.listener );
             const audioLoader = new THREE.AudioLoader();
              audioLoader.load( 'audio/app5.mp3', ( buffer ) => {
@@ -536,9 +547,10 @@ class App{
         const btn = new ARButton( self.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
               console.log(result)}, function (error){    
                   console.log(error);
-        });
+        });*/
         
        
+        const btn = new ARButton( self.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
 
         this.hitTestSourceRequested = false;
         this.hitTestSource = null;

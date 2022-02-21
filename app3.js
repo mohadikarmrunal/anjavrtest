@@ -46,6 +46,17 @@ class App{
         this.createBoxes();
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
+
+        const sound = new THREE.Audio( this.listener );
+        const audioLoader = new THREE.AudioLoader();
+         audioLoader.load( 'audio/introapp3.mp3', ( buffer ) => {
+          sound.setBuffer( buffer );
+          sound.setLoop( false );
+          sound.setVolume( 1.0 );
+         });
+        this.introsound = sound;
+        this.speech = new THREE.Audio( this.listener );
+
 	}	
     
     initScene(){
@@ -456,12 +467,13 @@ class App{
         const self = this;
         const audioLoader = new THREE.AudioLoader();
         audioLoader.load( `audio/${sndname}.mp3`, ( buffer ) => {
-            if (sound.isPlaying) sound.stop();
+            //if (sound.isPlaying) sound.stop();
             sound.setBuffer( buffer );
             sound.setLoop( false );
             sound.setVolume( 1.0 );
             sound.play();
         });
+        //if (sndname == 'introapp3')  self.introsound = sound;
         if (sndname == 'canvas1')  self.canvas1 = sound;
         if (sndname == 'canvas2')  self.canvas2 = sound;
         if (sndname == 'canvas3')  self.canvas3 = sound;
@@ -1203,7 +1215,7 @@ class App{
         
         function onSessionStart(){
             
-            self.sound.play();
+            self.introsound.play();
 
              if(!self.head.visible){
 
@@ -1232,7 +1244,7 @@ class App{
 
         function onSessionEnd(){
 
-            if (self.sound && self.sound.isPlaying) self.sound.stop();
+            if (self.introsound && self.introsound.isPlaying) self.introsound.stop();
             if (self.canvas1 && self.canvas1.isPlaying) self.canvas1.stop();
             if (self.canvas2 && self.canvas2.isPlaying) self.canvas2.stop();
             if (self.canvas3 && self.canvas3.isPlaying) self.canvas3.stop();
@@ -1300,7 +1312,7 @@ class App{
             if (self.text2) self.scene.remove(self.text2);
         }
 
-        var promise = new Promise(function(resolve, reject) {
+       /* var promise = new Promise(function(resolve, reject) {
             const sound = new THREE.Audio( self.listener );
             const audioLoader = new THREE.AudioLoader();
              audioLoader.load( 'audio/intoapp3.mp3', ( buffer ) => {
@@ -1327,7 +1339,8 @@ class App{
               console.log(result)}, function (error){    
                   console.log(error);
         });
-
+        */  
+        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
 
         const controller = this.renderer.xr.getController( 0 );
 
