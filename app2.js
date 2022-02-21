@@ -43,6 +43,16 @@ class App{
         this.setupVR();
 
         window.addEventListener('resize', this.resize.bind(this) );
+
+        const sound = new THREE.Audio( this.listener );
+             const audioLoader = new THREE.AudioLoader();
+              audioLoader.load( 'audio/app2.mp3', ( buffer ) => {
+               sound.setBuffer( buffer );
+               sound.setLoop( false );
+               sound.setVolume( 1.0 );
+           });
+        this.sound = sound;
+        this.speech = new THREE.Audio( this.listener );
 	
     }
 
@@ -431,7 +441,7 @@ class App{
 
         }
 
-        var promise = new Promise(function(resolve, reject) {
+       /* var promise = new Promise(function(resolve, reject) {
              const sound = new THREE.Audio( self.listener );
              const audioLoader = new THREE.AudioLoader();
               audioLoader.load( 'audio/app2.mp3', ( buffer ) => {
@@ -457,8 +467,10 @@ class App{
                const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
                console.log(result)}, function (error){
                console.log(error);
-           });
+           });*/
 
+        
+        const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
 
         const controller = this.renderer.xr.getController( 0 );
         
