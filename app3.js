@@ -89,6 +89,7 @@ class App{
                 const clip = self.animations['TossHead'];
                 const action = self.mixer.clipAction (clip);
                 action.enabled = true;
+                action.loop = THREE.LoopOnce;
                 self.action = action;
                 self.head.visible=false;
 				const scale = 0.05;
@@ -133,9 +134,10 @@ class App{
                 self.mixerT = new THREE.AnimationMixer( self.coinT );
                 const clipT = self.animationsT['TossTail'];
                 const actionT = self.mixerT.clipAction (clipT);
-                //action.loop = THREE.LoopOnce;
+                actionT.loop = THREE.LoopOnce;
                 actionT.enabled = true;
                 self.actionT = actionT;
+                self.actionT.clampWhenFinished = true;
                 self.tail.visible = false;
 				const scale = 0.05;
 				self.tail.scale.set(scale, scale, scale); 
@@ -1152,8 +1154,8 @@ class App{
 
             self.head.visible = true;
             self.scene.add(self.head);
+            self.action.reset();
             self.action.play();
-            //this.app.action.loop = THREE.LoopOnce;
         }
 
         function next2(){
@@ -1162,9 +1164,9 @@ class App{
             self.head.visible = false;
             self.tail.visible = true;
             self.scene.add(this.app.tail);
+            self.actionT.reset();
             self.actionT.play();
             self.playSound('canvas1');
-            //this.app.actionT.loop = THREE.LoopOnce;
         }
 
         function next3(){
@@ -1231,11 +1233,11 @@ class App{
                 //next 1 starts the animation of the coins
                 timeout1 = setTimeout(next1,31000);
                 self.timeout1 = timeout1;
-                //nextr 2 tosses the second coin; I need 2 seconds between them
+                //next 2 tosses the second coin; I need 2 seconds between them
                 timeout2 = setTimeout(next2,33000);
                 self.timeout2 = timeout2;
-                //stops the animation and shows the second canvas
-                timeout3 = setTimeout(next3,35000);
+                //next 3 stops the animation and shows the second canvas (2 secs)
+                timeout3 = setTimeout(next3,39000);
                 self.timeout3 = timeout3;
 
             }
