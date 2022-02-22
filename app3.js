@@ -129,9 +129,9 @@ class App{
                     self.tail.children[0].children[1].visible = false;
                 }
 
-                self.animations['TossTail'] = gltf.animations[0];
+                self.animationsT['TossTail'] = gltf.animations[0];
                 self.mixerT = new THREE.AnimationMixer( self.coinT );
-                const clipT = self.animations['TossTail'];
+                const clipT = self.animationsT['TossTail'];
                 const actionT = self.mixerT.clipAction (clipT);
                 //action.loop = THREE.LoopOnce;
                 actionT.enabled = true;
