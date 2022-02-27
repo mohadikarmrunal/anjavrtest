@@ -528,6 +528,10 @@ class App5{
 
         function onSessionStart(){
 
+            const el = document.getElementById("text");
+            self.el = el;
+            if (self.el!=undefined) self.el.style.visibility = 'hidden';
+
             const el1 = document.getElementsByClassName("buttonapp1");
             const el2 = document.getElementsByClassName("buttonapp2");
             const el3 = document.getElementsByClassName("buttonapp3");
@@ -643,12 +647,15 @@ class App5{
         } );
 
         session.addEventListener( 'end', function () {
+            
             console.log('end');
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;
             self.referenceSpace = null;
             self.floor.visible = false;
             self.control = true;
+            
+            if (self.el!=undefined) self.el.style.visibility = 'visible';
 
             //enable buttons for other apps
             self.elem1.disabled = false;

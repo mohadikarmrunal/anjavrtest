@@ -633,6 +633,7 @@ class App{
 
         function onSessionStart(){
 
+            //hiding other buttons
             const el2 = document.getElementsByClassName("buttonapp2");
             const el3 = document.getElementsByClassName("buttonapp3");
             const el4 = document.getElementsByClassName("buttonapp4");
@@ -649,11 +650,16 @@ class App{
             self.elem4.disabled = true;
             self.elem5 = el5[0];
             self.elem5.disabled = true;
-
+            self.el
            self.elem2.style.visibility = 'hidden';
            self.elem3.style.visibility = 'hidden';
            self.elem4.style.visibility = 'hidden';
            self.elem5.style.visibility = 'hidden';
+
+           const el = document.getElementById("text");
+           self.el = el;
+           if (self.el!=undefined) self.el.style.visibility = 'hidden';
+
 
             /*self.elem2 = [el2[0],el2[0].style.right,el2[0].style.top];
             self.elem3 = [el3[0],el3[0].style.right,el3[0].style.top];
@@ -708,6 +714,8 @@ class App{
         }
 
         function onSessionEnd(){
+
+            if (self.el!=undefined) self.el.style.visibility = 'visible';
 
             //display buttons for other apps
            self.elem2.disabled = false;

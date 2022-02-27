@@ -853,6 +853,10 @@ class App4{
         
         function onSessionStart(){
 
+            const el = document.getElementById("text");
+            self.el = el;
+            if (self.el!=undefined) self.el.style.visibility = 'hidden';
+
             const el1 = document.getElementsByClassName("buttonapp1");
             const el2 = document.getElementsByClassName("buttonapp2");
             const el3 = document.getElementsByClassName("buttonapp3");
@@ -905,6 +909,9 @@ class App4{
         }
 
         function onSessionEnd(){
+
+            if (self.el!=undefined) self.el.style.visibility = 'visible';
+
 
             self.elem1.disabled = false;
             self.elem2.disabled = false;

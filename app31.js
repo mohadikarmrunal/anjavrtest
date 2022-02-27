@@ -1217,6 +1217,10 @@ class App3{
         
         function onSessionStart(){
             
+            const el = document.getElementById("text");
+            self.el = el;
+            if (self.el!=undefined) self.el.style.visibility = 'hidden';
+
             const el1 = document.getElementsByClassName("buttonapp1");
             const el2 = document.getElementsByClassName("buttonapp2");
             const el4 = document.getElementsByClassName("buttonapp4");
@@ -1263,6 +1267,9 @@ class App3{
 
 
         function onSessionEnd(){
+
+            if (self.el!=undefined) self.el.style.visibility = 'visible';
+
 
             self.elem1.disabled = false;
             self.elem2.disabled = false;
