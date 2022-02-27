@@ -1031,7 +1031,7 @@ class App4{
             self.camera.remove(self.ui9.mesh);      
         }
         
-        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }}, '40%', '60%', 'buttonapp4')
+        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }}, '30%', '60%', 'buttonapp4')
        
         const controller = this.renderer.xr.getController( 0 );
         this.scene.add( controller );

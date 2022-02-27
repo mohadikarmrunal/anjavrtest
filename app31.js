@@ -1382,7 +1382,7 @@ class App3{
                   console.log(error);
         });
         */  
-        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }}, '40%', '50%', 'buttonapp3')
+        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }}, '30%', '50%', 'buttonapp3')
        
 
         const controller = this.renderer.xr.getController( 0 );

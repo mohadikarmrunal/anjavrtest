@@ -523,7 +523,7 @@ class App5{
         this.renderer.xr.enabled = true;
         const self = this; 
        
-        const btn = new ARButton2( self.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } , '40%', '70%', 'buttonapp5');
+        const btn = new ARButton2( self.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } , '30%', '70%', 'buttonapp5');
     
         this.hitTestSourceRequested = false;
         this.hitTestSource = null;

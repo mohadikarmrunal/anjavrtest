@@ -509,7 +509,7 @@ class App2{
            });*/
 
         
-        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }},'40%', '40%', 'buttonapp2')
+        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }},'30%', '40%', 'buttonapp2')
         
     
         const controller = this.renderer.xr.getController( 0 );

@@ -794,7 +794,7 @@ class App{
                 console.log(error);
             });
             */
-        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }}, '40%', '30%', 'buttonapp1')
+        const btn = new ARButton2( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }}, '30%', '30%', 'buttonapp1')
         //const element = document.getElementsByTagName("BUTTON");
         //element[0].className= 'button1';
         //element[0].style.right = '60px';
