@@ -231,7 +231,7 @@ class App5{
 
     
     initScene(){
-        this.loadingBar = new LoadingBar();
+        this.loadingBar5 = new LoadingBar();
         
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
@@ -268,14 +268,14 @@ class App5{
                 self.action.clampWhenFinished = true;
 
 
-               if (self.sound!=undefined) self.loadingBar.visible = false;
+               if (self.sound!=undefined) self.loadingBar5.visible = false;
                else {alert ('Error Happened! Refresh the page!')};
 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar5.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
