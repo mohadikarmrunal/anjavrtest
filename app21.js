@@ -21,6 +21,8 @@ class App2{
         const light = new THREE.DirectionalLight( 0xffffff );
         light.position.set( 1, 1, 1 ).normalize();
 		this.scene.add( light );
+
+        window.createImageBitmap = undefined;
 			
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		this.renderer.setPixelRatio( window.devicePixelRatio );

@@ -30,7 +30,7 @@ class App{
         light.position.set( 1, 1, 1 ).normalize();
 		this.scene.add( light );
         
-        window.createImageBitmap = undefined
+        //window.createImageBitmap = undefined
 			
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		this.renderer.setPixelRatio( window.devicePixelRatio );

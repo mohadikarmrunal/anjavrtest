@@ -33,6 +33,8 @@ class App5{
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
 		container.appendChild( this.renderer.domElement );
+
+        window.createImageBitmap = undefined;
         
         const labelContainer = document.createElement('div');
         labelContainer.style.position = 'absolute';

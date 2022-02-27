@@ -18,6 +18,8 @@ class App{
 		
 		this.scene = new THREE.Scene();
         this.scene.add(this.camera);
+
+        window.createImageBitmap = undefined;
        
 		this.scene.add( new THREE.HemisphereLight( 0x606060, 0x404040 ) );
 
