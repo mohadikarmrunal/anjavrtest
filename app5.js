@@ -556,6 +556,14 @@ class App{
         this.hitTestSource = null;
 
         function onSessionStart(){
+
+            const el1 = document.getElementById("text1");
+            const el2 = document.getElementById("text2");
+            const el3 = document.getElementById("text2");
+            self.el = [el1,el2,el3];
+            console.log(self.el);
+            if (self.el.length>0) self.el.forEach ((element) => element.style.visibility = 'hidden');
+
             self.sound.play();
             self.ui1.mesh.visible = true;
             self.ui2.mesh.visible = true;
@@ -653,6 +661,9 @@ class App{
         } );
 
         session.addEventListener( 'end', function () {
+
+            if (self.el.length>0) self.el.forEach ((element) => element.style.visibility = 'visible');
+
             console.log('end');
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;

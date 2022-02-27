@@ -631,6 +631,12 @@ class App{
 
         function onSessionStart(){
 
+            const el1 = document.getElementById("text1");
+            const el2 = document.getElementById("text2");
+            const el3 = document.getElementById("text2");
+            self.el = [el1,el2,el3];
+            console.log(self.el);
+            if (self.el.length>0) self.el.forEach ((element) => element.style.visibility = 'hidden');
             var timeout1, timeout2, timeout3, timeout4, timeout5
 
             self.ui1.mesh.visible = true;
@@ -678,6 +684,8 @@ class App{
         }
 
         function onSessionEnd(){
+
+            if (self.el.length>0) self.el.forEach ((element) => element.style.visibility = 'visible');
 
             if (self.sound && self.sound.isPlaying) self.sound.stop();
             self.control = false; 
