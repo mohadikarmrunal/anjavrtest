@@ -531,8 +531,11 @@ class App5{
         function onSessionStart(){
 
             const el = document.getElementById("text");
-            self.el = el;
-            if (self.el!=undefined) self.el.style.visibility = 'hidden';
+           const tit = document.getElementById("title");
+           self.el = el;
+           self.title = tit;
+           if (self.el!=undefined) self.el.style.visibility = 'hidden';
+           if (self.title!=undefined) self.title.style.visibility = 'hidden';
 
             const el1 = document.getElementsByClassName("buttonapp1");
             const el2 = document.getElementsByClassName("buttonapp2");
@@ -658,6 +661,7 @@ class App5{
             self.control = true;
             
             if (self.el!=undefined) self.el.style.visibility = 'visible';
+            if (self.title!=undefined) self.title.style.visibility = 'visible';
 
             //enable buttons for other apps
             self.elem1.disabled = false;

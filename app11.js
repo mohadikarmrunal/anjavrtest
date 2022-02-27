@@ -659,8 +659,11 @@ class App{
            self.elem5.style.visibility = 'hidden';
 
            const el = document.getElementById("text");
+           const tit = document.getElementById("title");
            self.el = el;
+           self.title = tit;
            if (self.el!=undefined) self.el.style.visibility = 'hidden';
+           if (self.title!=undefined) self.title.style.visibility = 'hidden';
 
 
             /*self.elem2 = [el2[0],el2[0].style.right,el2[0].style.top];
@@ -718,6 +721,7 @@ class App{
         function onSessionEnd(){
 
             if (self.el!=undefined) self.el.style.visibility = 'visible';
+            if (self.title!=undefined) self.title.style.visibility = 'visible';
 
             //display buttons for other apps
            self.elem2.disabled = false;

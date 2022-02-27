@@ -30,7 +30,7 @@ class App4{
         light.position.set( 1, 1, 1 ).normalize();
 		this.scene.add( light );
         
-        window.createImageBitmap = undefined
+        window.createImageBitmap = undefined;
 			
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -854,8 +854,11 @@ class App4{
         function onSessionStart(){
 
             const el = document.getElementById("text");
+            const tit = document.getElementById("title");
             self.el = el;
+            self.title = tit;
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
+            if (self.title!=undefined) self.title.style.visibility = 'hidden';
 
             const el1 = document.getElementsByClassName("buttonapp1");
             const el2 = document.getElementsByClassName("buttonapp2");
@@ -911,7 +914,7 @@ class App4{
         function onSessionEnd(){
 
             if (self.el!=undefined) self.el.style.visibility = 'visible';
-
+            if (self.title!=undefined) self.title.style.visibility = 'visible';
 
             self.elem1.disabled = false;
             self.elem2.disabled = false;
