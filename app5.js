@@ -557,12 +557,9 @@ class App{
 
         function onSessionStart(){
 
-            const el1 = document.getElementById("text1");
-            const el2 = document.getElementById("text2");
-            const el3 = document.getElementById("text2");
-            self.el = [el1,el2,el3];
-            console.log(self.el);
-            if (self.el.length>0) self.el.forEach ((element) => element.style.visibility = 'hidden');
+            const el = document.getElementById("text");
+            self.el = el;
+            if (self.el!=undefined) self.el.style.visibility = 'hidden';
 
             self.sound.play();
             self.ui1.mesh.visible = true;
@@ -662,7 +659,7 @@ class App{
 
         session.addEventListener( 'end', function () {
 
-            if (self.el.length>0) self.el.forEach ((element) => element.style.visibility = 'visible');
+            if (self.el!=undefined) self.el.style.visibility = 'visible';
 
             console.log('end');
             self.hitTestSourceRequested = false;

@@ -1219,7 +1219,6 @@ class App{
 
             const el = document.getElementById("text");
             self.el = el;
-            console.log(self.el);
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
 
             self.introsound.play();

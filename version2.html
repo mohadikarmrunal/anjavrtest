@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>MATHS IN AR</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <!--favicon -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <head>
+        <title>MATHS IN AR</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <!--favicon -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <link rel="apple-touch-icon" sizes="180x180" href="../../css/favicon/apple-touch-icon1.png">
         <link rel="icon" type="image/png" sizes="32x32" href="../../css/favicon/favicon1-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="../../css/favicon/favicon1-16x16.png">
@@ -15,31 +19,83 @@
         <meta name="theme-color" content="#ffffff">
         <!-- end favicon -->
         <style>
-            body{
-                margin: 0;
-                padding: 0;
-                background: none;
-            }
-            
-            ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            }
-
+            html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+            .w3-sidebar {
+            z-index: 3;
+            width: 250px;
+            top: 0;
+            bottom: 0;
+            height: inherit;
+        }
         </style>
-	</head>
-	<body>
-        <h1>Maths in AR</h1>
-        <ul>
-            <li><a href="example1.html">Area Under the Curve</a></li>
-            <li><a href="example2.html">Approximating Area Under The Curve Using Rectangles</a></li>
-            <li><a href="example3.html">Random Variable and Probability</a></li>
-            <li><a href="example4.html">Poisson Distribution</a></li>
-            <li><a href="example5.html">Uniform Continuous Distribution</a></li>
-          </ul>
-       
-        <p></p>
+    </head>
 
-	</body>
+    <body>
+        <!-- Sidebar -->
+        <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
+            <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+                <i class="fa fa-remove"></i>
+            </a>
+            <h4 class="w3-bar-item"><b>Menu</b></h4>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example11.html">Area Under the Curve</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example21.html">Approximating Area Under The Curve</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example31.html">Random Variable and Probability</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example41.html">Poisson Distribution</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example51.html">Uniform Continuous Distribution</a>
+        </nav>
+
+    <!-- Top menu on small screens -->
+        <header class="w3-container w3-top w3-hide-large w3-blue w3-xlarge w3-padding">
+            <a href="javascript:void(0)" class="w3-button w3-blue w3-margin-right" onclick="w3_open()">☰</a>
+            <span>Menu</span>
+        </header>
+    
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+        <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+        <div class="w3-main" style="margin-left:250px">
+
+            <div class="w3-container" style="margin-top:75px">
+                <h1 class="w3-xxxlarge w3-text-blue"><b>MATHS IN AR</b></h1>
+                <hr style="width:50px;border:5px solid rgb(10, 56, 141)" class="w3-round">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum
+                dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+
+          
+
+
+        <!-- End page content -->
+        </div>
+
+        <script>
+        // Get the Sidebar
+        var mySidebar = document.getElementById("mySidebar");
+
+        // Get the DIV with overlay effect
+        var overlayBg = document.getElementById("myOverlay");
+
+        // Toggle between showing and hiding the sidebar, and add overlay effect
+        function w3_open() {
+        if (mySidebar.style.display === 'block') {
+            mySidebar.style.display = 'none';
+            overlayBg.style.display = "none";
+        } else {
+            mySidebar.style.display = 'block';
+            overlayBg.style.display = "block";
+        }
+        }
+
+        // Close the sidebar with the close button
+        function w3_close() {
+        mySidebar.style.display = "none";
+        overlayBg.style.display = "none";
+        }
+        </script>
+
+    </body>
+
+
 </html>
