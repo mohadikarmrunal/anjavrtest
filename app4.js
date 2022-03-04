@@ -63,7 +63,7 @@ class App{
 
     
     initScene(){
-        this.loadingBar = new LoadingBar();
+        this.loadingBar41 = new LoadingBar();
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
         const dracoLoader = new DRACOLoader();
@@ -101,13 +101,13 @@ class App{
                 self.actionA.loop = THREE.LoopOnce;
 
                 self.actionI.play();              
-                if (self.tel!= undefined && self.sound!=undefined) self.loadingBar.visible = false;
+                if (self.tel!= undefined && self.sound!=undefined) self.loadingBar41.visible = false;
   
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar41.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -144,13 +144,13 @@ class App{
                 self.actionT = actionT;
                 self.actionT.loop = THREE.LoopOnce;
                 
-                if (self.worker!= undefined && self.sound!=undefined) self.loadingBar.visible = false;
+                if (self.worker!= undefined && self.sound!=undefined) self.loadingBar41.visible = false;
 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar41.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {

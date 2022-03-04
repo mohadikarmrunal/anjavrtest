@@ -56,7 +56,7 @@ class App{
 	}	
     
     initScene(){
-        this.loadingBar = new LoadingBar();
+        this.loadingBar11 = new LoadingBar();
         
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
@@ -73,13 +73,13 @@ class App{
 				const scale = 0.06;
 				self.apple.scale.set(scale, scale, scale); 
 
-                if (self.cart!=undefined && self.cursor!=undefined && self.sound!=undefined) self.loadingBar.visible = false;
+                if (self.cart!=undefined && self.cursor!=undefined && self.sound!=undefined) self.loadingBar11.visible = false;
 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -107,14 +107,14 @@ class App{
                 self.action.loop = THREE.LoopRepeat;
                 self.cart.visible=false; 
 
-                if (self.apple!=undefined && self.cursor!=undefined && self.sound!=undefined) self.loadingBar.visible = false;
+                if (self.apple!=undefined && self.cursor!=undefined && self.sound!=undefined) self.loadingBar11.visible = false;
 
 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -137,14 +137,14 @@ class App{
                 self.cursor.rotateX(Math.PI/2);
                 self.cursor1 = self.cursor.clone();
                 self.cursor2 = self.cursor.clone();
-                if (self.cart!=undefined && self.apple!=undefined && self.sound!=undefined) self.loadingBar.visible = false;
+                if (self.cart!=undefined && self.apple!=undefined && self.sound!=undefined) self.loadingBar11.visible = false;
 
 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {

@@ -60,7 +60,7 @@ class App{
 	}	
     
     initScene(){
-        this.loadingBar = new LoadingBar();
+        this.loadingBar31 = new LoadingBar();
         
         this.assetsPath = '../../assets/';
         const loader = new GLTFLoader().setPath(this.assetsPath);
@@ -96,13 +96,13 @@ class App{
 				self.head.scale.set(scale, scale, scale); 
                 self.head.position.set( 0, -0.5, -1 ); 
 
-                if (self.coin!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar.visible = false;
+                if (self.coin!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -143,12 +143,12 @@ class App{
 				self.tail.scale.set(scale, scale, scale); 
                 self.tail.position.set( 0, -0.5, -1 ); 
 
-                if (self.head!=undefined && self.coin!=undefined && self.cursor!=undefined)  self.loadingBar.visible = false;
+                if (self.head!=undefined && self.coin!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -181,14 +181,14 @@ class App{
                 self.coin7 = self.coin.clone();
                 self.coin.children[0].rotateX(Math.PI);
 
-                if (self.head!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar.visible = false;
+                if (self.head!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
 
 
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -231,7 +231,7 @@ class App{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -270,7 +270,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -295,7 +295,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -320,7 +320,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -345,7 +345,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -370,7 +370,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -395,7 +395,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -420,7 +420,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -444,12 +444,12 @@ class App{
                 self.cursor2 = self.cursor.clone();
                 self.cursor3 = self.cursor.clone();
 
-                if(self.coin!=undefined && self.head!=undefined && self.tail!=undefined) self.LoadingBar.visible = false;
+                if(self.coin!=undefined && self.head!=undefined && self.tail!=undefined) self.loadingBar31.visible = false;
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar.progress = (xhr.loaded / xhr.total);
+				self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
