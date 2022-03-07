@@ -20,12 +20,23 @@
                 padding: 0;
                 background: none;      
             } 
+            #btns{
+                position: absolute;
+                right: 10px;
+                top: 10px;
+            }
         </style>
 	</head>
 	<body>
+        <div id="btns">
+            <button id="btn1">Idle</button>
+            <button id="btn2">Answer</button>
+
+        </div>
+        
         <script src="../../libs/fas.js"></script>
         <script type="module">
-            import { App } from './app1.js';
+            import { App } from './pokusaj.js';
 
             document.addEventListener("DOMContentLoaded", function(){
                 const app = new App();
