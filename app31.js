@@ -65,10 +65,10 @@ class App3{
         this.loadingBar3 = new LoadingBar();
         
         this.assetsPath = '../../assets/';
-        const loader = new GLTFLoader().setPath(this.assetsPath);
+        const loader31 = new GLTFLoader().setPath(this.assetsPath);
 		const self = this;
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'TossHead.gltf',
 			// called when the resource is loaded
@@ -113,7 +113,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'TossTail.gltf',
 			// called when the resource is loaded
@@ -160,7 +160,7 @@ class App3{
 			}
         );   
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'Coin.gltf',
 			// called when the resource is loaded
@@ -200,7 +200,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'T.gltf',
 			// called when the resource is loaded
@@ -241,7 +241,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'H.gltf',
 			// called when the resource is loaded
@@ -280,7 +280,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'0.gltf',
 			// called when the resource is loaded
@@ -305,7 +305,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'1.gltf',
 			// called when the resource is loaded
@@ -330,7 +330,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'2.gltf',
 			// called when the resource is loaded
@@ -355,7 +355,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'num0.gltf',
 			// called when the resource is loaded
@@ -380,7 +380,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'num1.gltf',
 			// called when the resource is loaded
@@ -405,7 +405,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'num2.gltf',
 			// called when the resource is loaded
@@ -430,7 +430,7 @@ class App3{
 			}
         );
 
-        loader.load(
+        loader31.load(
 			// resource URL
 			'cursor.gltf',
 			// called when the resource is loaded

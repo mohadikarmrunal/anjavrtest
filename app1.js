@@ -59,10 +59,10 @@ class App{
         this.loadingBar11 = new LoadingBar();
         
         this.assetsPath = '../../assets/';
-        const loader = new GLTFLoader().setPath(this.assetsPath);
+        const loader1 = new GLTFLoader().setPath(this.assetsPath);
 		const self = this;
 
-        loader.load(
+        loader1.load(
 			// resource URL
 			'apple.gltf',
 			// called when the resource is loaded
@@ -89,7 +89,7 @@ class App{
 			}
         );
 
-        loader.load(
+        loader1.load(
 			// resource URL
 			'cart.gltf',
 			// called when the resource is loaded
@@ -124,7 +124,7 @@ class App{
 			}
         );
 
-        loader.load(
+        loader1.load(
 			// resource URL
 			'cursor.gltf',
 			// called when the resource is loaded

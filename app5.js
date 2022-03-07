@@ -232,10 +232,10 @@ class App{
         this.loadingBar51 = new LoadingBar();
         
         this.assetsPath = '../../assets/';
-        const loader = new GLTFLoader().setPath(this.assetsPath);
+        const loader5 = new GLTFLoader().setPath(this.assetsPath);
         const self = this;
 
-        loader.load(
+        loader5.load(
 			// resource URL
 			'TossHead.gltf',
 			// called when the resource is loaded

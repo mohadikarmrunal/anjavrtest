@@ -65,13 +65,13 @@ class App4{
     initScene(){
         this.loadingBar4 = new LoadingBar();
         this.assetsPath = '../../assets/';
-        const loader = new GLTFLoader().setPath(this.assetsPath);
+        const loader41 = new GLTFLoader().setPath(this.assetsPath);
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
-        loader.setDRACOLoader( dracoLoader );
+        loader41.setDRACOLoader( dracoLoader );
 		const self = this;
         
-        loader.load(
+        loader41.load(
 			// resource URL
 			'radnica.glb',
 			// called when the resource is loaded
@@ -117,7 +117,7 @@ class App4{
 			}
         );
 
-        loader.load(
+        loader41.load(
 			// resource URL
 			'telephone1.glb',
 			// called when the resource is loaded
