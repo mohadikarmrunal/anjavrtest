@@ -57,20 +57,20 @@ class App{
         const self = this;
         
         function onClick1(){
-            self.actionA.stop();
-            self.actionA.reset();
-            self.actionI.play();
+            console.log('clicked');
+            self.action.play();
+            console.log('clicked');
         }
-        function onClick2(){
+        /*function onClick2(){
             self.actionI.stop();
             self.actionI.reset();
             self.actionA.play();   
-        }
+        }*/
         
         const btn1 = document.getElementById(`btn${1}`);
         btn1.addEventListener( 'click', onClick1 );
-        const btn2 = document.getElementById(`btn${2}`);
-        btn2.addEventListener( 'click', onClick2 );
+       // const btn2 = document.getElementById(`btn${2}`);
+       // btn2.addEventListener( 'click', onClick2 );
 
         
     }
@@ -88,67 +88,46 @@ class App{
 		// Load a glTF resource
 		loader.load(
 			// resource URL
-			`${filename}.glb`,
+			'TossHead.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
-                //console.log(gltf.scene.children[0]);
-
                 self.animations = {};
+                self.head = gltf.scene;
+
+                if (gltf.scene.children[0].children[1].name == 'Coin'){
+                    self.coinH = gltf.scene.children[0].children[1];
+                    self.head.children[0].children[0].visible = false;
+                }
+                else {
+                    self.coinH = gltf.scene.children[0].children[0];
+                    self.head.children[0].children[1].visible = false;
+                }
                 
-                //self.animations[TossHead]= gltf.animations[0];
-                //console.log(gltf.animations[0]);
-                self.animations['Idle'] = gltf.animations[5];
-                self.animations['Answer'] = gltf.animations[3];
-                /*gltf.animations.forEach( (anim)=>{
-                    self.animations[anim.name] = anim;
-                    console.log(anim.name);
-                })*/
-
-
-                console.log(gltf);
-                console.log(gltf.scene.children[6]);
-
-                self.worker = gltf.scene.children[6];
-
-                self.mixer = new THREE.AnimationMixer( self.worker );
-                const clipI = self.animations['Idle'];
-                const clipA = self.animations['Answer'];
-                const actionI = self.mixer.clipAction (clipI);
-                const actionA = self.mixer.clipAction (clipA);
-                actionI.enable = true;
-                actionA.enable = true;
-                self.actionI = actionI;
-                self.actionA = actionA;
-                //self.actionA.loop = THREE.LoopOnce;
-
-                
-                //this is coin, and 0 is plane
-                
-                self.worker.position.set(0,0,-2);
-                const scale = 0.5;
-				self.worker.scale.set(scale, scale, scale); 
-                self.scene.add( self.worker );
-                
+                self.animations['TossHead'] = gltf.animations[0];
+                self.mixer = new THREE.AnimationMixer( self.coinH );
+                const clip = self.animations['TossHead'];
+                const action = self.mixer.clipAction (clip);
+                action.enabled = true;
+                self.action = action;
+                self.head.visible = true;
+				const scale = 0.5;
+				self.head.scale.set(scale, scale, scale); 
+                //self.action.loop = THREE.LoopOnce;
+                self.action.clampWhenFinished = true;
                 self.loadingBar.visible = false;
-                
-                //self.action = "Idle";
-                self.addButtonEvents();
-                
-                self.renderer.setAnimationLoop( self.render.bind(self) );
+
 			},
 			// called while loading is progressing
 			function ( xhr ) {
 
 				self.loadingBar.progress = (xhr.loaded / xhr.total);
-				
 			},
 			// called when loading has errors
 			function ( error ) {
-
-				console.log( 'An error happened' );
-
-			}  
+				console.log( 'An error happened with loading a 3D Object!' );
+                alert('An error happened when loading 3D Objects. Refresh the page!');
+			}
         );
     }
     

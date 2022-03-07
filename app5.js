@@ -64,7 +64,7 @@ class App{
         this.sidelength = [];
 
         this.control = true;
-
+        
         /*var vekt1 = new THREE.Vector3(0,2,9);
         var vekt2 = new THREE.Vector3(13,2,7);
         var vekt3 = new THREE.Vector3(15,2,-9);
