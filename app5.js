@@ -224,6 +224,7 @@ class App5{
                 }
                 console.log(self.coinH);
                 self.coinH.material.map.minFilter = THREE.LinearFilter;
+                self.coinH.material.map.anisotropy = self.renderer.getMaxAnisotropy();
                 console.log(self.coinH.material.map.minFilter);
                 console.log(THREE.LinearFilter);
                 self.animations['TossHead'] = gltf.animations[0];
