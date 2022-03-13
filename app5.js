@@ -64,45 +64,13 @@ class App{
         this.sidelength = [];
 
         this.control = true;
-        
-        /*var vekt1 = new THREE.Vector3(0,2,9);
-        var vekt2 = new THREE.Vector3(13,2,7);
-        var vekt3 = new THREE.Vector3(15,2,-9);
-        /*var vekt4 = new THREE.Vector3(11,2,-6);
-        var vekt5 = new THREE.Vector3(-2,2,-10);
-        var vekt6 = new THREE.Vector3(-4,2,-3);
-        var vekt7 = new THREE.Vector3(-7,2,4);
-        var vekt12 = vekt1.clone();
-        var vekt22 = vekt2.clone();
-        var vekt32 = vekt3.clone();
-        /*var vekt42 = vekt4.clone();
-        var vekt52 = vekt5.clone();
-        var vekt62 = vekt6.clone();
-        var vekt72 = vekt7.clone();*/
-    
-        /*this.coordinates.push(vekt1);
-        this.coordinates.push(vekt2);
-        this.coordinates.push(vekt22);
-        this.coordinates.push(vekt3);
-        this.coordinates.push(vekt32);
-        /*this.coordinates.push(vekt4);
-        this.coordinates.push(vekt42);
-        this.coordinates.push(vekt5);        
-        this.coordinates.push(vekt52);
-        this.coordinates.push(vekt6);
-        this.coordinates.push(vekt62);
-        this.coordinates.push(vekt7);
-        this.coordinates.push(vekt72);
-        this.coordinates.push(vekt12);
-        //this.coordinates.push(new THREE.Vector3(-7,2,4));*/
-    
+      
         this.initScene();
         this.setupXR();
         
         this.renderer.setAnimationLoop( this.render.bind(this) );
 		
 		window.addEventListener('resize', this.resize.bind(this));
-        
 	}
 
     
@@ -161,7 +129,6 @@ class App{
         vec.z = 0;
 
         return vec
-
     }
 
     coordcheck(coordinates){
@@ -208,7 +175,6 @@ class App{
             else return -Math.floor(a/2);
         }
         else return 0;
-
     }
 
 
@@ -234,7 +200,6 @@ class App{
         this.assetsPath = '../../assets/';
         const loader5 = new GLTFLoader().setPath(this.assetsPath);
         const self = this;
-
         loader5.load(
 			// resource URL
 			'TossHead.gltf',
@@ -265,15 +230,13 @@ class App{
                 self.action.loop = THREE.LoopOnce;
                 self.action.clampWhenFinished = true;
 
-
                if (self.sound!=undefined) self.loadingBar51.visible = false;
                else {alert ('Error Happened! Refresh the page!')};
-
 			},
 			// called while loading is progressing
-			function ( xhr51 ) {
-                console.log(xhr51.loaded / xhr51.total);
-				self.loadingBar51.progress = (xhr51.loaded / xhr51.total);
+			function ( xhr ) {
+                console.log(xhr);
+				self.loadingBar51.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -520,36 +483,7 @@ class App{
     setupXR(){
         this.renderer.xr.enabled = true;
         const self = this;
-
-        /*var promise = new Promise(function(resolve, reject) {
-            const sound = new THREE.Audio( self.listener );
-            const audioLoader = new THREE.AudioLoader();
-             audioLoader.load( 'audio/app5.mp3', ( buffer ) => {
-              sound.setBuffer( buffer );
-              sound.setLoop( false );
-              sound.setVolume( 1.0 );
-          });
-           self.sound = sound;
-           self.speech = new THREE.Audio( self.listener );
-           const controlspeech = true;
-           self.controlspeech = controlspeech;
-      
-            if (self.controlspeech) {
-            resolve("Sound loaded!");
-            }
-             else {
-            reject(Error("Sound did not load."));
-            }
-         });
-
-
-       promise.then(function(result) {
-        const btn = new ARButton( self.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
-              console.log(result)}, function (error){    
-                  console.log(error);
-        });*/
-        
-       
+               
         const btn = new ARButton( self.renderer, { onSessionStart, sessionInit: { requiredFeatures: [ 'hit-test' ], optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } } } );
 
         this.hitTestSourceRequested = false;
