@@ -12,7 +12,7 @@ import { TextGeometry } from '../../libs/TextGeometry.js';
 
 
 
-class App{
+class App4{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
@@ -1133,4 +1133,4 @@ class App{
     }
 }
 
-export { App };
+export { App4 };

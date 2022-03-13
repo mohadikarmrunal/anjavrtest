@@ -78,7 +78,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-                console.log(xhr);
+                console.log(xhr)
 				self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors

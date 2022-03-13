@@ -4,7 +4,7 @@ import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 
-class App{
+class App2{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
@@ -504,4 +504,4 @@ class App{
     }
 }
 
-export { App };
+export { App2 };

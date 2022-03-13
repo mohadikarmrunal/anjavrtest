@@ -7,7 +7,7 @@ import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 
 
 
-class App{
+class App5{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
@@ -707,4 +707,4 @@ class App{
     }
 }
 
-export { App };
+export { App5 };

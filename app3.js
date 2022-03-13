@@ -10,7 +10,7 @@ import { LoadingBar } from '../../libs/LoadingBar.js';
 //import { ControllerGestures } from '../../libs/ControllerGestures.js';
 
 
-class App{
+class App3{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
@@ -642,7 +642,7 @@ class App{
         //button for the sound #3 connected to canvas #4
         function button3next(){
             console.log('It is time for the third question!');
-            const self = this.app;
+            const self = this.app3;
 
             //add the mesh for the third question
             self.uiq3.mesh.visible = true;
@@ -793,7 +793,7 @@ class App{
         function button2next(){
 
             console.log('It is time for the second question!');
-            const self = this.app;
+            const self = this.app3;
 
             self.counting(0,1);
             self.coin.visible = true;
@@ -976,7 +976,7 @@ class App{
         //button for sound #1 for the canvas #2
         function button1next(){
             console.log('It is time for the first question of the day');
-            const self = this.app;
+            const self = this.app3;
             //self.ui2.mesh.visible = true;
             self.uiq1.mesh.visible = true;
             self.scene.add(self.uiq1.mesh);
@@ -1150,7 +1150,7 @@ class App{
         const self = this;
         
         function next1 (){
-            const self = this.app;
+            const self = this.app3;
 
             self.head.visible = true;
             self.scene.add(self.head);
@@ -1159,18 +1159,18 @@ class App{
         }
 
         function next2(){
-            const self = this.app;
+            const self = this.app3;
             
             self.head.visible = false;
             self.tail.visible = true;
-            self.scene.add(this.app.tail);
+            self.scene.add(this.app3.tail);
             self.actionT.reset();
             self.actionT.play();
             self.playSound('canvas1');
         }
 
         function next3(){
-            const self = this.app;
+            const self = this.app3;
             //removing the coins and the cursor
             self.tail.visible = false;
             self.scene.remove(self.head);
@@ -1394,4 +1394,4 @@ class App{
     }
 }
 
-export { App };
+export { App3 };
