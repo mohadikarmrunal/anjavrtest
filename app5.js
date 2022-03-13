@@ -4,6 +4,7 @@ import { ARButton } from '../../libs/ARButton.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { LoadingBar } from '../../libs/LoadingBar.js';
 import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
+import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
 
 
 
@@ -199,7 +200,11 @@ class App5{
         
         this.assetsPath = '../../assets/';
         const loader5 = new GLTFLoader().setPath(this.assetsPath);
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
+        loader5.setDRACOLoader( dracoLoader );
         const self = this;
+
         loader5.load(
 			// resource URL
 			'TossHead.gltf',

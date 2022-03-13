@@ -6,6 +6,8 @@ import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 import { ControllerGestures } from '../../libs/ControllerGestures.js';
+import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
+
 
 class App{
 	constructor(){
@@ -60,6 +62,9 @@ class App{
         
         this.assetsPath = '../../assets/';
         const loader1 = new GLTFLoader().setPath(this.assetsPath);
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
+        loader1.setDRACOLoader( dracoLoader );
 		const self = this;
 
         loader1.load(

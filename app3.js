@@ -4,6 +4,7 @@ import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
+import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
 //import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
 //import { Player } from '../../libs/Player.js';
@@ -64,7 +65,12 @@ class App3{
         
         this.assetsPath = '../../assets/';
         const loader3 = new GLTFLoader().setPath(this.assetsPath);
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
+        loader3.setDRACOLoader( dracoLoader );
 		const self = this;
+
+        
 
         loader3.load(
 			// resource URL
