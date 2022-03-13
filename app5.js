@@ -223,6 +223,9 @@ class App5{
                     self.head.children[0].children[1].visible = false;
                 }
                 console.log(self.coinH);
+                self.coinH.material.map.minFilter = THREE.LinearFilter;
+                console.log(self.coinH.material.map.minFilter);
+                console.log(THREE.LinearFilter);
                 self.animations['TossHead'] = gltf.animations[0];
                 self.mixer = new THREE.AnimationMixer( self.coinH );
                 const clip = self.animations['TossHead'];

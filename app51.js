@@ -257,6 +257,9 @@ class App5{
                 
                 self.animations['TossHead'] = gltf.animations[0];
                 self.mixer = new THREE.AnimationMixer( self.coinH );
+                self.coinH.material.map.minFilter = THREE.LinearFilter;
+                console.log(self.coinH.material.map.minFilter);
+                console.log(THREE.LinearFilter);
                 const clip = self.animations['TossHead'];
                 const action = self.mixer.clipAction (clip);
                 action.enabled = true;
