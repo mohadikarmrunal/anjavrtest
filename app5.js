@@ -252,7 +252,7 @@ class App{
                     self.coinH = gltf.scene.children[0].children[0];
                     self.head.children[0].children[1].visible = false;
                 }
-                
+                console.log(self.coinH);
                 self.animations['TossHead'] = gltf.animations[0];
                 self.mixer = new THREE.AnimationMixer( self.coinH );
                 const clip = self.animations['TossHead'];
@@ -271,9 +271,9 @@ class App{
 
 			},
 			// called while loading is progressing
-			function ( xhr ) {
-
-				self.loadingBar51.progress = (xhr.loaded / xhr.total);
+			function ( xhr51 ) {
+                
+				self.loadingBar51.progress = (xhr51.loaded / xhr51.total);
 			},
 			// called when loading has errors
 			function ( error ) {

@@ -274,7 +274,6 @@ class App5{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-
 				self.loadingBar5.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
