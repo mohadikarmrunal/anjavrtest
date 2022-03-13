@@ -73,7 +73,7 @@ class App4{
         
         loader41.load(
 			// resource URL
-			'radnica.glb',
+			'worker.glb',
 			// called when the resource is loaded
 			function ( gltf ) {
 

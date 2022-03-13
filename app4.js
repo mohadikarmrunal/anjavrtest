@@ -73,7 +73,7 @@ class App{
         
         loader4.load(
 			// resource URL
-			'radnica.glb',
+			'worker.glb',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -82,6 +82,8 @@ class App{
                 gltf.animations.forEach( (anim)=>{
                     self.animations[anim.name] = anim;
                 })
+                console.log(gltf);
+                console.log(gltf.scene.children[0]);
                 self.worker = gltf.scene.children[0];
                 const scale = 0.015;
 				self.worker.scale.set(scale, scale, scale); 
