@@ -50,7 +50,7 @@ class App{
     
     
     initScene(){
-        this.loadGLTF( 'knight' );
+        this.loadGLTF( 'Coin' );
     }
     
     addButtonEvents(){
@@ -111,9 +111,12 @@ class App{
                 action.enabled = true;
                 self.action = action;
                 self.head.visible = true;
+                self.coinH.visible = true;
+                self.coinH.position.set(0,0,-2);
 				const scale = 0.5;
-				self.head.scale.set(scale, scale, scale); 
+				//self.head.scale.set(scale, scale, scale); 
                 //self.action.loop = THREE.LoopOnce;
+                self.scene.add(self.coinH);
                 self.action.clampWhenFinished = true;
                 self.loadingBar.visible = false;
 
