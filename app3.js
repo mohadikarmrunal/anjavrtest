@@ -62,7 +62,6 @@ class App3{
     
     initScene(){
         this.loadingBar31 = new LoadingBar();
-        
         this.assetsPath = '../../assets/';
         const loader3 = new GLTFLoader().setPath(this.assetsPath);
         const dracoLoader = new DRACOLoader();
@@ -70,9 +69,14 @@ class App3{
         loader3.setDRACOLoader( dracoLoader );
 		const self = this;
 
+        const loader32 = new GLTFLoader().setPath(this.assetsPath);
+        const dracoLoader2 = new DRACOLoader();
+        dracoLoader2.setDecoderPath( '../../libs/three/js/draco/' );
+        loader32.setDRACOLoader( dracoLoader2 );
+
         
 
-        loader3.load(
+        loader32.load(
 			// resource URL
 			'TossHead.gltf',
 			// called when the resource is loaded
@@ -164,7 +168,7 @@ class App3{
 			}
         );   
 
-        loader3.load(
+        loader32.load(
 			// resource URL
 			'Coin.gltf',
 			// called when the resource is loaded
@@ -204,7 +208,7 @@ class App3{
 			}
         );
 
-        loader3.load(
+        loader32.load(
 			// resource URL
 			'T.gltf',
 			// called when the resource is loaded
