@@ -77,7 +77,6 @@ class App{
                 self.apple.visible=false;
 				const scale = 0.06;
 				self.apple.scale.set(scale, scale, scale); 
-                console.log(self.loadingBar11);
                 if (self.cart!=undefined && self.cursor!=undefined && self.sound!=undefined) self.loadingBar11.visible = false;
 
 			},
@@ -117,7 +116,6 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-
 				if (xhr.loaded <= xhr.total) self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
@@ -147,7 +145,6 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-
 				if (xhr.loaded <= xhr.total) self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
