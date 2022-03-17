@@ -62,9 +62,11 @@
                 <hr style="width:50px;border:5px solid rgb(10, 141, 91)" class=" w3-round">
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum
                 dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+                </p> 
             </div>
-            <body>
+        </div>
+
+        <body>
                 <script src="../../libs/fas.js"></script>
                 <script type="module">
                     import { App } from './app1.js';
@@ -74,37 +76,36 @@
                         window.app = app;
                     });
                 </script>
-            </body>
+        </body>
 
           
 
 
-        <!-- End page content -->
-        </div>
+       
 
         <script>
-        // Get the Sidebar
-        var mySidebar = document.getElementById("mySidebar");
+            // Get the Sidebar
+            var mySidebar = document.getElementById("mySidebar");
 
-        // Get the DIV with overlay effect
-        var overlayBg = document.getElementById("myOverlay");
+            // Get the DIV with overlay effect
+            var overlayBg = document.getElementById("myOverlay");
 
-        // Toggle between showing and hiding the sidebar, and add overlay effect
-        function w3_open() {
-        if (mySidebar.style.display === 'block') {
-            mySidebar.style.display = 'none';
+            // Toggle between showing and hiding the sidebar, and add overlay effect
+            function w3_open() {
+            if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+                overlayBg.style.display = "none";
+            } else {
+                mySidebar.style.display = 'block';
+                overlayBg.style.display = "block";
+            }
+            }
+
+            // Close the sidebar with the close button
+            function w3_close() {
+            mySidebar.style.display = "none";
             overlayBg.style.display = "none";
-        } else {
-            mySidebar.style.display = 'block';
-            overlayBg.style.display = "block";
-        }
-        }
-
-        // Close the sidebar with the close button
-        function w3_close() {
-        mySidebar.style.display = "none";
-        overlayBg.style.display = "none";
-        }
+            }
         </script>
 
     </body>
