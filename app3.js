@@ -106,7 +106,10 @@ class App3{
 				self.head.scale.set(scale, scale, scale); 
                 self.head.position.set( 0, -0.5, -1 ); 
 
-                if (self.coin!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
+                if (self.coin!=undefined && self.tail!=undefined && self.cursor!=undefined)  {
+                    self.loadingBar31.visible = false;
+                    self.loadingBar31.progress = 0;
+                }
 
 			},
 			// called while loading is progressing
@@ -153,7 +156,10 @@ class App3{
 				self.tail.scale.set(scale, scale, scale); 
                 self.tail.position.set( 0, -0.5, -1 ); 
 
-                if (self.head!=undefined && self.coin!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
+                if (self.head!=undefined && self.coin!=undefined && self.cursor!=undefined)  {
+                    self.loadingBar31.visible = false;
+                    self.loadingBar31.progress = 0;
+                }
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -191,7 +197,10 @@ class App3{
                 self.coin7 = self.coin.clone();
                 self.coin.children[0].rotateX(Math.PI);
 
-                if (self.head!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
+                if (self.head!=undefined && self.tail!=undefined && self.cursor!=undefined)  {
+                    self.loadingBar31.visible = false;
+                    self.loadingBar31.progress = 0;
+                }
 
 
 			},
@@ -454,7 +463,10 @@ class App3{
                 self.cursor2 = self.cursor.clone();
                 self.cursor3 = self.cursor.clone();
 
-                if(self.coin!=undefined && self.head!=undefined && self.tail!=undefined) self.loadingBar31.visible = false;
+                if(self.coin!=undefined && self.head!=undefined && self.tail!=undefined) {
+                    self.loadingBar31.visible = false;
+                    self.loadingBar31.progress = 0;
+                }
 			},
 			// called while loading is progressing
 			function ( xhr ) {
