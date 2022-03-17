@@ -105,6 +105,7 @@ class App3{
 				const scale = 0.05;
 				self.head.scale.set(scale, scale, scale); 
                 self.head.position.set( 0, -0.5, -1 ); 
+                self.loadingBar31.progress = 0;
 
                 if (self.coin!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
 
@@ -152,6 +153,7 @@ class App3{
 				const scale = 0.05;
 				self.tail.scale.set(scale, scale, scale); 
                 self.tail.position.set( 0, -0.5, -1 ); 
+                self.loadingBar31.progress = 0;
 
                 if (self.head!=undefined && self.coin!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
 			},
@@ -191,6 +193,7 @@ class App3{
                 self.coin7 = self.coin.clone();
                 self.coin.children[0].rotateX(Math.PI);
 
+                self.loadingBar31.progress = 0;
                 if (self.head!=undefined && self.tail!=undefined && self.cursor!=undefined)  self.loadingBar31.visible = false;
 
 
@@ -234,6 +237,7 @@ class App3{
                 self.T4.visible = false;
                 self.T6.visible = false;
                 self.T7.visible = false;
+                self.loadingBar31.progress = 0;
 
                 
 				
@@ -274,6 +278,7 @@ class App3{
                 self.H1.visible = false;
                 self.H2.visible = false;
                 self.H5.visible = false;
+                self.loadingBar31.progress = 0;
 
                
 				
@@ -301,6 +306,7 @@ class App3{
                 //positions
                 self.text0.position.set(-0.35,-0.1,-5.4);
                 self.text0.visible = false;	
+                self.loadingBar31.progress = 0;
 
 			},
 			// called while loading is progressing
@@ -326,6 +332,8 @@ class App3{
                 //positions
                 self.text1.position.set(-0.1,0.1,-5.4);
                 self.text1.visible = false;	
+                self.loadingBar31.progress = 0;
+
 
 			},
 			// called while loading is progressing
@@ -351,6 +359,8 @@ class App3{
                 //positions
                 self.text2.position.set(0.15,-0.1,-5.4);
                 self.text2.visible = false;	
+                self.loadingBar31.progress = 0;
+
 
 			},
 			// called while loading is progressing
@@ -376,6 +386,7 @@ class App3{
                 //positions
                 self.num0.position.set(0.45,0.17,-3.8);
                 self.num0.visible = false;
+                self.loadingBar31.progress = 0;
 
 			},
 			// called while loading is progressing
@@ -401,6 +412,7 @@ class App3{
                 //positions
                 self.num1.position.set(0.45,-0.13,-3.8);
                 self.num1.visible = false;	
+                self.loadingBar31.progress = 0;
 
 			},
 			// called while loading is progressing
@@ -426,6 +438,7 @@ class App3{
                 //positions
                 self.num2.position.set(0.45,-0.43,-3.8);
                 self.num2.visible = false;	
+                self.loadingBar31.progress = 0;
 
 			},
 			// called while loading is progressing
@@ -454,6 +467,7 @@ class App3{
                 self.cursor2 = self.cursor.clone();
                 self.cursor3 = self.cursor.clone();
 
+                self.loadingBar31.progress = 0;
                 if(self.coin!=undefined && self.head!=undefined && self.tail!=undefined) self.loadingBar31.visible = false;
 			},
 			// called while loading is progressing
