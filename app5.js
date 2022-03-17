@@ -33,6 +33,7 @@ class App5{
 		this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
+        console.log(THREE.sRGBEncoding);
 		container.appendChild( this.renderer.domElement );
         
         const labelContainer = document.createElement('div');
@@ -223,10 +224,13 @@ class App5{
                     self.head.children[0].children[1].visible = false;
                 }
                 console.log(self.coinH);
-                self.coinH.material.map.minFilter = THREE.LinearFilter;
+                self.coinH.material.map.minFilter = THREE.LinearMipMapLinearFilter;
+                self.coinH.material.map.magFilter = THREE.LinearFilter;
                 self.coinH.material.map.anisotropy = self.renderer.capabilities.getMaxAnisotropy();
-                console.log(self.coinH.material.map.minFilter);
-                console.log(THREE.LinearFilter);
+                /*texture.magFilter = THREE.NearestFilter;
+                texture.minFilter = THREE.LinearMipMapLinearFilter;
+                textureBack.magFilter = THREE.NearestFilter;
+                textureBack.minFilter = THREE.LinearMipMapLinearFilter;*/
                 self.animations['TossHead'] = gltf.animations[0];
                 self.mixer = new THREE.AnimationMixer( self.coinH );
                 const clip = self.animations['TossHead'];
