@@ -67,16 +67,9 @@ class App3{
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
         loader3.setDRACOLoader( dracoLoader );
-		const self = this;
+		const self = this; 
 
-        const loader32 = new GLTFLoader().setPath(this.assetsPath);
-        const dracoLoader2 = new DRACOLoader();
-        dracoLoader2.setDecoderPath( '../../libs/three/js/draco/' );
-        loader32.setDRACOLoader( dracoLoader2 );
-
-        
-
-        loader32.load(
+        loader3.load(
 			// resource URL
 			'TossHead.gltf',
 			// called when the resource is loaded
@@ -113,7 +106,7 @@ class App3{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -160,7 +153,7 @@ class App3{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -170,7 +163,7 @@ class App3{
 			}
         );   
 
-        loader32.load(
+        loader3.load(
 			// resource URL
 			'Coin.gltf',
 			// called when the resource is loaded
@@ -201,7 +194,7 @@ class App3{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -211,7 +204,7 @@ class App3{
 			}
         );
 
-        loader32.load(
+        loader3.load(
 			// resource URL
 			'T.gltf',
 			// called when the resource is loaded
@@ -245,7 +238,7 @@ class App3{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -285,7 +278,7 @@ class App3{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -311,7 +304,7 @@ class App3{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -338,7 +331,7 @@ class App3{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -365,7 +358,7 @@ class App3{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -391,7 +384,7 @@ class App3{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -417,7 +410,7 @@ class App3{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -443,7 +436,7 @@ class App3{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -473,7 +466,7 @@ class App3{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar31.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar31.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {

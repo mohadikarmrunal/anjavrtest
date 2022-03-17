@@ -83,8 +83,7 @@ class App{
 			},
 			// called while loading is progressing
 			function ( xhr ) {
-                console.log(xhr)
-				self.loadingBar11.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -119,7 +118,7 @@ class App{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar11.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
@@ -149,7 +148,7 @@ class App{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar11.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar11.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {

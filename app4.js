@@ -109,7 +109,7 @@ class App4{
 			// called while loading is progressing
 			function ( xhr ) {
 
-				self.loadingBar41.progress = (xhr.loaded / xhr.total);
+				if (xhr.loaded <= xhr.total) self.loadingBar41.progress = (xhr.loaded / xhr.total);
 			},
 			// called when loading has errors
 			function ( error ) {
