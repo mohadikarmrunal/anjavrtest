@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Area Under The Curve</title>
+        <title>Poisson Distribution</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -37,12 +37,12 @@
                 <i class="fa fa-remove"></i>
             </a>
             <h4 class="w3-bar-item"><b>MENU</b></h4>
-            <a class="w3-bar-item w3-button w3-hover-black" href="version2.html">Home Page</a>
-            <a class="w3-bar-item w3-button w3-hover-black" href="example11.html">1. Area Under the Curve</a>
-            <a class="w3-bar-item w3-button w3-hover-black" href="example21.html">2. Approximating Area Under The Curve</a>
-            <a class="w3-bar-item w3-button w3-hover-black" href="example31.html">3. Random Variable and Probability</a>
-            <a class="w3-bar-item w3-button w3-hover-black" href="example41.html">4. Poisson Distribution</a>
-            <a class="w3-bar-item w3-button w3-hover-black" href="example51.html">5. Uniform Continuous Distribution</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="mathsinAR.html">Home Page</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example1.html">1. Area Under the Curve</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example2.html">2. Approximating Area Under The Curve</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example3.html">3. Random Variable and Probability</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example4.html">4. Poisson Distribution</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="example5.html">5. Uniform Continuous Distribution</a>
         </nav>
 
     <!-- Top menu on small screens -->
@@ -58,54 +58,50 @@
         <div class="w3-main" style="margin-left:250px">
 
             <div class="w3-container" style="margin-top:75px" id="text">
-                <h1 class="w3-xxxlarge w3-text-green"><b>Area Under the Curve</b></h1>
+                <h1 class="w3-xxxlarge w3-text-green"><b>Poisson Distribution</b></h1>
                 <hr style="width:50px;border:5px solid rgb(10, 141, 91)" class=" w3-round">
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum
                 dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p> 
+                </p>
             </div>
         </div>
-
+       
         <body>
                 <script src="../../libs/fas.js"></script>
                 <script type="module">
-                    import { App } from './app1.js';
+                    import { App4 } from './app4.js';
         
                     document.addEventListener("DOMContentLoaded", function(){
-                        const app = new App();
-                        window.app = app;
+                        const app4 = new App4();
+                        window.app4 = app4;
                     });
                 </script>
         </body>
 
-          
-
-
-       
 
         <script>
-            // Get the Sidebar
-            var mySidebar = document.getElementById("mySidebar");
+        // Get the Sidebar
+        var mySidebar = document.getElementById("mySidebar");
 
-            // Get the DIV with overlay effect
-            var overlayBg = document.getElementById("myOverlay");
+        // Get the DIV with overlay effect
+        var overlayBg = document.getElementById("myOverlay");
 
-            // Toggle between showing and hiding the sidebar, and add overlay effect
-            function w3_open() {
-            if (mySidebar.style.display === 'block') {
-                mySidebar.style.display = 'none';
-                overlayBg.style.display = "none";
-            } else {
-                mySidebar.style.display = 'block';
-                overlayBg.style.display = "block";
-            }
-            }
-
-            // Close the sidebar with the close button
-            function w3_close() {
-            mySidebar.style.display = "none";
+        // Toggle between showing and hiding the sidebar, and add overlay effect
+        function w3_open() {
+        if (mySidebar.style.display === 'block') {
+            mySidebar.style.display = 'none';
             overlayBg.style.display = "none";
-            }
+        } else {
+            mySidebar.style.display = 'block';
+            overlayBg.style.display = "block";
+        }
+        }
+
+        // Close the sidebar with the close button
+        function w3_close() {
+        mySidebar.style.display = "none";
+        overlayBg.style.display = "none";
+        }
         </script>
 
     </body>
