@@ -55,6 +55,23 @@ class App{
         this.setupVR();
         window.addEventListener('resize', this.resize.bind(this) );
 	}	
+
+    stylizeElement( element, active = true, fontSize = 13, ignorePadding = false ) {
+
+        element.style.position = 'absolute';
+        //element.style.top = '20px';
+        if (!ignorePadding) element.style.padding = '12px 6px';
+        element.style.border = '1px solid #fff';
+        element.style.borderRadius = '4px';
+        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
+        element.style.color = '#fff';
+        element.style.font = `normal ${fontSize}px sans-serif`;
+        element.style.textAlign = 'center';
+        element.style.opacity = '0.5';
+        element.style.outline = 'none';
+        element.style.zIndex = '999';
+
+    }
     
     initScene(){
         this.loadingBar11 = new LoadingBar();
@@ -104,6 +121,8 @@ class App{
 
 			}
         );
+
+
     }
 
        
@@ -121,9 +140,9 @@ class App{
                 self.apple.visible = true;
                 self.apple.position.set( 0.5, 0, -1.5 ); 
                 self.scene.add( self.apple); 
-                self.coinH.visible = true;
+                /*self.coinH.visible = true;
                 self.coinH.position.set( -0.5, 0, -1.5 ); 
-                self.scene.add( self.coinH); 
+                self.scene.add( self.coinH); */
             }           
         }
 
@@ -135,6 +154,22 @@ class App{
          const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
          this.gestures = new ControllerGestures( this.renderer );
          this.renderer.setAnimationLoop( this.render.bind(this) );
+
+         const button1 = document.createElement( 'button' );
+         button1.style.height = '40px';
+         button1.style.display = '';
+         button1.style.left = '20px';
+         button1.style.top = '20px';
+         button1.style.width = '80px';
+         button1.style.cursor = 'pointer';
+         button1.innerHTML = '<i class="fas fa-camera"></i>';
+         this.stylizeElement( button1, true, 30, true );
+         button1.onclick = function() {
+              console.log('button was clicked');
+         };
+         document.body.appendChild( button1 );
+
+         console.log (button1);
     }
     
     resize(){
