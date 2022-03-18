@@ -76,9 +76,21 @@ class App{
                 self.apple.visible = false;
                 self.apple.children[0].rotateX(Math.PI/2);
 				const scale = 0.4;
-                console.log(self.apple.children[0]);
+                console.log(self.apple.children[0].children[0]);
 				self.apple.scale.set(scale, scale, scale); 
+
+                self.coinH = self.apple.children[0].children[0].clone();
+                var prevMaterial = self.coinH.material;
+                self.coinH.material.map.minFilter = THREE.LinearMipMapLinearFilter;
+                self.coinH.material.map.magFilter = THREE.LinearFilter;
+                self.coinH.material.map.anisotropy = self.renderer.capabilities.getMaxAnisotropy();
+                self.coinH.material = new THREE.MeshPhongMaterial();
+                THREE.MeshBasicMaterial.prototype.copy.call( self.coinH.material, prevMaterial );
+                self.coinH.rotateX(Math.PI/2);
+				self.coinH.scale.set(scale, scale, scale); 
+
                 self.loadingBar11.visible = false;
+
 
 			},
 			// called while loading is progressing
@@ -107,13 +119,17 @@ class App{
 
             if(!self.apple.visible){
                 self.apple.visible = true;
-                self.apple.position.set( 0, 0, -1 ); 
+                self.apple.position.set( 0.5, 0, -1.5 ); 
                 self.scene.add( self.apple); 
+                self.coinH.visible = true;
+                self.coinH.position.set( -0.5, 0, -1.5 ); 
+                self.scene.add( self.coinH); 
             }           
         }
 
         function onSessionEnd(){
-
+            self.apple.visible = false;
+            self.coinH.visible = false;
         }
 
          const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})

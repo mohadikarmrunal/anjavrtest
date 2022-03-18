@@ -223,15 +223,16 @@ class App5{
                     self.coinH = gltf.scene.children[0].children[0];
                     self.head.children[0].children[1].visible = false;
                 }
-                console.log(self.coinH.material);
-              
+                console.log(self.coinH);
+                self.coinH.material.map.minFilter = THREE.LinearMipMapLinearFilter;
+                self.coinH.material.map.magFilter = THREE.LinearFilter;
+                self.coinH.material.map.anisotropy = self.renderer.capabilities.getMaxAnisotropy();
+               
                 var prevMaterial = self.coinH.material;
                 self.coinH.material = new THREE.MeshPhongMaterial();
                 THREE.MeshBasicMaterial.prototype.copy.call( self.coinH.material, prevMaterial );
 
-                self.coinH.material.map.minFilter = THREE.LinearMipMapLinearFilter;
-                self.coinH.material.map.magFilter = THREE.LinearFilter;
-                self.coinH.material.map.anisotropy = self.renderer.capabilities.getMaxAnisotropy();
+              
                 /*texture.magFilter = THREE.NearestFilter;
                 texture.minFilter = THREE.LinearMipMapLinearFilter;
                 textureBack.magFilter = THREE.NearestFilter;
