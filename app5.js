@@ -384,7 +384,7 @@ class App5{
         const button1 = document.createElement( 'button' );
         button1.style.height = '40px';
         button1.style.display = '';
-        button1.style.left = '4%';
+        button1.style.left = '10px';
         button1.style.top = '100px';
         button1.style.width = '100px';
         button1.style.cursor = 'pointer';
@@ -407,7 +407,7 @@ class App5{
         const button3 = document.createElement( 'button' );
         button3.style.height = '40px';
         button3.style.display = '';
-        button3.style.right = '4%';
+        button3.style.right = '10px';
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
