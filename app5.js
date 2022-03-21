@@ -404,10 +404,11 @@ class App5{
         button2.innerText = 'INFO';
         button2.style.visibility = 'hidden';
 
+        const height2 = window.innerWidth-110;
         const button3 = document.createElement( 'button' );
         button3.style.height = '40px';
         button3.style.display = '';
-        button3.style.right = '10px';
+        button3.style.left = height2.toString()+'px';
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
