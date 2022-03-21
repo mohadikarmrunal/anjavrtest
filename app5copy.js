@@ -380,7 +380,7 @@ class App5{
         const button1 = document.createElement( 'button' );
         button1.style.height = '40px';
         button1.style.display = '';
-        button1.style.left = '5%';
+        button1.style.left = '4%';
         button1.style.top = '100px';
         button1.style.width = '100px';
         button1.style.cursor = 'pointer';
@@ -434,7 +434,7 @@ class App5{
         const button2 = document.createElement( 'button' );
         button2.style.height = '40px';
         button2.style.display = '';
-        button2.style.left = '45%';
+        button2.style.left = '40%';
         button2.style.top = '100px';
         button2.style.width = '100px';
         button2.style.cursor = 'pointer';
@@ -450,7 +450,7 @@ class App5{
         const button3 = document.createElement( 'button' );
         button3.style.height = '40px';
         button3.style.display = '';
-        button3.style.right = '5%';
+        button3.style.right = '4%';
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
