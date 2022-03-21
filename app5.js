@@ -195,7 +195,23 @@ class App5{
         if (sndname == '5theory')  self.sound1 = sound;
     }
 
-    
+    stylizeElement( element, active = true, fontSize = 13, ignorePadding = false ) {
+
+        element.style.position = 'absolute';
+        //element.style.top = '20px';
+        if (!ignorePadding) element.style.padding = '12px 6px';
+        element.style.border = '1px solid #fff';
+        element.style.borderRadius = '4px';
+        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
+        element.style.color = '#fff';
+        element.style.font = `normal ${fontSize}px sans-serif`;
+        element.style.textAlign = 'center';
+        element.style.opacity = '0.5';
+        element.style.outline = 'none';
+        element.style.zIndex = '999';
+        element.style.textAlign = 'center';
+    }
+
     initScene(){
         this.loadingBar51 = new LoadingBar();
         
@@ -283,6 +299,8 @@ class App5{
         this.scene.add(this.floor);
 
       
+       
+
         //ui is the main canvas that appears
         const config = {
             panelSize: { width: 0.5, height: 0.5 },
@@ -323,53 +341,94 @@ class App5{
         this.ui.mesh.position.set(0,0,-0.6);
         this.ui.mesh.visible = false;
 
+        //ui3 is the canvas for going back 
+        function back(){
 
-        //ui1 is the reset button
-        function reset(){
+            self.button1.style.visibility = 'visible';
+            self.button2.style.visibility = 'visible';
+            self.button3.style.visibility = 'visible';
+
             self.control = false;
-            console.log('Button for reseting is pressed!');
+            self.ui.mesh.visible = false;
+            self.ui3.mesh.visible = false;
+
+            self.scene.remove(self.ui.mesh);
+            self.scene.remove(self.ui3.mesh);
+            self.camera.remove(self.ui.mesh);
+            self.camera.remove(self.ui3.mesh);
+
+            self.ui.updateElement('body', "AREA IS");
+
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;
             self.referenceSpace = null;
-            self.floor.visible = false;
-
-            //clear the arrays
-            self.lines.forEach (element => self.scene.remove(element));
-            self.labels.splice(0,self.labels.length);
-            self.coordinates.splice(0,self.coordinates.length);
-            self.newcoord.splice(0,self.newcoord.length);
-            self.sidelength.splice(0,self.sidelength.length);
-            self.measurements.splice(0,self.measurements.length);
-
-            //remove length labels
-            const collection = document.getElementsByClassName("label");
-            const l = collection.length;
-            console.log(collection);
-            for (let i=0;i<l;i++){
-                collection[l-1-i].parentElement.removeChild(collection[l-i-1]);
-            }
-
-            //update the main ui canvas
-            self.ui.updateElement('body',"");            
-            self.ui.updateElement('result',"");
-            self.ui.updateElement('kordinate',"");
-
-            //reset and remove animation
-            self.scene.remove(self.head);
+         
         }
 
-        const config1 = {
-            body: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", textAlign: "center" },
-            reset: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z" , type: "button", position:{ top: 0, left: 0 }, textAlign: "center", padding:120, fontColor: "#fff", backgroundColor: '#021', fontSize:80, hover: "#4c5ba6", onSelect: reset },
+        const config3 = {
+            panelSize: { width: 0.035, height: 0.035 },
+            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back },
             renderer: this.renderer
         }
 
-        const content1 = {
-            reset: "     RESET",
+        const content3 = {
+            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
         }
 
-        //ui2 is the button for calcuating the area!
-        function calculate (){
+        const ui3 = new CanvasUI(content3, config3);
+        this.ui3 = ui3;
+        this.ui3.mesh.position.set(0.15,0.15,-0.5);
+        this.ui3.mesh.visible = false;
+
+        //creating buttons
+        //button1 is calculate button
+        const button1 = document.createElement( 'button' );
+        button1.style.height = '40px';
+        button1.style.display = '';
+        button1.style.left = '4%';
+        button1.style.top = '100px';
+        button1.style.width = '100px';
+        button1.style.cursor = 'pointer';
+        button1.innerHTML = 'CALCULATE';
+        button1.style.visibility = 'hidden';
+        this.stylizeElement( button1, true, 12, true );
+
+        const height = window.innerWidth/2 -50;
+        const button2 = document.createElement( 'button' );
+        button2.style.height = '40px';
+        button2.style.display = '';
+        button2.style.left = height.toString()+'px';
+        button2.style.top = '100px';
+        button2.style.width = '100px';
+        button2.style.cursor = 'pointer';
+        button2.innerHTML = 'INFO';
+        button2.style.visibility = 'hidden';
+        this.stylizeElement( button2, true, 25, true );
+
+        const button3 = document.createElement( 'button' );
+        button3.style.height = '40px';
+        button3.style.display = '';
+        button3.style.right = '4%';
+        button3.style.top = '100px';
+        button3.style.width = '100px';
+        button3.style.cursor = 'pointer';
+        button3.innerHTML = 'RESET';
+        button3.style.visibility = 'hidden';
+        this.stylizeElement( button3, true, 25, true );
+
+        this.button1 = button1;
+        this.button2 = button2;
+        this.button3 = button3;
+        document.body.appendChild( self.button1 );
+        document.body.appendChild( self.button2 );
+        document.body.appendChild( self.button3 );
+
+        this.button1.onclick = function calculate (){
+           
+            self.button1.style.visibility = 'hidden';
+            self.button2.style.visibility = 'hidden';
+            self.button3.style.visibility = 'hidden';
+
             self.control = false;
             self.scene.add(self.ui.mesh);
             self.camera.add(self.ui.mesh);
@@ -412,87 +471,53 @@ class App5{
             console.log (self.newcoord);
             console.log(self.area(self.newcoord));
         }
+
        
-        const config2 = {
-            body: { clipPath: "M 357.87 252 A 1.008 1.008 90 0 0 345 68 L 162.57 69.93 M 161.94 69.93 A 1.008 1.008 90 0 0 155.01 250.74 L 357.87 252 Z", textAlign: "center" },
-            button: { clipPath: "M 357.87 252 A 1.008 1.008 90 0 0 345 68 L 162.57 69.93 M 161.94 69.93 A 1.008 1.008 90 0 0 155.01 250.74 L 357.87 252 Z", type: "button", position:{ top: 0, left: 0 }, padding:150, textAlign: "center", fontColor: "#fff", backgroundColor: '#021', fontSize:33, hover: "#4c5ba6", onSelect: calculate },
-            renderer: this.renderer
-        }
-
-        const content2 = {
-            button: "CALCULATE",
-        }
-
-        //ui4 is the info button
-        function infobutton(){
+        self.button2.onclick = function infobutton(){
             self.control = false;
             if (self.sound && self.sound.isPlaying) self.sound.stop();
             self.playSound('5theory');
         }
 
-        const config4 = { 
-            body: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z", textAlign: "center" },
-            info: { clipPath: "M 77.2 104.4 A 1.6 1.6 90 0 0 448.4 354 A 1.6 1.6 90 0 0 82 102.8 Z" , type: "button", position:{ top: 0, left: 0 }, textAlign: "center", padding:120, fontColor: "#fff", backgroundColor: '#021', fontSize:80, hover: "#4c5ba6", onSelect: infobutton },
-            renderer: this.renderer
-        }
-
-        const content4 = {
-            info: "   INFO",
-        }
-
        
-        const ui1 = new CanvasUI(content1, config1);
-        this.ui1 = ui1;
-        this.ui1.mesh.position.set(0.15,0.22,-0.7);
-        this.ui1.mesh.scale.set(0.14,0.14,0.14);
-        this.ui1.mesh.visible = false;
-
-        const ui2 = new CanvasUI(content2, config2);
-        this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.14,0.18,-0.7);
-        this.ui2.mesh.scale.set(0.25,0.25,0.25);
-        this.ui2.mesh.visible = false;
-
-        const ui4 = new CanvasUI(content4, config4);
-        this.ui4 = ui4;
-        this.ui4.mesh.position.set(0.02,0.22,-0.7);
-        this.ui4.mesh.scale.set(0.14,0.14,0.14);
-        this.ui4.mesh.visible = false;
-
-
-        //ui3 is the canvas for going back 
-        function back(){
+        self.button3.onclick =   function reset(){
             self.control = false;
-            self.ui.mesh.visible = false;
-            self.ui3.mesh.visible = false;
-
-            self.scene.remove(self.ui.mesh);
-            self.scene.remove(self.ui3.mesh);
-            self.camera.remove(self.ui.mesh);
-            self.camera.remove(self.ui3.mesh);
-
-            self.ui.updateElement('body', "AREA IS");
-
+            console.log('Button for reseting is pressed!');
             self.hitTestSourceRequested = false;
             self.hitTestSource = null;
             self.referenceSpace = null;
-         
-        }
+            self.floor.visible = false;
 
-        const config3 = {
-            panelSize: { width: 0.035, height: 0.035 },
-            back1: { type: "button", position:{ top: 0, left: 0 }, padding:15, fontColor: "#fff", backgroundColor: '#021', fontSize:20, hover: "#4c5ba6", onSelect: back },
-            renderer: this.renderer
-        }
+            //clear the arrays
+            self.lines.forEach (element => self.scene.remove(element));
+            self.labels.splice(0,self.labels.length);
+            self.coordinates.splice(0,self.coordinates.length);
+            self.newcoord.splice(0,self.newcoord.length);
+            self.sidelength.splice(0,self.sidelength.length);
+            self.measurements.splice(0,self.measurements.length);
 
-        const content3 = {
-            back1: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
-        }
+            //remove length labels
+            const collection = document.getElementsByClassName("label");
+            const l = collection.length;
+            console.log(collection);
+            for (let i=0;i<l;i++){
+                collection[l-1-i].parentElement.removeChild(collection[l-i-1]);
+            }
 
-        const ui3 = new CanvasUI(content3, config3);
-        this.ui3 = ui3;
-        this.ui3.mesh.position.set(0.15,0.15,-0.5);
-        this.ui3.mesh.visible = false;
+            //update the main ui canvas
+            self.ui.updateElement('body',"");            
+            self.ui.updateElement('result',"");
+            self.ui.updateElement('kordinate',"");
+
+            //reset and remove animation
+            self.scene.remove(self.head);
+        }
+       
+
+        //ui1 is the reset button
+        //ui2 is the button for calcuating the area!
+        //ui4 is the info button
+        
     }   
 
   
@@ -513,19 +538,12 @@ class App5{
             self.el = el;
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
 
+            console.log(self.button1);
+            self.button1.style.visibility = 'visible';
+            self.button2.style.visibility = 'visible';
+            self.button3.style.visibility = 'visible';
+
             self.sound.play();
-            self.ui1.mesh.visible = true;
-            self.ui2.mesh.visible = true;
-            self.ui4.mesh.visible = true;
-
-            
-            self.scene.add(self.ui1.mesh);
-            self.scene.add(self.ui2.mesh);
-            self.scene.add(self.ui4.mesh);
-            self.camera.add(self.ui1.mesh);
-            self.camera.add(self.ui2.mesh);
-            self.camera.add(self.ui4.mesh);
-
            
         }
         
@@ -643,15 +661,11 @@ class App5{
             self.ui.updateElement('kordinate',"");
 
             self.ui3.mesh.visible = false;
-            self.ui1.mesh.visible = false;
-            self.ui4.mesh.visible = false;
-            self.ui2.mesh.visible = false;
             self.ui.mesh.visible = false;
 
-            self.scene.remove(self.ui1.mesh);
-            self.scene.remove(self.ui4.mesh);
-            self.camera.remove(self.ui1.mesh);
-            self.camera.remove(self.ui4.mesh);
+            self.button1.style.visibility = 'hidden';
+            self.button2.style.visibility = 'hidden';
+            self.button3.style.visibility = 'hidden';
 
             self.scene.remove(self.head);
             self.reticle.visible = false;
@@ -714,9 +728,6 @@ class App5{
         if ( this.renderer.xr.isPresenting ) {
             this.ui.update();
             this.ui3.update();
-            this.ui1.update();
-            this.ui2.update();
-            this.ui4.update();
             this.mixer.update( dt ) 
 
         }
