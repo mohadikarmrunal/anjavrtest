@@ -393,10 +393,11 @@ class App5{
         button1.style.visibility = 'hidden';
 
         const height = window.innerWidth/2 -50;
+        const height2 = window.innerWidth-110;
         const button2 = document.createElement( 'button' );
         button2.style.height = '40px';
         button2.style.display = '';
-        button2.style.left = height.toString()+'px';
+        button2.style.left = height2.toString()+'px';
         button2.style.top = '100px';
         button2.style.width = '100px';
         button2.style.cursor = 'pointer';
@@ -404,11 +405,10 @@ class App5{
         button2.innerText = 'INFO';
         button2.style.visibility = 'hidden';
 
-        const height2 = window.innerWidth-110;
         const button3 = document.createElement( 'button' );
         button3.style.height = '40px';
         button3.style.display = '';
-        button3.style.left = height2.toString()+'px';
+        button3.style.left = height.toString()+'px';
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
