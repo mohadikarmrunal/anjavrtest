@@ -388,9 +388,9 @@ class App5{
         button1.style.top = '100px';
         button1.style.width = '100px';
         button1.style.cursor = 'pointer';
+        this.stylizeElement( button1, true, 12, true );
         button1.innerText = 'CALCULATE';
         button1.style.visibility = 'hidden';
-        this.stylizeElement( button1, true, 12, true );
 
         const height = window.innerWidth/2 -50;
         const button2 = document.createElement( 'button' );
@@ -400,9 +400,9 @@ class App5{
         button2.style.top = '100px';
         button2.style.width = '100px';
         button2.style.cursor = 'pointer';
+        this.stylizeElement( button2, true, 25, true );
         button2.innerText = 'INFO';
         button2.style.visibility = 'hidden';
-        this.stylizeElement( button2, true, 25, true );
 
         const button3 = document.createElement( 'button' );
         button3.style.height = '40px';
@@ -411,9 +411,9 @@ class App5{
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
+        this.stylizeElement( button3, true, 25, true );
         button3.innerText = 'RESET';
         button3.style.visibility = 'hidden';
-        this.stylizeElement( button3, true, 25, true );
 
         this.button1 = button1;
         this.button2 = button2;
