@@ -338,11 +338,16 @@ class App5{
 
         const ui = new CanvasUI(content, config);
         this.ui = ui;
-        this.ui.mesh.position.set(0,-0.1,-0.6);
+        this.ui.mesh.position.set(0,0,-0.6);
         this.ui.mesh.visible = false;
 
         //ui3 is the canvas for going back 
         function back(){
+
+            self.button1.style.visibility = 'visible';
+            self.button1.style.visibility = 'visible';
+            self.button3.style.visibility = 'visible';
+
             self.control = false;
             self.ui.mesh.visible = false;
             self.ui3.mesh.visible = false;
@@ -372,7 +377,7 @@ class App5{
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0.15,0.05,-0.5);
+        this.ui3.mesh.position.set(0.15,0.15,-0.5);
         this.ui3.mesh.visible = false;
 
         //creating buttons
@@ -387,7 +392,43 @@ class App5{
         button1.innerHTML = 'CALCULATE';
         button1.style.visibility = 'hidden';
         this.stylizeElement( button1, true, 12, true );
-        button1.onclick = function calculate (){
+
+        const height = window.innerWidth/2;
+        const button2 = document.createElement( 'button' );
+        button2.style.height = '40px';
+        button2.style.display = '';
+        button2.style.left = height+'px';
+        button2.style.top = '100px';
+        button2.style.width = '100px';
+        button2.style.cursor = 'pointer';
+        button2.innerHTML = 'INFO';
+        button2.style.visibility = 'hidden';
+        this.stylizeElement( button2, true, 25, true );
+
+        const button3 = document.createElement( 'button' );
+        button3.style.height = '40px';
+        button3.style.display = '';
+        button3.style.right = '4%';
+        button3.style.top = '100px';
+        button3.style.width = '100px';
+        button3.style.cursor = 'pointer';
+        button3.innerHTML = 'RESET';
+        button3.style.visibility = 'hidden';
+        this.stylizeElement( button3, true, 25, true );
+
+        this.button1 = button1;
+        this.button2 = button2;
+        this.button3 = button3;
+        document.body.appendChild( self.button1 );
+        document.body.appendChild( self.button2 );
+        document.body.appendChild( self.button3 );
+
+        this.button1.onclick = function calculate (){
+           
+            self.button1.style.visibility = 'hidden';
+            self.button2.style.visibility = 'hidden';
+            self.button3.style.visibility = 'hidden';
+
             self.control = false;
             self.scene.add(self.ui.mesh);
             self.camera.add(self.ui.mesh);
@@ -431,34 +472,15 @@ class App5{
             console.log(self.area(self.newcoord));
         }
 
-        const height = window.innerWidth/2;
-        const button2 = document.createElement( 'button' );
-        button2.style.height = '40px';
-        button2.style.display = '';
-        button2.style.left = height+'px';
-        button2.style.top = '100px';
-        button2.style.width = '100px';
-        button2.style.cursor = 'pointer';
-        button2.innerHTML = 'INFO';
-        button2.style.visibility = 'hidden';
-        this.stylizeElement( button2, true, 25, true );
-        button2.onclick = function infobutton(){
+       
+        self.button2.onclick = function infobutton(){
             self.control = false;
             if (self.sound && self.sound.isPlaying) self.sound.stop();
             self.playSound('5theory');
         }
 
-        const button3 = document.createElement( 'button' );
-        button3.style.height = '40px';
-        button3.style.display = '';
-        button3.style.right = '4%';
-        button3.style.top = '100px';
-        button3.style.width = '100px';
-        button3.style.cursor = 'pointer';
-        button3.innerHTML = 'RESET';
-        button3.style.visibility = 'hidden';
-        this.stylizeElement( button3, true, 25, true );
-        button3.onclick =   function reset(){
+       
+        self.button3.onclick =   function reset(){
             self.control = false;
             console.log('Button for reseting is pressed!');
             self.hitTestSourceRequested = false;
@@ -490,12 +512,7 @@ class App5{
             //reset and remove animation
             self.scene.remove(self.head);
         }
-        self.button1 = button1;
-        self.button2 = button2;
-        self.button3 = button3;
-        document.body.appendChild( self.button1 );
-        document.body.appendChild( self.button2 );
-        document.body.appendChild( self.button3 );
+       
 
         //ui1 is the reset button
         //ui2 is the button for calcuating the area!
