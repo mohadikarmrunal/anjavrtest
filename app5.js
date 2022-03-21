@@ -198,7 +198,6 @@ class App5{
     stylizeElement( element, active = true, fontSize = 13, ignorePadding = false ) {
 
         element.style.position = 'absolute';
-        //element.style.top = '20px';
         if (!ignorePadding) element.style.padding = '12px 6px';
         element.style.border = '1px solid #fff';
         element.style.borderRadius = '4px';
@@ -389,7 +388,7 @@ class App5{
         button1.style.top = '100px';
         button1.style.width = '100px';
         button1.style.cursor = 'pointer';
-        button1.innerHTML = 'CALCULATE';
+        button1.innerText = 'CALCULATE';
         button1.style.visibility = 'hidden';
         this.stylizeElement( button1, true, 12, true );
 
@@ -401,7 +400,7 @@ class App5{
         button2.style.top = '100px';
         button2.style.width = '100px';
         button2.style.cursor = 'pointer';
-        button2.innerHTML = 'INFO';
+        button2.innerText = 'INFO';
         button2.style.visibility = 'hidden';
         this.stylizeElement( button2, true, 25, true );
 
@@ -412,7 +411,7 @@ class App5{
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
-        button3.innerHTML = 'RESET';
+        button3.innerText = 'RESET';
         button3.style.visibility = 'hidden';
         this.stylizeElement( button3, true, 25, true );
 
