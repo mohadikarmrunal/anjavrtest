@@ -345,7 +345,7 @@ class App5{
         function back(){
 
             self.button1.style.visibility = 'visible';
-            self.button1.style.visibility = 'visible';
+            self.button2.style.visibility = 'visible';
             self.button3.style.visibility = 'visible';
 
             self.control = false;
@@ -393,11 +393,11 @@ class App5{
         button1.style.visibility = 'hidden';
         this.stylizeElement( button1, true, 12, true );
 
-        const height = window.innerWidth/2;
+        const height = window.innerWidth/2 -50;
         const button2 = document.createElement( 'button' );
         button2.style.height = '40px';
         button2.style.display = '';
-        button2.style.left = height+'px';
+        button2.style.left = height.toString()+'px';
         button2.style.top = '100px';
         button2.style.width = '100px';
         button2.style.cursor = 'pointer';

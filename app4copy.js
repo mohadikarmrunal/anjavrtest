@@ -221,9 +221,9 @@ class App4{
         buttoncounter.style.top = '30%';
         buttoncounter.style.width = '100px';
         buttoncounter.style.cursor = 'pointer';
-        buttoncounter.innerHTML = '00:00:00';
+        buttoncounter.innerHTML = 'COUNTER: 0';
         buttoncounter.style.visibility = 'hidden';
-        this.stylizeElement( buttoncounter, true, 18, false );
+        this.stylizeElement( buttoncounter, true, 15, false );
 
         const buttonexp = document.createElement( 'a' );
         buttonexp.style.height = '40px';
@@ -239,19 +239,19 @@ class App4{
         const buttonexp1 = document.createElement( 'a' );
         buttonexp1.style.height = '40px';
         buttonexp1.style.display = '';
-        buttonexp1.style.right = '10px';
-        buttonexp1.style.top = '150px';
+        buttonexp1.style.right = '20px';
+        buttonexp1.style.top = '200px';
         buttonexp1.style.width = '70px';
         buttonexp1.style.cursor = 'pointer';
-        buttonexp1.innerHTML = 'EXPERIMENT';
+        buttonexp1.innerHTML = '';
         buttonexp1.style.visibility = 'hidden';
         this.stylizeElement( buttonexp1, true, 30, true );
 
         const buttonexp2 = document.createElement( 'a' );
         buttonexp2.style.height = '40px';
         buttonexp2.style.display = '';
-        buttonexp2.style.right = '10px';
-        buttonexp2.style.top = '200px';
+        buttonexp2.style.right = '20px';
+        buttonexp2.style.top = '250px';
         buttonexp2.style.width = '70px';
         buttonexp2.style.cursor = 'pointer';
         buttonexp2.innerHTML = '';
@@ -261,8 +261,8 @@ class App4{
         const buttonexp3 = document.createElement( 'a' );
         buttonexp3.style.height = '40px';
         buttonexp3.style.display = '';
-        buttonexp3.style.right = '10px';
-        buttonexp3.style.top = '250px';
+        buttonexp3.style.right = '20px';
+        buttonexp3.style.top = '300px';
         buttonexp3.style.width = '70px';
         buttonexp3.style.cursor = 'pointer';
         buttonexp3.innerHTML = '';
@@ -272,8 +272,8 @@ class App4{
         const buttonexp4 = document.createElement( 'a' );
         buttonexp4.style.height = '40px';
         buttonexp4.style.display = '';
-        buttonexp4.style.right = '10px';
-        buttonexp4.style.top = '300px';
+        buttonexp4.style.right = '20px';
+        buttonexp4.style.top = '350px';
         buttonexp4.style.width = '70px';
         buttonexp4.style.cursor = 'pointer';
         buttonexp4.innerHTML = '';
