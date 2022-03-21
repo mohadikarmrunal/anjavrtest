@@ -208,11 +208,11 @@ class App4{
         buttontimer.style.height = '40px';
         buttontimer.style.display = '';
         buttontimer.style.left = '10px';
-        buttontimer.style.top = '10$';
+        buttontimer.style.top = '100px';
         buttontimer.style.width = '100px';
         buttontimer.innerHTML = '00:00:00';
         buttontimer.style.visibility = 'hidden';
-        this.stylizeElement( buttontimer, true, 18, true );
+        this.stylizeElement( buttontimer, true, 18, false );
         
         const buttoncounter = document.createElement( 'a' );
         buttoncounter.style.height = '40px';
@@ -223,7 +223,7 @@ class App4{
         buttoncounter.style.cursor = 'pointer';
         buttoncounter.innerHTML = '00:00:00';
         buttoncounter.style.visibility = 'hidden';
-        this.stylizeElement( buttoncounter, true, 18, true );
+        this.stylizeElement( buttoncounter, true, 18, false );
 
         const buttonexp = document.createElement( 'a' );
         buttonexp.style.height = '40px';
@@ -234,7 +234,7 @@ class App4{
         buttonexp.style.cursor = 'pointer';
         buttonexp.innerHTML = 'EXPERIMENT';
         buttonexp.style.visibility = 'hidden';
-        this.stylizeElement( buttonexp, true, 10, true );
+        this.stylizeElement( buttonexp, true, 10, false );
 
         const buttonexp1 = document.createElement( 'a' );
         buttonexp1.style.height = '40px';

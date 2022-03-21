@@ -431,10 +431,11 @@ class App5{
             console.log(self.area(self.newcoord));
         }
 
+        const height = window.innerWidth/2;
         const button2 = document.createElement( 'button' );
         button2.style.height = '40px';
         button2.style.display = '';
-        button2.style.left = '40%';
+        button2.style.left = height+'px';
         button2.style.top = '100px';
         button2.style.width = '100px';
         button2.style.cursor = 'pointer';
