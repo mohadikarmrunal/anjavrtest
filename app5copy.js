@@ -338,7 +338,7 @@ class App5{
 
         const ui = new CanvasUI(content, config);
         this.ui = ui;
-        this.ui.mesh.position.set(0,0,-0.6);
+        this.ui.mesh.position.set(0,-0.1,-0.6);
         this.ui.mesh.visible = false;
 
         //ui3 is the canvas for going back 
@@ -372,7 +372,7 @@ class App5{
 
         const ui3 = new CanvasUI(content3, config3);
         this.ui3 = ui3;
-        this.ui3.mesh.position.set(0.15,0.15,-0.5);
+        this.ui3.mesh.position.set(0.15,0.05,-0.5);
         this.ui3.mesh.visible = false;
 
         //creating buttons
@@ -380,7 +380,7 @@ class App5{
         const button1 = document.createElement( 'button' );
         button1.style.height = '40px';
         button1.style.display = '';
-        button1.style.left = '10%';
+        button1.style.left = '5%';
         button1.style.top = '100px';
         button1.style.width = '100px';
         button1.style.cursor = 'pointer';
@@ -450,7 +450,7 @@ class App5{
         const button3 = document.createElement( 'button' );
         button3.style.height = '40px';
         button3.style.display = '';
-        button3.style.right = '10%';
+        button3.style.right = '5%';
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
