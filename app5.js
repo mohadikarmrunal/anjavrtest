@@ -401,7 +401,7 @@ class App5{
         button2.style.top = '100px';
         button2.style.width = '100px';
         button2.style.cursor = 'pointer';
-        this.stylizeElement( button2, true, 25, true );
+        this.stylizeElement( button2, true, 20, true );
         button2.innerText = 'INFO';
         button2.style.visibility = 'hidden';
 
@@ -412,7 +412,7 @@ class App5{
         button3.style.top = '100px';
         button3.style.width = '100px';
         button3.style.cursor = 'pointer';
-        this.stylizeElement( button3, true, 25, true );
+        this.stylizeElement( button3, true, 20, true );
         button3.innerText = 'RESET';
         button3.style.visibility = 'hidden';
 
