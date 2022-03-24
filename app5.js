@@ -136,9 +136,15 @@ class App5{
         const self = this;
         var newcoord1 = [];
         var length = coordinates.length;
-        const coinpos = new THREE.Vector2(self.floor.position.x*100, self.floor.position.z*100);
-
+    
         if (length>0){
+
+             //checking if the triangle is inside the bounded area
+             for (let k=0;k<(length-1);k++) {
+                 console.log(self.fakefloor.geometry.boundingBox.containsPoint(coordinates[k]));
+                if (!self.fakefloor.geometry.boundingBox.containsPoint(coordinates[k])) return 0
+            }
+
             //multiply each axis-component with 100 to get the positions
             for (let i=0;i<length;i++){
                 newcoord1[i]= new THREE.Vector2(coordinates[i].x*100,coordinates[i].z*100);
@@ -151,10 +157,7 @@ class App5{
             for (let k=0;k<(length-1);k++) {
                 self.newcoord.push(newcoord1[k]);
             }
-            //checking if the triangle is inside the bounded area
-            for (let k=0;k<(length-1);k++) {
-                if (self.newcoord[k].distanceTo(coinpos)>50) return 0
-            }
+           
         }
         else if (length=0) return 0;
 
@@ -299,9 +302,10 @@ class App5{
         this.floor = new THREE.Mesh (boxgeometry, boxmaterial);
         this.floor.visible = false;
         this.scene.add(this.floor);
+        
+        const boxgeometry1 = new THREE.BoxGeometry (1,0.1,1);
 
-      
-       
+        this.fakefloor = new THREE.Mesh (boxgeometry1,boxmaterial);
 
         //ui is the main canvas that appears
         const config = {
@@ -443,18 +447,25 @@ class App5{
             const x = self.coordcheck(self.coordinates);
             const n = self.area(self.newcoord)/100;
 
-            if (self.coordinates.length==0){
+            if (self.coordinates.length == 0){
                 self.ui.updateElement('body',"An error happened!");
                 self.ui.updateElement('result',"Click the reset button and try again!");
 
             }
             else if (x == 0) {
-                self.ui.updateElement('body',"An error happened!");
-                self.ui.updateElement('result',"Click the reset button and try again!");
-                self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! ");
-
+                if(self.newcoord.length == 0) {
+                    self.ui.updateElement('body',"An error happened!");
+                    self.ui.updateElement('result',"Click the reset button and try again!");
+                    self.ui.updateElement('kordinate',"Points of the polygon are outside the boundary! ");
+                }
+                else {
+                    self.ui.updateElement('body',"An error happened!");
+                    self.ui.updateElement('result',"Click the reset button and try again!");
+                    self.ui.updateElement('kordinate',"Polygon wasn't properly drawn! ");
+                }
 
             }
+
             else if (self.newcoord.length <= 2) {
                 self.ui.updateElement('body',"An error happened!");
                 self.ui.updateElement('result',"Click the reset button and try again!");
@@ -593,7 +604,6 @@ class App5{
                     else {
                         //show and set the floor
                         self.floor.visible = true;
-                        //self.workingVec3.setFromMatrixPosition( self.reticle.matrix );
                         self.floor.position.setFromMatrixPosition( self.reticle.matrix );
 
                         //play the animation
@@ -602,6 +612,13 @@ class App5{
                         self.action.reset();
                         self.scene.add(self.head);
                         self.action.play();
+
+                        //set up a fake floor that we use to check if all the points are inside the boundary
+                        self.fakefloor.position.setFromMatrixPosition (self.reticle.matrix);
+                        self.fakefloor.geometry.computeBoundingBox();
+                        self.fakefloor.geometry.boundingBox.translate (self.head.position);
+                        
+                    
                     }
                 }
             }
