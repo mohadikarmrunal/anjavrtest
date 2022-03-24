@@ -33,7 +33,6 @@ class App5{
 		this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
-        console.log(THREE.sRGBEncoding);
 		container.appendChild( this.renderer.domElement );
         
         const labelContainer = document.createElement('div');
@@ -137,6 +136,7 @@ class App5{
         const self = this;
         var newcoord1 = [];
         var length = coordinates.length;
+        const coinpos = new THREE.Vector2(self.floor.position.x*100, self.floor.position.z*100);
 
         if (length>0){
             //multiply each axis-component with 100 to get the positions
@@ -150,6 +150,10 @@ class App5{
             //fill the newcoord without double points
             for (let k=0;k<(length-1);k++) {
                 self.newcoord.push(newcoord1[k]);
+            }
+            //checking if the triangle is inside the bounded area
+            for (let k=0;k<(length-1);k++) {
+                if (self.newcoord[k].distanceTo(coinpos)>50) return 0
             }
         }
         else if (length=0) return 0;
@@ -238,7 +242,6 @@ class App5{
                     self.coinH = gltf.scene.children[0].children[0];
                     self.head.children[0].children[1].visible = false;
                 }
-                console.log(self.coinH);
                 self.coinH.material.map.minFilter = THREE.LinearMipMapLinearFilter;
                 self.coinH.material.map.magFilter = THREE.LinearFilter;
                 self.coinH.material.map.anisotropy = self.renderer.capabilities.getMaxAnisotropy();
@@ -538,7 +541,6 @@ class App5{
             self.el = el;
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
 
-            console.log(self.button1);
             self.button1.style.visibility = 'visible';
             self.button2.style.visibility = 'visible';
             self.button3.style.visibility = 'visible';
