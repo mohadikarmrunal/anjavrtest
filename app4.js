@@ -82,8 +82,6 @@ class App4{
                 gltf.animations.forEach( (anim)=>{
                     self.animations[anim.name] = anim;
                 })
-                console.log(gltf);
-                console.log(gltf.scene.children[0]);
                 self.worker = gltf.scene.children[0];
                 const scale = 0.015;
 				self.worker.scale.set(scale, scale, scale); 
@@ -183,56 +181,121 @@ class App4{
         if (sndname == 'ring')  self.ring = sound;
         self.ring.setVolume(0.3);
 
+    }
 
+    stylizeElement( element, active = true, fontSize = 13, ignorePadding = false ) {
+        element.style.position = 'absolute';
+       if (!ignorePadding) element.style.padding = '12px 6px';
+        element.style.border = '1px solid #fff';
+        element.style.borderRadius = '4px';
+        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
+        element.style.color = '#fff';
+        element.style.font = `normal ${fontSize}px sans-serif`;
+        element.style.textAlign = 'center';
+        element.style.opacity = '0.5';
+        element.style.outline = 'none';
+        element.style.zIndex = '999';
+        element.style.textAlign = 'center';
     }
 
     createUI() {
         const self = this;
 
-        //canvas for the timer
-        const config1 = {
-            panelSize: { width: 0.3, height: 0.1 },
-            height: 512/3,
-            info:{ type: "text", position:{ top: 50, left: 6 }, width: 500 , height: 60, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
-        }
+        const buttontimer = document.createElement( 'div' );
+        this.stylizeElement( buttontimer, true, 20, false );
+        buttontimer.style.height = '30px';
+        buttontimer.style.display = '';
+        buttontimer.style.left = '10px';
+        buttontimer.style.top = '10px';
+        buttontimer.style.width = '100px';
+        buttontimer.style.verticalAlign = 'middle';
+        buttontimer.innerHTML = '00:00:00';
+        buttontimer.style.visibility = 'hidden';
+        
+        const buttoncounter = document.createElement( 'div' );
+        this.stylizeElement( buttoncounter, true, 15, false );
+        buttoncounter.style.height = '30px';
+        buttoncounter.style.display = '';
+        buttoncounter.style.left = '10px';
+        buttoncounter.style.top = '30%';
+        buttoncounter.style.width = '100px';
+        buttoncounter.style.cursor = 'pointer';
+        buttoncounter.style.verticalAlign = 'middle';
+        buttoncounter.innerHTML = 'COUNTER: 0';
+        buttoncounter.style.visibility = 'hidden';
 
-        const content1 = {
-            info: "00:00:00"
-        }
+        const buttonexp = document.createElement( 'div' );
+        this.stylizeElement( buttonexp, true, 15, false );
+        buttonexp.style.height = '30px';
+        buttonexp.style.display = '';
+        buttonexp.style.right = '5px';
+        buttonexp.style.top = '120px';
+        buttonexp.style.width = '100px';
+        buttonexp.style.cursor = 'pointer';
+        buttonexp.style.verticalAlign = 'middle';
+        buttonexp.innerHTML = 'EXPERIMENT';
+        buttonexp.style.visibility = 'hidden';
 
-        //counter canvas 
-        const config2 = {
-            panelSize: { width: 0.3, height: 0.1 },
-            height: 512/3,
-            info:{ type: "text", position:{ top: 50, left: 6 }, width: 500 , height: 60, textAlign: 'center', fontFamily: 'Verdana', fontSize: 70}
-        }
+        const buttonexp1 = document.createElement( 'a' );
+        buttonexp1.style.height = '40px';
+        buttonexp1.style.display = '';
+        buttonexp1.style.right = '20px';
+        buttonexp1.style.top = '200px';
+        buttonexp1.style.width = '70px';
+        buttonexp1.style.cursor = 'pointer';
+        buttonexp1.innerHTML = '';
+        buttonexp1.style.visibility = 'hidden';
+        this.stylizeElement( buttonexp1, true, 30, true );
 
-        const content2 = {
-            info: "COUNTER: 0"
-        }
+        const buttonexp2 = document.createElement( 'a' );
+        buttonexp2.style.height = '40px';
+        buttonexp2.style.display = '';
+        buttonexp2.style.right = '20px';
+        buttonexp2.style.top = '250px';
+        buttonexp2.style.width = '70px';
+        buttonexp2.style.cursor = 'pointer';
+        buttonexp2.innerHTML = '';
+        buttonexp2.style.visibility = 'hidden';
+        this.stylizeElement( buttonexp2, true, 30, true );
 
-        //experiment canvas
-        const config3 = {
-            panelSize: {width: 0.1, height: 0.6},
-            width: 85.333,
-            info:{ type: "text", position:{ top: 12, left: 7.665 } , width: 70 , height: 115, textAlign: 'center', fontFamily: 'Verdana', fontSize: 30, padding:7},
-            info1:{ type: "text", position:{ top: 127, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
-            info2:{ type: "text", position:{ top: 222, left: 7.665} , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
-            info3:{ type: "text", position:{ top: 317, left: 7.665 } , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
-            info4:{ type: "text", position:{ top: 412, left: 7.665 } , width: 70, height: 80, textAlign: 'center', backgroundColor: "#0DD", fontFamily: 'Verdana', fontSize: 50, padding: 30},
+        const buttonexp3 = document.createElement( 'a' );
+        buttonexp3.style.height = '40px';
+        buttonexp3.style.display = '';
+        buttonexp3.style.right = '20px';
+        buttonexp3.style.top = '300px';
+        buttonexp3.style.width = '70px';
+        buttonexp3.style.cursor = 'pointer';
+        buttonexp3.innerHTML = '';
+        buttonexp3.style.visibility = 'hidden';
+        this.stylizeElement( buttonexp3, true, 30, true );
 
-        }
+        const buttonexp4 = document.createElement( 'a' );
+        buttonexp4.style.height = '40px';
+        buttonexp4.style.display = '';
+        buttonexp4.style.right = '20px';
+        buttonexp4.style.top = '350px';
+        buttonexp4.style.width = '70px';
+        buttonexp4.style.cursor = 'pointer';
+        buttonexp4.innerHTML = '';
+        buttonexp4.style.visibility = 'hidden';
+        this.stylizeElement( buttonexp4, true, 30, true );
+       
+        self.buttontimer = buttontimer;
+        self.buttoncounter = buttoncounter;
+        self.buttonexp = buttonexp;
+        self.buttonexp1 = buttonexp1;
+        self.buttonexp2 = buttonexp2;
+        self.buttonexp3 = buttonexp3;
+        self.buttonexp4 = buttonexp4;
 
-        const content3 = {
-            info: "RESULT",
-            info1: "",
-            info2: "",
-            info3: "",
-            info4: "",
+        document.body.appendChild( self.buttontimer );
+        document.body.appendChild( self.buttoncounter );
+        document.body.appendChild( self.buttonexp );
+        document.body.appendChild( self.buttonexp1 );
+        document.body.appendChild( self.buttonexp2 );
+        document.body.appendChild( self.buttonexp3 );
+        document.body.appendChild( self.buttonexp4 );
 
-        }   
-
-  
 
         //creating materials for canvases
         const material1 = new THREE.MeshPhysicalMaterial ();
@@ -274,25 +337,6 @@ class App4{
         material3.clearcoat = 0.15;
         material3.clearcoatRoughness = 0.17;
         material3.transparent = false;
-
-        const ui1 = new CanvasUI(content1, config1);
-        this.ui1 = ui1;
-        this.ui1.mesh.position.set(-0.2,0.4,-1);
-        this.ui1.mesh.material = material1;
-        this.ui1.mesh.material.map = this.ui1.texture;        
-        self.seconds = 30;
-
-        const ui2 = new CanvasUI(content2, config2);
-        this.ui2 = ui2;
-        this.ui2.mesh.position.set(-0.2,0,-1);
-        this.ui2.mesh.material = material2;
-        this.ui2.mesh.material.map = this.ui2.texture;  
-
-        const ui3 = new CanvasUI(content3, config3);
-        this.ui3 = ui3;
-        this.ui3.mesh.position.set(0.17,0,-0.65);
-        this.ui3.mesh.material = material3;
-        this.ui3.mesh.material.map = this.ui3.texture;  
 
         //creating 3D cylinders for the frequency diagram |   theoretical frequency 
         const geometry1 = new THREE.CylinderGeometry( 0.03, 0.03, 0.16, 32 );
@@ -698,48 +742,48 @@ class App4{
                 self.actionT.play();
                 self.actionA.play();
                 self.playSound('ring');
-                self.ui2.updateElement('info', "COUNTER: "+self.counter.toString());
+                self.buttoncounter.innerHTML= "COUNTER: " + self.counter;
             }
 
             if ( self.seconds < 5 && self.second!= -1){
-                self.ui1.mesh.material.color = new THREE.Color(0xf22602);
+                self.buttontimer.style.background = 'rgba(180,20,20,1)';
             }
 
             if (self.seconds == -1) {
                 self.seconds = 30;
 
-                self.ui1.mesh.material.color = new THREE.Color(0x2d7ac8);
-                self.ui1.updateElement('info', "00:00:00");
-                self.ui2.updateElement('info', "COUNTER: 0");
+                self.buttontimer.style.background = 'rgba(20,150,80,1)';
+                self.buttontimer.innerHTML = '00:00:00';
+                self.buttoncounter.innerHTML = 'COUNTER: 0';
 
                 if (self.case == 1) {
                     clearInterval(self.interval1);
-                    self.ui3.updateElement('info1', self.counter.toString());
+                    self.buttonexp1.innerHTML = self.counter;
                     self.counter = 0;
                 }
 
                 if (self.case == 2) {
                     clearInterval(self.interval2);
-                    self.ui3.updateElement('info2', self.counter.toString());
+                    self.buttonexp2.innerHTML = self.counter;
                     self.counter = 0;
                 }
 
                 if (self.case == 3) {
                     clearInterval(self.interval3);
-                    self.ui3.updateElement('info3', self.counter.toString());
+                    self.buttonexp3.innerHTML = self.counter;
                     self.counter = 0;
                 }
 
                 if (self.case == 4) {
                     clearInterval(self.interval4);
-                    self.ui3.updateElement('info4', self.counter.toString());
+                    self.buttonexp4.innerHTML = self.counter;
                     self.counter = 0;
                 }
 
             }
 
             else {
-                self.ui1.updateElement('info', "00:00:"+self.seconds.toString());
+                self.buttontimer.innerHTML = '00:00:'+self.seconds;
                 self.seconds = self.seconds -1;
             }
         }
@@ -787,14 +831,14 @@ class App4{
 
             self.playSound('sound2');
             self.swipeoption = true;
-            self.scene.remove(self.ui1.mesh);
-            self.camera.remove(self.ui1.mesh);
+            self.buttontimer.style.visibility = 'hidden';
+            self.buttoncounter.style.visibility = 'hidden';
+            self.buttonexp.style.visibility = 'hidden';
+            self.buttonexp1.style.visibility = 'hidden';
+            self.buttonexp2.style.visibility = 'hidden';
+            self.buttonexp3.style.visibility = 'hidden';
+            self.buttonexp4.style.visibility = 'hidden';
 
-            self.scene.remove(self.ui2.mesh);
-            self.camera.remove(self.ui2.mesh);
-
-            self.scene.remove(self.ui3.mesh);
-            self.camera.remove(self.ui3.mesh);
 
             self.actionA.reset();
             self.actionT.reset();
@@ -859,25 +903,20 @@ class App4{
             const el = document.getElementById("text");
             self.el = el;
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
-            
+
+            self.buttoncounter.style.visibility = 'visible';
+            self.buttontimer.style.visibility = 'visible';
+            self.buttonexp.style.visibility = 'visible';
+            self.buttonexp1.style.visibility = 'visible';
+            self.buttonexp2.style.visibility = 'visible';
+            self.buttonexp3.style.visibility = 'visible';
+            self.buttonexp4.style.visibility = 'visible';
+
             self.sound.play();
 
             self.scene.add(self.worker);
             self.scene.add(self.tel);
-
-            self.ui1.mesh.visible = true;
-            self.scene.add(self.ui1.mesh);
-            self.camera.add(self.ui1.mesh);
-
-            self.ui2.mesh.visible = true;
-            self.scene.add(self.ui2.mesh);
-            self.camera.add(self.ui2.mesh);
-
-            self.ui3.mesh.visible = true;
-            self.scene.add(self.ui3.mesh);
-            self.camera.add(self.ui3.mesh);
-
-           
+            
             var timeout1, timeout2, timeout3, timeout4, timeout5;
             timeout1 = setTimeout(next1, 43000);
             timeout2 = setTimeout(next2, 78000);
@@ -905,24 +944,22 @@ class App4{
             self.scene.remove(self.worker);
             self.scene.remove(self.tel);
 
+            self.buttontimer.innerHTML= '00:00:00';
+            self.buttoncounter.innerHTML = 'COUNTER: 0';
+            self.buttontimer.style.background = 'rgba(20,150,80,1)';
 
-            self.ui1.updateElement('info', "00:00:00");                
-            self.ui1.mesh.material.color = new THREE.Color(0x2d7ac8);
-
-
-            self.scene.remove(self.ui1.mesh);
-            self.camera.remove(self.ui1.mesh);
-
-            self.ui2.updateElement('info', "COUNTER: 0");
-            self.scene.remove(self.ui2.mesh);
-            self.camera.remove(self.ui2.mesh);
-
-            self.ui3.updateElement('info1', "");
-            self.ui3.updateElement('info2', "");
-            self.ui3.updateElement('info3', "");
-            self.ui3.updateElement('info4', "");
-            self.scene.remove(self.ui3.mesh);
-            self.camera.remove(self.ui3.mesh);
+            self.buttoncounter.style.visibility = 'hidden';
+            self.buttontimer.style.visibility = 'hidden';
+            self.buttonexp.style.visibility = 'hidden';
+            self.buttonexp1.style.visibility = 'hidden';
+            self.buttonexp2.style.visibility = 'hidden';
+            self.buttonexp3.style.visibility = 'hidden';
+            self.buttonexp4.style.visibility = 'hidden';
+           
+            self.buttonexp1.innerHTML = '';
+            self.buttonexp2.innerHTML = '';
+            self.buttonexp3.innerHTML = '';
+            self.buttonexp4.innerHTML = '';
 
             clearTimeout(self.timeout1);
             clearTimeout(self.timeout2);
@@ -1001,33 +1038,6 @@ class App4{
             self.camera.remove(self.ui9.mesh);      
         }
 
-        /*var promise = new Promise(function(resolve, reject) {
-            const sound = new THREE.Audio( self.listener );
-            const audioLoader = new THREE.AudioLoader();
-             audioLoader.load( 'audio/app4-1.mp3', ( buffer ) => {
-              sound.setBuffer( buffer );
-              sound.setLoop( false );
-              sound.setVolume( 1.0 );
-          });
-           self.sound = sound;
-           self.speech = new THREE.Audio( self.listener );
-           const controlspeech = true;
-           self.controlspeech = controlspeech;
-      
-            if (self.controlspeech) {
-            resolve("Sound loaded!");
-            }
-             else {
-            reject(Error("Sound did not load."));
-            }
-         });
-
-
-       promise.then(function(result) {
-              const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
-              console.log(result)}, function (error){    
-                  console.log(error);
-        });*/
         
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
 
@@ -1117,9 +1127,6 @@ class App4{
         if ( this.renderer.xr.isPresenting ) {
            this.mixer.update( dt );
            this.mixerT.update(dt);
-           this.ui1.update();
-           this.ui2.update();
-           this.ui3.update();
            this.ui4.update();
            this.ui5.update();
            this.ui6.update();
