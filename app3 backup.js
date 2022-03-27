@@ -56,21 +56,6 @@ class App3{
         this.speech = new THREE.Audio( this.listener );
 
 	}	
-
-    stylizeElement( element, active = true, fontSize = 13, ignorePadding = false ) {
-        element.style.position = 'absolute';
-       if (!ignorePadding) element.style.padding = '12px 6px';
-        element.style.border = '1px solid #fff';
-        element.style.borderRadius = '4px';
-        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
-        element.style.color = '#fff';
-        element.style.font = `normal ${fontSize}px sans-serif`;
-        element.style.textAlign = 'center';
-        element.style.opacity = '0.5';
-        element.style.outline = 'none';
-        element.style.zIndex = '999';
-        element.style.textAlign = 'center';
-    }
     
     initScene(){
         this.loadingBar31 = new LoadingBar();
@@ -508,21 +493,23 @@ class App3{
     createUI() {
         const self = this;
 
-        //EXPERIMENT canvas
-        const experiment = document.createElement( 'div' );
-        this.stylizeElement( experiment, true, 20, false );
-        experiment.setAttribute("id",'experiment')
-        experiment.style.height = '50px';
-        experiment.style.display = '';
-        experiment.style.left = '0';
-        experiment.style.top = '100px';
-        experiment.style.width = '100%';
-        experiment.style.verticalAlign = 'middle';
-        experiment.innerHTML = 'EXPERIMENT';
-        experiment.style.visibility = 'hidden';
-        
-        self.experiment = experiment;
-        document.body.appendChild( self.experiment );
+        //setting up button canvasUI
+        const config1 = {
+            panelSize: { width: 0.6, height: 0.2 },
+            height: 512/3,
+            body:{
+                textAlign: 'center',
+                backgroundColor:'#ccc',
+                fontColor:'#000',
+                padding: 65,
+                fontSize:45,
+            },
+            info:{ type: "text", fontFamily: 'Verdana'}
+        }
+
+        const content1 = {
+            info: "EXPERIMENT"
+        }
 
         const config2 = {
             //panelSize: { width: 0.6, height: 0.3 },
@@ -575,7 +562,11 @@ class App3{
             info: "PROBABILITY DISTRIBUTION"
         }
 
-        
+        const ui1 = new CanvasUI(content1, config1);
+        this.ui1 = ui1;
+        this.ui1.mesh.position.set(0,0.4,-1.1);
+        this.ui1.mesh.material.opacity = 0.3;
+        this.ui1.mesh.material.transparent = true;
 
         const ui2 = new CanvasUI(content2, config2);
         this.ui2 = ui2;
@@ -630,8 +621,10 @@ class App3{
             self.scene.remove(self.text0);
             self.scene.remove(self.text1);
             self.scene.remove(self.text2);
+
+
+            //add a congrats sign in the future
         }
-        
         const configq3 = {
             panelSize: { height: 0.2 },
             height: 102.4,
@@ -1190,7 +1183,8 @@ class App3{
             self.tail.visible = false;
             self.scene.remove(self.head);
             self.scene.remove(self.tail);
-            self.experiment.style.visibility = 'hidden';
+            self.ui1.mesh.visible = false;
+            self.scene.remove(self.ui1.mesh);
             self.scene.remove(self.cursor);
 
             //adding the second canvas
@@ -1243,7 +1237,8 @@ class App3{
 
                 var timeout1, timeout2, timeout3
 
-               self.experiment.style.visibility = 'visible';
+                self.ui1.mesh.visible = true;
+                self.scene.add(self.ui1.mesh);
 
                 self.cursor.visible = true; 
                 self.scene.add(self.cursor);
@@ -1282,7 +1277,6 @@ class App3{
                 self.coin7.children[0].rotateX(-Math.PI/2);
             }
 
-            self.experiment.style.visibility = 'hidden';
             self.scene.remove(self.coin);
             self.scene.remove(self.coin1);
             self.scene.remove(self.coin2);
@@ -1291,6 +1285,7 @@ class App3{
             self.scene.remove(self.coin5);
             self.scene.remove(self.coin6);
             self.scene.remove(self.coin7);
+            self.scene.remove(self.ui1.mesh);
             self.scene.remove(self.ui2.mesh);
             self.scene.remove(self.ui3.mesh);
             self.scene.remove(self.ui4.mesh);
