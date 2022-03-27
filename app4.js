@@ -490,13 +490,10 @@ class App4{
             back2: "<path>M 76.8 245.76 L 414.72 76.8 L 414.72 414.72 Z</path>",
         }
 
-        
-
         const ui6 = new CanvasUI(content6, config6);
         this.ui6 = ui6;
         this.ui6.mesh.position.set(0,0,-0.6);
         self.ui6.mesh.visible = false;
-
 
         const ui7 = new CanvasUI(content7, config7);
         this.ui7 = ui7;
@@ -512,7 +509,6 @@ class App4{
         this.ui9 = ui9;
         this.ui9.mesh.position.set(0.155,0.145,-0.5);
         self.ui9.mesh.visible = false;
-
 
         function button1(){
             self.swipeoption = false;
@@ -562,7 +558,6 @@ class App4{
         this.ui4.needsUpdate = true;
         this.ui4.texture.needsUpdate = true;
   
-
         const ui5 = new CanvasUI(content5, config5);
         this.ui5 = ui5;
         this.ui5.mesh.position.set(0.37,0.22,-0.95);
@@ -681,8 +676,6 @@ class App4{
             const text9 = new THREE.Mesh (geometryF1, material);
             const text10 = new THREE.Mesh (geometryF2, material5);
 
-
-
             self.text2 = text2;
             self.text3 = text3;
             self.text4 = text4;
@@ -702,7 +695,6 @@ class App4{
             self.text8.scale.set(0.006,0.006,0.006);
             self.text9.scale.set(0.006,0.006,0.006);
             self.text10.scale.set(0.006,0.006,0.006);
-
 
             self.text2.position.set(-0.35,-0.22,-0.95);     
             self.text3.position.set(-0.25,-0.22,-0.95);

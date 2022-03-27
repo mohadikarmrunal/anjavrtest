@@ -5,10 +5,7 @@ import { Stats } from '../../libs/stats.module.js';
 import { CanvasUI } from '../../libs/CanvasUI.js'
 import { ARButton } from '../../libs/ARButton.js';
 import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
-//import { FBXLoader } from '../../libs/three/jsm/FBXLoader.js';
 import { LoadingBar } from '../../libs/LoadingBar.js';
-//import { Player } from '../../libs/Player.js';
-//import { ControllerGestures } from '../../libs/ControllerGestures.js';
 
 
 class App3{
@@ -231,9 +228,7 @@ class App3{
                 self.T6.visible = false;
                 self.T7.visible = false;
                 self.loadingBar31.progress = 0;
-
-                
-				
+	
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -273,8 +268,6 @@ class App3{
                 self.H5.visible = false;
                 self.loadingBar31.progress = 0;
 
-               
-				
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -327,7 +320,6 @@ class App3{
                 self.text1.visible = false;	
                 self.loadingBar31.progress = 0;
 
-
 			},
 			// called while loading is progressing
 			function ( xhr ) {
@@ -353,7 +345,6 @@ class App3{
                 self.text2.position.set(0.15,-0.1,-5.4);
                 self.text2.visible = false;	
                 self.loadingBar31.progress = 0;
-
 
 			},
 			// called while loading is progressing

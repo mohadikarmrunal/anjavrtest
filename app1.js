@@ -162,27 +162,27 @@ class App{
     createUI() {
         
         const config1 = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 194,
+            panelSize: { width: 0.1, height: 0.05 },
+            height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
                 padding:65,
-                fontSize:55,
+                fontSize:75,
             },
             info:{ type: "text" }
         }
 
         const config2 = {
-            panelSize: { width: 0.1, height: 0.038 },
-            height: 194,
+            panelSize: { width: 0.1, height: 0.05 },
+            height: 256,
             body:{
                 textAlign: 'center',
                 backgroundColor:'#ccc',
                 fontColor:'#000',
                 padding:65,
-                fontSize:55,
+                fontSize:75,
             },
             info:{ type: "text" }
         }
@@ -204,11 +204,11 @@ class App{
         }
 
         const content1 = {
-            info: "Price per kg"
+            info: "Price Per Kilogram"
         }   
 
         const content2 = {
-            info: "Sold in kg"
+            info: "Sold In Kilogram"
         }
 
         const config = {
@@ -405,11 +405,10 @@ class App{
 
         //restoring additional two canvases
         if (ind){
-            this.ui1.updateElement('info', 'Price per kg');
-            this.ui2.updateElement('info', 'Sold in kg'); 
+            this.ui1.updateElement('info', 'Price Per Kilogram');
+            this.ui2.updateElement('info', 'Sold In Kilogram'); 
             this.ui1.updateConfig ("body", "fontColor", "#000" );
             this.ui2.updateConfig ("body", "fontColor", "#000" );
-            this.ui2.updateConfig ("body", "fontSize", "55" );
             this.ui1.update();
             this.ui2.update(); 
         }        
@@ -451,8 +450,8 @@ class App{
             this.app.clearCanvas(0,this.app.ui);
 
             //update of the price and quantity in a ui1 and ui2
-            this.app.ui1.updateElement('info', 'Price: 1.9 \u20AC /kg');
-            this.app.ui2.updateElement('info', 'Sold: 90 kg'); 
+            this.app.ui1.updateElement('info', 'PRICE: 1.9 \u20AC /kg');
+            this.app.ui2.updateElement('info', 'SOLD:   90 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#114" );
             this.app.ui2.updateConfig ("body", "fontColor", "#114" );
             this.app.ui1.update();
@@ -499,8 +498,8 @@ class App{
 
         function next3(){
             //update price and demand
-            this.app.ui1.updateElement('info', 'Price: 2.8 \u20AC /kg');
-            this.app.ui2.updateElement('info', 'Sold: 60 kg'); 
+            this.app.ui1.updateElement('info', 'PRICE: 2.8 \u20AC /kg');
+            this.app.ui2.updateElement('info', 'SOLD:   60 kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#00f" );
             this.app.ui2.updateConfig ("body", "fontColor", "#00f" );
             this.app.ui1.update();
@@ -540,8 +539,8 @@ class App{
         function next4(){
             //update price and demand
             console.log('setTimeout4');
-            this.app.ui1.updateElement('info', 'Price: 3.7 \u20AC /kg');
-            this.app.ui2.updateElement('info', 'Sold:  30kg'); 
+            this.app.ui1.updateElement('info', 'PRICE: 3.7 \u20AC /kg');
+            this.app.ui2.updateElement('info', 'SOLD:  30kg'); 
             this.app.ui1.updateConfig ("body", "fontColor", "#f00" );
             this.app.ui2.updateConfig ("body", "fontColor", "#f00" );
             this.app.ui1.update();
