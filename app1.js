@@ -632,8 +632,16 @@ class App{
         function onSessionStart(){
 
             const el = document.getElementById("text");
+            const Sidebar = document.getElementById("mySidebar");
+            const SmallSidebar = document.getElementById("mySmallSidebar");
+
             self.el = el;
+            self.smallbar = SmallSidebar;
+            self.sidebar = Sidebar;
+
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
+            if (self.sidebar!=undefined) self.sidebar.style.visibility = 'hidden';
+            if (self.smallbar!=undefined) self.smallbar.style.visibility = 'hidden';
 
             var timeout1, timeout2, timeout3, timeout4, timeout5
 
@@ -684,6 +692,8 @@ class App{
         function onSessionEnd(){
 
             if (self.el!=undefined) self.el.style.visibility = 'visible';
+            if (self.sidebar!=undefined) self.sidebar.style.visibility = 'visible';
+            if (self.smallbar!=undefined) self.smallbar.style.visibility = 'visible';
 
             if (self.sound && self.sound.isPlaying) self.sound.stop();
             self.control = false; 

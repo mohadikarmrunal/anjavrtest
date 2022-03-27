@@ -62,7 +62,7 @@ class App3{
        if (!ignorePadding) element.style.padding = '12px 6px';
         element.style.border = '1px solid #fff';
         element.style.borderRadius = '4px';
-        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
+        element.style.background = (active) ? 'rgb(20,150,80)' : 'rgba(180,20,20,1)';
         element.style.color = '#fff';
         element.style.font = `normal ${fontSize}px sans-serif`;
         element.style.textAlign = 'center';
@@ -511,11 +511,10 @@ class App3{
         //EXPERIMENT canvas
         const experiment = document.createElement( 'div' );
         this.stylizeElement( experiment, true, 20, false );
-        experiment.setAttribute("id",'experiment')
         experiment.style.height = '50px';
         experiment.style.display = '';
         experiment.style.left = '0';
-        experiment.style.top = '100px';
+        experiment.style.top = '70px';
         experiment.style.width = '100%';
         experiment.style.verticalAlign = 'middle';
         experiment.innerHTML = 'EXPERIMENT';
@@ -1232,8 +1231,17 @@ class App3{
         function onSessionStart(){
 
             const el = document.getElementById("text");
+            const Sidebar = document.getElementById("mySidebar");
+            const SmallSidebar = document.getElementById("mySmallSidebar");
+            
             self.el = el;
+            self.smallbar = SmallSidebar;
+            self.sidebar = Sidebar;
+
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
+            if (self.sidebar!=undefined) self.sidebar.style.visibility = 'hidden';
+            if (self.smallbar!=undefined) self.smallbar.style.visibility = 'hidden';
+
 
             self.introsound.play();
 
@@ -1264,6 +1272,10 @@ class App3{
         function onSessionEnd(){
             
             if (self.el!=undefined) self.el.style.visibility = 'visible';
+            if (self.sidebar!=undefined) self.sidebar.style.visibility = 'visible';
+            if (self.smallbar!=undefined) self.smallbar.style.visibility = 'visible';
+
+
 
             if (self.introsound && self.introsound.isPlaying) self.introsound.stop();
             if (self.canvas1 && self.canvas1.isPlaying) self.canvas1.stop();
