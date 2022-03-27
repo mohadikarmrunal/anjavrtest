@@ -514,7 +514,7 @@ class App3{
         experiment.style.height = '50px';
         experiment.style.display = '';
         experiment.style.left = '0';
-        experiment.style.top = '70px';
+        experiment.style.top = '0px';
         experiment.style.width = '100%';
         experiment.style.verticalAlign = 'middle';
         experiment.innerHTML = 'EXPERIMENT';
