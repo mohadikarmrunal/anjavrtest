@@ -260,7 +260,6 @@ class App{
         }
 
 
-       
         const ui = new CanvasUI( content, config );
         const ui1 = new CanvasUI( content1, config1 );
         const ui2 = new CanvasUI( content2, config2 );
@@ -728,34 +727,6 @@ class App{
             clearTimeout(self.timeout5);
         }
 
-        /*var promise = new Promise(function(resolve, reject) {
-             const sound = new THREE.Audio( self.listener );
-            const audioLoader = new THREE.AudioLoader();
-            audioLoader.load( 'audio/app1.mp3', ( buffer ) => {
-                sound.setBuffer( buffer );
-                sound.setLoop( false );
-                sound.setVolume( 1.0 );
-            });
-             self.sound = sound;
-             self.speech = new THREE.Audio( self.listener );
-             const controlspeech = true;
-             self.controlspeech = controlspeech;
-        
-         if (self.controlspeech) {
-              resolve("Sound loaded!");
-            }
-         else {
-              reject(Error("Sound did not load."));
-            }
-        });
-
-
-         promise.then(function(result) {
-                const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
-                console.log(result)}, function (error){
-                console.log(error);
-            });
-            */
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
 
          this.gestures = new ControllerGestures( this.renderer );

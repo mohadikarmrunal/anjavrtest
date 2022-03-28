@@ -635,10 +635,9 @@ class App3{
             panelSize: { height: 0.2 },
             height: 102.4,
             info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            button1: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq3f },
-            button2: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq3t },
-            button3: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq3ff },
+            button1: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq3f },
+            button2: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq3t },
+            button3: { type: "button", fontFamily: 'Verdana', position:{ top: 54.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq3ff },
             renderer: this.renderer
         }
         const contentq3 = {
@@ -681,8 +680,8 @@ class App3{
         const configb3 = {
             panelSize: { height: 0.1, width: 0.1},
             height: 512,
-            body: {backgroundColor: '#049'},
-            buttonb3: { type: "button", position:{ top: 100, left: 50 }, fontColor: "#fff", fontSize:100, hover:"#4c5ba6", onSelect: button3 },
+            body: {backgroundColor: '#021',},
+            buttonb3: { type: "button", position:{ top: 100, left: 50 }, fontColor: "#fff", backgroundColor: '#021', fontSize:100, hover:"#4c5ba6", onSelect: button3 },
             renderer: this.renderer
         }
         const contentb3 = {
@@ -787,9 +786,9 @@ class App3{
             height: 153.6,
             info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 7.2 }, textAlign: 'center', width: 500, height: 92.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial',padding: 30},
             //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            buttonq21: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2f },
-            buttonq22: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2ff },
-            buttonq23: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq2t },
+            buttonq21: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 6 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq2f },
+            buttonq22: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 176 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq2ff },
+            buttonq23: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 346 }, width: 160, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq2t },
             renderer: this.renderer
         }
         const contentq2 = {
@@ -861,8 +860,8 @@ class App3{
         const configb2 = {
             panelSize: { height: 0.1, width: 0.1},
             height: 512,
-            body: {backgroundColor: '#049',fontFamily: 'Verdana'},
-            buttonb2: { type: "button", fontFamily: 'Verdana', position:{ top: 100, left: 50 }, fontColor: "#fff", fontSize:100, hover: "#4c5ba6", onSelect: button2 },
+            body: {backgroundColor: '#021',fontFamily: 'Verdana'},
+            buttonb2: { type: "button", fontFamily: 'Verdana', position:{ top: 100, left: 50 }, fontColor: "#fff", backgroundColor: '#021', fontSize:100, hover: "#4c5ba6", onSelect: button2 },
             renderer: this.renderer
         }
         const contentb2 = {
@@ -971,9 +970,8 @@ class App3{
             panelSize: { height: 0.3 },
             height: 153.6,
             info: { type: "text", fontFamily: 'Verdana', position:{ left: 6, top: 7.2 }, textAlign: 'center', width: 500, height: 92.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial', padding: 30},
-            //button1: { type: "button", position:{ top: 64, left: 0 }, width: 64, fontColor: "#bb0", hover: "#026", onSelect: button1 },
-            buttonq1t: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 6 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1t },
-            buttonq1f: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 261 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#049", hover: "#4c5ba6", onSelect: buttonq1f },
+            buttonq1t: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 6 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq1t },
+            buttonq1f: { type: "button", fontFamily: 'Verdana', position:{ top: 104.4, left: 261 }, width: 245, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#4c5ba6", onSelect: buttonq1f },
             renderer: this.renderer
         }
         const contentq1 = {
@@ -1015,8 +1013,8 @@ class App3{
         const configb1 = {
             panelSize: { height: 0.1, width: 0.1},
             height: 512,
-            body: {backgroundColor: '#049'},
-            buttonb1: { type: "button", position:{ top: 100, left: 50 }, fontColor: "#fff", fontSize:100, hover: "#4c5ba6", onSelect: button1 },
+            body: {backgroundColor: '#021',},
+            buttonb1: { type: "button", position:{ top: 100, left: 50 }, fontColor: "#fff", backgroundColor: '#021', fontSize:100, hover: "#4c5ba6", onSelect: button1 },
             renderer: this.renderer
         }
         const contentb1 = {
@@ -1344,35 +1342,7 @@ class App3{
             if (self.text1) self.scene.remove(self.text1);
             if (self.text2) self.scene.remove(self.text2);
         }
-
-       /* var promise = new Promise(function(resolve, reject) {
-            const sound = new THREE.Audio( self.listener );
-            const audioLoader = new THREE.AudioLoader();
-             audioLoader.load( 'audio/intoapp3.mp3', ( buffer ) => {
-              sound.setBuffer( buffer );
-              sound.setLoop( false );
-              sound.setVolume( 1.0 );
-          });
-           self.sound = sound;
-           self.speech = new THREE.Audio( self.listener );
-           const controlspeech = true;
-           self.controlspeech = controlspeech;
-      
-            if (self.controlspeech) {
-            resolve("Sound loaded!");
-            }
-             else {
-            reject(Error("Sound did not load."));
-            }
-         });
-
-
-       promise.then(function(result) {
-              const btn = new ARButton( self.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
-              console.log(result)}, function (error){    
-                  console.log(error);
-        });
-        */  
+ 
         const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
 
         const controller = this.renderer.xr.getController( 0 );
