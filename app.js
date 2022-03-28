@@ -77,8 +77,8 @@ class App{
                 const action = self.mixer.clipAction (clip);
                 action.enable = true;
                 self.action = action;
-                self.action.timeScale = 0.7;
-                self.action.loop = THREE.LoopOnce;
+                self.action.timeScale = 0.6;
+                //self.action.loop = THREE.LoopOnce;
 
                 self.loadingBar.visible = false;
 
