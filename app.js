@@ -1,10 +1,11 @@
 import * as THREE from '../../libs/three/three.module.js';
 import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
 import { Stats } from '../../libs/stats.module.js';
-import { CanvasUI } from '../../libs/CanvasUI.js'
-import { ARButton } from '../../libs/ARButton.js';
+import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
+import { LoadingBar } from '../../libs/LoadingBar.js';
+import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
 
-class App2{
+class App{
 	constructor(){
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
@@ -39,423 +40,173 @@ class App2{
         this.listener = new THREE.AudioListener();
         this.camera.add( this.listener );
         
-        this.createUI();
+       this.initscene();
         this.setupVR();
 
         window.addEventListener('resize', this.resize.bind(this) );
 
+	
+    }
+    
+    initscene(){
+        
+        this.loadingBar = new LoadingBar();
+        this.assetsPath = '../../assets/';
+        const loader = new GLTFLoader().setPath(this.assetsPath);
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( '../../libs/three/js/draco/' );
+        loader.setDRACOLoader( dracoLoader );
+        const self = this;
+        
+        loader.load(
+            // resource URL
+            'worker2.glb',
+            // called when the resource is loaded
+            function ( gltf ) {
+
+                self.animations = {};
+                self.animations['Talk'] = gltf.animations[0];
+                self.worker = gltf.scene.children[0];
+                const scale = 0.015;
+                self.worker.scale.set(scale, scale, scale); 
+                self.worker.position.set(0.3,-2.05,-3);
+
+                //animations
+                self.mixer = new THREE.AnimationMixer( self.worker );
+                const clip = self.animations['Talk'];
+                const action = self.mixer.clipAction (clip);
+                action.enable = true;
+                self.action = action;
+                self.action.timeScale = 0.7;
+                self.action.loop = THREE.LoopOnce;
+
+                self.loadingBar.visible = false;
+
+            },
+            // called while loading is progressing
+            function ( xhr ) {
+
+                if (xhr.loaded <= xhr.total) self.loadingBar.progress = (xhr.loaded / xhr.total);
+            },
+            // called when loading has errors
+            function ( error ) {
+                console.log( 'An error happened while loading 3D object!' );
+                alert ('Objects did not load properly. Please refresh the page!');
+
+            }
+        );
+
+    }
+
+    setupVR() {
+
+        this.renderer.xr.enabled = true;
         const sound = new THREE.Audio( this.listener );
              const audioLoader = new THREE.AudioLoader();
-              audioLoader.load( 'audio/app2.mp3', ( buffer ) => {
+              audioLoader.load( 'audio/app.mp3', ( buffer ) => {
                sound.setBuffer( buffer );
                sound.setLoop( false );
                sound.setVolume( 1.0 );
            });
         this.sound = sound;
         this.speech = new THREE.Audio( this.listener );
-	
-    }
-
-
-    createUI(){
 
         const self = this;
+        const count = 0;
+        self.count = count;
 
-        const config1 = {
-            body:{ 
-                textAlign: 'center',
-                backgroundColor: '#fff', 
-                fontColor:'#000', 
-                borderRadius: 6,
-                padding:50,
-                fontSize:50,
-            },
-            info:{ type: "text" }
-            }
-
-
-        const content1 = {
-                info: ""
-        }
-
-        const ui1 = new CanvasUI( content1, config1 );
-        this.ui1 = ui1;
-
-        const ui2 = new CanvasUI( content1, config1 );
-        this.ui2 = ui2;
-
-        const ui3 = new CanvasUI( content1, config1 );
-        this.ui3 = ui3;
-
-        const ui4 = new CanvasUI( content1, config1 );
-        this.ui4 = ui4;
-
-        const ui5 = new CanvasUI( content1, config1 );
-        this.ui5 = ui5;
-        
-        //setting up canvas for graph
-        this.ui1.context.lineJoin = "round";  
-        this.ui1.context.strokeStyle = "black"; 
-        this.ui1.context.font = "20px Arial";
-
-        this.ui2.context.lineJoin = "round";  
-        this.ui2.context.strokeStyle = "black"; 
-        this.ui2.context.font = "20px Arial";
-
-        this.ui3.context.lineJoin = "round";  
-        this.ui3.context.strokeStyle = "black"; 
-        this.ui3.context.font = "20px Arial";
-
-        this.ui4.context.lineJoin = "round";  
-        this.ui4.context.strokeStyle = "black"; 
-        this.ui4.context.font = "20px Arial";
-
-        this.ui5.context.lineJoin = "round";  
-        this.ui5.context.strokeStyle = "black"; 
-        this.ui5.context.font = "20px Arial";
-        
-        //creating const for length and width
-        const a = this.ui1.config.width;
-        const b = this.ui1.config.height;
-        const c = 60;
-        this.a = a;
-        this.b = b;
-        this.c = c;
-       
-        //setting up button canvasUI
-        const config2 = {
-            panelSize: { height: 0.2 },
-            height: 102.4,
-            info: { type: "text", position:{ left: 6, top: 6 }, textAlign: 'center', width: 500, height: 42.4, backgroundColor: "#fff", fontColor: "#000", fontSize: 17, fontStyle: 'Arial'},
-            button1: { type: "button", position:{ top: 54.4, left: 6.15 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#3df", onSelect: button1 },
-            button2: { type: "button", position:{ top: 54.4, left: 107.3 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#3df", onSelect: button2 },
-            button3: { type: "button", position:{ top: 54.4, left: 208.45}, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#3df", onSelect: button3 },
-            button4: { type: "button", position:{ top: 54.4, left: 309.6 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#3df", onSelect: button4 },
-            button5: { type: "button", position:{ top: 54.4, left: 410.75 }, width: 95, height: 42, padding:17, fontColor: "#fff", backgroundColor: "#021", hover: "#3df", onSelect: button5 },
-            renderer: this.renderer
-        }
-        const content2 = {
-            info: "Select the lenght of the rectangles by pressing buttons",
-            button1: "10",
-            button2: "40",
-            button3: "70",
-            button4: "100",
-            button5: "130",
-        }
-
-        const ui6 = new CanvasUI( content2, config2 );
-        this.ui6 = ui6;
-
-        const config7 = {
-            panelSize: { height: 0.23 },
-            height: 117.78,
-            image: { type: "img", backgroundColor: "#fff", position: { left: 0, top: 0 }},
-        }
-
-        const content7 = {
-            image: "../../assets/integral.png",
-        }
-
-        const ui7 = new CanvasUI(content7, config7);
-        this.ui7 = ui7;
-
-        this.ui8 = this.ui7.mesh.clone();
-
-        this.ui9 = this.ui7.mesh.clone();
-
-        this.ui10 = this.ui7.mesh.clone();
-
-        this.ui11 = this.ui7.mesh.clone();
-
-
-        //functions of the buttons
-
-        function button1(){
-            const msg = "You have selected length 10.";
-            self.rectangles(10, self.ui5);
-            console.log(msg);
-            self.ui6.updateElement( "info", msg );
-        }
-        
-        function button2(){
-            const msg = "You have selected length 40.";
-            self.rectangles(40, self.ui5);
-            console.log(msg);
-            self.ui6.updateElement( "info", msg );
-        }
-        
-        function button3(){
-            const msg = "You have selected length 70.";
-            self.rectangles(70, self.ui5);
-            console.log(msg);
-            self.ui6.updateElement( "info", msg );
-
-        }
-
-        function button4(){
-            const msg = "You have selected length 100.";
-            self.rectangles(100, self.ui5);
-            console.log(msg);
-            self.ui6.updateElement( "info", msg );
-        }
-
-        function button5(){
-            const msg = "You have selected length 130.";
-            self.rectangles(130, self.ui5);
-            console.log(msg);
-            self.ui6.updateElement( "info", msg );
-        }
-
-    }
-    
-    rectangles(n, canv){
-        this.ui = canv;
-        this.clearCanvas(this.ui);
-        this.RenderFunction(this.ui);
-        this.ui.context.save();
-        this.ui.context.fillStyle = 'gray';
-        const a = this.a;
-        const b = this.b;
-        const c = this.c;
-        
-        for (let i=1;i*n<a-2*c;i++) {
-            var area=0;
-            var p;
-            var k=i;
-            var x = c+ i*n;
-            var y= this.YC((x-452)*(x-452)/452);
+        function next1(){
+            if (self.worker!=undefined) {
+                self.scene.add(self.worker);
             
-            if (i==1){
-                area=n*(((n)-452)*((n)-452)/452);
-                p=area;
-                this.ui.context.beginPath();
-                this.ui.context.setLineDash([5, 15]);
-                this.ui.context.moveTo(c,y);
-                this.ui.context.lineTo(x,y);
-                this.ui.context.lineTo(x,b-c);
-                this.ui.context.lineTo(c,b-c);
-                this.ui.context.lineTo(c,y);
-                this.ui.context.stroke();
-                this.ui.context.save();
-                this.ui.context.fillStyle = 'black';
-                this.ui.context.fillText(x-60, x, b-2*c/3);
-                this.ui.context.restore();
-                this.ui.context.fill();
-            }
+                self.timeout3 = setTimeout(function(){self.sound.play()
+                    self.action.play();              
+                },2000);
 
-            else{
-                this.ui.context.beginPath();
-                this.ui.context.setLineDash([5, 15]);
-                this.ui.context.moveTo(x-n,y);
-                this.ui.context.lineTo(x,y);
-                this.ui.context.lineTo(x,b-c);
-                this.ui.context.lineTo(x-n,b-c);
-                this.ui.context.lineTo(x-n,y);
-                this.ui.context.stroke();
-                this.ui.context.save();
-                this.ui.context.fillStyle = 'black';
-                if (n>10){
-                   this.ui.context.fillText(x-60, x, b-2*c/3);
-                }
-                else {
-                    if(k%5==0) {
-                    this.ui.context.fillText(x-60, x, b-2*c/3);
-                    }
-                }
-                this.ui.context.restore();
-                this.ui.context.fill();
-                area=p+n*(((i*n)-452)*((i*n)-452)/452);
-                p=area;
-                
+
+            }
+            else {
+                 
+                self.timeout2 = setTimeout (next1,2000);
             }
         }
 
-        this.ui.context.fillStyle = 'black';
-        this.ui.context.fillText("Area of the rectangles with lenght "+n, 3*a/5 , c);
-        this.ui.context.save();
-        this.ui.context.fillStyle = "#02f";
-        this.ui.context.font = "bold 20px Arial";
-        this.ui.context.fillText(area.toFixed(2), 3*a/5 , c+30);
-        this.ui.context.restore();
-        this.ui.needsUpdate = true;
-        this.ui.texture.needsUpdate = true;
-        this.ui.context.restore();
-    }
-    
-    YC(y) {
-        return this.b-this.c-y;
-    }
-
-    clearCanvas(canv){
-        this.ui = canv ;
-        this.ui.context.save();
-        this.ui.context.fillStyle = 'white';
-        this.ui.context.fillRect(0,0,this.a,this.b);
-        this.ui.needsUpdate = true;
-        this.ui.texture.needsUpdate = true;
-        this.ui.context.restore();
-    }
-
-    // RenderFunction() renders the input funtion f on the canvas.
-    RenderFunction(canv) {
-        this.ui = canv;
-        var XSTEP= 5;
-        var first = true;
-        const a = this.a;
-        const b = this.b;
-        const c = this.c;
-
-        //x and y axis with labels
-        this.ui.context.beginPath();
-        this.ui.context.moveTo(c,c);
-        this.ui.context.lineTo(c,b-c);
-        this.ui.context.lineTo(a-c,b-c);
-        this.ui.context.stroke();
-        this.ui.context.fillText("Quantity Demanded", a/2,b-c/4);
-        this.ui.context.save();
-        this.ui.context.rotate(-Math.PI/2);
-        this.ui.context.fillText("Price per kilogram", -2*b/3 , 2*c/3);
-        this.ui.context.restore(); 
-        this.ui.context.save();
-        this.ui.context.rotate(2*Math.PI/7);
-        this.ui.context.fillStyle = 'black';
-        this.ui.context.font = "20px Arial";
-        this.ui.context.fillText("Demand Curve f(x)", a/2 , -b/70);
-        this.ui.context.restore();
-
-        //step for function drawing
-        this.ui.context.save();
-        this.ui.context.beginPath() ;
-        for (var x = c; x <= a-c; x += XSTEP) {
-        var y = (x-452)*(x-452)/452 ;
-        if (first) {
-        this.ui.context.lineWidth = '3';
-        this.ui.context.moveTo(x,this.YC(y));
-        first = false ;
-        } else {
-        this.ui.context.lineTo(x,this.YC(y)) ;
-        this.ui.context.stroke() ;
-        this.ui.needsUpdate = true;
-        this.ui.texture.needsUpdate = true;
-        }
-        }
-        
-        this.ui.context.restore();
-        
-    }
-
-    setupVR() {
-        this.renderer.xr.enabled = true; 
-
-        const self = this;
-        const a = this.a;
-        const b = this.b;
-        const c = this.c;
-            
         function onSessionStart(){
-            
+
             const el = document.getElementById("text");
-            const Sidebar = document.getElementById("mySidebar");
-            const SmallSidebar = document.getElementById("mySmallSidebar");
-
             self.el = el;
-            self.smallbar = SmallSidebar;
-            self.sidebar = Sidebar;
-
             if (self.el!=undefined) self.el.style.visibility = 'hidden';
-            if (self.sidebar!=undefined) self.sidebar.style.visibility = 'hidden';
-            if (self.smallbar!=undefined) self.smallbar.style.visibility = 'hidden';
-            
-            self.sound.play();
 
-            //adding meshes to scene
-            self.ui1.mesh.position.set(-2,0,-2);
-            self.ui1.mesh.rotateY(Math.PI/2);
-            self.scene.add(self.ui1.mesh);
-            self.ui7.mesh.position.set(-2,0.8,-2);
-            self.ui7.mesh.rotateY(Math.PI/2);
-            self.scene.add(self.ui7.mesh);
-            self.rectangles(100,self.ui1);
-
-            self.ui2.mesh.position.set(-2,0,-4);
-            self.ui2.mesh.rotateY(Math.PI/4);
-            self.scene.add(self.ui2.mesh);
-            self.ui8.position.set(-2,0.8,-4);
-            self.ui8.rotateY(Math.PI/4);
-            self.scene.add(self.ui8);
-            self.rectangles(70,self.ui2);
-
-            self.ui3.mesh.position.set(0,0,-4);
-            self.scene.add(self.ui3.mesh);
-            self.ui9.position.set(0,0.8,-4);
-            self.scene.add(self.ui9);
-            self.rectangles(40,self.ui3);
-
-            self.ui4.mesh.position.set(2,0,-4);
-            self.ui4.mesh.rotateY(-Math.PI/4);
-            self.scene.add(self.ui4.mesh);
-            self.ui10.position.set(2,0.8,-4);
-            self.ui10.rotateY(-Math.PI/4);
-            self.scene.add(self.ui10);
-            self.rectangles(10,self.ui4);
-
-            self.ui5.mesh.position.set(2,0,-2);
-            self.ui5.mesh.rotateY(-Math.PI/2);
-            self.scene.add(self.ui5.mesh);
-            self.ui11.position.set(2,0.8,-2);
-            self.ui11.rotateY(-Math.PI/2);
-            self.scene.add(self.ui11);
-            self.RenderFunction(self.ui5);
-            self.ui6.mesh.position.set(2,-0.8,-2);
-            self.ui6.mesh.rotateY(-Math.PI/2);
-            self.scene.add(self.ui6.mesh);
-
+            var timeout1, 
+            timeout1 = setTimeout(next1, 4000);
+            self.timeout1 = timeout1;            
             
         }
        
         function onSessionEnd(){
 
             if (self.el!=undefined) self.el.style.visibility = 'visible';
-            if (self.sidebar!=undefined) self.sidebar.style.visibility = 'visible';
-            if (self.smallbar!=undefined) self.smallbar.style.visibility = 'visible';
-
             if (self.sound && self.sound.isPlaying) self.sound.stop();
+            clearTimeout(self.timeout1);
+            clearTimeout(self.timeout2);
+            clearTimeout(self.timeout3);
 
-            self.clearCanvas(self.ui1);
-            self.clearCanvas(self.ui2);
-            self.clearCanvas(self.ui3);
-            self.clearCanvas(self.ui4);
-            self.clearCanvas(self.ui5);
-            
-
-            self.ui1.mesh.rotateY(-Math.PI/2);
-            self.ui7.mesh.rotateY(-Math.PI/2);
-            self.ui2.mesh.rotateY(-Math.PI/4);
-            self.ui8.rotateY(-Math.PI/4);
-            self.ui4.mesh.rotateY(Math.PI/4);
-            self.ui10.rotateY(Math.PI/4);
-            self.ui5.mesh.rotateY(Math.PI/2);
-            self.ui11.rotateY(Math.PI/2);
-            self.ui6.mesh.rotateY(Math.PI/2);
-
-            self.scene.remove( self.ui1.mesh );
-            self.scene.remove( self.ui2.mesh );
-            self.scene.remove( self.ui3.mesh );
-            self.scene.remove( self.ui4.mesh );
-            self.scene.remove( self.ui5.mesh );
-            self.scene.remove( self.ui6.mesh );
-            self.scene.remove( self.ui7.mesh );
-
-            self.scene.remove( self.ui8 );
-            self.scene.remove( self.ui9 );
-            self.scene.remove( self.ui10 );
-            self.scene.remove( self.ui11 );
 
 
         }
-        
-        const btn = new ARButton( this.renderer, { onSessionStart, onSessionEnd, sessionInit: { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } }})
 
+        const sessionInit = { optionalFeatures: [ 'dom-overlay' ], domOverlay: { root: document.body } };
+
+        
+        self.onSessionStart = onSessionStart;
+        self.onSessionEnd = onSessionEnd;
+        self.sessionInit = sessionInit;
+    
+        
+        if ( 'xr' in navigator ) {
+
+			const button = document.createElement( 'button' );
+			button.style.display = 'none';
+            button.style.height = '40px';
+
+			navigator.xr.isSessionSupported( 'immersive-ar' ).then( ( supported ) => {
+
+				supported ? self.showStartAR( button ) : self.showARNotSupported( button );
+
+			} );
+            
+            document.body.appendChild( button );
+
+		} else {
+
+			const message = document.createElement( 'a' );
+
+			if ( window.isSecureContext === false ) {
+
+				message.href = document.location.href.replace( /^http:/, 'https:' );
+				message.innerHTML = 'WEBXR NEEDS HTTPS'; 
+
+			} else {
+
+				message.href = 'https://immersiveweb.dev/';
+				message.innerHTML = 'WEBXR NOT AVAILABLE';
+
+			}
+
+			message.style.left = '0px';
+			message.style.width = '100%';
+			message.style.textDecoration = 'none';
+
+			self.stylizeElement( message, false );
+            message.style.bottom = '0px';
+            message.style.opacity = '1';
+            
+            document.body.appendChild ( message );
+
+		}
+
+        
+        
         const controller = this.renderer.xr.getController( 0 );
         
         this.scene.add( controller );
@@ -465,7 +216,86 @@ class App2{
 
     }
 
-   
+    showStartAR( button ) {
+
+        let currentSession = null;
+        const self = this;
+                
+        function onSessionStarted( session ) {
+
+            session.addEventListener( 'end', onSessionEnded );
+
+            self.renderer.xr.setReferenceSpaceType( 'local' );
+            self.renderer.xr.setSession( session );
+            
+            currentSession = session;
+            
+            if (self.onSessionStart !== undefined && self.onSessionStart !== null) self.onSessionStart();
+
+        }
+
+        function onSessionEnded( ) {
+
+            currentSession.removeEventListener( 'end', onSessionEnded );
+
+            self.stylizeElement( button, true, 12, true );
+            button.textContent = 'START AR';
+
+            currentSession = null;
+            
+            if (self.onSessionEnd !== undefined && self.onSessionEnd !== null) self.onSessionEnd();
+
+        }
+
+        if ( currentSession === null ) {
+
+            // WebXR's requestReferenceSpace only works if the corresponding feature
+            // was requested at session creation time. For simplicity, just ask for
+            // the interesting ones as optional features, but be aware that the
+            // requestReferenceSpace call will fail if it turns out to be unavailable.
+            // ('local' is always available for immersive sessions and doesn't need to
+            // be requested separately.)
+            
+            navigator.xr.requestSession( 'immersive-ar', self.sessionInit ).then( onSessionStarted );
+
+        } else {
+
+            currentSession.end();
+
+        }
+
+    }
+
+    showARNotSupported( button ) {
+        this.stylizeElement( button, false );
+        button.style.display = '';
+        button.style.width = '100%';
+        button.style.right = '0px';
+        button.style.bottom = '0px';
+        button.style.border = '';
+        button.style.opacity = '1';
+        button.style.fontSize = '13px';
+        button.textContent = 'AR NOT SUPPORTED';
+
+    }
+
+    stylizeElement( element, active = true, fontSize = 13, ignorePadding = false ) {
+
+        element.style.position = 'absolute';
+        element.style.bottom = '20px';
+        if (!ignorePadding) element.style.padding = '12px 6px';
+        element.style.border = '1px solid #fff';
+        element.style.borderRadius = '4px';
+        element.style.background = (active) ? 'rgba(20,150,80,1)' : 'rgba(180,20,20,1)';
+        element.style.color = '#fff';
+        element.style.font = `normal ${fontSize}px sans-serif`;
+        element.style.textAlign = 'center';
+        element.style.opacity = '0.5';
+        element.style.outline = 'none';
+        element.style.zIndex = '999';
+
+    }
+
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
@@ -477,10 +307,11 @@ class App2{
         const dt = this.clock.getDelta();
         this.stats.update();
         if ( this.renderer.xr.isPresenting ) {
-            this.ui6.update();
+            if (this.worker!=undefined)  this.mixer.update( dt )
+
         }
         this.renderer.render( this.scene, this.camera );
     }
 }
 
-export { App2 };
+export { App };

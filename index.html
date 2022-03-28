@@ -56,19 +56,28 @@
         <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
         <div class="w3-main" style="margin-left:250px">
 
-            <div class="w3-container" style="margin-top:75px">
+            <div class="w3-container" style="margin-top:75px" id="text">
                 <h1 class="w3-xxxlarge w3-text-green"><b>MATHS IN AR</b></h1>
                 <hr style="width:50px;border:5px solid rgb(10, 141, 91)" class="w3-round">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum
-                dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
             </div>
 
+            <body>
+                <script src="../../libs/fas.js"></script>
+                <script type="module">
+                    import { App } from './app.js';
+        
+                    document.addEventListener("DOMContentLoaded", function(){
+                        const app = new App();
+                        window.app = app;
+                    });
+                </script>
+        </body>
           
 
 
         <!-- End page content -->
         </div>
+
 
         <script>
         // Get the Sidebar
