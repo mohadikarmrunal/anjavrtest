@@ -77,8 +77,9 @@ class App{
                 const action = self.mixer.clipAction (clip);
                 action.enable = true;
                 self.action = action;
-                self.action.timeScale = 0.6;
-                //self.action.loop = THREE.LoopOnce;
+                self.action.timeScale = 0.7;
+                self.action.loop = THREE.LoopPingPong;
+                self.action.repetitions = 2;
 
                 self.loadingBar.visible = false;
 

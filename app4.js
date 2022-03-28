@@ -50,7 +50,6 @@ class App4{
          audioLoader.load( 'audio/app4-1.mp3', ( buffer ) => {
           sound.setBuffer( buffer );
           sound.setLoop( false );
-          sound.setVolume( 1.0 );
          });
        this.sound = sound;
        this.speech = new THREE.Audio( this.listener );
@@ -202,38 +201,38 @@ class App4{
         const self = this;
 
         const buttontimer = document.createElement( 'div' );
-        this.stylizeElement( buttontimer, true, 20, false );
-        buttontimer.style.height = '30px';
+        this.stylizeElement( buttontimer, true, 18, false );
+        buttontimer.style.height = '40px';
         buttontimer.style.display = '';
         buttontimer.style.left = '10px';
         buttontimer.style.top = '10px';
         buttontimer.style.width = '100px';
         buttontimer.style.verticalAlign = 'middle';
-        buttontimer.innerHTML = '00:00:00';
+        buttontimer.innerText = '00:00:00';
         buttontimer.style.visibility = 'hidden';
         
         const buttoncounter = document.createElement( 'div' );
-        this.stylizeElement( buttoncounter, true, 15, false );
-        buttoncounter.style.height = '30px';
+        this.stylizeElement( buttoncounter, true, 13, false );
+        buttoncounter.style.height = '40px';
         buttoncounter.style.display = '';
         buttoncounter.style.left = '10px';
         buttoncounter.style.top = '30%';
         buttoncounter.style.width = '100px';
         buttoncounter.style.cursor = 'pointer';
         buttoncounter.style.verticalAlign = 'middle';
-        buttoncounter.innerHTML = 'COUNTER: 0';
+        buttoncounter.innerText = 'COUNTER: 0';
         buttoncounter.style.visibility = 'hidden';
 
         const buttonexp = document.createElement( 'div' );
-        this.stylizeElement( buttonexp, true, 15, false );
-        buttonexp.style.height = '30px';
+        this.stylizeElement( buttonexp, true, 13, false );
+        buttonexp.style.height = '40px';
         buttonexp.style.display = '';
         buttonexp.style.right = '5px';
         buttonexp.style.top = '120px';
         buttonexp.style.width = '100px';
         buttonexp.style.cursor = 'pointer';
         buttonexp.style.verticalAlign = 'middle';
-        buttonexp.innerHTML = 'EXPERIMENT';
+        buttonexp.innerText = 'EXPERIMENT';
         buttonexp.style.visibility = 'hidden';
 
         const buttonexp1 = document.createElement( 'a' );
@@ -243,7 +242,7 @@ class App4{
         buttonexp1.style.top = '200px';
         buttonexp1.style.width = '70px';
         buttonexp1.style.cursor = 'pointer';
-        buttonexp1.innerHTML = '';
+        buttonexp1.innerText = '';
         buttonexp1.style.visibility = 'hidden';
         this.stylizeElement( buttonexp1, true, 30, true );
 
@@ -254,7 +253,7 @@ class App4{
         buttonexp2.style.top = '250px';
         buttonexp2.style.width = '70px';
         buttonexp2.style.cursor = 'pointer';
-        buttonexp2.innerHTML = '';
+        buttonexp2.innerText = '';
         buttonexp2.style.visibility = 'hidden';
         this.stylizeElement( buttonexp2, true, 30, true );
 
@@ -265,7 +264,7 @@ class App4{
         buttonexp3.style.top = '300px';
         buttonexp3.style.width = '70px';
         buttonexp3.style.cursor = 'pointer';
-        buttonexp3.innerHTML = '';
+        buttonexp3.innerText = '';
         buttonexp3.style.visibility = 'hidden';
         this.stylizeElement( buttonexp3, true, 30, true );
 
@@ -276,7 +275,7 @@ class App4{
         buttonexp4.style.top = '350px';
         buttonexp4.style.width = '70px';
         buttonexp4.style.cursor = 'pointer';
-        buttonexp4.innerHTML = '';
+        buttonexp4.innerText = '';
         buttonexp4.style.visibility = 'hidden';
         this.stylizeElement( buttonexp4, true, 30, true );
        
@@ -724,6 +723,8 @@ class App4{
         self.counter = 0;
         //keeps track of what is displayed
         self.display = 1;
+        //keeps track of the timer
+        self.seconds = 30;
 
         function count(number){
 
@@ -734,7 +735,7 @@ class App4{
                 self.actionT.play();
                 self.actionA.play();
                 self.playSound('ring');
-                self.buttoncounter.innerHTML= "COUNTER: " + self.counter;
+                self.buttoncounter.innerText= "COUNTER: " + self.counter;
             }
 
             if ( self.seconds < 5 && self.second!= -1){
@@ -745,37 +746,37 @@ class App4{
                 self.seconds = 30;
 
                 self.buttontimer.style.background = 'rgba(20,150,80,1)';
-                self.buttontimer.innerHTML = '00:00:00';
-                self.buttoncounter.innerHTML = 'COUNTER: 0';
+                self.buttontimer.innerText = '00:00:00';
+                self.buttoncounter.innerText = 'COUNTER: 0';
 
                 if (self.case == 1) {
                     clearInterval(self.interval1);
-                    self.buttonexp1.innerHTML = self.counter;
+                    self.buttonexp1.innerText = self.counter;
                     self.counter = 0;
                 }
 
                 if (self.case == 2) {
                     clearInterval(self.interval2);
-                    self.buttonexp2.innerHTML = self.counter;
+                    self.buttonexp2.innerText = self.counter;
                     self.counter = 0;
                 }
 
                 if (self.case == 3) {
                     clearInterval(self.interval3);
-                    self.buttonexp3.innerHTML = self.counter;
+                    self.buttonexp3.innerText = self.counter;
                     self.counter = 0;
                 }
 
                 if (self.case == 4) {
                     clearInterval(self.interval4);
-                    self.buttonexp4.innerHTML = self.counter;
+                    self.buttonexp4.innerText = self.counter;
                     self.counter = 0;
                 }
 
             }
 
             else {
-                self.buttontimer.innerHTML = '00:00:'+self.seconds;
+                self.buttontimer.innerText = '00:00:'+self.seconds;
                 self.seconds = self.seconds -1;
             }
         }
@@ -946,8 +947,8 @@ class App4{
             self.scene.remove(self.worker);
             self.scene.remove(self.tel);
 
-            self.buttontimer.innerHTML= '00:00:00';
-            self.buttoncounter.innerHTML = 'COUNTER: 0';
+            self.buttontimer.innerText= '00:00:00';
+            self.buttoncounter.innerText = 'COUNTER: 0';
             self.buttontimer.style.background = 'rgba(20,150,80,1)';
 
             self.buttoncounter.style.visibility = 'hidden';
@@ -958,10 +959,10 @@ class App4{
             self.buttonexp3.style.visibility = 'hidden';
             self.buttonexp4.style.visibility = 'hidden';
            
-            self.buttonexp1.innerHTML = '';
-            self.buttonexp2.innerHTML = '';
-            self.buttonexp3.innerHTML = '';
-            self.buttonexp4.innerHTML = '';
+            self.buttonexp1.innerText = '';
+            self.buttonexp2.innerText = '';
+            self.buttonexp3.innerText = '';
+            self.buttonexp4.innerText = '';
 
             clearTimeout(self.timeout1);
             clearTimeout(self.timeout2);
