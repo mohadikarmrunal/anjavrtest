@@ -1,10 +1,10 @@
-import * as THREE from '../../libs/three/three.module.js';
-import { BufferGeometryUtils } from '../../libs/three/jsm/BufferGeometryUtils.js';
-import { ARButton } from '../../libs/ARButton.js';
-import { CanvasUI } from '../../libs/CanvasUI.js'
-import { LoadingBar } from '../../libs/LoadingBar.js';
-import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
-import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
+import * as THREE from '../libs/three/three.module.js';
+import { BufferGeometryUtils } from '../libs/three/jsm/BufferGeometryUtils.js';
+import { ARButton } from '../libs/ARButton.js';
+import { CanvasUI } from '../libs/CanvasUI.js'
+import { LoadingBar } from '../libs/LoadingBar.js';
+import { GLTFLoader } from '../libs/three/jsm/GLTFLoader.js';
+import { DRACOLoader } from '../libs/three/jsm/DRACOLoader.js';
 
 
 

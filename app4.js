@@ -1,14 +1,14 @@
-import * as THREE from '../../libs/three/three.module.js';
-import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
-import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
-import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
-import { Stats } from '../../libs/stats.module.js';
-import { CanvasUI } from '../../libs/CanvasUI.js'
-import { ARButton } from '../../libs/ARButton.js';
-import { LoadingBar } from '../../libs/LoadingBar.js';
-import { ControllerGestures } from '../../libs/ControllerGestures.js';
-import { FontLoader } from '../../libs/FontLoader.js';
-import { TextGeometry } from '../../libs/TextGeometry.js';
+import * as THREE from '../libs/three/three.module.js';
+import { OrbitControls } from '../libs/three/jsm/OrbitControls.js';
+import { GLTFLoader } from '../libs/three/jsm/GLTFLoader.js';
+import { DRACOLoader } from '../libs/three/jsm/DRACOLoader.js';
+import { Stats } from '../libs/stats.module.js';
+import { CanvasUI } from '../libs/CanvasUI.js'
+import { ARButton } from '../libs/ARButton.js';
+import { LoadingBar } from '../libs/LoadingBar.js';
+import { ControllerGestures } from '../libs/ControllerGestures.js';
+import { FontLoader } from '../libs/FontLoader.js';
+import { TextGeometry } from '../libs/TextGeometry.js';
 
 
 

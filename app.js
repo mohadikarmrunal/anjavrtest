@@ -1,9 +1,9 @@
-import * as THREE from '../../libs/three/three.module.js';
-import { OrbitControls } from '../../libs/three/jsm/OrbitControls.js';
-import { Stats } from '../../libs/stats.module.js';
-import { DRACOLoader } from '../../libs/three/jsm/DRACOLoader.js';
-import { LoadingBar } from '../../libs/LoadingBar.js';
-import { GLTFLoader } from '../../libs/three/jsm/GLTFLoader.js';
+import * as THREE from '../libs/three/three.module.js';
+import { OrbitControls } from '../libs/three/jsm/OrbitControls.js';
+import { Stats } from '../libs/stats.module.js';
+import { DRACOLoader } from '../libs/three/jsm/DRACOLoader.js';
+import { LoadingBar } from '../libs/LoadingBar.js';
+import { GLTFLoader } from '../libs/three/jsm/GLTFLoader.js';
 
 class App{
 	constructor(){
