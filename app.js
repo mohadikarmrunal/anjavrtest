@@ -60,7 +60,7 @@ class App{
         
         loader.load(
             // resource URL
-            './worker2.glb',
+            'assets/worker2.glb',
             // called when the resource is loaded
             function ( gltf ) {
 
