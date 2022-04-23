@@ -452,7 +452,7 @@ class App3{
 
         loader3.load(
 			// resource URL
-			'cursor.gltf',
+			'./cursor.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 

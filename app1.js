@@ -69,7 +69,7 @@ class App{
 
         loader1.load(
 			// resource URL
-			'apple.gltf',
+			'./apple.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
@@ -94,7 +94,7 @@ class App{
 
         loader1.load(
 			// resource URL
-			'cart.gltf',
+			'./cart.gltf',
 			// called when the resource is loaded
 			function ( gltf ) {
 
